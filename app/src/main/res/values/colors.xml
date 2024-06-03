@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="primaryColor">#8BD5FF</color>
+    <color name="primaryOnTop">#55B5FA</color>
+    <color name="primaryOnBottom">#3C8FDB</color>
+
+    <color name="secondaryColor">#07193A</color>
+    <color name="secondaryOnTop">#354465</color>
+    <color name="secondaryOnBottom">#07193A</color>
+
+    <color name="lightBaseColor">#E4E5E6</color>
+    <color name="lightOnTop">#F9F9F9</color>
+    <color name="lightOnBottom">#DFDFDF</color>
+
+    <color name="darkBaseColor">#454545</color>
+    <color name="darkOnTop">#BCBCBC</color>
+    <color name="darkOnBottom">#2A2A2A</color>
+
+    <color name="infoColor">#4996FF</color>
+    <color name="infoColorLight">#85B9FF</color>
+
+    <color name="warningColor">#FCB938</color>
+    <color name="warningColorLight">#FFCE50</color>
+
+    <color name="successColor">#5CE495</color>
+    <color name="successColorLight">#9BF1BF</color>
+
+    <color name="errorColor">#ED3A3A</color>
+    <color name="errorColorLight">#EB5757</color>
+
+    <color name="ratingColor">#0047FF</color>
+    <color name="emptyRatingColor">#354465</color>
+</resources>

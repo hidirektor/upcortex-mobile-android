@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CircularCountdownView">
+        <attr name="progressColor" format="color" />
+        <attr name="backgroundColor" format="color" />
+        <attr name="progressTextColor" format="color" />
+        <attr name="remainingTimeTextColor" format="color" />
+        <attr name="progressTextSize" format="dimension" />
+        <attr name="remainingTimeTextSize" format="dimension" />
+        <attr name="strokeWidth" format="dimension" />
+        <attr name="progressText" format="string" />
+        <attr name="duration" format="integer" />
+        <attr name="remainingTime" format="integer" />
+        <attr name="circleDiameter" format="dimension" />
+        <attr name="clockwise" format="boolean" />
+        <attr name="softProgress" format="boolean" />
+    </declare-styleable>
+</resources>
+
+
