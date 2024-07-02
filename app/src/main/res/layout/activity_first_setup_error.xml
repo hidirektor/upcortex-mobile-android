@@ -73,6 +73,21 @@
         android:layout_marginRight="12dp"
         android:layout_marginBottom="16dp"
         android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/supportButton"/>
+
+    <Button
+        android:id="@+id/supportButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_support"
+        android:text="@string/button_support"
+        android:textColor="@color/ratingColor"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

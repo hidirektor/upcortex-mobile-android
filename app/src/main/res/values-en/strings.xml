@@ -7,6 +7,7 @@
     <string name="button_yes">Yes</string>
     <string name="button_no">No</string>
     <string name="button_back_to_start">Back to Start</string>
+    <string name="button_support">Contact Us</string>
 
     <!-- Onboard Texts-->
     <string name="onboard_1_headline">Discover the Power of Your Mind</string>

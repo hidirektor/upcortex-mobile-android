@@ -9,10 +9,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
 import me.t3sl4.upcortex.Util.Utils;
+import me.t3sl4.upcortex.Util.Web.WebUtil;
 
 public class FirstSetupError extends AppCompatActivity {
 
     private Button backToMainButton;
+    private Button supportButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,7 @@ public class FirstSetupError extends AppCompatActivity {
 
     private void initializeComponents() {
         backToMainButton = findViewById(R.id.backToMainButton);
+        supportButton = findViewById(R.id.supportButton);
     }
 
     private void buttonClickListener() {
@@ -36,5 +39,10 @@ public class FirstSetupError extends AppCompatActivity {
             startActivity(firstSetupIntent);
             finish();
         });
+
+        supportButton.setOnClickListener(v -> {
+            WebUtil.openURL(this, "https://www.github.com/hidirektor");
+        });
+
     }
 }
