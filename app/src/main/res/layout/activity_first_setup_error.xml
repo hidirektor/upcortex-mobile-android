@@ -43,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/first_setup_error_headline"
-                    android:textSize="22sp"
+                    android:textSize="28sp"
                     android:textColor="@color/ratingColor"
                     android:textStyle="bold"/>
 
