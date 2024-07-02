@@ -15,7 +15,6 @@ public class OnBoard1 extends AppCompatActivity {
 
     private Button nextButton;
     private Button skipButton;
-    private GestureDetector gestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
