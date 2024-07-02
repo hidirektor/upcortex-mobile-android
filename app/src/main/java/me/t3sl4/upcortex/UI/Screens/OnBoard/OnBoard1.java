@@ -2,7 +2,6 @@ package me.t3sl4.upcortex.UI.Screens.OnBoard;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.GestureDetector;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
