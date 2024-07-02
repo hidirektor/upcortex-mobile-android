@@ -7,6 +7,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import me.t3sl4.upcortex.R;
+import me.t3sl4.upcortex.UI.Screens.FirstSetup.FirstSetup;
 import me.t3sl4.upcortex.UI.Screens.General.Dashboard;
 import me.t3sl4.upcortex.Util.Screen.ScreenUtil;
 
@@ -39,7 +40,7 @@ public class OnBoard1 extends AppCompatActivity {
         });
 
         skipButton.setOnClickListener(v -> {
-            Intent loginIntent = new Intent(OnBoard1.this, Dashboard.class);
+            Intent loginIntent = new Intent(OnBoard1.this, FirstSetup.class);
             startActivity(loginIntent);
             finish();
         });
