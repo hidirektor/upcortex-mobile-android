@@ -8,7 +8,9 @@ import android.os.Looper;
 import androidx.appcompat.app.AppCompatActivity;
 
 import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
+import me.t3sl4.upcortex.UI.Screens.General.Dashboard;
 import me.t3sl4.upcortex.UI.Screens.OnBoard.OnBoard1;
+import me.t3sl4.upcortex.Util.Utils;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -22,7 +24,13 @@ public class SplashActivity extends AppCompatActivity {
         NavigationBarUtil.hideNavigationBar(this);
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            Intent intent = new Intent(SplashActivity.this, OnBoard1.class);
+            Intent intent;
+            if (Utils.isFirstTime(SplashActivity.this)) {
+                intent = new Intent(SplashActivity.this, OnBoard1.class);
+                Utils.setFirstTime(SplashActivity.this, false);
+            } else {
+                intent = new Intent(SplashActivity.this, Dashboard.class);
+            }
             startActivity(intent);
             finish();
         }, SPLASH_DELAY);

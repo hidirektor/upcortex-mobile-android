@@ -7,6 +7,8 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import me.t3sl4.upcortex.R;
+import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
+import me.t3sl4.upcortex.Util.Utils;
 
 public class FirstSetupError extends AppCompatActivity {
 
@@ -16,6 +18,9 @@ public class FirstSetupError extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_setup_error);
+
+        NavigationBarUtil.hideNavigationBar(this);
+        Utils.hideStatusBar(this);
 
         initializeComponents();
         buttonClickListener();
