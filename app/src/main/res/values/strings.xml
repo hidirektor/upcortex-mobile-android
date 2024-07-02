@@ -5,6 +5,9 @@
     <string name="button_next">İleri</string>
     <string name="button_skip">Atla</string>
     <string name="button_login">Giriş Yap</string>
+    <string name="button_yes">Evet</string>
+    <string name="button_no">Hayır</string>
+    <string name="button_back_to_start">Başa Dön</string>
 
     <!-- Onboard Texts-->
     <string name="onboard_1_headline">Zihninizin Gücünü Keşfedin</string>
@@ -13,4 +16,11 @@
     <string name="onboard_2_desc">Cihazınızı Bluetooth ile eşleştirmek için basit adımları izleyin ve başlamaya hazır olun.</string>
     <string name="onboard_3_headline">İlk Seansınıza Başlayın</string>
     <string name="onboard_3_desc">İlk seansınıza başlamak ve zihninizin potansiyelini açığa çıkarmak için dokunun.</string>
+
+    <!-- First Setup Question Texts-->
+    <string name="first_setup_q1">12 Yaşının üstünde misiniz?</string>
+    <string name="first_setup_q2">Kalp pili kullanıyor musunuz?</string>
+    <string name="first_setup_q3">Beyin pili kullanıyor musunuz?</string>
+    <string name="first_setup_error_headline">Maalesef Sürece \nDevam Edemiyoruz…</string>
+    <string name="first_setup_error_desc">Cihazı kullanabilmek için herhangi bir kalp pili ve/veya beyin pili kullanmıyor olmanız gerekmektedir.</string>
 </resources>

@@ -4,6 +4,9 @@
     <string name="button_next">Next</string>
     <string name="button_skip">Skip</string>
     <string name="button_login">Login</string>
+    <string name="button_yes">Yes</string>
+    <string name="button_no">No</string>
+    <string name="button_back_to_start">Back to Start</string>
 
     <!-- Onboard Texts-->
     <string name="onboard_1_headline">Discover the Power of Your Mind</string>
@@ -12,4 +15,11 @@
     <string name="onboard_2_desc">Follow the simple steps to pair your device via Bluetooth and you are ready to go.</string>
     <string name="onboard_3_headline">Start Your First Session</string>
     <string name="onboard_3_desc">Tap to start your first session and unleash your minds potential.</string>
+
+    <!-- First Setup Question Texts-->
+    <string name="first_setup_q1">Are you over 12 years old?</string>
+    <string name="first_setup_q2">Do you use a pacemaker?</string>
+    <string name="first_setup_q3">Do you use a deep brain pacemaker?</string>
+    <string name="first_setup_error_headline">Unfortunately, we cannot \ncontinue the process…</string>
+    <string name="first_setup_error_desc">In order to use the device, you must not be using any pacemaker and/or brain pacemaker.</string>
 </resources>
