@@ -74,6 +74,7 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <Button
+            android:id="@+id/nextButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.0"
@@ -90,6 +91,7 @@
             android:textStyle="bold"/>
 
         <Button
+            android:id="@+id/skipButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.0"

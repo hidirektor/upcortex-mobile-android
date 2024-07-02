@@ -35,6 +35,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".UI.Screens.OnBoard.OnBoard1" />
+        <activity android:name=".UI.Screens.OnBoard.OnBoard2" />
+        <activity android:name=".UI.Screens.OnBoard.OnBoard3" />
         <activity android:name=".UI.Screens.General.Dashboard" />
     </application>
 </manifest>

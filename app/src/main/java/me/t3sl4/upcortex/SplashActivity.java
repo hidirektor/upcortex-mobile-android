@@ -7,8 +7,7 @@ import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
 
 import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
-import me.t3sl4.upcortex.UI.Screens.General.Dashboard;
-import me.t3sl4.upcortex.Util.Utils;
+import me.t3sl4.upcortex.UI.Screens.OnBoard.OnBoard1;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -24,7 +23,7 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashActivity.this, Dashboard.class);
+                Intent intent = new Intent(SplashActivity.this, OnBoard1.class);
                 startActivity(intent);
                 finish();
             }
