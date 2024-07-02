@@ -1,3 +1,16 @@
 <resources>
-    <string name="app_name">UpCortex</string>
+    <string name="app_name" translatable="false">UpCortex</string>
+
+    <!-- Button Texts-->
+    <string name="button_next">İleri</string>
+    <string name="button_skip">Atla</string>
+    <string name="button_login">Giriş Yap</string>
+
+    <!-- Onboard Texts-->
+    <string name="onboard_1_headline">Zihninizin Gücünü Keşfedin</string>
+    <string name="onboard_1_desc">Gelişmiş nörostimülasyon teknolojimizle bilişsel fonksiyonlarınızı artırma yolculuğuna başlayın.</string>
+    <string name="onboard_2_headline">Kolay Kurulum</string>
+    <string name="onboard_2_desc">Cihazınızı Bluetooth ile eşleştirmek için basit adımları izleyin ve başlamaya hazır olun.</string>
+    <string name="onboard_3_headline">İlk Seansınıza Başlayın</string>
+    <string name="onboard_3_desc">İlk seansınıza başlamak ve zihninizin potansiyelini açığa çıkarmak için dokunun.</string>
 </resources>

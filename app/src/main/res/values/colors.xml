@@ -11,6 +11,7 @@
     <color name="secondaryColor">#07193A</color>
     <color name="secondaryOnTop">#354465</color>
     <color name="secondaryOnBottom">#07193A</color>
+    <color name="secondaryButton">#326CFF</color>
 
     <color name="lightBaseColor">#E4E5E6</color>
     <color name="lightOnTop">#F9F9F9</color>

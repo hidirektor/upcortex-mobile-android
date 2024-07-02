@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Button Texts-->
+    <string name="button_next">Next</string>
+    <string name="button_skip">Skip</string>
+    <string name="button_login">Login</string>
+
+    <!-- Onboard Texts-->
+    <string name="onboard_1_headline">Discover the Power of Your Mind</string>
+    <string name="onboard_1_desc">Begin your journey to boost your cognitive functions with our advanced neurostimulation technology.</string>
+    <string name="onboard_2_headline">Easy Setup</string>
+    <string name="onboard_2_desc">Follow the simple steps to pair your device via Bluetooth and you are ready to go.</string>
+    <string name="onboard_3_headline">Start Your First Session</string>
+    <string name="onboard_3_desc">Tap to start your first session and unleash your minds potential.</string>
+</resources>
