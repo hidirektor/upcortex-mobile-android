@@ -108,6 +108,7 @@ public class Register3 extends AppCompatActivity {
         nextButton.setOnClickListener(v -> {
             if (confirmCheckBox.isChecked()) {
                 saveData(); // Verileri kaydet
+                clearRegisterData();
                 // Ödeme ekranına yönlendirmeden önce taksit seçeneği uyarısını göster
                 Intent finalIntent = new Intent(Register3.this, Register4.class);
                 startActivity(finalIntent);
@@ -242,5 +243,32 @@ public class Register3 extends AppCompatActivity {
 
         boolean confirmCheckBoxValue = sharedPrefManager.getBoolean("confirmCheckBox");
         confirmCheckBox.setChecked(confirmCheckBoxValue);
+    }
+
+    private void clearRegisterData() {
+        sharedPrefManager.remove("name");
+        sharedPrefManager.remove("surname");
+        sharedPrefManager.remove("idNumber");
+        sharedPrefManager.remove("birthDate");
+        sharedPrefManager.remove("countryCode");
+        sharedPrefManager.remove("phoneNumber");
+        sharedPrefManager.remove("password");
+        sharedPrefManager.remove("repeatPassword");
+        sharedPrefManager.remove("termsAccepted");
+        sharedPrefManager.remove("addressName");
+        sharedPrefManager.remove("addressName_name");
+        sharedPrefManager.remove("addressName_surname");
+        sharedPrefManager.remove("addressName_countryCode");
+        sharedPrefManager.remove("addressName_phoneNumber");
+        sharedPrefManager.remove("city");
+        sharedPrefManager.remove("district");
+        sharedPrefManager.remove("neighborhood");
+        sharedPrefManager.remove("addressDetail");
+        sharedPrefManager.remove("confirmAddress");
+        sharedPrefManager.remove("cardNumber");
+        sharedPrefManager.remove("holderName");
+        sharedPrefManager.remove("expiryDate");
+        sharedPrefManager.remove("cvv");
+        sharedPrefManager.remove("confirmCheckBox");
     }
 }

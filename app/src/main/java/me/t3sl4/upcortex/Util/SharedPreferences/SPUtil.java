@@ -39,6 +39,11 @@ public class SPUtil {
         editor.apply();
     }
 
+    public void remove(String key) {
+        editor.remove(key);
+        editor.apply();
+    }
+
     public static boolean isFirstTime(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(PREF_NAME_FIRST_TIME, Context.MODE_PRIVATE);
         return prefs.getBoolean(KEY_IS_FIRST_TIME, true);
