@@ -100,6 +100,7 @@
                 android:layout_marginBottom="16dp">
 
                 <Button
+                    android:id="@+id/buttonMonthly"
                     android:layout_width="0dp"
                     android:layout_weight="1.0"
                     android:layout_height="wrap_content"
@@ -111,6 +112,7 @@
                     android:layout_marginRight="12dp"/>
 
                 <Button
+                    android:id="@+id/button6Month"
                     android:layout_width="0dp"
                     android:layout_weight="1.0"
                     android:layout_height="wrap_content"
@@ -122,6 +124,7 @@
                     android:layout_marginRight="12dp"/>
 
                 <Button
+                    android:id="@+id/buttonAnnually"
                     android:layout_width="0dp"
                     android:layout_weight="1.0"
                     android:layout_height="wrap_content"
@@ -159,6 +162,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <TextView
+                        android:id="@+id/packagePrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="1.990,00 TL"
@@ -181,6 +185,7 @@
                             android:background="@color/white"
                             android:layout_gravity="center"/>
                         <Button
+                            android:id="@+id/promotionButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/register_thirth_gift"
@@ -202,6 +207,7 @@
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/package_spec_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/register_thirth_spec_1"
@@ -213,6 +219,7 @@
                         android:textSize="18sp"
                         android:layout_marginBottom="12dp"/>
                     <TextView
+                        android:id="@+id/package_spec_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/register_thirth_spec_2"
@@ -224,6 +231,7 @@
                         android:textSize="18sp"
                         android:layout_marginBottom="12dp"/>
                     <TextView
+                        android:id="@+id/package_spec_3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/register_thirth_spec_3"
@@ -258,6 +266,7 @@
                     android:layout_gravity="center"/>
 
                 <TextView
+                    android:id="@+id/termsViewText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/register_thirth_terms"
