@@ -42,6 +42,9 @@
         <activity android:name=".UI.Screens.FirstSetup.FirstSetup" />
         <activity android:name=".UI.Screens.FirstSetup.FirstSetupError" />
 
+        <activity android:name=".UI.Screens.Auth.AuthSelection" />
+        <activity android:name=".UI.Screens.Auth.Login" android:windowSoftInputMode="adjustPan" />
+
         <activity android:name=".UI.Screens.General.Dashboard" />
     </application>
 </manifest>

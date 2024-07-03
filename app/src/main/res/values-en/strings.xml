@@ -4,6 +4,7 @@
     <string name="button_next">Next</string>
     <string name="button_skip">Skip</string>
     <string name="button_login">Login</string>
+    <string name="button_register">Register</string>
     <string name="button_yes">Yes</string>
     <string name="button_no">No</string>
     <string name="button_back_to_start">Back to Start</string>
@@ -23,4 +24,11 @@
     <string name="first_setup_q3">Do you use a deep brain pacemaker?</string>
     <string name="first_setup_error_headline">Unfortunately, we cannot \ncontinue the process…</string>
     <string name="first_setup_error_desc">In order to use the device, you must not be using any pacemaker and/or brain pacemaker.</string>
+
+    <!-- Login Screen Texts-->
+    <string name="login_headline_desc">Welcome Back</string>
+    <string name="login_personal_id">ID Number</string>
+    <string name="login_personal_pass">Password</string>
+    <string name="login_forget_pass">Forgot your password?</string>
+    <string name="login_register_first">Dont have an account yet?</string>
 </resources>

@@ -1,6 +1,5 @@
 package me.t3sl4.upcortex.UI.Screens.Dialog;
 
-import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +7,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import androidx.fragment.app.DialogFragment;
 
 import me.t3sl4.upcortex.R;
 

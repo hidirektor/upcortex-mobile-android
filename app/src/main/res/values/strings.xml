@@ -5,6 +5,7 @@
     <string name="button_next">İleri</string>
     <string name="button_skip">Atla</string>
     <string name="button_login">Giriş Yap</string>
+    <string name="button_register">Üye Ol</string>
     <string name="button_yes">Evet</string>
     <string name="button_no">Hayır</string>
     <string name="button_back_to_start">Başa Dön</string>
@@ -24,4 +25,11 @@
     <string name="first_setup_q3">Beyin pili kullanıyor musunuz?</string>
     <string name="first_setup_error_headline">Maalesef Sürece \nDevam Edemiyoruz…</string>
     <string name="first_setup_error_desc">Cihazı kullanabilmek için herhangi bir kalp pili ve/veya beyin pili kullanmıyor olmanız gerekmektedir.</string>
+
+    <!-- Login Screen Texts-->
+    <string name="login_headline_desc">Dünyasına Tekrardan Hoşgeldin</string>
+    <string name="login_personal_id">T.C. Kimlik Numaranız</string>
+    <string name="login_personal_pass">Şifre</string>
+    <string name="login_forget_pass">Şifrenizi mi unuttunuz?</string>
+    <string name="login_register_first">Henüz hesabınız yok mu?</string>
 </resources>

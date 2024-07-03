@@ -21,4 +21,17 @@
     <style name="Theme.RemoveSplashScreenTheme" parent="@style/Theme.UpCortex">
         <item name="android:windowIsTranslucent">true</item>
     </style>
+
+    <style name="MyCardView" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/MyCardViewOverlay</item>
+    </style>
+
+    <style name="MyCardViewOverlay">
+        <item name="cornerFamily">rounded</item>
+        <!-- below items does not work with normal ImageView -->
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeBottomRight">16dp</item>
+        <item name="cornerSizeBottomLeft">16dp</item>
+    </style>
 </resources>

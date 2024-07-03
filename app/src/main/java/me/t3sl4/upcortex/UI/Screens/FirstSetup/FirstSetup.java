@@ -10,7 +10,7 @@ import androidx.core.content.ContextCompat;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
-import me.t3sl4.upcortex.UI.Screens.General.Dashboard;
+import me.t3sl4.upcortex.UI.Screens.Auth.AuthSelection;
 import me.t3sl4.upcortex.Util.Utils;
 
 public class FirstSetup extends AppCompatActivity {
@@ -61,7 +61,7 @@ public class FirstSetup extends AppCompatActivity {
         nextButton.setOnClickListener(v -> {
             Intent redirectIntent;
             if(checkStatus()) {
-                redirectIntent = new Intent(FirstSetup.this, Dashboard.class);
+                redirectIntent = new Intent(FirstSetup.this, AuthSelection.class);
             } else {
                 redirectIntent = new Intent(FirstSetup.this, FirstSetupError.class);
             }

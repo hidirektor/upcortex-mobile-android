@@ -1,0 +1,37 @@
+{
+  "version": 3,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "me.t3sl4.upcortex",
+  "variantName": "release",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "attributes": [],
+      "versionCode": 350,
+      "versionName": "1.2.50(350)",
+      "outputFile": "UpCortex release_03-07-2024_v1.2.50(350).apk"
+    }
+  ],
+  "elementType": "File",
+  "baselineProfiles": [
+    {
+      "minApi": 28,
+      "maxApi": 30,
+      "baselineProfiles": [
+        "baselineProfiles/1/UpCortex release_03-07-2024_v1.2.50(350).dm"
+      ]
+    },
+    {
+      "minApi": 31,
+      "maxApi": 2147483647,
+      "baselineProfiles": [
+        "baselineProfiles/0/UpCortex release_03-07-2024_v1.2.50(350).dm"
+      ]
+    }
+  ],
+  "minSdkVersionForDexing": 29
+}

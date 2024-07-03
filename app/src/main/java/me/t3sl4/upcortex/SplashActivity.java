@@ -8,7 +8,7 @@ import android.os.Looper;
 import androidx.appcompat.app.AppCompatActivity;
 
 import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
-import me.t3sl4.upcortex.UI.Screens.General.Dashboard;
+import me.t3sl4.upcortex.UI.Screens.Auth.AuthSelection;
 import me.t3sl4.upcortex.UI.Screens.OnBoard.OnBoard1;
 import me.t3sl4.upcortex.Util.Utils;
 
@@ -29,7 +29,7 @@ public class SplashActivity extends AppCompatActivity {
                 intent = new Intent(SplashActivity.this, OnBoard1.class);
                 Utils.setFirstTime(SplashActivity.this, false);
             } else {
-                intent = new Intent(SplashActivity.this, Dashboard.class);
+                intent = new Intent(SplashActivity.this, AuthSelection.class);
             }
             startActivity(intent);
             finish();
