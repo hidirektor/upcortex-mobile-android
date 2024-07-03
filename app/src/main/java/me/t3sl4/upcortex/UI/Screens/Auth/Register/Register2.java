@@ -298,10 +298,10 @@ public class Register2 extends AppCompatActivity {
 
     private void saveData() {
         sharedPrefManager.saveString("addressName", addressName.getText().toString());
-        sharedPrefManager.saveString("name", name.getText().toString());
-        sharedPrefManager.saveString("surname", surname.getText().toString());
-        sharedPrefManager.saveString("countryCode", countryCode.getSelectedCountryCode());
-        sharedPrefManager.saveString("phoneNumber", phoneNumber.getText().toString());
+        sharedPrefManager.saveString("addressName_name", name.getText().toString());
+        sharedPrefManager.saveString("addressName_surname", surname.getText().toString());
+        sharedPrefManager.saveString("addressName_countryCode", countryCode.getSelectedCountryCode());
+        sharedPrefManager.saveString("addressName_phoneNumber", phoneNumber.getText().toString());
         sharedPrefManager.saveString("city", city.getText().toString());
         sharedPrefManager.saveString("district", district.getText().toString());
         sharedPrefManager.saveString("neighborhood", neighborhood.getText().toString());
