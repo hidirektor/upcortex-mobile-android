@@ -2,8 +2,6 @@ package me.t3sl4.upcortex.UI.Screens.Auth;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;

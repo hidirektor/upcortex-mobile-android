@@ -1,5 +1,6 @@
 package me.t3sl4.upcortex.UI.Screens.Auth.Register;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -35,6 +36,7 @@ public class Register1 extends AppCompatActivity {
         NavigationBarUtil.hideNavigationBar(this);
 
         initializeComponents();
+        buttonClickListeners();
     }
 
     private void initializeComponents() {
@@ -49,5 +51,12 @@ public class Register1 extends AppCompatActivity {
         termsAndConditionsCheckBox = findViewById(R.id.termsCheckBox);
         termsViewerTextView = findViewById(R.id.termsViewText);
         nextButton = findViewById(R.id.nextButton);
+    }
+
+    private void buttonClickListeners() {
+        nextButton.setOnClickListener(v -> {
+           Intent secondRegisterIntent = new Intent(Register1.this, Register2.class);
+           startActivity(secondRegisterIntent);
+        });
     }
 }
