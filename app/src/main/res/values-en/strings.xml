@@ -41,4 +41,14 @@
     <string name="register_phone_number">Phone</string>
     <string name="register_repeat_pass">Confirm Password</string>
     <string name="register_terms_and_conditions">I approve the Membership Agreement, Privacy Policy and Device Terms of Use.</string>
+
+    <!-- Register 2 Screen Texts-->
+    <string name="register_second_header">Address info</string>
+    <string name="register_second_desc">After determining your platform access password, \nyou must enter your cargo information.</string>
+    <string name="register_address_name">Address Name</string>
+    <string name="register_address_city">City</string>
+    <string name="register_address_district">District</string>
+    <string name="register_address_neighborhood">Neighborhood</string>
+    <string name="register_address_detail">Address Detail</string>
+    <string name="register_address_confirm">I confirm that the address I have given is correct.</string>
 </resources>

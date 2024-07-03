@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
+import me.t3sl4.upcortex.UI.Screens.Auth.Register.Register1;
 
 public class AuthSelection extends AppCompatActivity {
 
@@ -32,7 +33,8 @@ public class AuthSelection extends AppCompatActivity {
 
     private void buttonClickListeners() {
         registerButton.setOnClickListener(v -> {
-
+            Intent registerIntent = new Intent(AuthSelection.this, Register1.class);
+            startActivity(registerIntent);
         });
 
         loginButton.setOnClickListener(v -> {

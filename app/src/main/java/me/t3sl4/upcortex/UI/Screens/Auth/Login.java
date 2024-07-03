@@ -1,5 +1,6 @@
 package me.t3sl4.upcortex.UI.Screens.Auth;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -7,13 +8,11 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.shape.CornerFamily;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
+import me.t3sl4.upcortex.UI.Screens.Auth.Register.Register1;
 
 public class Login extends AppCompatActivity {
 
@@ -32,6 +31,7 @@ public class Login extends AppCompatActivity {
         NavigationBarUtil.hideNavigationBar(this);
 
         initializeComponents();
+        buttonClickListeners();
     }
 
     private void initializeComponents() {
@@ -41,5 +41,12 @@ public class Login extends AppCompatActivity {
         forgetPassword = findViewById(R.id.forgetPasswordTextView);
         loginButton = findViewById(R.id.loginButton);
         registerButton = findViewById(R.id.registerLinearLayout);
+    }
+
+    private void buttonClickListeners() {
+        registerButton.setOnClickListener(v -> {
+            Intent registerIntent = new Intent(Login.this, Register1.class);
+            startActivity(registerIntent);
+        });
     }
 }

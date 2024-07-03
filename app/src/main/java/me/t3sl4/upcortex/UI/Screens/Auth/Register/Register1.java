@@ -1,9 +1,6 @@
 package me.t3sl4.upcortex.UI.Screens.Auth.Register;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -14,11 +11,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.zpj.widget.checkbox.ZCheckBox;
 
 import me.t3sl4.upcortex.R;
-import me.t3sl4.upcortex.SplashActivity;
 import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
-import me.t3sl4.upcortex.UI.Screens.Auth.AuthSelection;
-import me.t3sl4.upcortex.UI.Screens.OnBoard.OnBoard1;
-import me.t3sl4.upcortex.Util.Utils;
 
 public class Register1 extends AppCompatActivity {
 
@@ -37,7 +30,7 @@ public class Register1 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+        setContentView(R.layout.activity_register_1);
 
         NavigationBarUtil.hideNavigationBar(this);
 

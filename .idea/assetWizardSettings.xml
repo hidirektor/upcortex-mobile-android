@@ -19,8 +19,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ikon_register_phone" />
-                            <entry key="sourceFile" value="C:\Users\hidir\Desktop\mdi_phone-dial.svg" />
+                            <entry key="outputName" value="ikon_address_detail" />
+                            <entry key="sourceFile" value="C:\Users\hidir\Desktop\mdi_map-marker-outline.svg" />
                           </map>
                         </option>
                       </PersistentState>

@@ -42,4 +42,14 @@
     <string name="register_phone_number">Telefon</string>
     <string name="register_repeat_pass">Tekrar Şifrenizi Girin</string>
     <string name="register_terms_and_conditions">Üyelik Sözleşmesini, Gizlilik Politikasını ve Cihaz Kullanım Şartlarını onaylıyorum.</string>
+
+    <!-- Register 2 Screen Texts-->
+    <string name="register_second_header">Adres Bilgileri</string>
+    <string name="register_second_desc">Platforma erişim şifrenizi belirledikten sonra\nkargo bilgilerinizi girmelisiniz.</string>
+    <string name="register_address_name">Adres Adı</string>
+    <string name="register_address_city">Şehir</string>
+    <string name="register_address_district">İlçe</string>
+    <string name="register_address_neighborhood">Mahalle</string>
+    <string name="register_address_detail">Adres Detayı</string>
+    <string name="register_address_confirm">Verdiğim adresin doğru olduğunu teyit ediyorum.</string>
 </resources>
