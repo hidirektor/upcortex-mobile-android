@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
 import me.t3sl4.upcortex.UI.Screens.Auth.AuthSelection;
 import me.t3sl4.upcortex.UI.Screens.OnBoard.OnBoard1;
-import me.t3sl4.upcortex.Util.Utils;
+import me.t3sl4.upcortex.Util.SharedPreferences.SPUtil;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -24,9 +24,9 @@ public class SplashActivity extends AppCompatActivity {
 
         NavigationBarUtil.hideNavigationBar(this);
 
-        if(Utils.isFirstTime(SplashActivity.this)) {
+        if(SPUtil.isFirstTime(SplashActivity.this)) {
             redirectIntent = new Intent(SplashActivity.this, OnBoard1.class);
-            Utils.setFirstTime(SplashActivity.this, false);
+            SPUtil.setFirstTime(SplashActivity.this, false);
             new Handler(Looper.getMainLooper()).postDelayed(() -> startActivity(redirectIntent), SPLASH_DELAY);
         } else {
             redirectIntent = new Intent(SplashActivity.this, AuthSelection.class);

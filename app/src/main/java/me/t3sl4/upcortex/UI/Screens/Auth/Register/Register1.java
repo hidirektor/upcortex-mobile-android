@@ -19,6 +19,7 @@ import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.DatePicker.DatePickerBottomSheet;
 import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
+import me.t3sl4.upcortex.Util.SharedPreferences.SPUtil;
 
 public class Register1 extends AppCompatActivity {
 
@@ -34,6 +35,8 @@ public class Register1 extends AppCompatActivity {
     private TextView termsViewerTextView;
     private Button nextButton;
 
+    private SPUtil sharedPrefManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +44,10 @@ public class Register1 extends AppCompatActivity {
 
         NavigationBarUtil.hideNavigationBar(this);
 
+        sharedPrefManager = new SPUtil(this);
+
         initializeComponents();
+        loadSavedData(); // Kaydedilen verileri yükle
         buttonClickListeners();
     }
 
@@ -61,7 +67,8 @@ public class Register1 extends AppCompatActivity {
 
     private void buttonClickListeners() {
         nextButton.setOnClickListener(v -> {
-            if(termsAndConditionsCheckBox.isChecked()) {
+            if (termsAndConditionsCheckBox.isChecked()) {
+                saveData(); // Verileri kaydet
                 Intent intent = new Intent(Register1.this, Register2.class);
                 startActivity(intent);
                 finish();
@@ -120,5 +127,62 @@ public class Register1 extends AppCompatActivity {
         today.add(Calendar.YEAR, -12);
 
         return !today.before(birthDate);
+    }
+
+    private void saveData() {
+        sharedPrefManager.saveString("name", nameEditText.getText().toString());
+        sharedPrefManager.saveString("surname", surnameEditText.getText().toString());
+        sharedPrefManager.saveString("idNumber", idNumberEditText.getText().toString());
+        sharedPrefManager.saveString("birthDate", birthDateEditText.getText().toString());
+        sharedPrefManager.saveString("countryCode", countryCodePicker.getSelectedCountryCode());
+        sharedPrefManager.saveString("phoneNumber", phoneNumberEditText.getText().toString());
+        sharedPrefManager.saveString("password", passwordEditText.getText().toString());
+        sharedPrefManager.saveString("repeatPassword", repeatPasswordEditText.getText().toString());
+        sharedPrefManager.saveBoolean("termsAccepted", termsAndConditionsCheckBox.isChecked());
+    }
+
+    private void loadSavedData() {
+        String name = sharedPrefManager.getString("name");
+        if (name != null && !name.isEmpty()) {
+            nameEditText.setText(name);
+        }
+
+        String surname = sharedPrefManager.getString("surname");
+        if (surname != null && !surname.isEmpty()) {
+            surnameEditText.setText(surname);
+        }
+
+        String idNumber = sharedPrefManager.getString("idNumber");
+        if (idNumber != null && !idNumber.isEmpty()) {
+            idNumberEditText.setText(idNumber);
+        }
+
+        String birthDate = sharedPrefManager.getString("birthDate");
+        if (birthDate != null && !birthDate.isEmpty()) {
+            birthDateEditText.setText(birthDate);
+        }
+
+        String countryCode = sharedPrefManager.getString("countryCode");
+        if (countryCode != null && !countryCode.isEmpty()) {
+            countryCodePicker.setCountryForPhoneCode(Integer.parseInt(countryCode));
+        }
+
+        String phoneNumber = sharedPrefManager.getString("phoneNumber");
+        if (phoneNumber != null && !phoneNumber.isEmpty()) {
+            phoneNumberEditText.setText(phoneNumber);
+        }
+
+        String password = sharedPrefManager.getString("password");
+        if (password != null && !password.isEmpty()) {
+            passwordEditText.setText(password);
+        }
+
+        String repeatPassword = sharedPrefManager.getString("repeatPassword");
+        if (repeatPassword != null && !repeatPassword.isEmpty()) {
+            repeatPasswordEditText.setText(repeatPassword);
+        }
+
+        boolean termsAccepted = sharedPrefManager.getBoolean("termsAccepted");
+        termsAndConditionsCheckBox.setChecked(termsAccepted);
     }
 }

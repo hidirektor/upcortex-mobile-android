@@ -19,6 +19,7 @@ import com.zpj.widget.checkbox.ZCheckBox;
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
+import me.t3sl4.upcortex.Util.SharedPreferences.SPUtil;
 
 public class Register3 extends AppCompatActivity {
 
@@ -51,6 +52,8 @@ public class Register3 extends AppCompatActivity {
     private TextInputEditText editTextCVV;
     private LinearLayout paymentOptionsButton;
 
+    private SPUtil sharedPrefManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +61,10 @@ public class Register3 extends AppCompatActivity {
 
         NavigationBarUtil.hideNavigationBar(this);
 
+        sharedPrefManager = new SPUtil(this);
+
         initializeComponents();
+        loadSavedData(); // Kaydedilen verileri yükle
         buttonClickListeners();
         summarySection();
     }
@@ -100,8 +106,9 @@ public class Register3 extends AppCompatActivity {
         });
 
         nextButton.setOnClickListener(v -> {
-            if(confirmCheckBox.isChecked()) {
-                //Ödeme ekranına yönlendirmeden önce taksit seçeneği uyarısını göster
+            if (confirmCheckBox.isChecked()) {
+                saveData(); // Verileri kaydet
+                // Ödeme ekranına yönlendirmeden önce taksit seçeneği uyarısını göster
                 Intent finalIntent = new Intent(Register3.this, Register4.class);
                 startActivity(finalIntent);
                 finish();
@@ -137,7 +144,7 @@ public class Register3 extends AppCompatActivity {
 
     private void summarySection() {
         confirmCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if(isChecked) {
+            if (isChecked) {
                 packageCard.setVisibility(View.GONE);
                 packageSummaryCard.setVisibility(View.VISIBLE);
                 buttonSummary.setVisibility(View.VISIBLE);
@@ -162,7 +169,7 @@ public class Register3 extends AppCompatActivity {
         Drawable defaultDrawable = ContextCompat.getDrawable(this, R.drawable.button_fs_no);
         Drawable secondDrawable = ContextCompat.getDrawable(this, R.drawable.button_fs_yes);
 
-        if(buttonStatus) {
+        if (buttonStatus) {
             inputButton.setTextColor(secondTextColor);
             inputButton.setBackground(secondDrawable);
             inputButton.setCompoundDrawableTintList(colorStateListWhite);
@@ -174,7 +181,7 @@ public class Register3 extends AppCompatActivity {
     }
 
     private void packageSetup(int stateNumber) {
-        if(stateNumber == 1) {
+        if (stateNumber == 1) {
             packagePrice.setText(R.string.plan_1_price);
             packagePromotion.setText(R.string.plan_1_gift);
             package_spec_1.setText(getString(R.string.plan_1_spec_1));
@@ -183,7 +190,7 @@ public class Register3 extends AppCompatActivity {
 
             buttonSummary.setText(R.string.plan_1_summary);
             packagePriceSummary.setText(R.string.plan_1_price);
-        } else if(stateNumber == 2) {
+        } else if (stateNumber == 2) {
             packagePrice.setText(R.string.plan_2_price);
             packagePromotion.setText(R.string.plan_2_gift);
             package_spec_1.setText(getString(R.string.plan_2_spec_1));
@@ -202,5 +209,38 @@ public class Register3 extends AppCompatActivity {
             buttonSummary.setText(R.string.plan_3_summary);
             packagePriceSummary.setText(R.string.plan_3_price);
         }
+    }
+
+    private void saveData() {
+        sharedPrefManager.saveString("cardNumber", editTextCardNumber.getText().toString());
+        sharedPrefManager.saveString("holderName", editTextHolderName.getText().toString());
+        sharedPrefManager.saveString("expiryDate", editTextExpiryDate.getText().toString());
+        sharedPrefManager.saveString("cvv", editTextCVV.getText().toString());
+        sharedPrefManager.saveBoolean("confirmCheckBox", confirmCheckBox.isChecked());
+    }
+
+    private void loadSavedData() {
+        String cardNumber = sharedPrefManager.getString("cardNumber");
+        if (cardNumber != null && !cardNumber.isEmpty()) {
+            editTextCardNumber.setText(cardNumber);
+        }
+
+        String holderName = sharedPrefManager.getString("holderName");
+        if (holderName != null && !holderName.isEmpty()) {
+            editTextHolderName.setText(holderName);
+        }
+
+        String expiryDate = sharedPrefManager.getString("expiryDate");
+        if (expiryDate != null && !expiryDate.isEmpty()) {
+            editTextExpiryDate.setText(expiryDate);
+        }
+
+        String cvv = sharedPrefManager.getString("cvv");
+        if (cvv != null && !cvv.isEmpty()) {
+            editTextCVV.setText(cvv);
+        }
+
+        boolean confirmCheckBoxValue = sharedPrefManager.getBoolean("confirmCheckBox");
+        confirmCheckBox.setChecked(confirmCheckBoxValue);
     }
 }

@@ -10,6 +10,7 @@ import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
 import me.t3sl4.upcortex.UI.Screens.FirstSetup.FirstSetup;
 import me.t3sl4.upcortex.Util.Screen.ScreenUtil;
+import me.t3sl4.upcortex.Util.SharedPreferences.SPUtil;
 import me.t3sl4.upcortex.Util.Utils;
 
 public class OnBoard3 extends AppCompatActivity {
@@ -38,7 +39,7 @@ public class OnBoard3 extends AppCompatActivity {
         nextButton.setOnClickListener(v -> {
             Intent loginIntent = new Intent(OnBoard3.this, FirstSetup.class);
             startActivity(loginIntent);
-            Utils.setFirstTime(OnBoard3.this, false);
+            SPUtil.setFirstTime(OnBoard3.this, false);
             finish();
         });
     }
