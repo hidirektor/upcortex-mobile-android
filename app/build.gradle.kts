@@ -62,7 +62,7 @@ android {
             versionCode = realVersionCode
             versionName = "$major.$minor.$patch($versionCode)"
 
-            buildConfigField("String", "BASE_URL", "\"http://85.95.231.92:4000/api/v1/\"")
+            buildConfigField("String", "BASE_URL", "\"http://160.20.111.42:3200/api/\"")
 
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         }
