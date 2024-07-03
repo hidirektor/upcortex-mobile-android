@@ -108,7 +108,7 @@
                     android:ems="10"
                     android:fontFamily="@font/roboto_flex"
                     android:hint="@string/register_name"
-                    android:inputType="textPassword"
+                    android:inputType="textPersonName"
                     android:padding="8dp"
                     android:textColorHint="@color/darkBaseColor"
                     android:layout_marginRight="12dp"/>
@@ -124,7 +124,7 @@
                     android:ems="10"
                     android:fontFamily="@font/roboto_flex"
                     android:hint="@string/register_surname"
-                    android:inputType="textPassword"
+                    android:inputType="textPersonName"
                     android:padding="8dp"
                     android:textColorHint="@color/darkBaseColor"/>
             </LinearLayout>
@@ -141,7 +141,7 @@
                 android:ems="10"
                 android:fontFamily="@font/roboto_flex"
                 android:hint="@string/login_personal_id"
-                android:inputType="textPassword"
+                android:inputType="text|number"
                 android:padding="8dp"
                 android:textColorHint="@color/darkBaseColor"
                 android:layout_marginLeft="16dp"
@@ -260,13 +260,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp">
 
                 <com.zpj.widget.checkbox.ZCheckBox
-                    android:id="@+id/beniHatirlaCheckBox"
+                    android:id="@+id/termsCheckBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
@@ -277,7 +277,7 @@
                     android:layout_gravity="center"/>
 
                 <TextView
-                    android:id="@+id/forgetPasswordTextView"
+                    android:id="@+id/termsViewText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/register_terms_and_conditions"
@@ -285,18 +285,20 @@
                     android:textColor="@color/ratingColor"
                     android:fontFamily="@font/roboto_flex"/>
             </LinearLayout>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="@string/button_next"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:background="@drawable/button_next_2"
-                android:textStyle="bold"
-                android:textSize="16sp"/>
         </LinearLayout>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/nextButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/button_next"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:background="@drawable/button_next_2"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
