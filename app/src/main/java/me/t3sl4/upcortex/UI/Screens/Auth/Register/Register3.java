@@ -12,6 +12,7 @@ import com.zpj.widget.checkbox.ZCheckBox;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
+import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
 
 public class Register3 extends AppCompatActivity {
 
@@ -82,7 +83,10 @@ public class Register3 extends AppCompatActivity {
             if(confirmCheckBox.isChecked()) {
                 //Ödeme ekranına yönlendirmeden önce taksit seçeneği uyarısını göster
             } else {
-                //Uyarı mesajı vermen gereken yer
+                Sneaker.with(Register3.this)
+                        .setTitle(getString(R.string.error_title))
+                        .setMessage(getString(R.string.error_term_confirm))
+                        .sneakError();
             }
         });
     }

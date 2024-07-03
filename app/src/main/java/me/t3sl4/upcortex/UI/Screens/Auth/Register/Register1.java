@@ -13,6 +13,7 @@ import com.zpj.widget.checkbox.ZCheckBox;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
+import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
 
 public class Register1 extends AppCompatActivity {
 
@@ -55,8 +56,16 @@ public class Register1 extends AppCompatActivity {
 
     private void buttonClickListeners() {
         nextButton.setOnClickListener(v -> {
-           Intent secondRegisterIntent = new Intent(Register1.this, Register2.class);
-           startActivity(secondRegisterIntent);
+            if(termsAndConditionsCheckBox.isChecked()) {
+                Intent intent = new Intent(Register1.this, Register2.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Sneaker.with(Register1.this)
+                        .setTitle(getString(R.string.error_title))
+                        .setMessage(getString(R.string.error_term_confirm))
+                        .sneakError();
+            }
         });
     }
 }

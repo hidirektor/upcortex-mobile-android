@@ -65,4 +65,8 @@
     <string name="register_thirth_terms">I have read the Preliminary Information Form and I accept the Distance Sales Agreement.</string>
     <string name="register_thirth_warning">Your subscription process begins after you receive your device.</string>
     <string name="register_thirth_summary">Annual Plan</string>
+
+    <!-- Error Messages-->
+    <string name="error_title">Error !</string>
+    <string name="error_term_confirm">You must confirm the terms and conditions.</string>
 </resources>

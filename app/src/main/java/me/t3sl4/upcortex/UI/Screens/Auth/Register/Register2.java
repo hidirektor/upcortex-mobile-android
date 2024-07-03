@@ -13,6 +13,7 @@ import com.zpj.widget.checkbox.ZCheckBox;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
+import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
 
 public class Register2 extends AppCompatActivity {
 
@@ -68,7 +69,10 @@ public class Register2 extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             } else {
-                //Uyarı mesajı vermen gereken yer
+                Sneaker.with(Register2.this)
+                        .setTitle(getString(R.string.error_title))
+                        .setMessage(getString(R.string.error_term_confirm))
+                        .sneakError();
             }
         });
     }
