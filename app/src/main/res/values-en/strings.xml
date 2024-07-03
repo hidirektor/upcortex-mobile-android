@@ -64,4 +64,5 @@
     <string name="register_thirth_spec_3">Cut annually</string>
     <string name="register_thirth_terms">I have read the Preliminary Information Form and I accept the Distance Sales Agreement.</string>
     <string name="register_thirth_warning">Your subscription process begins after you receive your device.</string>
+    <string name="register_thirth_summary">Annual Plan</string>
 </resources>

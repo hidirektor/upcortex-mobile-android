@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:id="@+id/mainLayout">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -149,7 +150,8 @@
                 app:cardPreventCornerOverlap="false"
                 app:cardCornerRadius="25dp"
                 android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp">
+                android:layout_marginRight="24dp"
+                android:visibility="visible">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="match_parent"
@@ -243,6 +245,58 @@
                         android:textSize="18sp"
                         android:layout_marginBottom="12dp"/>
                 </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/MyCardView"
+                android:id="@+id/subscriptionSummaryCard"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/white"
+                app:layout_constraintTop_toTopOf="parent"
+                app:cardPreventCornerOverlap="false"
+                app:cardCornerRadius="25dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:visibility="gone">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/image_dashboard_cardview"
+                android:scaleType="matrix"/>
+
+                <Button
+                    android:id="@+id/buttonSummary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/register_thirth_summary"
+                    android:drawableTint="@color/white"
+                    android:drawableStart="@drawable/ikon_membership_star"
+                    android:textAllCaps="false"
+                    android:drawablePadding="6dp"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:background="@color/transparent"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginLeft="12dp"
+                    android:padding="12dp"
+                    android:layout_gravity="center|start"/>
+
+                <TextView
+                    android:id="@+id/packagePriceSummary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1.990,00 TL"
+                    android:layout_marginTop="12dp"
+                    android:layout_gravity="center|end"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/roboto_flex"
+                    android:textSize="20sp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginEnd="12dp"/>
             </com.google.android.material.card.MaterialCardView>
 
             <LinearLayout

@@ -1,5 +1,6 @@
 package me.t3sl4.upcortex.UI.Screens.Auth.Register;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -62,7 +63,13 @@ public class Register2 extends AppCompatActivity {
         });
 
         nextButton.setOnClickListener(v -> {
-
+            if(confirmAddress.isChecked()) {
+                Intent intent = new Intent(Register2.this, Register3.class);
+                startActivity(intent);
+                finish();
+            } else {
+                //Uyarı mesajı vermen gereken yer
+            }
         });
     }
 }
