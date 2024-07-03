@@ -1,5 +1,7 @@
 package me.t3sl4.upcortex.UI.Screens.Auth.Register;
 
+import android.content.res.ColorStateList;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -7,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
@@ -105,6 +108,24 @@ public class Register3 extends AppCompatActivity {
                         .sneakError();
             }
         });
+
+        monthlyButton.setOnClickListener(v -> {
+            buttonStatusSwitch(monthlyButton, true);
+            buttonStatusSwitch(sixMonthButton, false);
+            buttonStatusSwitch(annuallyButton, false);
+        });
+
+        sixMonthButton.setOnClickListener(v -> {
+            buttonStatusSwitch(monthlyButton, false);
+            buttonStatusSwitch(sixMonthButton, true);
+            buttonStatusSwitch(annuallyButton, false);
+        });
+
+        annuallyButton.setOnClickListener(v -> {
+            buttonStatusSwitch(monthlyButton, false);
+            buttonStatusSwitch(sixMonthButton, false);
+            buttonStatusSwitch(annuallyButton, true);
+        });
     }
 
     private void summarySection() {
@@ -123,5 +144,25 @@ public class Register3 extends AppCompatActivity {
                 creditCardLayout.setVisibility(View.GONE);
             }
         });
+    }
+
+    private void buttonStatusSwitch(Button inputButton, boolean buttonStatus) {
+        int defaultTextColor = ContextCompat.getColor(this, R.color.darkBaseColor);
+        int secondTextColor = ContextCompat.getColor(this, R.color.white);
+        ColorStateList colorStateList = ColorStateList.valueOf(getResources().getColor(R.color.darkBaseColor));
+        ColorStateList colorStateListWhite = ColorStateList.valueOf(getResources().getColor(R.color.white));
+
+        Drawable defaultDrawable = ContextCompat.getDrawable(this, R.drawable.button_fs_no);
+        Drawable secondDrawable = ContextCompat.getDrawable(this, R.drawable.button_fs_yes);
+
+        if(buttonStatus) {
+            inputButton.setTextColor(secondTextColor);
+            inputButton.setBackground(secondDrawable);
+            inputButton.setCompoundDrawableTintList(colorStateListWhite);
+        } else {
+            inputButton.setTextColor(defaultTextColor);
+            inputButton.setBackground(defaultDrawable);
+            inputButton.setCompoundDrawableTintList(colorStateList);
+        }
     }
 }
