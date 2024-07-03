@@ -67,7 +67,17 @@ public class Register1 extends AppCompatActivity {
 
     private void buttonClickListeners() {
         nextButton.setOnClickListener(v -> {
-            if (termsAndConditionsCheckBox.isChecked()) {
+            if (!areAllFieldsFilled()) {
+                Sneaker.with(Register1.this)
+                        .setTitle(getString(R.string.error_title))
+                        .setMessage(getString(R.string.error_fill_blanks))
+                        .sneakError();
+            } else if (!isAgeValid()) {
+                Sneaker.with(Register1.this)
+                        .setTitle(getString(R.string.error_title))
+                        .setMessage(getString(R.string.error_age_error))
+                        .sneakError();
+            } else if (termsAndConditionsCheckBox.isChecked()) {
                 saveData(); // Verileri kaydet
                 Intent intent = new Intent(Register1.this, Register2.class);
                 startActivity(intent);
@@ -184,5 +194,15 @@ public class Register1 extends AppCompatActivity {
 
         boolean termsAccepted = sharedPrefManager.getBoolean("termsAccepted");
         termsAndConditionsCheckBox.setChecked(termsAccepted);
+    }
+
+    private boolean areAllFieldsFilled() {
+        return !nameEditText.getText().toString().isEmpty()
+                && !surnameEditText.getText().toString().isEmpty()
+                && !idNumberEditText.getText().toString().isEmpty()
+                && !birthDateEditText.getText().toString().isEmpty()
+                && !phoneNumberEditText.getText().toString().isEmpty()
+                && !passwordEditText.getText().toString().isEmpty()
+                && !repeatPasswordEditText.getText().toString().isEmpty();
     }
 }

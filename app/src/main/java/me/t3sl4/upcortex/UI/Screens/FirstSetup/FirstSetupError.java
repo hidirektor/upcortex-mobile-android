@@ -41,7 +41,7 @@ public class FirstSetupError extends AppCompatActivity {
         });
 
         supportButton.setOnClickListener(v -> {
-            WebUtil.openURL((AppCompatActivity) this, "https://www.github.com/hidirektor");
+            WebUtil.openURL(this, Utils.SUPPORT_URL);
         });
 
     }

@@ -16,6 +16,8 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.zpj.widget.checkbox.ZCheckBox;
 
+import java.util.UUID;
+
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
@@ -53,6 +55,8 @@ public class Register3 extends AppCompatActivity {
     private LinearLayout paymentOptionsButton;
 
     private SPUtil sharedPrefManager;
+    private String uniqueID;
+    private String packageName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +71,8 @@ public class Register3 extends AppCompatActivity {
         loadSavedData(); // Kaydedilen verileri yükle
         buttonClickListeners();
         summarySection();
+
+        uniqueID = UUID.randomUUID().toString();
     }
 
     private void initializeComponents() {
@@ -106,11 +112,18 @@ public class Register3 extends AppCompatActivity {
         });
 
         nextButton.setOnClickListener(v -> {
-            if (confirmCheckBox.isChecked()) {
+            if (!areAllFieldsFilled()) {
+                Sneaker.with(Register3.this)
+                        .setTitle(getString(R.string.error_title))
+                        .setMessage(getString(R.string.error_fill_blanks))
+                        .sneakError();
+            } else if (confirmCheckBox.isChecked()) {
                 saveData(); // Verileri kaydet
                 clearRegisterData();
+                String summary = packageName + ";Online Abonelik;" + packagePriceSummary.getText().toString() + ";" + uniqueID;
                 // Ödeme ekranına yönlendirmeden önce taksit seçeneği uyarısını göster
                 Intent finalIntent = new Intent(Register3.this, Register4.class);
+                finalIntent.putExtra("summaryData", summary);
                 startActivity(finalIntent);
                 finish();
             } else {
@@ -126,6 +139,7 @@ public class Register3 extends AppCompatActivity {
             buttonStatusSwitch(sixMonthButton, false);
             buttonStatusSwitch(annuallyButton, false);
             packageSetup(1);
+            packageName = getString(R.string.plan_1_summary);
         });
 
         sixMonthButton.setOnClickListener(v -> {
@@ -133,6 +147,7 @@ public class Register3 extends AppCompatActivity {
             buttonStatusSwitch(sixMonthButton, true);
             buttonStatusSwitch(annuallyButton, false);
             packageSetup(2);
+            packageName = getString(R.string.plan_2_summary);
         });
 
         annuallyButton.setOnClickListener(v -> {
@@ -140,7 +155,15 @@ public class Register3 extends AppCompatActivity {
             buttonStatusSwitch(sixMonthButton, false);
             buttonStatusSwitch(annuallyButton, true);
             packageSetup(3);
+            packageName = getString(R.string.plan_3_summary);
         });
+    }
+
+    private boolean areAllFieldsFilled() {
+        return !editTextCardNumber.getText().toString().isEmpty()
+                && !editTextHolderName.getText().toString().isEmpty()
+                && !editTextExpiryDate.getText().toString().isEmpty()
+                && !editTextCVV.getText().toString().isEmpty();
     }
 
     private void summarySection() {

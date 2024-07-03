@@ -8,6 +8,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 public class Utils {
+    public static String SUPPORT_URL = "https://github.com/hidirektor";
 
     public static void hideStatusBar(Activity mainActivity) {
         if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {

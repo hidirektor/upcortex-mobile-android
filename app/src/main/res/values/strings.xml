@@ -96,6 +96,8 @@
     <!-- Error Messages-->
     <string name="error_title">Hata !</string>
     <string name="error_term_confirm">Sözleşmeleri onaylamalısınız.</string>
+    <string name="error_fill_blanks">Lütfen tüm alanları doldurun.</string>
+    <string name="error_age_error">12 yaşından küçükler için abonelik planı seçilemez.</string>
 
     <!-- Register 4 Screen Texts-->
     <string name="register_fourth_success">Aboneliğiniz Başarıyla Alındı!</string>

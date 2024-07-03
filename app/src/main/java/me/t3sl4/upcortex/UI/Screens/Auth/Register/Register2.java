@@ -69,7 +69,12 @@ public class Register2 extends AppCompatActivity {
         });
 
         nextButton.setOnClickListener(v -> {
-            if (confirmAddress.isChecked()) {
+            if (!areAllFieldsFilled()) {
+                Sneaker.with(Register2.this)
+                        .setTitle(getString(R.string.error_title))
+                        .setMessage(getString(R.string.error_fill_blanks))
+                        .sneakError();
+            } else if (confirmAddress.isChecked()) {
                 saveData(); // Verileri kaydet
                 Intent intent = new Intent(Register2.this, Register3.class);
                 startActivity(intent);
@@ -81,6 +86,17 @@ public class Register2 extends AppCompatActivity {
                         .sneakError();
             }
         });
+    }
+
+    private boolean areAllFieldsFilled() {
+        return !addressName.getText().toString().isEmpty()
+                && !name.getText().toString().isEmpty()
+                && !surname.getText().toString().isEmpty()
+                && !phoneNumber.getText().toString().isEmpty()
+                && !city.getText().toString().isEmpty()
+                && !district.getText().toString().isEmpty()
+                && !neighborhood.getText().toString().isEmpty()
+                && !addressDetail.getText().toString().isEmpty();
     }
 
     private void saveData() {
