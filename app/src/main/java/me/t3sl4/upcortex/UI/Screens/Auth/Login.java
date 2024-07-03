@@ -28,7 +28,7 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_auth_selection);
+        setContentView(R.layout.activity_login);
 
         NavigationBarUtil.hideNavigationBar(this);
 
@@ -45,14 +45,10 @@ public class Login extends AppCompatActivity {
         registerButton = findViewById(R.id.registerLinearLayout);
     }
 
-    private void buttonClickListeners() {
-        registerButton.setOnTouchListener((v, event) -> {
-            if (event.getAction() == MotionEvent.ACTION_UP) {
-                Intent registerIntent = new Intent(Login.this, Register1.class);
-                startActivity(registerIntent);
-                return true;
-            }
-            return false;
+    private void buttonClickListeners() {;
+        registerButton.setOnClickListener(v -> {
+            Intent registerIntent = new Intent(Login.this, Register1.class);
+            startActivity(registerIntent);
         });
     }
 }

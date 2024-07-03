@@ -14,7 +14,8 @@ import me.t3sl4.upcortex.Util.Utils;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private static final int SPLASH_DELAY = 3000;
+    private static final int SPLASH_DELAY = 2000;
+    Intent redirectIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,16 +24,14 @@ public class SplashActivity extends AppCompatActivity {
 
         NavigationBarUtil.hideNavigationBar(this);
 
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            Intent intent;
-            if (Utils.isFirstTime(SplashActivity.this)) {
-                intent = new Intent(SplashActivity.this, OnBoard1.class);
-                Utils.setFirstTime(SplashActivity.this, false);
-            } else {
-                intent = new Intent(SplashActivity.this, AuthSelection.class);
-            }
-            startActivity(intent);
-            finish();
-        }, SPLASH_DELAY);
+        if(Utils.isFirstTime(SplashActivity.this)) {
+            redirectIntent = new Intent(SplashActivity.this, OnBoard1.class);
+            Utils.setFirstTime(SplashActivity.this, false);
+            new Handler(Looper.getMainLooper()).postDelayed(() -> startActivity(redirectIntent), SPLASH_DELAY);
+        } else {
+            redirectIntent = new Intent(SplashActivity.this, AuthSelection.class);
+            startActivity(redirectIntent);
+        }
+        finish();
     }
 }
