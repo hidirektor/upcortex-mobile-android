@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat;
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
 import me.t3sl4.upcortex.UI.Screens.Auth.AuthSelection;
+import me.t3sl4.upcortex.Util.SharedPreferences.SPUtil;
 import me.t3sl4.upcortex.Util.Utils;
 
 public class FirstSetup extends AppCompatActivity {
@@ -30,6 +31,8 @@ public class FirstSetup extends AppCompatActivity {
     boolean heartStatus;
     boolean brainStatus;
 
+    private SPUtil sharedPrefManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +40,8 @@ public class FirstSetup extends AppCompatActivity {
 
         NavigationBarUtil.hideNavigationBar(this);
         Utils.hideStatusBar(this);
+
+        sharedPrefManager = new SPUtil(this);
 
         initializeComponents();
         buttonClickListener();
@@ -61,8 +66,10 @@ public class FirstSetup extends AppCompatActivity {
         nextButton.setOnClickListener(v -> {
             Intent redirectIntent;
             if(checkStatus()) {
+                sharedPrefManager.saveBoolean("canAccess", true);
                 redirectIntent = new Intent(FirstSetup.this, AuthSelection.class);
             } else {
+                sharedPrefManager.saveBoolean("canAccess", false);
                 redirectIntent = new Intent(FirstSetup.this, FirstSetupError.class);
             }
             startActivity(redirectIntent);
