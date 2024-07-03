@@ -22,16 +22,25 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
-    <style name="MyCardView">
-        <item name="shapeAppearanceOverlay">@style/MyCardViewOverlay</item>
+    <style name="MyCardView" parent="Theme.MaterialComponents.Light">
+        <item name="shapeAppearance">@style/ShapeAppearance.MyCardView</item>
+        <item name="cardElevation">4dp</item>
+        <item name="cardBackgroundColor">@color/white</item>
     </style>
 
-    <style name="MyCardViewOverlay" >
+    <style name="ShapeAppearance.MyCardView" parent="ShapeAppearance.MaterialComponents.MediumComponent">
         <item name="cornerFamily">rounded</item>
-        <!-- below items does not work with normal ImageView -->
-        <item name="cornerSizeTopRight">0dp</item>
         <item name="cornerSizeTopLeft">0dp</item>
-        <item name="cornerSizeBottomRight">16dp</item>
+        <item name="cornerSizeTopRight">0dp</item>
         <item name="cornerSizeBottomLeft">16dp</item>
+        <item name="cornerSizeBottomRight">16dp</item>
+    </style>
+
+    <style name="MyCardViewOverlay">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeBottomLeft">16dp</item>
+        <item name="cornerSizeBottomRight">16dp</item>
     </style>
 </resources>
