@@ -113,14 +113,35 @@ public class Register2 extends AppCompatActivity {
             showCityDialog();
         });
 
+        city.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                hideKeyboard();
+                showCityDialog();
+            }
+        });
+
         district.setOnClickListener(v -> {
             hideKeyboard();
             showDistrictDialog();
         });
 
+        district.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                hideKeyboard();
+                showDistrictDialog();
+            }
+        });
+
         neighborhood.setOnClickListener(v -> {
             hideKeyboard();
             showNeighborhoodDialog();
+        });
+
+        neighborhood.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                hideKeyboard();
+                showNeighborhoodDialog();
+            }
         });
     }
 
