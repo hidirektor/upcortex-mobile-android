@@ -240,7 +240,7 @@
                 android:ems="10"
                 android:fontFamily="@font/roboto_flex"
                 android:hint="@string/register_address_city"
-                android:inputType="textPassword"
+                android:inputType="none"
                 android:padding="8dp"
                 android:textColorHint="@color/darkBaseColor"
                 android:layout_marginTop="12dp"
@@ -267,7 +267,7 @@
                     android:ems="10"
                     android:fontFamily="@font/roboto_flex"
                     android:hint="@string/register_address_district"
-                    android:inputType="textPersonName"
+                    android:inputType="none"
                     android:padding="8dp"
                     android:textColorHint="@color/darkBaseColor"
                     android:layout_marginRight="12dp"/>
@@ -284,7 +284,8 @@
                     android:ems="10"
                     android:fontFamily="@font/roboto_flex"
                     android:hint="@string/register_address_neighborhood"
-                    android:inputType="textPersonName"
+                    android:inputType="none"
+                    android:clickable="false"
                     android:padding="8dp"
                     android:textColorHint="@color/darkBaseColor"/>
             </LinearLayout>
@@ -301,7 +302,7 @@
                 android:ems="10"
                 android:fontFamily="@font/roboto_flex"
                 android:hint="@string/register_address_detail"
-                android:inputType="textPassword"
+                android:inputType="text"
                 android:padding="8dp"
                 android:textColorHint="@color/darkBaseColor"
                 android:layout_marginTop="12dp"
