@@ -38,6 +38,7 @@ public class OnBoard3 extends AppCompatActivity {
         nextButton.setOnClickListener(v -> {
             Intent loginIntent = new Intent(OnBoard3.this, FirstSetup.class);
             startActivity(loginIntent);
+            Utils.setFirstTime(OnBoard3.this, false);
             finish();
         });
     }

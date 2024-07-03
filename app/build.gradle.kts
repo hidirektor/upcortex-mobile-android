@@ -122,26 +122,27 @@ tasks.withType<JavaCompile> {
 }
 
 dependencies {
-    implementation("androidx.appcompat:appcompat:1.7.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.security:security-crypto:1.1.0-alpha06")
+    implementation(libs.appcompat.v170)
+    implementation(libs.constraintlayout)
+    implementation(libs.security.crypto)
 
-    implementation("com.google.android.material:material:1.12.0")
-    implementation("com.google.firebase:protolite-well-known-types:18.0.0")
-    implementation("com.google.android.gms:play-services-base:18.5.0")
-    implementation("com.google.android.gms:play-services-maps:18.2.0")
-    implementation("com.google.android.gms:play-services-location:21.3.0")
-    implementation("com.google.maps.android:android-maps-utils:2.3.0")
-    implementation("com.google.code.gson:gson:2.10.1")
+    implementation(libs.material)
+    implementation(libs.protolite.well.known.types)
+    implementation(libs.play.services.base)
+    implementation(libs.play.services.maps)
+    implementation(libs.play.services.location)
+    implementation(libs.android.maps.utils)
+    implementation(libs.gson)
     implementation("com.google.code.findbugs:annotations:3.0.1") {
         exclude(group = "com.google.code.findbugs", module = "jsr305")
         exclude(group = "net.jcip", module = "jcip-annotations")
     }
 
-    implementation("androidx.core:core-ktx:1.13.1")
+    implementation(libs.core.ktx)
 
-    implementation("com.iarcuschin:simpleratingbar:0.1.5")
-    implementation("com.github.Z-P-J:ZCheckBox:1.0.0")
+    implementation(libs.simpleratingbar)
+    implementation(libs.zcheckbox)
+    implementation("com.hbb20:ccp:2.7.3")
 
     implementation(libs.appcompat)
     implementation(libs.material)

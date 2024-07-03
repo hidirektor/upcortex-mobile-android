@@ -194,11 +194,14 @@
                     android:layout_gravity="center"
                     app:tint="@color/darkBaseColor" />
 
-                <Spinner
-                    android:id="@+id/country_code_spinner"
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/country_code_picker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"/>
+                    app:ccp_defaultNameCode="TR"
+                    app:ccp_showNameCode="false"
+                    app:ccp_showFlag="false"
+                    android:layout_gravity="center"/>
 
                 <View
                     android:id="@+id/divider"

@@ -46,6 +46,7 @@ public class OnBoard1 extends AppCompatActivity {
         skipButton.setOnClickListener(v -> {
             Intent loginIntent = new Intent(OnBoard1.this, FirstSetup.class);
             startActivity(loginIntent);
+            Utils.setFirstTime(OnBoard1.this, false);
             finish();
         });
     }

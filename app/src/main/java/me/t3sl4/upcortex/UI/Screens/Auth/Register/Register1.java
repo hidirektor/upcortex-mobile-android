@@ -3,12 +3,12 @@ package me.t3sl4.upcortex.UI.Screens.Auth.Register;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.hbb20.CountryCodePicker;
 import com.zpj.widget.checkbox.ZCheckBox;
 
 import me.t3sl4.upcortex.R;
@@ -21,7 +21,7 @@ public class Register1 extends AppCompatActivity {
     private TextInputEditText surnameEditText;
     private TextInputEditText idNumberEditText;
     private TextInputEditText birthDateEditText;
-    private Spinner countryCodeSpinner;
+    private CountryCodePicker countryCodePicker;
     private TextInputEditText phoneNumberEditText;
     private TextInputEditText passwordEditText;
     private TextInputEditText repeatPasswordEditText;
@@ -45,7 +45,7 @@ public class Register1 extends AppCompatActivity {
         surnameEditText = findViewById(R.id.editTextSurname);
         idNumberEditText = findViewById(R.id.editTextIDNumber);
         birthDateEditText = findViewById(R.id.editTextBirthDate);
-        countryCodeSpinner = findViewById(R.id.country_code_spinner);
+        countryCodePicker = findViewById(R.id.country_code_picker);
         phoneNumberEditText = findViewById(R.id.editTextPhoneNumber);
         passwordEditText = findViewById(R.id.editTextPassword);
         repeatPasswordEditText = findViewById(R.id.editTextPasswordRepeat);
