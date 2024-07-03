@@ -1,5 +1,6 @@
 package me.t3sl4.upcortex.UI.Screens.Auth.Register;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -101,6 +102,9 @@ public class Register3 extends AppCompatActivity {
         nextButton.setOnClickListener(v -> {
             if(confirmCheckBox.isChecked()) {
                 //Ödeme ekranına yönlendirmeden önce taksit seçeneği uyarısını göster
+                Intent finalIntent = new Intent(Register3.this, Register4.class);
+                startActivity(finalIntent);
+                finish();
             } else {
                 Sneaker.with(Register3.this)
                         .setTitle(getString(R.string.error_title))

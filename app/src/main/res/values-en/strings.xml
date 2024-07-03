@@ -88,4 +88,11 @@
     <!-- Error Messages-->
     <string name="error_title">Error !</string>
     <string name="error_term_confirm">You must confirm the terms and conditions.</string>
+
+    <!-- Register 4 Screen Texts-->
+    <string name="register_fourth_success">Your Subscription Has Been Successfully Received!</string>
+    <string name="register_fourth_shipment">Shipping Information Preview</string>
+    <string name="register_fourth_plan_name">Plan Name</string>
+    <string name="register_fourth_order_type">Order Type</string>
+    <string name="register_fourth_plan_price">Price</string>
 </resources>
