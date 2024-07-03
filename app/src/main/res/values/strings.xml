@@ -10,6 +10,7 @@
     <string name="button_no">Hayır</string>
     <string name="button_back_to_start">Başa Dön</string>
     <string name="button_support">Bizimle İletişime Geçin</string>
+    <string name="button_back" translatable="false">&lt;</string>
 
     <!-- Onboard Texts-->
     <string name="onboard_1_headline">Zihninizin Gücünü Keşfedin</string>

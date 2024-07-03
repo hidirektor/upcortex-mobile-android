@@ -44,6 +44,8 @@
 
         <activity android:name=".UI.Screens.Auth.AuthSelection" />
         <activity android:name=".UI.Screens.Auth.Login" android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".UI.Screens.Auth.Register.Register1" android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".UI.Screens.Auth.Register.Register2" android:windowSoftInputMode="adjustPan" />
 
         <activity android:name=".UI.Screens.General.Dashboard" />
     </application>

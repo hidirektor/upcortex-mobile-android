@@ -2,6 +2,8 @@ package me.t3sl4.upcortex.UI.Screens.Auth;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -44,9 +46,13 @@ public class Login extends AppCompatActivity {
     }
 
     private void buttonClickListeners() {
-        registerButton.setOnClickListener(v -> {
-            Intent registerIntent = new Intent(Login.this, Register1.class);
-            startActivity(registerIntent);
+        registerButton.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                Intent registerIntent = new Intent(Login.this, Register1.class);
+                startActivity(registerIntent);
+                return true;
+            }
+            return false;
         });
     }
 }
