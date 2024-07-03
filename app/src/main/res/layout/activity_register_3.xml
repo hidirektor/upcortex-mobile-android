@@ -361,6 +361,153 @@
                     android:textColor="@color/darkBaseColor"
                     android:fontFamily="@font/roboto_flex"/>
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/creditCardLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextCardNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/button_support"
+                    android:drawableEnd="@drawable/ikon_register_arrow_down"
+                    android:drawableTint="@color/darkBaseColor"
+                    android:drawableStart="@drawable/ikon_credit_card"
+                    android:drawablePadding="16dp"
+                    android:ems="10"
+                    android:fontFamily="@font/roboto_flex"
+                    android:hint="@string/register_card_number"
+                    android:inputType="text|number"
+                    android:padding="8dp"
+                    android:textColorHint="@color/darkBaseColor"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="12dp"/>
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextHolderName"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/button_support"
+                    android:drawableEnd="@drawable/ikon_register_arrow_down"
+                    android:drawableTint="@color/darkBaseColor"
+                    android:drawableStart="@drawable/ikon_register_person"
+                    android:drawablePadding="16dp"
+                    android:ems="10"
+                    android:fontFamily="@font/roboto_flex"
+                    android:hint="@string/register_card_name"
+                    android:inputType="textPersonName"
+                    android:padding="8dp"
+                    android:textColorHint="@color/darkBaseColor"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="12dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="12dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextExpiryDate"
+                        android:layout_width="0dp"
+                        android:layout_weight="1.0"
+                        android:layout_height="50dp"
+                        android:background="@drawable/button_support"
+                        android:drawableEnd="@drawable/ikon_register_arrow_down"
+                        android:drawableTint="@color/darkBaseColor"
+                        android:drawableStart="@drawable/ikon_register_date_picker"
+                        android:drawablePadding="16dp"
+                        android:ems="10"
+                        android:fontFamily="@font/roboto_flex"
+                        android:hint="@string/register_card_date"
+                        android:inputType="textPersonName"
+                        android:padding="8dp"
+                        android:textColorHint="@color/darkBaseColor"
+                        android:layout_marginRight="12dp"/>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextCVV"
+                        android:layout_width="0dp"
+                        android:layout_weight="1.0"
+                        android:layout_height="50dp"
+                        android:background="@drawable/button_support"
+                        android:drawableEnd="@drawable/ikon_register_arrow_down"
+                        android:drawableTint="@color/darkBaseColor"
+                        android:drawableStart="@drawable/ikon_credit_card_cvv"
+                        android:drawablePadding="16dp"
+                        android:ems="10"
+                        android:fontFamily="@font/roboto_flex"
+                        android:hint="@string/register_card_cvv"
+                        android:inputType="textPersonName"
+                        android:padding="8dp"
+                        android:textColorHint="@color/darkBaseColor"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginBottom="16dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ikon_ssl"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="16dp"
+                        app:tint="@color/successColor" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/register_card_security"
+                        android:textSize="16sp"
+                        android:textColor="@color/successColor"
+                        android:fontFamily="@font/roboto_flex"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/paymentOptionsButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/button_support"
+                    android:padding="8dp"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ikon_credit_card"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="16dp"
+                        app:tint="@color/ratingColor" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/register_card_options"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/ratingColor"
+                        android:fontFamily="@font/roboto_flex"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

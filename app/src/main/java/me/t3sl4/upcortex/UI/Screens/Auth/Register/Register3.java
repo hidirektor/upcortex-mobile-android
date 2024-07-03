@@ -3,11 +3,13 @@ package me.t3sl4.upcortex.UI.Screens.Auth.Register;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.textfield.TextInputEditText;
 import com.zpj.widget.checkbox.ZCheckBox;
 
 import me.t3sl4.upcortex.R;
@@ -37,6 +39,13 @@ public class Register3 extends AppCompatActivity {
 
     private Button buttonSummary;
     private TextView packagePriceSummary;
+
+    private LinearLayout creditCardLayout;
+    private TextInputEditText editTextCardNumber;
+    private TextInputEditText editTextHolderName;
+    private TextInputEditText editTextExpiryDate;
+    private TextInputEditText editTextCVV;
+    private LinearLayout paymentOptionsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +81,13 @@ public class Register3 extends AppCompatActivity {
 
         buttonSummary = findViewById(R.id.buttonSummary);
         packagePriceSummary = findViewById(R.id.packagePriceSummary);
+
+        creditCardLayout = findViewById(R.id.creditCardLayout);
+        editTextCardNumber = findViewById(R.id.editTextCardNumber);
+        editTextHolderName = findViewById(R.id.editTextHolderName);
+        editTextExpiryDate = findViewById(R.id.editTextExpiryDate);
+        editTextCVV = findViewById(R.id.editTextCVV);
+        paymentOptionsButton = findViewById(R.id.paymentOptionsButton);
     }
 
     private void buttonClickListeners() {
@@ -98,11 +114,13 @@ public class Register3 extends AppCompatActivity {
                 packageSummaryCard.setVisibility(View.VISIBLE);
                 buttonSummary.setVisibility(View.VISIBLE);
                 packagePriceSummary.setVisibility(View.VISIBLE);
+                creditCardLayout.setVisibility(View.VISIBLE);
             } else {
                 packageCard.setVisibility(View.VISIBLE);
                 packageSummaryCard.setVisibility(View.GONE);
                 buttonSummary.setVisibility(View.GONE);
                 packagePriceSummary.setVisibility(View.GONE);
+                creditCardLayout.setVisibility(View.GONE);
             }
         });
     }

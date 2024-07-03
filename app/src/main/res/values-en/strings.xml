@@ -65,6 +65,12 @@
     <string name="register_thirth_terms">I have read the Preliminary Information Form and I accept the Distance Sales Agreement.</string>
     <string name="register_thirth_warning">Your subscription process begins after you receive your device.</string>
     <string name="register_thirth_summary">Annual Plan</string>
+    <string name="register_card_number">Card Number</string>
+    <string name="register_card_name">Card Holder Name</string>
+    <string name="register_card_date">Month / Year</string>
+    <string name="register_card_cvv">CVV</string>
+    <string name="register_card_security">Your Credit Card Information is Protected with 128 Bit SSL.</string>
+    <string name="register_card_options">Payment Options</string>
 
     <!-- Error Messages-->
     <string name="error_title">Error !</string>

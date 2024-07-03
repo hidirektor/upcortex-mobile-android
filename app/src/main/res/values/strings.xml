@@ -67,6 +67,12 @@
     <string name="register_thirth_terms">Ön Bilgilendirme Formunu okudum, Mesafeli Satış Sözleşmesini kabul ediyorum.</string>
     <string name="register_thirth_warning">Abonelik süreciniz cihaz elinize ulaştıktan sonra başlar.</string>
     <string name="register_thirth_summary">1 Yıllık Plan</string>
+    <string name="register_card_number">Kart Numarası</string>
+    <string name="register_card_name">Kart Üzerindeki isim</string>
+    <string name="register_card_date">Ay / Yıl</string>
+    <string name="register_card_cvv">CVV</string>
+    <string name="register_card_security">Kredi Kartı Bilgileriniz 128 Bit SSL ile Korunur.</string>
+    <string name="register_card_options">Taksit Seçenekleri</string>
 
     <!-- Error Messages-->
     <string name="error_title">Hata !</string>
