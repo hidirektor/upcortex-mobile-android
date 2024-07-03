@@ -11,9 +11,9 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 350,
-      "versionName": "1.2.50(350)",
-      "outputFile": "UpCortex release_03-07-2024_v1.2.50(350).apk"
+      "versionCode": 437,
+      "versionName": "1.3.37(437)",
+      "outputFile": "UpCortex release_04-07-2024_v1.3.37(437).apk"
     }
   ],
   "elementType": "File",
@@ -22,14 +22,14 @@
       "minApi": 28,
       "maxApi": 30,
       "baselineProfiles": [
-        "baselineProfiles/1/UpCortex release_03-07-2024_v1.2.50(350).dm"
+        "baselineProfiles/1/UpCortex release_04-07-2024_v1.3.37(437).dm"
       ]
     },
     {
       "minApi": 31,
       "maxApi": 2147483647,
       "baselineProfiles": [
-        "baselineProfiles/0/UpCortex release_03-07-2024_v1.2.50(350).dm"
+        "baselineProfiles/0/UpCortex release_04-07-2024_v1.3.37(437).dm"
       ]
     }
   ],
