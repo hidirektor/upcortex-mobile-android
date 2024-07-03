@@ -317,11 +317,13 @@ public class Register2 extends AppCompatActivity {
         String cityValue = sharedPrefManager.getString("city");
         if (cityValue != null && !cityValue.isEmpty()) {
             city.setText(cityValue);
+            loadDistricts(cityValue);
         }
 
         String districtValue = sharedPrefManager.getString("district");
         if (districtValue != null && !districtValue.isEmpty()) {
             district.setText(districtValue);
+            loadNeighborhoods(cityValue, districtValue);
         }
 
         String neighborhoodValue = sharedPrefManager.getString("neighborhood");
@@ -336,6 +338,34 @@ public class Register2 extends AppCompatActivity {
 
         boolean confirmAddressValue = sharedPrefManager.getBoolean("confirmAddress");
         confirmAddress.setChecked(confirmAddressValue);
+    }
+
+    private void loadDistricts(String cityName) {
+        String cityKey = getCityKeyByName(cityName);
+        List<String> districtNames = new ArrayList<>();
+        try {
+            JSONArray districtsArray = districtsJson.getJSONArray(cityKey);
+            for (int i = 0; i < districtsArray.length(); i++) {
+                districtNames.add(districtsArray.getString(i));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadNeighborhoods(String cityName, String districtName) {
+        String cityKey = getCityKeyByName(cityName);
+        List<String> neighborhoodNames = new ArrayList<>();
+        for (int i = 0; i < neighborhoodsJson.length(); i++) {
+            try {
+                JSONArray neighborhoodArray = neighborhoodsJson.getJSONArray(i);
+                if (neighborhoodArray.getString(0).equals(cityKey) && neighborhoodArray.getString(2).equals(districtName)) {
+                    neighborhoodNames.add(neighborhoodArray.getString(3));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void loadJsonData() {
