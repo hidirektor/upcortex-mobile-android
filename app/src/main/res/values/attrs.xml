@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="CircularCountdownView">
         <attr name="progressColor" format="color" />
@@ -17,17 +16,28 @@
     </declare-styleable>
 
     <declare-styleable name="CircleStepper">
-        <attr name="stepSize" format="integer" />
-        <attr name="currentStep" format="integer" />
-        <attr name="fill" format="boolean" />
-        <attr name="circleColor" format="color" />
-        <attr name="circleSize" format="dimension" />
-        <attr name="borderSize" format="dimension" />
-        <attr name="center" format="boolean" />
-        <attr name="padding" format="dimension" />
-        <attr name="pager" format="boolean"/>
+        <attr name="circleStepperStepSize" format="integer" />
+        <attr name="circleStepperCurrentStep" format="integer" />
+        <attr name="circleStepperFill" format="boolean" />
+        <attr name="circleStepperCircleColor" format="color" />
+        <attr name="circleStepperCircleSize" format="dimension" />
+        <attr name="circleStepperBorderSize" format="dimension" />
+        <attr name="circleStepperCenter" format="boolean" />
+        <attr name="circleStepperPadding" format="dimension" />
+        <attr name="circleStepperPager" format="boolean"/>
     </declare-styleable>
 
+    <declare-styleable name="HorizontalStepper">
+        <attr name="horizontalStepperStepSize" format="integer" />
+        <attr name="horizontalStepperCurrentStep" format="integer" />
+        <attr name="horizontalStepperCompletedColor" format="color" />
+        <attr name="horizontalStepperCurrentColor" format="color" />
+        <attr name="horizontalStepperGeneralColor" format="color" />
+        <attr name="horizontalStepperLeftTopRadius" format="dimension" />
+        <attr name="horizontalStepperLeftBottomRadius" format="dimension" />
+        <attr name="horizontalStepperRightTopRadius" format="dimension" />
+        <attr name="horizontalStepperRightBottomRadius" format="dimension" />
+        <attr name="horizontalStepperPager" format="boolean" />
+        <attr name="horizontalStepperPadding" format="dimension" />
+    </declare-styleable>
 </resources>
-
-

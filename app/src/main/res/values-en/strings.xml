@@ -31,4 +31,14 @@
     <string name="login_personal_pass">Password</string>
     <string name="login_forget_pass">Forgot your password?</string>
     <string name="login_register_first">Dont have an account yet?</string>
+
+    <!-- Register 1 Screen Texts-->
+    <string name="register_first_header">Personal Info</string>
+    <string name="register_first_desc">Please enter the information of the \nperson who will use the device.</string>
+    <string name="register_name">Name</string>
+    <string name="register_surname">Surname</string>
+    <string name="register_birth_date">Birth Date</string>
+    <string name="register_phone_number">Phone</string>
+    <string name="register_repeat_pass">Confirm Password</string>
+    <string name="register_terms_and_conditions">I approve the Membership Agreement, Privacy Policy and Device Terms of Use.</string>
 </resources>

@@ -32,4 +32,14 @@
     <string name="login_personal_pass">Şifre</string>
     <string name="login_forget_pass">Şifrenizi mi unuttunuz?</string>
     <string name="login_register_first">Henüz hesabınız yok mu?</string>
+
+    <!-- Register 1 Screen Texts-->
+    <string name="register_first_header">Kişisel Bilgiler</string>
+    <string name="register_first_desc">Lütfen cihazı kullanacak olan kişinin\nbilgilerini giriniz.</string>
+    <string name="register_name">İsim</string>
+    <string name="register_surname">Soyisim</string>
+    <string name="register_birth_date">Doğum Tarihi</string>
+    <string name="register_phone_number">Telefon</string>
+    <string name="register_repeat_pass">Tekrar Şifrenizi Girin</string>
+    <string name="register_terms_and_conditions">Üyelik Sözleşmesini, Gizlilik Politikasını ve Cihaz Kullanım Şartlarını onaylıyorum.</string>
 </resources>

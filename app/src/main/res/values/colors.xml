@@ -35,4 +35,6 @@
 
     <color name="ratingColor">#0047FF</color>
     <color name="emptyRatingColor">#354465</color>
+
+    <color name="horizontalStepperColor">#003CD7</color>
 </resources>

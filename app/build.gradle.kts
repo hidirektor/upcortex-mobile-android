@@ -137,6 +137,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.13.1")
 
     implementation("com.iarcuschin:simpleratingbar:0.1.5")
+    implementation("com.github.Z-P-J:ZCheckBox:1.0.0")
 
     implementation(libs.appcompat)
     implementation(libs.material)

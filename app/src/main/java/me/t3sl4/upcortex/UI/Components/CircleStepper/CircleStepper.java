@@ -33,15 +33,15 @@ public class CircleStepper extends View {
                 0, 0);
 
         try {
-            stepSize = a.getInteger(R.styleable.CircleStepper_stepSize, 3);
-            currentStep = a.getInteger(R.styleable.CircleStepper_currentStep, 0);
-            fill = a.getBoolean(R.styleable.CircleStepper_fill, true);
-            circleColor = a.getColor(R.styleable.CircleStepper_circleColor, 0xFF000000);
-            circleSize = a.getDimension(R.styleable.CircleStepper_circleSize, 50.0f);
-            borderSize = a.getDimension(R.styleable.CircleStepper_borderSize, 5.0f);
-            center = a.getBoolean(R.styleable.CircleStepper_center, true);
-            padding = a.getDimension(R.styleable.CircleStepper_padding, 10.0f);
-            pager = a.getBoolean(R.styleable.CircleStepper_pager, false);
+            stepSize = a.getInteger(R.styleable.CircleStepper_circleStepperStepSize, 3);
+            currentStep = a.getInteger(R.styleable.CircleStepper_circleStepperCurrentStep, 0);
+            fill = a.getBoolean(R.styleable.CircleStepper_circleStepperFill, true);
+            circleColor = a.getColor(R.styleable.CircleStepper_circleStepperCircleColor, 0xFF000000);
+            circleSize = a.getDimension(R.styleable.CircleStepper_circleStepperCircleSize, 50.0f);
+            borderSize = a.getDimension(R.styleable.CircleStepper_circleStepperBorderSize, 5.0f);
+            center = a.getBoolean(R.styleable.CircleStepper_circleStepperCenter, true);
+            padding = a.getDimension(R.styleable.CircleStepper_circleStepperPadding, 10.0f);
+            pager = a.getBoolean(R.styleable.CircleStepper_circleStepperPager, false);
         } finally {
             a.recycle();
         }
@@ -57,9 +57,7 @@ public class CircleStepper extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        // Çemberler ve aralarındaki boşlukları hesaplayarak toplam genişliği bul
         float totalWidth = stepSize * circleSize * 2 + (stepSize - 1) * padding;
-        // Başlangıç noktasını merkeze alacak şekilde ayarla
         float startX = center ? (getWidth() - totalWidth) / 2 + circleSize : padding + circleSize;
         float centerY = getHeight() / 2f;
 
