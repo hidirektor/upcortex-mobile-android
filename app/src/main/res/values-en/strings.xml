@@ -58,19 +58,32 @@
     <string name="register_thirth_monthly">Monthly</string>
     <string name="register_thirth_sixmonth">6 Month</string>
     <string name="register_thirth_annually">Annually</string>
-    <string name="register_thirth_gift">1 Month Gift</string>
-    <string name="register_thirth_spec_1">No Commitment Cancel Anytime</string>
-    <string name="register_thirth_spec_2">Divided into 12 Installments</string>
-    <string name="register_thirth_spec_3">Cut annually</string>
     <string name="register_thirth_terms">I have read the Preliminary Information Form and I accept the Distance Sales Agreement.</string>
     <string name="register_thirth_warning">Your subscription process begins after you receive your device.</string>
-    <string name="register_thirth_summary">Annual Plan</string>
     <string name="register_card_number">Card Number</string>
     <string name="register_card_name">Card Holder Name</string>
     <string name="register_card_date">Month / Year</string>
     <string name="register_card_cvv">CVV</string>
     <string name="register_card_security">Your Credit Card Information is Protected with 128 Bit SSL.</string>
     <string name="register_card_options">Payment Options</string>
+
+    <!-- Package Plan Texts-->
+    <string name="plan_1_summary">Monthly Plan</string>
+    <string name="plan_2_summary">6 Month Plan</string>
+    <string name="plan_3_summary">Annual Plan</string>
+
+    <string name="plan_1_gift">10 Days Gift</string>
+    <string name="plan_1_spec_1">No Commitment Cancel Anytime</string>
+    <string name="plan_1_spec_2">Divided into 12 Installments</string>
+    <string name="plan_1_spec_3">Cut annually</string>
+    <string name="plan_2_gift">15 Days Gift</string>
+    <string name="plan_2_spec_1">No Commitment Cancel Anytime</string>
+    <string name="plan_2_spec_2">Divided into 12 Installments</string>
+    <string name="plan_2_spec_3">Cut annually</string>
+    <string name="plan_3_gift">1 Month Gift</string>
+    <string name="plan_3_spec_1">No Commitment Cancel Anytime</string>
+    <string name="plan_3_spec_2">Divided into 12 Installments</string>
+    <string name="plan_3_spec_3">Cut annually</string>
 
     <!-- Error Messages-->
     <string name="error_title">Error !</string>

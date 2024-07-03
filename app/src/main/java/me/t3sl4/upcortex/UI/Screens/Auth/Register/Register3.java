@@ -113,18 +113,21 @@ public class Register3 extends AppCompatActivity {
             buttonStatusSwitch(monthlyButton, true);
             buttonStatusSwitch(sixMonthButton, false);
             buttonStatusSwitch(annuallyButton, false);
+            packageSetup(1);
         });
 
         sixMonthButton.setOnClickListener(v -> {
             buttonStatusSwitch(monthlyButton, false);
             buttonStatusSwitch(sixMonthButton, true);
             buttonStatusSwitch(annuallyButton, false);
+            packageSetup(2);
         });
 
         annuallyButton.setOnClickListener(v -> {
             buttonStatusSwitch(monthlyButton, false);
             buttonStatusSwitch(sixMonthButton, false);
             buttonStatusSwitch(annuallyButton, true);
+            packageSetup(3);
         });
     }
 
@@ -163,6 +166,37 @@ public class Register3 extends AppCompatActivity {
             inputButton.setTextColor(defaultTextColor);
             inputButton.setBackground(defaultDrawable);
             inputButton.setCompoundDrawableTintList(colorStateList);
+        }
+    }
+
+    private void packageSetup(int stateNumber) {
+        if(stateNumber == 1) {
+            packagePrice.setText(R.string.plan_1_price);
+            packagePromotion.setText(R.string.plan_1_gift);
+            package_spec_1.setText(getString(R.string.plan_1_spec_1));
+            package_spec_2.setText(getString(R.string.plan_1_spec_2));
+            package_spec_3.setText(getString(R.string.plan_1_spec_3));
+
+            buttonSummary.setText(R.string.plan_1_summary);
+            packagePriceSummary.setText(R.string.plan_1_price);
+        } else if(stateNumber == 2) {
+            packagePrice.setText(R.string.plan_2_price);
+            packagePromotion.setText(R.string.plan_2_gift);
+            package_spec_1.setText(getString(R.string.plan_2_spec_1));
+            package_spec_2.setText(getString(R.string.plan_2_spec_2));
+            package_spec_3.setText(getString(R.string.plan_2_spec_3));
+
+            buttonSummary.setText(R.string.plan_2_summary);
+            packagePriceSummary.setText(R.string.plan_2_price);
+        } else {
+            packagePrice.setText(R.string.plan_3_price);
+            packagePromotion.setText(R.string.plan_3_gift);
+            package_spec_1.setText(getString(R.string.plan_3_spec_1));
+            package_spec_2.setText(getString(R.string.plan_3_spec_2));
+            package_spec_3.setText(getString(R.string.plan_3_spec_3));
+
+            buttonSummary.setText(R.string.plan_3_summary);
+            packagePriceSummary.setText(R.string.plan_3_price);
         }
     }
 }

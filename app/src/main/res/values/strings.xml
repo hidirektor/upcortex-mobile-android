@@ -60,19 +60,36 @@
     <string name="register_thirth_monthly">Aylık</string>
     <string name="register_thirth_sixmonth">6 Aylık</string>
     <string name="register_thirth_annually">Yıllık</string>
-    <string name="register_thirth_gift">1 Ay Hediye</string>
-    <string name="register_thirth_spec_1">Taahhüt Yok Dilediğin Zaman İptal Et</string>
-    <string name="register_thirth_spec_2">12 Taksite Bölünür</string>
-    <string name="register_thirth_spec_3">Yıllık Olarak Kesilir</string>
     <string name="register_thirth_terms">Ön Bilgilendirme Formunu okudum, Mesafeli Satış Sözleşmesini kabul ediyorum.</string>
     <string name="register_thirth_warning">Abonelik süreciniz cihaz elinize ulaştıktan sonra başlar.</string>
-    <string name="register_thirth_summary">1 Yıllık Plan</string>
     <string name="register_card_number">Kart Numarası</string>
     <string name="register_card_name">Kart Üzerindeki isim</string>
     <string name="register_card_date">Ay / Yıl</string>
     <string name="register_card_cvv">CVV</string>
     <string name="register_card_security">Kredi Kartı Bilgileriniz 128 Bit SSL ile Korunur.</string>
     <string name="register_card_options">Taksit Seçenekleri</string>
+
+    <!-- Package Plan Texts-->
+    <string name="plan_1_price" translatable="false">170,00 TL</string>
+    <string name="plan_2_price" translatable="false">1.020,00 TL</string>
+    <string name="plan_3_price" translatable="false">1.990,00 TL</string>
+
+    <string name="plan_1_summary">Aylık Plan</string>
+    <string name="plan_2_summary">6 Aylık Plan</string>
+    <string name="plan_3_summary">1 Yıllık Plan</string>
+
+    <string name="plan_1_gift">10 Gün Hediye</string>
+    <string name="plan_1_spec_1">Taahhüt Yok Dilediğin Zaman İptal Et</string>
+    <string name="plan_1_spec_2">12 Taksite Bölünür</string>
+    <string name="plan_1_spec_3">Yıllık Olarak Kesilir</string>
+    <string name="plan_2_gift">15 Gün Hediye</string>
+    <string name="plan_2_spec_1">Taahhüt Yok Dilediğin Zaman İptal Et</string>
+    <string name="plan_2_spec_2">12 Taksite Bölünür</string>
+    <string name="plan_2_spec_3">Yıllık Olarak Kesilir</string>
+    <string name="plan_3_gift">1 Ay Hediye</string>
+    <string name="plan_3_spec_1">Taahhüt Yok Dilediğin Zaman İptal Et</string>
+    <string name="plan_3_spec_2">12 Taksite Bölünür</string>
+    <string name="plan_3_spec_3">Yıllık Olarak Kesilir</string>
 
     <!-- Error Messages-->
     <string name="error_title">Hata !</string>
