@@ -68,6 +68,7 @@
     <string name="register_card_cvv">CVV</string>
     <string name="register_card_security">Your Credit Card Information is Protected with 128 Bit SSL.</string>
     <string name="register_card_options">Payment Options</string>
+    <string name="register_thirth_select_expiry_date">Expiry Date</string>
 
     <!-- Package Plan Texts-->
     <string name="plan_1_summary">Monthly Plan</string>

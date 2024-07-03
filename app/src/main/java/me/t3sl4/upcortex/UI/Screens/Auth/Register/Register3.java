@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,11 +20,12 @@ import com.zpj.widget.checkbox.ZCheckBox;
 import java.util.UUID;
 
 import me.t3sl4.upcortex.R;
+import me.t3sl4.upcortex.UI.Components.DatePicker.ExpiryDatePicker;
 import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
 import me.t3sl4.upcortex.Util.SharedPreferences.SPUtil;
 
-public class Register3 extends AppCompatActivity {
+public class Register3 extends AppCompatActivity implements ExpiryDatePicker.ExpiryDateSelectedListener  {
 
     private Button monthlyButton;
     private Button sixMonthButton;
@@ -157,6 +159,31 @@ public class Register3 extends AppCompatActivity {
             packageSetup(3);
             packageName = getString(R.string.plan_3_summary);
         });
+
+        editTextExpiryDate.setOnClickListener(v -> {
+            hideKeyboard();
+            showExpiryDatePicker();
+        });
+
+        editTextExpiryDate.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                hideKeyboard();
+                showExpiryDatePicker();
+            }
+        });
+    }
+
+    private void hideKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    private void showExpiryDatePicker() {
+        ExpiryDatePicker datePickerBottomSheet = new ExpiryDatePicker(this);
+        datePickerBottomSheet.show(getSupportFragmentManager(), "datePickerBottomSheet");
     }
 
     private boolean areAllFieldsFilled() {
@@ -293,5 +320,11 @@ public class Register3 extends AppCompatActivity {
         sharedPrefManager.remove("expiryDate");
         sharedPrefManager.remove("cvv");
         sharedPrefManager.remove("confirmCheckBox");
+    }
+
+    @Override
+    public void onExpiryDateSelected(int month, int year) {
+        String formattedDate = String.format("%02d/%d", month, year);
+        editTextExpiryDate.setText(formattedDate);
     }
 }
