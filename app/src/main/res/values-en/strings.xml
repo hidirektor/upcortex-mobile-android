@@ -51,4 +51,17 @@
     <string name="register_address_neighborhood">Neighborhood</string>
     <string name="register_address_detail">Address Detail</string>
     <string name="register_address_confirm">I confirm that the address I have given is correct.</string>
+
+    <!-- Register 3 Screen Texts-->
+    <string name="register_thirth_header">Subscription Plan</string>
+    <string name="register_thirth_desc">You can continue with one of \nthe membership options suitable for you..</string>
+    <string name="register_thirth_monthly">Monthly</string>
+    <string name="register_thirth_sixmonth">6 Month</string>
+    <string name="register_thirth_annually">Annually</string>
+    <string name="register_thirth_gift">1 Month Gift</string>
+    <string name="register_thirth_spec_1">No Commitment Cancel Anytime</string>
+    <string name="register_thirth_spec_2">Divided into 12 Installments</string>
+    <string name="register_thirth_spec_3">Cut annually</string>
+    <string name="register_thirth_terms">I have read the Preliminary Information Form and I accept the Distance Sales Agreement.</string>
+    <string name="register_thirth_warning">Your subscription process begins after you receive your device.</string>
 </resources>

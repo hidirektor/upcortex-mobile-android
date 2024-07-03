@@ -53,4 +53,17 @@
     <string name="register_address_neighborhood">Mahalle</string>
     <string name="register_address_detail">Adres Detayı</string>
     <string name="register_address_confirm">Verdiğim adresin doğru olduğunu teyit ediyorum.</string>
+
+    <!-- Register 3 Screen Texts-->
+    <string name="register_thirth_header">Üyelik Planı</string>
+    <string name="register_thirth_desc">Size uygun üyelik seçeneklerinden biri ile\ndevam edebilirsiniz.</string>
+    <string name="register_thirth_monthly">Aylık</string>
+    <string name="register_thirth_sixmonth">6 Aylık</string>
+    <string name="register_thirth_annually">Yıllık</string>
+    <string name="register_thirth_gift">1 Ay Hediye</string>
+    <string name="register_thirth_spec_1">Taahhüt Yok Dilediğin Zaman İptal Et</string>
+    <string name="register_thirth_spec_2">12 Taksite Bölünür</string>
+    <string name="register_thirth_spec_3">Yıllık Olarak Kesilir</string>
+    <string name="register_thirth_terms">Ön Bilgilendirme Formunu okudum, Mesafeli Satış Sözleşmesini kabul ediyorum.</string>
+    <string name="register_thirth_warning">Abonelik süreciniz cihaz elinize ulaştıktan sonra başlar.</string>
 </resources>

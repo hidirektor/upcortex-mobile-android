@@ -37,4 +37,6 @@
     <color name="emptyRatingColor">#354465</color>
 
     <color name="horizontalStepperColor">#003CD7</color>
+
+    <color name="membershipButtonColor">#F1F1F1</color>
 </resources>
