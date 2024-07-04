@@ -13,6 +13,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
 import me.t3sl4.upcortex.UI.Screens.Auth.Register.Register1;
+import me.t3sl4.upcortex.Util.Utils;
 
 public class Login extends AppCompatActivity {
 
@@ -32,6 +33,7 @@ public class Login extends AppCompatActivity {
 
         initializeComponents();
         buttonClickListeners();
+        Utils.passwordListener(password);
     }
 
     private void initializeComponents() {

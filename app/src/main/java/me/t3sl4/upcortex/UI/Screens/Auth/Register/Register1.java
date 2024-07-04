@@ -20,6 +20,7 @@ import me.t3sl4.upcortex.UI.Components.DatePicker.DatePickerBottomSheet;
 import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
 import me.t3sl4.upcortex.Util.SharedPreferences.SPUtil;
+import me.t3sl4.upcortex.Util.Utils;
 
 public class Register1 extends AppCompatActivity {
 
@@ -49,6 +50,8 @@ public class Register1 extends AppCompatActivity {
         initializeComponents();
         loadSavedData(); // Kaydedilen verileri yükle
         buttonClickListeners();
+        Utils.passwordListener(passwordEditText);
+        Utils.passwordListener(repeatPasswordEditText);
     }
 
     private void initializeComponents() {
