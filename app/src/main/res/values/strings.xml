@@ -11,6 +11,7 @@
     <string name="button_back_to_start">Başa Dön</string>
     <string name="button_support">Bizimle İletişime Geçin</string>
     <string name="button_back" translatable="false">&lt;</string>
+    <string name="button_confirm">Onayla</string>
 
     <!-- Onboard Texts-->
     <string name="onboard_1_headline">Zihninizin Gücünü Keşfedin</string>
@@ -108,4 +109,13 @@
     <string name="register_fourth_plan_name">Abonelik İsmi</string>
     <string name="register_fourth_order_type">Sipariş Türü</string>
     <string name="register_fourth_plan_price">Fiyat</string>
+
+    <!-- Payment Options Bottom Sheet Texts-->
+    <string name="payment_options_type">Ödeme Şekli</string>
+    <string name="payment_options_total_price">Toplam Tutarı</string>
+    <string name="payment_options_advance">Peşin</string>
+    <string name="payment_options_two_month_advance">2 Taksit</string>
+    <string name="payment_options_four_month_advance">4 Taksit</string>
+    <string name="payment_options_eight_month_advance">8 Taksit</string>
+    <string name="payment_options_annual_advance">12 Taksit</string>
 </resources>

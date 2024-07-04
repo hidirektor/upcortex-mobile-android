@@ -9,6 +9,7 @@
     <string name="button_no">No</string>
     <string name="button_back_to_start">Back to Start</string>
     <string name="button_support">Contact Us</string>
+    <string name="button_confirm">Confirm</string>
 
     <!-- Onboard Texts-->
     <string name="onboard_1_headline">Discover the Power of Your Mind</string>
@@ -102,4 +103,13 @@
     <string name="register_fourth_plan_name">Plan Name</string>
     <string name="register_fourth_order_type">Order Type</string>
     <string name="register_fourth_plan_price">Price</string>
+
+    <!-- Payment Options Bottom Sheet Texts-->
+    <string name="payment_options_type">Payment Type</string>
+    <string name="payment_options_total_price">Total Price</string>
+    <string name="payment_options_advance">Advance</string>
+    <string name="payment_options_two_month_advance">2 Installment</string>
+    <string name="payment_options_four_month_advance">4 Installment</string>
+    <string name="payment_options_eight_month_advance">8 Installment</string>
+    <string name="payment_options_annual_advance">12 Installment</string>
 </resources>

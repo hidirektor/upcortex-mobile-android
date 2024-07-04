@@ -22,6 +22,7 @@ import java.util.UUID;
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.DatePicker.ExpiryDatePicker;
 import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
+import me.t3sl4.upcortex.UI.Components.PaymentOptions.PaymentOptions;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
 import me.t3sl4.upcortex.Util.SharedPreferences.SPUtil;
 
@@ -59,6 +60,7 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
     private SPUtil sharedPrefManager;
     private String uniqueID;
     private String packageName;
+    private String selectedPaymentOption;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,6 +173,10 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
                 showExpiryDatePicker();
             }
         });
+
+        paymentOptionsButton.setOnClickListener(v -> {
+            showPaymentOptions();
+        });
     }
 
     private void hideKeyboard() {
@@ -184,6 +190,11 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
     private void showExpiryDatePicker() {
         ExpiryDatePicker datePickerBottomSheet = new ExpiryDatePicker(this);
         datePickerBottomSheet.show(getSupportFragmentManager(), "datePickerBottomSheet");
+    }
+
+    private void showPaymentOptions() {
+        PaymentOptions paymentOptionsBottomSheet = new PaymentOptions(option -> selectedPaymentOption = option);
+        paymentOptionsBottomSheet.show(getSupportFragmentManager(), "paymentOptionsBottomSheet");
     }
 
     private boolean areAllFieldsFilled() {
