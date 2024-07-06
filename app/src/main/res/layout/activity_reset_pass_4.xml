@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:id="@+id/mainLayout">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/MyCardView"
+            android:id="@+id/headerCard"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@color/transparent"
+            app:cardPreventCornerOverlap="false"
+            app:cardElevation="0dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@color/ratingColor"
+                app:shapeAppearanceOverlay="@style/MyCardViewOverlay"
+                android:scaleType="fitXY" />
+
+            <me.t3sl4.upcortex.UI.Components.HorizontalStepper.HorizontalStepper
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                app:horizontalStepperStepSize="4"
+                app:horizontalStepperCurrentStep="3"
+                app:horizontalStepperCompletedColor="@color/secondaryColor"
+                app:horizontalStepperCurrentColor="@color/white"
+                app:horizontalStepperGeneralColor="@color/horizontalStepperColor"
+                app:horizontalStepperLeftTopRadius="10dp"
+                app:horizontalStepperLeftBottomRadius="10dp"
+                app:horizontalStepperRightTopRadius="10dp"
+                app:horizontalStepperRightBottomRadius="10dp"
+                app:horizontalStepperPager="false"
+                app:horizontalStepperPadding="6dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"/>
+
+            <ImageView
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/logo_splash"
+                android:layout_gravity="center" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.0"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp">
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ikon_membership_star"
+                    app:tint="@color/ratingColor"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="12dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reset_password_created"
+                    android:layout_marginTop="12dp"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/ratingColor"
+                    android:fontFamily="@font/roboto_flex"
+                    android:textSize="24sp"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reset_password_created_desc"
+                    android:layout_gravity="center"
+                    android:textColor="@color/darkBaseColor"
+                    android:fontFamily="@font/roboto_flex"
+                    android:textSize="20sp"
+                    android:layout_marginBottom="12dp"
+                    android:textAlignment="center"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottomSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <Button
+            android:id="@+id/nextButton"
+            android:layout_width="0dp"
+            android:layout_weight="1.0"
+            android:layout_height="wrap_content"
+            android:text="@string/button_back_to_login"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:background="@drawable/button_next_2"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

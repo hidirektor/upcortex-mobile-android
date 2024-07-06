@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:id="@+id/mainLayout">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/MyCardView"
+            android:id="@+id/headerCard"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@color/transparent"
+            app:cardPreventCornerOverlap="false"
+            app:cardElevation="0dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@color/ratingColor"
+                app:shapeAppearanceOverlay="@style/MyCardViewOverlay"
+                android:scaleType="fitXY" />
+
+            <me.t3sl4.upcortex.UI.Components.HorizontalStepper.HorizontalStepper
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                app:horizontalStepperStepSize="4"
+                app:horizontalStepperCurrentStep="2"
+                app:horizontalStepperCompletedColor="@color/secondaryColor"
+                app:horizontalStepperCurrentColor="@color/white"
+                app:horizontalStepperGeneralColor="@color/horizontalStepperColor"
+                app:horizontalStepperLeftTopRadius="10dp"
+                app:horizontalStepperLeftBottomRadius="10dp"
+                app:horizontalStepperRightTopRadius="10dp"
+                app:horizontalStepperRightBottomRadius="10dp"
+                app:horizontalStepperPager="false"
+                app:horizontalStepperPadding="6dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"/>
+
+            <ImageView
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/logo_splash"
+                android:layout_gravity="center" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.0"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:gravity="start"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp">
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ikon_reset_phone"
+                        app:tint="@color/ratingColor"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="12dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/reset_otp_code"
+                        android:layout_marginTop="12dp"
+                        android:layout_gravity="center"
+                        android:textColor="@color/darkBaseColor"
+                        android:fontFamily="@font/roboto_flex"
+                        android:textSize="20sp"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reset_otp_code_desc"
+                    android:layout_gravity="center"
+                    android:textColor="@color/darkBaseColor"
+                    android:fontFamily="@font/roboto_flex"
+                    android:textSize="18sp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="12dp"
+                    android:gravity="start"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"/>
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/button_support"
+                    android:drawableEnd="@drawable/ikon_show_pass"
+                    android:drawableTint="@color/darkBaseColor"
+                    android:drawableStart="@drawable/ikon_login_pass"
+                    android:drawablePadding="16dp"
+                    android:ems="10"
+                    android:fontFamily="@font/roboto_flex"
+                    android:hint="@string/login_personal_pass"
+                    android:inputType="textPassword"
+                    android:padding="8dp"
+                    android:textColorHint="@color/darkBaseColor"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"/>
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextPasswordRepeat"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/button_support"
+                    android:drawableEnd="@drawable/ikon_show_pass"
+                    android:drawableTint="@color/darkBaseColor"
+                    android:drawableStart="@drawable/ikon_login_pass"
+                    android:drawablePadding="16dp"
+                    android:ems="10"
+                    android:fontFamily="@font/roboto_flex"
+                    android:hint="@string/register_repeat_pass"
+                    android:inputType="textPassword"
+                    android:padding="8dp"
+                    android:textColorHint="@color/darkBaseColor"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottomSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <Button
+            android:id="@+id/nextButton"
+            android:layout_width="0dp"
+            android:layout_weight="1.0"
+            android:layout_height="wrap_content"
+            android:text="@string/button_save_pass"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:background="@drawable/button_next_2"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

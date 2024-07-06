@@ -1,5 +1,6 @@
 package me.t3sl4.upcortex.UI.Screens.ResetPass;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -43,6 +44,11 @@ public class ResetPass1 extends AppCompatActivity {
     private void buttonClickListeners() {
         backButton.setOnClickListener(v -> {
             finish();
+        });
+
+        nextButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ResetPass2.class);
+            startActivity(intent);
         });
 
         contactSupport.setOnClickListener(v -> {

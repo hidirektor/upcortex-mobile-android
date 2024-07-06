@@ -2,6 +2,7 @@
 agp = "8.5.0"
 androidMapsUtils = "2.3.0"
 appcompatVersion = "1.7.0"
+ccp = "2.7.3"
 constraintlayout = "2.1.4"
 gson = "2.10.1"
 junit = "4.13.2"
@@ -11,6 +12,7 @@ appcompat = "1.6.1"
 material = "1.12.0"
 kotlin = "2.0.0"
 coreKtx = "1.13.1"
+pinview = "1.4.4"
 playServicesBase = "18.5.0"
 playServicesLocation = "21.3.0"
 playServicesMaps = "19.0.0"
@@ -22,6 +24,7 @@ zcheckbox = "1.0.0"
 [libraries]
 android-maps-utils = { module = "com.google.maps.android:android-maps-utils", version.ref = "androidMapsUtils" }
 appcompat-v170 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
+ccp = { module = "com.hbb20:ccp", version.ref = "ccp" }
 constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -30,6 +33,7 @@ espresso-core = { group = "androidx.test.espresso", name = "espresso-core", vers
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+pinview = { module = "io.github.chaosleung:pinview", version.ref = "pinview" }
 play-services-base = { module = "com.google.android.gms:play-services-base", version.ref = "playServicesBase" }
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }

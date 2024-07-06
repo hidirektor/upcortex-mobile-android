@@ -12,6 +12,8 @@
     <string name="button_support">Bizimle İletişime Geçin</string>
     <string name="button_back" translatable="false">&lt;</string>
     <string name="button_confirm">Onayla</string>
+    <string name="button_save_pass">Şifreni Güncelle</string>
+    <string name="button_back_to_login">Giriş Ekranına Dön</string>
 
     <!-- Onboard Texts-->
     <string name="onboard_1_headline">Zihninizin Gücünü Keşfedin</string>
@@ -119,9 +121,21 @@
     <string name="payment_options_eight_month_advance">8 Taksit</string>
     <string name="payment_options_annual_advance">12 Taksit</string>
 
-    <!-- Reset Password Texts-->
+    <!-- Reset Password 1 Texts-->
     <string name="reset_enter_phone">Telefonunuzu Giriniz</string>
     <string name="reset_enter_phone_desc">Şifrenizi sıfırlamak için kayıtlı telefon numaranızı girin ve “İleri” butonuna tıklayın.</string>
     <string name="reset_pass_support">Yardım mı gerekiyor?</string>
     <string name="reset_pass_contact"><u>Destek Ekibiyle İletişime Geçin</u></string>
+
+    <!-- Reset Password 2 Texts-->
+    <string name="reset_otp_code">Doğrulama Kodu</string>
+    <string name="reset_otp_code_desc">Şifrenizi sıfırlayabilmeniz için telefon numaranıza 6 haneli bir kod gönderdik. Lütfen aşağıdaki alana kodu giriniz.</string>
+
+    <!-- Reset Password 3 Texts-->
+    <string name="reset_new_pass">Yeni Platform Erişim Şifresi</string>
+    <string name="reset_new_pass_desc">Platforma erişmek için yeni şifrenizi aşağıdaki alanlara girişiniz yapınız.</string>
+
+    <!-- Reset Password 4 Texts-->
+    <string name="reset_password_created">Şifreniz Oluşturuldu</string>
+    <string name="reset_password_created_desc">Yeni şifreniz ile platforma erişim sağlayabilirsiniz.</string>
 </resources>

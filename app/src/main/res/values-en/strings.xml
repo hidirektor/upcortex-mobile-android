@@ -10,6 +10,8 @@
     <string name="button_back_to_start">Back to Start</string>
     <string name="button_support">Contact Us</string>
     <string name="button_confirm">Confirm</string>
+    <string name="button_save_pass">Save Password</string>
+    <string name="button_back_to_login">Back to Login</string>
 
     <!-- Onboard Texts-->
     <string name="onboard_1_headline">Discover the Power of Your Mind</string>
@@ -113,9 +115,21 @@
     <string name="payment_options_eight_month_advance">8 Installment</string>
     <string name="payment_options_annual_advance">12 Installment</string>
 
-    <!-- Reset Password Texts-->
+    <!-- Reset Password 1 Texts-->
     <string name="reset_enter_phone">Enter Your Phone Number</string>
     <string name="reset_enter_phone_desc">To reset your password, enter your registered phone number and click the “Next” button.</string>
     <string name="reset_pass_support">Do you need support?</string>
     <string name="reset_pass_contact"><u>Contact to Support Team</u></string>
+
+    <!-- Reset Password 2 Texts-->
+    <string name="reset_otp_code">OTP Code</string>
+    <string name="reset_otp_code_desc">We have sent a 6-digit code to your phone number so you can reset your password. Please enter the code in the field below.</string>
+
+    <!-- Reset Password 3 Texts-->
+    <string name="reset_new_pass">New Platform Access Password</string>
+    <string name="reset_new_pass_desc">To access the platform, enter your new password in the fields below.</string>
+
+    <!-- Reset Password 4 Texts-->
+    <string name="reset_password_created">Your Password has been Created</string>
+    <string name="reset_password_created_desc">You can access the platform with your new password.</string>
 </resources>

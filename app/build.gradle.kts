@@ -142,7 +142,8 @@ dependencies {
 
     implementation(libs.simpleratingbar)
     implementation(libs.zcheckbox)
-    implementation("com.hbb20:ccp:2.7.3")
+    implementation(libs.ccp)
+    implementation(libs.pinview)
 
     implementation(libs.appcompat)
     implementation(libs.material)
