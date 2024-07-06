@@ -118,4 +118,10 @@
     <string name="payment_options_four_month_advance">4 Taksit</string>
     <string name="payment_options_eight_month_advance">8 Taksit</string>
     <string name="payment_options_annual_advance">12 Taksit</string>
+
+    <!-- Reset Password Texts-->
+    <string name="reset_enter_phone">Telefonunuzu Giriniz</string>
+    <string name="reset_enter_phone_desc">Şifrenizi sıfırlamak için kayıtlı telefon numaranızı girin ve “İleri” butonuna tıklayın.</string>
+    <string name="reset_pass_support">Yardım mı gerekiyor?</string>
+    <string name="reset_pass_contact"><u>Destek Ekibiyle İletişime Geçin</u></string>
 </resources>

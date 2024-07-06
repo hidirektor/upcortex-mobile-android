@@ -13,6 +13,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
 import me.t3sl4.upcortex.UI.Screens.Auth.Register.Register1;
+import me.t3sl4.upcortex.UI.Screens.ResetPass.ResetPass1;
 import me.t3sl4.upcortex.Util.Utils;
 
 public class Login extends AppCompatActivity {
@@ -49,6 +50,11 @@ public class Login extends AppCompatActivity {
         registerButton.setOnClickListener(v -> {
             Intent registerIntent = new Intent(Login.this, Register1.class);
             startActivity(registerIntent);
+        });
+
+        forgetPassword.setOnClickListener(v -> {
+            Intent forgetPasswordIntent = new Intent(Login.this, ResetPass1.class);
+            startActivity(forgetPasswordIntent);
         });
     }
 }
