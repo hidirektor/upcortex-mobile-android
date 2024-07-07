@@ -267,4 +267,141 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/subLayout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+            android:layout_width="match_parent"
+            android:id="@+id/app_bar"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom"
+            app:fabCradleMargin="8dp"
+            app:fabCradleRoundedCornerRadius="1dp"
+            app:fabCradleVerticalOffset="6dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetEnd="0dp"
+            android:backgroundTint="@color/secondaryColor">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/myMachine"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:visibility="invisible">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ikon_navbar_home"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint = "@color/ratingColor"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/profileConstraint"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2">
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent">
+
+                        <View
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/background_navbar_ikon" />
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            app:srcCompat="@drawable/ikon_navbar_stats"
+                            app:tint="@color/white" />
+                    </FrameLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:visibility="invisible">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ikon_navbar_home"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/languageConstraint"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profile_image"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/ikon_navbar_template"
+                        app:civ_border_width="4dp"
+                        app:civ_border_color="@color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/settingsConstraint"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:visibility="invisible">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ikon_navbar_home"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint = "@color/ratingColor"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+        </com.google.android.material.bottomappbar.BottomAppBar>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/qrConstraint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:pointerIcon="wait"
+            android:src="@drawable/ikon_navbar_home"
+            app:maxImageSize="25dp"
+            app:tint="@color/ratingColor"
+            app:layout_anchor="@id/app_bar"
+            app:backgroundTint="@color/white"/>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

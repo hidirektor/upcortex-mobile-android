@@ -3,6 +3,7 @@ agp = "8.5.0"
 androidMapsUtils = "2.3.0"
 appcompatVersion = "1.7.0"
 ccp = "2.7.3"
+circleimageview = "3.1.0"
 constraintlayout = "2.1.4"
 gson = "2.10.1"
 junit = "4.13.2"
@@ -25,6 +26,7 @@ zcheckbox = "1.0.0"
 android-maps-utils = { module = "com.google.maps.android:android-maps-utils", version.ref = "androidMapsUtils" }
 appcompat-v170 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
 ccp = { module = "com.hbb20:ccp", version.ref = "ccp" }
+circleimageview = { module = "de.hdodenhof:circleimageview", version.ref = "circleimageview" }
 constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

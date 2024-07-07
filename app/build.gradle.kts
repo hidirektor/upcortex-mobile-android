@@ -144,6 +144,7 @@ dependencies {
     implementation(libs.zcheckbox)
     implementation(libs.ccp)
     implementation(libs.pinview)
+    implementation(libs.circleimageview)
 
     implementation(libs.appcompat)
     implementation(libs.material)
