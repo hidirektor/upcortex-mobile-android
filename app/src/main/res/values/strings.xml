@@ -138,4 +138,8 @@
     <!-- Reset Password 4 Texts-->
     <string name="reset_password_created">Şifreniz Oluşturuldu</string>
     <string name="reset_password_created_desc">Yeni şifreniz ile platforma erişim sağlayabilirsiniz.</string>
+
+    <!-- Dashboard Texts-->
+    <string name="dashboard_instructure">Kullanım Talimatı</string>
+    <string name="dashboard_instructure_desc">Haftada 5 Gün kullanmanız öneriliyor.</string>
 </resources>

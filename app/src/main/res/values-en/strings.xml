@@ -132,4 +132,8 @@
     <!-- Reset Password 4 Texts-->
     <string name="reset_password_created">Your Password has been Created</string>
     <string name="reset_password_created_desc">You can access the platform with your new password.</string>
+
+    <!-- Dashboard Texts-->
+    <string name="dashboard_instructure">Instructions for Use</string>
+    <string name="dashboard_instructure_desc">It is recommended to use it 5 days a week.</string>
 </resources>

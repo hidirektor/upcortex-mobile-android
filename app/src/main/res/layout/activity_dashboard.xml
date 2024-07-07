@@ -154,17 +154,45 @@
                                 app:circleDiameter="200dp"
                                 app:clockwise="false"
                                 app:softProgress="true"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="305dp"
+                    android:layout_height="match_parent"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="20dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/headerCard"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/headerCard">
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/checkList"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:layout_marginTop="2.5dp"
+                        android:layout_marginBottom="1dp"
+                        app:cardBackgroundColor="@color/secondaryColor"
+                        app:cardCornerRadius="20sp"
+                        android:layout_gravity="center">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
                                 android:layout_gravity="center"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="40dp">
+                                android:layout_marginTop="6dp"
+                                android:layout_marginBottom="8dp">
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Tedavi Bilgisi"
+                                    android:text="@string/dashboard_instructure"
                                     android:textStyle="bold"
                                     android:textColor="@color/white"
                                     android:textSize="16sp"
@@ -172,56 +200,27 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Haftada 4 Gün kullanmanız öneriliyor."
+                                    android:text="@string/dashboard_instructure_desc"
                                     android:textStyle="normal"
                                     android:textColor="@color/white"
                                     android:textSize="16sp"
                                     android:textAlignment="center"/>
                             </LinearLayout>
+                            <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                                android:id="@+id/ratingStar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:srb_starSize="32dp"
+                                app:srb_numberOfStars="4"
+                                app:srb_rating="3"
+                                app:srb_stepSize="0.5"
+                                app:srb_isIndicator="true"
+                                app:srb_borderColor="@color/white"
+                                app:srb_fillColor="@color/ratingColor"
+                                app:srb_starBackgroundColor="@color/emptyRatingColor"
+                                android:layout_gravity="center"/>
                         </LinearLayout>
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/checkList"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    app:cardBackgroundColor="@color/secondaryColor"
-                    app:cardCornerRadius="30sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/headerCard"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/headerCard">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Tedavi Görev Check-List"
-                            android:textColor="@color/white"
-                            android:fontFamily="@font/robotoflex"
-                            android:textStyle="bold"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="8dp"/>
-                        <com.iarcuschin.simpleratingbar.SimpleRatingBar
-                            android:id="@+id/ratingStar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:srb_starSize="32dp"
-                            app:srb_numberOfStars="4"
-                            app:srb_rating="3"
-                            app:srb_stepSize="0.5"
-                            app:srb_isIndicator="true"
-                            app:srb_borderColor="@color/white"
-                            app:srb_fillColor="@color/ratingColor"
-                            app:srb_starBackgroundColor="@color/emptyRatingColor"
-                            android:layout_gravity="center"/>
-                    </LinearLayout>
+                    </androidx.cardview.widget.CardView>
                 </androidx.cardview.widget.CardView>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
