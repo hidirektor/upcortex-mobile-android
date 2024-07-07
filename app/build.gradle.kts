@@ -140,7 +140,6 @@ dependencies {
 
     implementation(libs.core.ktx)
 
-    implementation(libs.simpleratingbar)
     implementation(libs.zcheckbox)
     implementation(libs.ccp)
     implementation(libs.pinview)

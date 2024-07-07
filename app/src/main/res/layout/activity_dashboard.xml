@@ -206,7 +206,7 @@
                                     android:textSize="16sp"
                                     android:textAlignment="center"/>
                             </LinearLayout>
-                            <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                            <me.t3sl4.upcortex.UI.Components.RatingBar.RatingBar
                                 android:id="@+id/ratingStar"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -215,9 +215,10 @@
                                 app:srb_rating="3"
                                 app:srb_stepSize="0.5"
                                 app:srb_isIndicator="true"
-                                app:srb_borderColor="@color/white"
-                                app:srb_fillColor="@color/ratingColor"
+                                app:srb_borderColor="@color/transparent"
+                                app:srb_fillColor="@color/warningColor"
                                 app:srb_starBackgroundColor="@color/emptyRatingColor"
+                                app:srb_starCornerRadius="12"
                                 android:layout_gravity="center"/>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
