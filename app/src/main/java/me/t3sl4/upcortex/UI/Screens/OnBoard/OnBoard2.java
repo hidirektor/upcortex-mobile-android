@@ -7,7 +7,6 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import me.t3sl4.upcortex.R;
-import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
 import me.t3sl4.upcortex.UI.Screens.FirstSetup.FirstSetup;
 import me.t3sl4.upcortex.Util.Screen.ScreenUtil;
 import me.t3sl4.upcortex.Util.SharedPreferences.SPUtil;
@@ -23,7 +22,7 @@ public class OnBoard2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboard_2);
 
-        NavigationBarUtil.hideNavigationBar(this);
+        Utils.hideNavigationBar(this);
         Utils.hideStatusBar(this);
 
         initializeComponents();

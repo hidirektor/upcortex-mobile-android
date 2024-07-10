@@ -7,8 +7,8 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import me.t3sl4.upcortex.R;
-import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
 import me.t3sl4.upcortex.UI.Screens.Auth.Register.Register1;
+import me.t3sl4.upcortex.Util.Utils;
 
 public class AuthSelection extends AppCompatActivity {
 
@@ -20,7 +20,7 @@ public class AuthSelection extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth_selection);
 
-        NavigationBarUtil.hideNavigationBar(this);
+        Utils.hideNavigationBar(this);
 
         initializeComponents();
         buttonClickListeners();

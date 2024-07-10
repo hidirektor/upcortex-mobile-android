@@ -17,7 +17,6 @@ import java.util.Calendar;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.DatePicker.DatePickerBottomSheet;
-import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
 import me.t3sl4.upcortex.Util.SharedPreferences.SPUtil;
 import me.t3sl4.upcortex.Util.Utils;
@@ -43,7 +42,7 @@ public class Register1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_1);
 
-        NavigationBarUtil.hideNavigationBar(this);
+        Utils.hideNavigationBar(this);
 
         sharedPrefManager = new SPUtil(this);
 

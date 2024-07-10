@@ -21,10 +21,10 @@ import java.util.UUID;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.DatePicker.ExpiryDatePicker;
-import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
 import me.t3sl4.upcortex.UI.Components.PaymentOptions.PaymentOptions;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
 import me.t3sl4.upcortex.Util.SharedPreferences.SPUtil;
+import me.t3sl4.upcortex.Util.Utils;
 
 public class Register3 extends AppCompatActivity implements ExpiryDatePicker.ExpiryDateSelectedListener  {
 
@@ -67,7 +67,7 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_3);
 
-        NavigationBarUtil.hideNavigationBar(this);
+        Utils.hideNavigationBar(this);
 
         sharedPrefManager = new SPUtil(this);
 

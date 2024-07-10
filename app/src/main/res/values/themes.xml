@@ -1,5 +1,4 @@
 <resources>
-    <!-- Base application theme. -->
     <style name="Theme.UpCortex" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primaryColor</item>
@@ -10,7 +9,7 @@
         <item name="colorSecondaryVariant">@color/secondaryOnTop</item>
         <item name="colorOnSecondary">@color/secondaryOnBottom</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/black</item>
+        <item name="android:statusBarColor">@color/secondaryColor</item>
         <!-- Customize your theme here. -->
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowTranslucentNavigation">true</item>

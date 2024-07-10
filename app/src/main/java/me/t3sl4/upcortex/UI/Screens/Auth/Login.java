@@ -11,8 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputEditText;
 
 import me.t3sl4.upcortex.R;
-import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
 import me.t3sl4.upcortex.UI.Screens.Auth.Register.Register1;
+import me.t3sl4.upcortex.UI.Screens.General.Dashboard;
 import me.t3sl4.upcortex.UI.Screens.ResetPass.ResetPass1;
 import me.t3sl4.upcortex.Util.Utils;
 
@@ -30,7 +30,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        NavigationBarUtil.hideNavigationBar(this);
+        Utils.hideNavigationBar(this);
 
         initializeComponents();
         buttonClickListeners();
@@ -55,6 +55,11 @@ public class Login extends AppCompatActivity {
         forgetPassword.setOnClickListener(v -> {
             Intent forgetPasswordIntent = new Intent(Login.this, ResetPass1.class);
             startActivity(forgetPasswordIntent);
+        });
+
+        loginButton.setOnClickListener(v -> {
+            Intent dashboardIntent = new Intent(Login.this, Dashboard.class);
+            startActivity(dashboardIntent);
         });
     }
 }

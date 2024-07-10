@@ -7,7 +7,6 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import me.t3sl4.upcortex.R;
-import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
 import me.t3sl4.upcortex.Util.Utils;
 import me.t3sl4.upcortex.Util.Web.WebUtil;
 
@@ -21,7 +20,7 @@ public class FirstSetupError extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_setup_error);
 
-        NavigationBarUtil.hideNavigationBar(this);
+        Utils.hideNavigationBar(this);
         Utils.hideStatusBar(this);
 
         initializeComponents();

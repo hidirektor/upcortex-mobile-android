@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import me.t3sl4.upcortex.R;
-import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
 import me.t3sl4.upcortex.UI.Screens.Auth.AuthSelection;
 import me.t3sl4.upcortex.Util.SharedPreferences.SPUtil;
 import me.t3sl4.upcortex.Util.Utils;
@@ -38,7 +37,7 @@ public class FirstSetup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_setup);
 
-        NavigationBarUtil.hideNavigationBar(this);
+        Utils.hideNavigationBar(this);
         Utils.hideStatusBar(this);
 
         sharedPrefManager = new SPUtil(this);

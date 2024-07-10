@@ -52,6 +52,6 @@
         <activity android:name=".UI.Screens.ResetPass.ResetPass1" android:windowSoftInputMode="adjustPan" />
         <activity android:name=".UI.Screens.ResetPass.ResetPass2" android:windowSoftInputMode="adjustPan" />
 
-        <activity android:name=".UI.Screens.General.Dashboard" />
+        <activity android:name=".UI.Screens.General.Dashboard" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
     </application>
 </manifest>

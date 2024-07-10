@@ -29,9 +29,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import me.t3sl4.upcortex.R;
-import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
 import me.t3sl4.upcortex.Util.SharedPreferences.SPUtil;
+import me.t3sl4.upcortex.Util.Utils;
 
 public class Register2 extends AppCompatActivity {
 
@@ -58,7 +58,8 @@ public class Register2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_2);
-        NavigationBarUtil.hideNavigationBar(this);
+
+        Utils.hideNavigationBar(this);
 
         sharedPrefManager = new SPUtil(this);
 

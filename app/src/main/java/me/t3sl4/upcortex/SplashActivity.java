@@ -7,12 +7,12 @@ import android.os.Looper;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import me.t3sl4.upcortex.UI.Components.NavigationBar.NavigationBarUtil;
 import me.t3sl4.upcortex.UI.Screens.Auth.AuthSelection;
 import me.t3sl4.upcortex.UI.Screens.FirstSetup.FirstSetup;
 import me.t3sl4.upcortex.UI.Screens.General.Dashboard;
 import me.t3sl4.upcortex.UI.Screens.OnBoard.OnBoard1;
 import me.t3sl4.upcortex.Util.SharedPreferences.SPUtil;
+import me.t3sl4.upcortex.Util.Utils;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -25,7 +25,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        NavigationBarUtil.hideNavigationBar(this);
+        Utils.hideNavigationBar(this);
 
         sharedPrefManager = new SPUtil(this);
 
