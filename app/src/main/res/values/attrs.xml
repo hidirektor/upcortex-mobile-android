@@ -7,12 +7,14 @@
         <attr name="progressTextSize" format="dimension" />
         <attr name="remainingTimeTextSize" format="dimension" />
         <attr name="strokeWidth" format="dimension" />
+        <attr name="preProgressText" format="boolean" />
         <attr name="progressText" format="string" />
         <attr name="duration" format="integer" />
         <attr name="remainingTime" format="integer" />
         <attr name="circleDiameter" format="dimension" />
         <attr name="clockwise" format="boolean" />
         <attr name="softProgress" format="boolean" />
+        <attr name="timeFormat" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="CircleStepper">

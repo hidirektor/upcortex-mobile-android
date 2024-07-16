@@ -23,6 +23,7 @@ public class CircularCountdownView extends View {
     private long duration = 3600000; // Default: 1 hour in milliseconds
     private long remainingTime = 1800000; // Default: 30 minutes in milliseconds
     private String progressText = "Kalan Süre \n";
+    private boolean preProgressText = false;
     private int progressColor;
     private int backgroundColor;
     private int progressTextColor;
@@ -33,6 +34,7 @@ public class CircularCountdownView extends View {
     private float circleDiameter;
     private boolean clockwise = true;
     private boolean softProgress = false;
+    private boolean timeFormat = false;
 
     public CircularCountdownView(Context context) {
         super(context);
@@ -59,12 +61,14 @@ public class CircularCountdownView extends View {
             progressTextSize = typedArray.getDimension(R.styleable.CircularCountdownView_progressTextSize, 40);
             remainingTimeTextSize = typedArray.getDimension(R.styleable.CircularCountdownView_remainingTimeTextSize, 40);
             strokeWidth = typedArray.getDimension(R.styleable.CircularCountdownView_strokeWidth, 20);
+            preProgressText = typedArray.getBoolean(R.styleable.CircularCountdownView_preProgressText, false);
             progressText = typedArray.getString(R.styleable.CircularCountdownView_progressText);
             duration = typedArray.getInt(R.styleable.CircularCountdownView_duration, 3600000);
             remainingTime = typedArray.getInt(R.styleable.CircularCountdownView_remainingTime, 1800000);
             circleDiameter = typedArray.getDimension(R.styleable.CircularCountdownView_circleDiameter, 200);
             clockwise = typedArray.getBoolean(R.styleable.CircularCountdownView_clockwise, true);
             softProgress = typedArray.getBoolean(R.styleable.CircularCountdownView_softProgress, false);
+            timeFormat = typedArray.getBoolean(R.styleable.CircularCountdownView_timeFormat, false);
             typedArray.recycle();
         } else {
             progressColor = ContextCompat.getColor(context, R.color.ratingColor);
@@ -91,15 +95,22 @@ public class CircularCountdownView extends View {
         backgroundPaint.setStyle(Paint.Style.STROKE);
         backgroundPaint.setStrokeWidth(strokeWidth);
 
-        progressTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        progressTextPaint.setColor(progressTextColor);
-        progressTextPaint.setTextSize(progressTextSize);
-        progressTextPaint.setTextAlign(Paint.Align.CENTER);
+        if(preProgressText) {
+            progressTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            progressTextPaint.setColor(progressTextColor);
+            progressTextPaint.setTextSize(progressTextSize);
+            progressTextPaint.setTextAlign(Paint.Align.CENTER);
 
-        remainingTimeTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        remainingTimeTextPaint.setColor(remainingTimeTextColor);
-        remainingTimeTextPaint.setTextSize(remainingTimeTextSize);
-        remainingTimeTextPaint.setTextAlign(Paint.Align.CENTER);
+            remainingTimeTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            remainingTimeTextPaint.setColor(remainingTimeTextColor);
+            remainingTimeTextPaint.setTextSize(remainingTimeTextSize);
+            remainingTimeTextPaint.setTextAlign(Paint.Align.CENTER);
+        } else {
+            remainingTimeTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            remainingTimeTextPaint.setColor(remainingTimeTextColor);
+            remainingTimeTextPaint.setTextSize(remainingTimeTextSize);
+            remainingTimeTextPaint.setTextAlign(Paint.Align.CENTER);
+        }
 
         rectF = new RectF();
     }
@@ -125,8 +136,13 @@ public class CircularCountdownView extends View {
         canvas.drawArc(rectF, -90, angle, false, progressPaint);
 
         String timeText = formatRemainingTime(remainingTime);
-        canvas.drawText(progressText, getWidth() / 2, getHeight() / 2 - 40, progressTextPaint);
-        canvas.drawText(timeText, getWidth() / 2, getHeight() / 2 + 40, remainingTimeTextPaint);
+
+        if (preProgressText) {
+            canvas.drawText(progressText, getWidth() / 2, getHeight() - remainingTimeTextSize, progressTextPaint);
+            canvas.drawText(timeText, getWidth() / 2, getHeight() + remainingTimeTextSize, remainingTimeTextPaint);
+        } else {
+            canvas.drawText(timeText, getWidth() / 2, rectF.height() / 2 + (remainingTimeTextSize / 2), remainingTimeTextPaint);
+        }
     }
 
     public void setDuration(long duration) {
@@ -142,6 +158,10 @@ public class CircularCountdownView extends View {
         long seconds = (millis / 1000) % 60;
         long minutes = (millis / (1000 * 60)) % 60;
         long hours = (millis / (1000 * 60 * 60)) % 24;
-        return String.format("%02d Sa %02d Dk. %02d Sn.", hours, minutes, seconds);
+        if(timeFormat) {
+            return String.format("%02d Sa %02d Dk. %02d Sn.", hours, minutes, seconds);
+        } else {
+            return String.format("%02d:%02d", minutes, seconds);
+        }
     }
 }

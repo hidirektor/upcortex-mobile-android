@@ -14,6 +14,7 @@
     <string name="button_confirm">Onayla</string>
     <string name="button_save_pass">Şifreni Güncelle</string>
     <string name="button_back_to_login">Giriş Ekranına Dön</string>
+    <string name="button_space">Boşluk</string>
 
     <!-- Onboard Texts-->
     <string name="onboard_1_headline">Zihninizin Gücünü Keşfedin</string>
@@ -142,4 +143,12 @@
     <!-- Dashboard Texts-->
     <string name="dashboard_instructure">Kullanım Talimatı</string>
     <string name="dashboard_instructure_desc">Haftada 5 Gün kullanmanız öneriliyor.</string>
+
+    <!-- Game Texts-->
+    <string name="game_header">Sayısal Hafıza Oyunu</string>
+    <string name="game_desc">Yeni Test butonuna tıklayınız ve ekranda görüntülenen sayıları aklınızda tutunuz. </string>
+    <string name="game_slow">Yavaş</string>
+    <string name="game_fast">Hızlı</string>
+    <string name="game_reset">Sıfırla</string>
+    <string name="game_new_game">Yeni Oyun</string>
 </resources>

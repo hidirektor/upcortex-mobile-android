@@ -7,7 +7,6 @@ import android.widget.ScrollView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.CircularCountdown.CircularCountdownView;
@@ -19,8 +18,6 @@ public class Dashboard extends AppCompatActivity {
     private long countdownDuration = 5600000;
 
     private ScrollView mainScroll;
-    private CardView usingDetail;
-    private ConstraintLayout examButtonsLayout;
     private CardView nonSetupCard;
 
     @Override
@@ -38,8 +35,6 @@ public class Dashboard extends AppCompatActivity {
     private void initializeComponents() {
         mainScroll = findViewById(R.id.mainScroll);
         nonSetupCard = findViewById(R.id.nonSetupCard);
-        usingDetail = findViewById(R.id.usingDetailCard);
-        examButtonsLayout = findViewById(R.id.examButtonsConstraint);
 
         circularCountdownView = findViewById(R.id.circularCountdownView);
         circularCountdownView.setDuration(countdownDuration);

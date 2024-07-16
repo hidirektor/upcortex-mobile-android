@@ -12,6 +12,7 @@
     <string name="button_confirm">Confirm</string>
     <string name="button_save_pass">Save Password</string>
     <string name="button_back_to_login">Back to Login</string>
+    <string name="button_space">Space</string>
 
     <!-- Onboard Texts-->
     <string name="onboard_1_headline">Discover the Power of Your Mind</string>
@@ -136,4 +137,12 @@
     <!-- Dashboard Texts-->
     <string name="dashboard_instructure">Instructions for Use</string>
     <string name="dashboard_instructure_desc">It is recommended to use it 5 days a week.</string>
+
+    <!-- Game Texts-->
+    <string name="game_header">Digital Memory Game</string>
+    <string name="game_desc">Click on the New Test button and keep in mind the numbers displayed on the screen.</string>
+    <string name="game_slow">Slot</string>
+    <string name="game_fast">Fast</string>
+    <string name="game_reset">Reset</string>
+    <string name="game_new_game">New Game</string>
 </resources>
