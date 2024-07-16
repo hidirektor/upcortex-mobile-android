@@ -27,7 +27,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_margin="16dp">
+            android:layout_margin="16dp"
+            android:layout_gravity="top"
+            android:gravity="top">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
@@ -66,6 +68,15 @@
                     app:timeFormat="false"/>
             </LinearLayout>
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="16dp"
+            android:layout_gravity="center">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -76,7 +87,9 @@
                     android:layout_weight="0.8"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_gravity="bottom"
+                    android:gravity="bottom">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -124,9 +137,9 @@
                         android:fontFamily="@font/roboto_flex"
                         android:inputType="none"
                         android:padding="8dp"
-                        android:textColorHint="@color/darkBaseColor" 
+                        android:textColorHint="@color/darkBaseColor"
                         android:layout_marginBottom="12dp"/>
-                        
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
@@ -337,6 +350,23 @@
                             android:layout_marginBottom="12dp"
                             android:background="@drawable/background_game_linear_thirth">
                             <Button
+                                android:id="@+id/personalButton"
+                                android:layout_width="0dp"
+                                android:layout_weight="1.0"
+                                android:layout_height="match_parent"
+                                android:text="@string/game_single"
+                                android:textColor="@color/white"
+                                android:textAllCaps="false"
+                                android:textStyle="bold"
+                                android:background="@color/transparent"/>
+                            <View
+                                android:layout_width="2dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/ratingColor"
+                                android:layout_marginTop="12dp"
+                                android:layout_marginBottom="12dp"/>
+                            <Button
+                                android:id="@+id/resetButton"
                                 android:layout_width="0dp"
                                 android:layout_weight="1.0"
                                 android:layout_height="match_parent"
@@ -346,13 +376,13 @@
                                 android:textStyle="bold"
                                 android:background="@color/transparent"/>
                             <View
-                                android:id="@+id/verticalLine"
                                 android:layout_width="2dp"
                                 android:layout_height="match_parent"
                                 android:background="@color/ratingColor"
                                 android:layout_marginTop="12dp"
                                 android:layout_marginBottom="12dp"/>
                             <Button
+                                android:id="@+id/newGameButton"
                                 android:layout_width="0dp"
                                 android:layout_weight="1.0"
                                 android:layout_height="match_parent"

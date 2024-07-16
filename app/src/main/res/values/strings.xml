@@ -151,4 +151,5 @@
     <string name="game_fast">Hızlı</string>
     <string name="game_reset">Sıfırla</string>
     <string name="game_new_game">Yeni Oyun</string>
+    <string name="game_single">Bireysel</string>
 </resources>
