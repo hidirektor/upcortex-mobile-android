@@ -160,7 +160,7 @@ public class SplashActivity extends AppCompatActivity {
     private void continueAppFlow() {
         boolean isFirstTime = SharedPreferencesManager.getSharedPref("isFirstTime", this, true);
         boolean canAccess = SharedPreferencesManager.getSharedPref("canAccess", this, true);
-        Utils.setSystemLanguage(this);
+        //Utils.setSystemLanguage(this);
 
         if(Utils.isNetworkAvailable(this)) {
             if(canAccess) {

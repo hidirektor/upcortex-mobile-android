@@ -8,12 +8,10 @@ import android.net.NetworkInfo;
 
 import com.yariksoffice.lingver.Lingver;
 
-import me.t3sl4.upcortex.Service.UserDataService;
-
 public class Utils {
     public static String SUPPORT_URL = "https://github.com/hidirektor";
 
-    public static void setSystemLanguage(Context context) {
+    /*public static void setSystemLanguage(Context context) {
         String userLanguage = UserDataService.getSelectedLanguage(context);
         String nextLang;
 
@@ -43,7 +41,7 @@ public class Utils {
         //UserService.updatePreferences(context, UserDataService.getUserID(context), UserDataService.getSelectedLanguage(context), UserDataService.getSelectedNightMode(context));
 
         updateLocale(context, nextLang);
-    }
+    }*/
 
     public static void updateLocale(Context context, String nextLang) {
         Lingver.getInstance().setLocale(context, nextLang);
