@@ -23,6 +23,7 @@ import me.t3sl4.upcortex.UI.Screens.Auth.Login;
 import me.t3sl4.upcortex.UI.Screens.FirstSetup.FirstSetupError;
 import me.t3sl4.upcortex.UI.Screens.General.Dashboard;
 import me.t3sl4.upcortex.UI.Screens.OnBoard.OnBoard1;
+import me.t3sl4.upcortex.Utility.Bluetooth.BluetoothUtil;
 import me.t3sl4.upcortex.Utility.Permission.PermissionUtil;
 import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
 import me.t3sl4.upcortex.Utility.SharedPreferences.SharedPreferencesManager;
@@ -35,10 +36,16 @@ public class SplashActivity extends AppCompatActivity {
     private Animation fadeIn;
     private Animation fadeOut;
 
+    private BluetoothUtil bluetoothUtil;
+    String savedDeviceAddress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        bluetoothUtil = new BluetoothUtil();
+        savedDeviceAddress = bluetoothUtil.getSavedDeviceAddress(this);
 
         componentInitialize();
 
@@ -167,6 +174,16 @@ public class SplashActivity extends AppCompatActivity {
                 if (isFirstTime) {
                     setupOnboarding();
                 } else {
+                    if (savedDeviceAddress != null) {
+                        bluetoothUtil.connectToDevice(savedDeviceAddress, isConnected -> {
+                            if (isConnected) {
+                                Sneaker.with(SplashActivity.this)
+                                        .setTitle(getString(R.string.connected_title))
+                                        .setMessage(getString(R.string.connected_desc))
+                                        .sneakSuccess();
+                            }
+                        });
+                    }
                     redirectToMainActivity();
                 }
             } else {

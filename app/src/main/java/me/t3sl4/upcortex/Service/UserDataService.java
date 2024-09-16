@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import me.t3sl4.upcortex.Model.User.User;
+import me.t3sl4.upcortex.Utility.Bluetooth.BluetoothUtil;
 
 public class UserDataService {
 
@@ -18,8 +19,6 @@ public class UserDataService {
     private static final String KEY_USER_PHONE = "userPhone";
 
     private static final String KEY_USER_STATE = "userState";
-
-    private static final String KEY_USER_DEVICE_ID = "userDeviceID";
 
     private static SharedPreferences getPreferences(Context context) {
         return context.getSharedPreferences(USER_DATA, Context.MODE_PRIVATE);
@@ -74,13 +73,6 @@ public class UserDataService {
         editor.apply();
     }
 
-    public static void setUserDeviceID(Context context, String userDeviceID) {
-        SharedPreferences prefs = getPreferences(context);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(KEY_USER_DEVICE_ID, userDeviceID);
-        editor.apply();
-    }
-
     // Get individual user properties from SharedPreferences
     public static String getUserID(Context context) {
         SharedPreferences prefs = getPreferences(context);
@@ -117,11 +109,6 @@ public class UserDataService {
         return prefs.getString(KEY_USER_STATE, "");
     }
 
-    public static String getUserDeviceID(Context context) {
-        SharedPreferences prefs = getPreferences(context);
-        return prefs.getString(KEY_USER_DEVICE_ID, "");
-    }
-
     // Clear user data from SharedPreferences
     public static void clearUser(Context context) {
         SharedPreferences prefs = getPreferences(context);
@@ -135,7 +122,7 @@ public class UserDataService {
         editor.remove(KEY_USER_NAME_SURNAME);
         editor.remove(KEY_USER_PHONE);
         editor.remove(KEY_USER_STATE);
-        editor.remove(KEY_USER_DEVICE_ID);
+        BluetoothUtil.clearSavedDeviceAddress(context);
 
         editor.apply();
     }

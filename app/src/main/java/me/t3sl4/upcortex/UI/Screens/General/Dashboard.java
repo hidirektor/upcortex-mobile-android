@@ -15,9 +15,9 @@ import androidx.cardview.widget.CardView;
 import java.util.Set;
 
 import me.t3sl4.upcortex.R;
-import me.t3sl4.upcortex.Service.UserDataService;
 import me.t3sl4.upcortex.UI.Components.CircularCountdown.CircularCountdownView;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
+import me.t3sl4.upcortex.Utility.Bluetooth.BluetoothUtil;
 import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
 
 public class Dashboard extends AppCompatActivity {
@@ -31,6 +31,7 @@ public class Dashboard extends AppCompatActivity {
     private LinearLayout addDeviceLayout;
 
     private BluetoothAdapter bluetoothAdapter;
+    private BluetoothUtil bluetoothUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,8 @@ public class Dashboard extends AppCompatActivity {
 
         circularCountdownView = findViewById(R.id.circularCountdownView);
         circularCountdownView.setDuration(countdownDuration);
+
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     }
 
     private void startCountdown(long duration) {
@@ -98,11 +101,10 @@ public class Dashboard extends AppCompatActivity {
     }
 
     private void connectToDevice(BluetoothDevice device) {
+        bluetoothUtil.saveDeviceAddress(this, device.getAddress());
         Sneaker.with(Dashboard.this)
                 .setTitle(getString(R.string.connected_title))
                 .setMessage(getString(R.string.connected_desc))
                 .sneakSuccess();
-
-        UserDataService.setUserDeviceID(this, device.getAddress());
     }
 }
