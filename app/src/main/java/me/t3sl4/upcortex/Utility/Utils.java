@@ -1,15 +1,13 @@
 package me.t3sl4.upcortex.Utility;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.text.InputType;
-import android.view.MotionEvent;
-import android.view.View;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
 
-import com.google.android.material.textfield.TextInputEditText;
 import com.yariksoffice.lingver.Lingver;
 
-import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.Service.UserDataService;
 
 public class Utils {
@@ -51,30 +49,25 @@ public class Utils {
         Lingver.getInstance().setLocale(context, nextLang);
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    public static void passwordListener(TextInputEditText password) {
-        password.setOnTouchListener(new View.OnTouchListener() {
-            boolean isPasswordVisible = false;
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                final int DRAWABLE_END = 2;
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= (password.getRight() - password.getCompoundDrawables()[DRAWABLE_END].getBounds().width())) {
-                        if (isPasswordVisible) {
-                            password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                            password.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ikon_login_pass, 0, R.drawable.ikon_show_pass, 0);
-                        } else {
-                            password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                            password.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ikon_login_pass, 0, R.drawable.ikon_hide_pass, 0);
-                        }
-                        isPasswordVisible = !isPasswordVisible;
-                        password.setSelection(password.getText().length());
-                        return true;
-                    }
+        if (connectivityManager != null) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                Network network = connectivityManager.getActiveNetwork();
+                if (network != null) {
+                    NetworkCapabilities networkCapabilities = connectivityManager.getNetworkCapabilities(network);
+                    return networkCapabilities != null &&
+                            (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                                    networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
+                                    networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET));
                 }
-                return false;
+            } else {
+                // below Android Marshmallow (API 23)
+                NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+                return activeNetworkInfo != null && activeNetworkInfo.isConnected();
             }
-        });
+        }
+        return false;
     }
 }

@@ -18,8 +18,9 @@ import java.util.Calendar;
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.DatePicker.DatePickerBottomSheet;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
+import me.t3sl4.upcortex.Utility.Screen.ScreenListeners;
+import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
 import me.t3sl4.upcortex.Utility.SharedPreferences.SharedPreferencesManager;
-import me.t3sl4.upcortex.Utility.Utils;
 
 public class Register1 extends AppCompatActivity {
 
@@ -35,22 +36,18 @@ public class Register1 extends AppCompatActivity {
     private TextView termsViewerTextView;
     private Button nextButton;
 
-    private SharedPreferencesManager sharedPrefManager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_1);
 
-        Utils.hideNavigationBar(this);
-
-        sharedPrefManager = new SharedPreferencesManager(this);
+        ScreenUtil.hideNavigationBar(this);
 
         initializeComponents();
         loadSavedData(); // Kaydedilen verileri yükle
         buttonClickListeners();
-        Utils.passwordListener(passwordEditText);
-        Utils.passwordListener(repeatPasswordEditText);
+        ScreenListeners.passwordListener(passwordEditText);
+        ScreenListeners.passwordListener(repeatPasswordEditText);
     }
 
     private void initializeComponents() {
@@ -142,59 +139,59 @@ public class Register1 extends AppCompatActivity {
     }
 
     private void saveData() {
-        sharedPrefManager.saveString("name", nameEditText.getText().toString());
-        sharedPrefManager.saveString("surname", surnameEditText.getText().toString());
-        sharedPrefManager.saveString("idNumber", idNumberEditText.getText().toString());
-        sharedPrefManager.saveString("birthDate", birthDateEditText.getText().toString());
-        sharedPrefManager.saveString("countryCode", countryCodePicker.getSelectedCountryCode());
-        sharedPrefManager.saveString("phoneNumber", phoneNumberEditText.getText().toString());
-        sharedPrefManager.saveString("password", passwordEditText.getText().toString());
-        sharedPrefManager.saveString("repeatPassword", repeatPasswordEditText.getText().toString());
-        sharedPrefManager.saveBoolean("termsAccepted", termsAndConditionsCheckBox.isChecked());
+        SharedPreferencesManager.writeSharedPref("name", nameEditText.getText().toString(), this);
+        SharedPreferencesManager.writeSharedPref("surname", surnameEditText.getText().toString(), this);
+        SharedPreferencesManager.writeSharedPref("idNumber", idNumberEditText.getText().toString(), this);
+        SharedPreferencesManager.writeSharedPref("birthDate", birthDateEditText.getText().toString(), this);
+        SharedPreferencesManager.writeSharedPref("countryCode", countryCodePicker.getSelectedCountryCode(), this);
+        SharedPreferencesManager.writeSharedPref("phoneNumber", phoneNumberEditText.getText().toString(), this);
+        SharedPreferencesManager.writeSharedPref("password", passwordEditText.getText().toString(), this);
+        SharedPreferencesManager.writeSharedPref("repeatPassword", repeatPasswordEditText.getText().toString(), this);
+        SharedPreferencesManager.writeSharedPref("termsAccepted", termsAndConditionsCheckBox.isChecked(), this);
     }
 
     private void loadSavedData() {
-        String name = sharedPrefManager.getString("name");
-        if (name != null && !name.isEmpty()) {
+        String name = SharedPreferencesManager.getSharedPref("name", this, "");
+        if (!name.isEmpty()) {
             nameEditText.setText(name);
         }
 
-        String surname = sharedPrefManager.getString("surname");
-        if (surname != null && !surname.isEmpty()) {
+        String surname = SharedPreferencesManager.getSharedPref("surname", this, "");
+        if (!surname.isEmpty()) {
             surnameEditText.setText(surname);
         }
 
-        String idNumber = sharedPrefManager.getString("idNumber");
-        if (idNumber != null && !idNumber.isEmpty()) {
+        String idNumber = SharedPreferencesManager.getSharedPref("idNumber", this, "");
+        if (!idNumber.isEmpty()) {
             idNumberEditText.setText(idNumber);
         }
 
-        String birthDate = sharedPrefManager.getString("birthDate");
-        if (birthDate != null && !birthDate.isEmpty()) {
+        String birthDate = SharedPreferencesManager.getSharedPref("birthDate", this, "");
+        if (!birthDate.isEmpty()) {
             birthDateEditText.setText(birthDate);
         }
 
-        String countryCode = sharedPrefManager.getString("countryCode");
-        if (countryCode != null && !countryCode.isEmpty()) {
+        String countryCode = SharedPreferencesManager.getSharedPref("countryCode", this, "");
+        if (!countryCode.isEmpty()) {
             countryCodePicker.setCountryForPhoneCode(Integer.parseInt(countryCode));
         }
 
-        String phoneNumber = sharedPrefManager.getString("phoneNumber");
-        if (phoneNumber != null && !phoneNumber.isEmpty()) {
+        String phoneNumber = SharedPreferencesManager.getSharedPref("phoneNumber", this, "");
+        if (!phoneNumber.isEmpty()) {
             phoneNumberEditText.setText(phoneNumber);
         }
 
-        String password = sharedPrefManager.getString("password");
-        if (password != null && !password.isEmpty()) {
+        String password = SharedPreferencesManager.getSharedPref("password", this, "");
+        if (!password.isEmpty()) {
             passwordEditText.setText(password);
         }
 
-        String repeatPassword = sharedPrefManager.getString("repeatPassword");
-        if (repeatPassword != null && !repeatPassword.isEmpty()) {
+        String repeatPassword = SharedPreferencesManager.getSharedPref("repeatPassword", this, "");
+        if (!repeatPassword.isEmpty()) {
             repeatPasswordEditText.setText(repeatPassword);
         }
 
-        boolean termsAccepted = sharedPrefManager.getBoolean("termsAccepted");
+        boolean termsAccepted = SharedPreferencesManager.getSharedPref("termsAccepted", this, false);
         termsAndConditionsCheckBox.setChecked(termsAccepted);
     }
 

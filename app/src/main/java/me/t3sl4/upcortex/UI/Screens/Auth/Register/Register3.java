@@ -23,8 +23,8 @@ import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.DatePicker.ExpiryDatePicker;
 import me.t3sl4.upcortex.UI.Components.PaymentOptions.PaymentOptions;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
+import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
 import me.t3sl4.upcortex.Utility.SharedPreferences.SharedPreferencesManager;
-import me.t3sl4.upcortex.Utility.Utils;
 
 public class Register3 extends AppCompatActivity implements ExpiryDatePicker.ExpiryDateSelectedListener  {
 
@@ -57,7 +57,6 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
     private TextInputEditText editTextCVV;
     private LinearLayout paymentOptionsButton;
 
-    private SharedPreferencesManager sharedPrefManager;
     private String uniqueID;
     private String packageName;
     private String selectedPaymentOption;
@@ -67,9 +66,7 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_3);
 
-        Utils.hideNavigationBar(this);
-
-        sharedPrefManager = new SharedPreferencesManager(this);
+        ScreenUtil.hideNavigationBar(this);
 
         initializeComponents();
         loadSavedData(); // Kaydedilen verileri yükle
@@ -274,63 +271,63 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
     }
 
     private void saveData() {
-        sharedPrefManager.saveString("cardNumber", editTextCardNumber.getText().toString());
-        sharedPrefManager.saveString("holderName", editTextHolderName.getText().toString());
-        sharedPrefManager.saveString("expiryDate", editTextExpiryDate.getText().toString());
-        sharedPrefManager.saveString("cvv", editTextCVV.getText().toString());
-        sharedPrefManager.saveBoolean("confirmCheckBox", confirmCheckBox.isChecked());
+        SharedPreferencesManager.writeSharedPref("cardNumber", editTextCardNumber.getText().toString(), this);
+        SharedPreferencesManager.writeSharedPref("holderName", editTextHolderName.getText().toString(), this);
+        SharedPreferencesManager.writeSharedPref("expiryDate", editTextExpiryDate.getText().toString(), this);
+        SharedPreferencesManager.writeSharedPref("cvv", editTextCVV.getText().toString(), this);
+        SharedPreferencesManager.writeSharedPref("confirmCheckBox", confirmCheckBox.isChecked(), this);
     }
 
     private void loadSavedData() {
-        String cardNumber = sharedPrefManager.getString("cardNumber");
-        if (cardNumber != null && !cardNumber.isEmpty()) {
+        String cardNumber = SharedPreferencesManager.getSharedPref("cardNumber", this, "");
+        if (!cardNumber.isEmpty()) {
             editTextCardNumber.setText(cardNumber);
         }
 
-        String holderName = sharedPrefManager.getString("holderName");
-        if (holderName != null && !holderName.isEmpty()) {
+        String holderName = SharedPreferencesManager.getSharedPref("holderName", this, "");
+        if (!holderName.isEmpty()) {
             editTextHolderName.setText(holderName);
         }
 
-        String expiryDate = sharedPrefManager.getString("expiryDate");
-        if (expiryDate != null && !expiryDate.isEmpty()) {
+        String expiryDate = SharedPreferencesManager.getSharedPref("expiryDate", this, "");
+        if (!expiryDate.isEmpty()) {
             editTextExpiryDate.setText(expiryDate);
         }
 
-        String cvv = sharedPrefManager.getString("cvv");
-        if (cvv != null && !cvv.isEmpty()) {
+        String cvv = SharedPreferencesManager.getSharedPref("cvv", this, "");
+        if (!cvv.isEmpty()) {
             editTextCVV.setText(cvv);
         }
 
-        boolean confirmCheckBoxValue = sharedPrefManager.getBoolean("confirmCheckBox");
+        boolean confirmCheckBoxValue = SharedPreferencesManager.getSharedPref("confirmCheckBox", this, false);
         confirmCheckBox.setChecked(confirmCheckBoxValue);
     }
 
     private void clearRegisterData() {
-        sharedPrefManager.remove("name");
-        sharedPrefManager.remove("surname");
-        sharedPrefManager.remove("idNumber");
-        sharedPrefManager.remove("birthDate");
-        sharedPrefManager.remove("countryCode");
-        sharedPrefManager.remove("phoneNumber");
-        sharedPrefManager.remove("password");
-        sharedPrefManager.remove("repeatPassword");
-        sharedPrefManager.remove("termsAccepted");
-        sharedPrefManager.remove("addressName");
-        sharedPrefManager.remove("addressName_name");
-        sharedPrefManager.remove("addressName_surname");
-        sharedPrefManager.remove("addressName_countryCode");
-        sharedPrefManager.remove("addressName_phoneNumber");
-        sharedPrefManager.remove("city");
-        sharedPrefManager.remove("district");
-        sharedPrefManager.remove("neighborhood");
-        sharedPrefManager.remove("addressDetail");
-        sharedPrefManager.remove("confirmAddress");
-        sharedPrefManager.remove("cardNumber");
-        sharedPrefManager.remove("holderName");
-        sharedPrefManager.remove("expiryDate");
-        sharedPrefManager.remove("cvv");
-        sharedPrefManager.remove("confirmCheckBox");
+        SharedPreferencesManager.writeSharedPref("name", "", this);
+        SharedPreferencesManager.writeSharedPref("surname", "", this);
+        SharedPreferencesManager.writeSharedPref("idNumber", "", this);
+        SharedPreferencesManager.writeSharedPref("birthDate", "", this);
+        SharedPreferencesManager.writeSharedPref("countryCode", "", this);
+        SharedPreferencesManager.writeSharedPref("phoneNumber", "", this);
+        SharedPreferencesManager.writeSharedPref("password", "", this);
+        SharedPreferencesManager.writeSharedPref("repeatPassword", "", this);
+        SharedPreferencesManager.writeSharedPref("termsAccepted", false, this);
+        SharedPreferencesManager.writeSharedPref("addressName", "", this);
+        SharedPreferencesManager.writeSharedPref("addressName_name", "", this);
+        SharedPreferencesManager.writeSharedPref("addressName_surname", "", this);
+        SharedPreferencesManager.writeSharedPref("addressName_countryCode", "", this);
+        SharedPreferencesManager.writeSharedPref("addressName_phoneNumber", "", this);
+        SharedPreferencesManager.writeSharedPref("city", "", this);
+        SharedPreferencesManager.writeSharedPref("district", "", this);
+        SharedPreferencesManager.writeSharedPref("neighborhood", "", this);
+        SharedPreferencesManager.writeSharedPref("addressDetail", "", this);
+        SharedPreferencesManager.writeSharedPref("confirmAddress", false, this);
+        SharedPreferencesManager.writeSharedPref("cardNumber", "", this);
+        SharedPreferencesManager.writeSharedPref("holderName", "", this);
+        SharedPreferencesManager.writeSharedPref("expiryDate", "", this);
+        SharedPreferencesManager.writeSharedPref("cvv", "", this);
+        SharedPreferencesManager.writeSharedPref("confirmCheckBox", false, this);
     }
 
     @Override

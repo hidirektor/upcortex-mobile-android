@@ -10,7 +10,6 @@ import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Screens.FirstSetup.FirstSetup;
 import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
 import me.t3sl4.upcortex.Utility.SharedPreferences.SharedPreferencesManager;
-import me.t3sl4.upcortex.Utility.Utils;
 
 public class OnBoard3 extends AppCompatActivity {
 
@@ -21,8 +20,8 @@ public class OnBoard3 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboard_3);
 
-        Utils.hideNavigationBar(this);
-        Utils.hideStatusBar(this);
+        ScreenUtil.hideNavigationBar(this);
+        ScreenUtil.hideStatusBar(this);
 
         initializeComponents();
         buttonClickListeners();
@@ -38,7 +37,7 @@ public class OnBoard3 extends AppCompatActivity {
         nextButton.setOnClickListener(v -> {
             Intent loginIntent = new Intent(OnBoard3.this, FirstSetup.class);
             startActivity(loginIntent);
-            SharedPreferencesManager.setFirstTime(OnBoard3.this, false);
+            SharedPreferencesManager.writeSharedPref("isFirstTime", false, this);
             finish();
         });
     }

@@ -39,4 +39,6 @@
     <color name="horizontalStepperColor">#003CD7</color>
 
     <color name="membershipButtonColor">#F1F1F1</color>
+
+    <color name="webview_background">#27292f</color>
 </resources>

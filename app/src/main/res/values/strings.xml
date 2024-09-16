@@ -16,6 +16,15 @@
     <string name="button_back_to_login">Giriş Ekranına Dön</string>
     <string name="button_space">Boşluk</string>
 
+    <string name="permission_allow">İzin Ver</string>
+    <string name="permission_deny">Şimdilik Reddet</string>
+
+    <!-- General Headers -->
+    <string name="warning">UYARI !</string>
+
+    <!-- Failure Texts -->
+    <string name="wifiFailure">Lütfen internet bağlantınızı kontrol edin!</string>
+
     <!-- Onboard Texts-->
     <string name="onboard_1_headline">Zihninizin Gücünü Keşfedin</string>
     <string name="onboard_1_desc">Gelişmiş nörostimülasyon teknolojimizle bilişsel fonksiyonlarınızı artırma yolculuğuna başlayın.</string>
@@ -152,4 +161,11 @@
     <string name="game_reset">Sıfırla</string>
     <string name="game_new_game">Yeni Oyun</string>
     <string name="game_single">Bireysel</string>
+
+    <!-- Permission Texts -->
+    <string name="permLocationTitle">Konum İzni</string>
+    <string name="permLocationDesc">Konum servislerini aktif ederek cihaz eşleştirmelerinde konumunuzun da sisteme kaydedilmesini sağlayarak satış sonrası desteği daha verimli bir hale getirebilirsiniz.</string>
+    <string name="permNotificationTitle">Bildirim İzni</string>
+    <string name="permNotificationDesc">Bildirim izni ile yeni güncellemelerden ve gelişmelerden haberdar olabilirsiniz.</string>
+    <string name="locationPermError">Konum izni gereklidir. Lütfen uygulamayı yeniden başlatın.</string>
 </resources>

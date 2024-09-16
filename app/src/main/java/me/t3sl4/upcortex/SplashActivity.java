@@ -21,6 +21,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
+import me.t3sl4.upcortex.UI.Screens.Auth.Login;
+import me.t3sl4.upcortex.UI.Screens.OnBoard.OnBoard1;
 import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
 import me.t3sl4.upcortex.Utility.SharedPreferences.SharedPreferencesManager;
 import me.t3sl4.upcortex.Utility.Utils;
@@ -143,7 +145,7 @@ public class SplashActivity extends AppCompatActivity {
 
         denyButton.setOnClickListener(v -> {
             String permErrorMsg = getString(R.string.locationPermError);
-            String errorTitleMsg = getString(R.string.errorTitle);
+            String errorTitleMsg = getString(R.string.error_title);
             if(permStatus == 1) {
                 Sneaker.with(this).setTitle(errorTitleMsg).setMessage(permErrorMsg).sneakError();
             }
@@ -156,25 +158,40 @@ public class SplashActivity extends AppCompatActivity {
 
     private void continueAppFlow() {
         boolean isFirstTime = SharedPreferencesManager.getSharedPref("isFirstTime", this, true);
+        boolean canAccess = SharedPreferencesManager.getSharedPref("canAccess", this, true);
         Utils.setSystemLanguage(this);
 
         if(Utils.isNetworkAvailable(this)) {
-            if (isFirstTime) {
-                setupOnboarding();
+            if(canAccess) {
+                if(isFirstTime) {
+                    setupOnboarding();
+                } else {
+                    redirectToMainActivity();
+                }
             } else {
-                redirectToMainActivity();
+
             }
         } else {
-            String errorTitleMsg = getString(R.string.errorTitle);
+            String errorTitleMsg = getString(R.string.error_title);
             String networkErrorMsg = getString(R.string.wifiFailure);
             Sneaker.with(this).setTitle(errorTitleMsg).setMessage(networkErrorMsg).sneakError();
         }
     }
 
+    private void redirectToMainActivity() {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(() -> {
+            stopLoadingAnimation();
+            Intent intent = new Intent(SplashActivity.this, Login.class);
+            startActivity(intent);
+            finish();
+        }, SPLASH_DELAY);
+    }
+
     //Buraca canAccess eklenecek
     private void setupOnboarding() {
         SharedPreferencesManager.writeSharedPref("isFirstTime", false, this);
-        Intent intent = new Intent(SplashActivity.this, OnBoarding.class);
+        Intent intent = new Intent(SplashActivity.this, OnBoard1.class);
         startActivity(intent);
         finish();
     }

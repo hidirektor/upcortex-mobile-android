@@ -14,6 +14,15 @@
     <string name="button_back_to_login">Back to Login</string>
     <string name="button_space">Space</string>
 
+    <string name="permission_allow">Allow</string>
+    <string name="permission_deny">Deny</string>
+
+    <!-- General Headers -->
+    <string name="warning">WARNING !</string>
+
+    <!-- Failure Texts -->
+    <string name="wifiFailure">Please check your WiFi connection!</string>
+
     <!-- Onboard Texts-->
     <string name="onboard_1_headline">Discover the Power of Your Mind</string>
     <string name="onboard_1_desc">Begin your journey to boost your cognitive functions with our advanced neurostimulation technology.</string>
@@ -146,4 +155,11 @@
     <string name="game_reset">Reset</string>
     <string name="game_new_game">New Game</string>
     <string name="game_single">Personal</string>
+
+    <!-- Permission Texts -->
+    <string name="permLocationTitle">Location</string>
+    <string name="permLocationDesc">By activating location services, you can make after-sales support more efficient by ensuring that your location is recorded in the system when pairing devices.</string>
+    <string name="permNotificationTitle">Notification</string>
+    <string name="permNotificationDesc">With notification permission, you can be informed about new updates and developments.</string>
+    <string name="locationPermError">Location must be enabled. Please restart the application.</string>
 </resources>

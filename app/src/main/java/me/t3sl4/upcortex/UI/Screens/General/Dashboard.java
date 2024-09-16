@@ -10,7 +10,7 @@ import androidx.cardview.widget.CardView;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.CircularCountdown.CircularCountdownView;
-import me.t3sl4.upcortex.Utility.Utils;
+import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
 
 public class Dashboard extends AppCompatActivity {
 
@@ -25,7 +25,7 @@ public class Dashboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        Utils.hideNavigationBar(this);
+        ScreenUtil.hideNavigationBar(this);
 
         initializeComponents();
 

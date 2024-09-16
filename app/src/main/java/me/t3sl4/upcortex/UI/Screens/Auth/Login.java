@@ -14,7 +14,8 @@ import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Screens.Auth.Register.Register1;
 import me.t3sl4.upcortex.UI.Screens.General.Dashboard;
 import me.t3sl4.upcortex.UI.Screens.ResetPass.ResetPass1;
-import me.t3sl4.upcortex.Utility.Utils;
+import me.t3sl4.upcortex.Utility.Screen.ScreenListeners;
+import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
 
 public class Login extends AppCompatActivity {
 
@@ -30,11 +31,11 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Utils.hideNavigationBar(this);
+        ScreenUtil.hideNavigationBar(this);
 
         initializeComponents();
         buttonClickListeners();
-        Utils.passwordListener(password);
+        ScreenListeners.passwordListener(password);
     }
 
     private void initializeComponents() {

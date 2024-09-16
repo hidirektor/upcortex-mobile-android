@@ -10,8 +10,8 @@ import androidx.core.content.ContextCompat;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Screens.Auth.AuthSelection;
+import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
 import me.t3sl4.upcortex.Utility.SharedPreferences.SharedPreferencesManager;
-import me.t3sl4.upcortex.Utility.Utils;
 
 public class FirstSetup extends AppCompatActivity {
 
@@ -37,10 +37,8 @@ public class FirstSetup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_setup);
 
-        Utils.hideNavigationBar(this);
-        Utils.hideStatusBar(this);
-
-        sharedPrefManager = new SharedPreferencesManager(this);
+        ScreenUtil.hideNavigationBar(this);
+        ScreenUtil.hideStatusBar(this);
 
         initializeComponents();
         buttonClickListener();
@@ -65,10 +63,10 @@ public class FirstSetup extends AppCompatActivity {
         nextButton.setOnClickListener(v -> {
             Intent redirectIntent;
             if(checkStatus()) {
-                sharedPrefManager.saveBoolean("canAccess", true);
+                SharedPreferencesManager.writeSharedPref("canAccess", true, this);
                 redirectIntent = new Intent(FirstSetup.this, AuthSelection.class);
             } else {
-                sharedPrefManager.saveBoolean("canAccess", false);
+                SharedPreferencesManager.writeSharedPref("canAccess", false, this);
                 redirectIntent = new Intent(FirstSetup.this, FirstSetupError.class);
             }
             startActivity(redirectIntent);

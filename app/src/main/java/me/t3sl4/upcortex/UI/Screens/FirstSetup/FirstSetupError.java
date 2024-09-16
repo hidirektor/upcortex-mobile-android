@@ -7,8 +7,9 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import me.t3sl4.upcortex.R;
+import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
 import me.t3sl4.upcortex.Utility.Utils;
-import me.t3sl4.upcortex.Utility.Web.WebUtil;
+import me.t3sl4.upcortex.Utility.Web.WebViewBottomSheetFragment;
 
 public class FirstSetupError extends AppCompatActivity {
 
@@ -20,8 +21,8 @@ public class FirstSetupError extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_setup_error);
 
-        Utils.hideNavigationBar(this);
-        Utils.hideStatusBar(this);
+        ScreenUtil.hideNavigationBar(this);
+        ScreenUtil.hideStatusBar(this);
 
         initializeComponents();
         buttonClickListener();
@@ -40,7 +41,8 @@ public class FirstSetupError extends AppCompatActivity {
         });
 
         supportButton.setOnClickListener(v -> {
-            WebUtil.openURL(this, Utils.SUPPORT_URL);
+            WebViewBottomSheetFragment webViewBottomSheet = new WebViewBottomSheetFragment(Utils.SUPPORT_URL);
+            webViewBottomSheet.show(getSupportFragmentManager(), "WebViewBottomSheet");
         });
 
     }

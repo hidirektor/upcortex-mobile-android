@@ -12,7 +12,7 @@ import com.hbb20.CountryCodePicker;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.Utility.Utils;
-import me.t3sl4.upcortex.Utility.Web.WebUtil;
+import me.t3sl4.upcortex.Utility.Web.WebViewBottomSheetFragment;
 
 public class ResetPass1 extends AppCompatActivity {
 
@@ -52,7 +52,8 @@ public class ResetPass1 extends AppCompatActivity {
         });
 
         contactSupport.setOnClickListener(v -> {
-            WebUtil.openURL(this, Utils.SUPPORT_URL);
+            WebViewBottomSheetFragment webViewBottomSheet = new WebViewBottomSheetFragment(Utils.SUPPORT_URL);
+            webViewBottomSheet.show(getSupportFragmentManager(), "WebViewBottomSheet");
         });
     }
 }

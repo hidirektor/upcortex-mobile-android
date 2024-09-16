@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Screens.Auth.Login;
-import me.t3sl4.upcortex.Utility.Utils;
+import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
 
 public class Register4 extends AppCompatActivity {
 
@@ -25,7 +25,7 @@ public class Register4 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_4);
 
-        Utils.hideNavigationBar(this);
+        ScreenUtil.hideNavigationBar(this);
 
         initializeComponents();
         buttonClickListeners();

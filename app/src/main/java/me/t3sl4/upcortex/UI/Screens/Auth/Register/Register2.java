@@ -30,8 +30,8 @@ import java.util.List;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
+import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
 import me.t3sl4.upcortex.Utility.SharedPreferences.SharedPreferencesManager;
-import me.t3sl4.upcortex.Utility.Utils;
 
 public class Register2 extends AppCompatActivity {
 
@@ -49,7 +49,6 @@ public class Register2 extends AppCompatActivity {
     private Button backButton;
     private Button nextButton;
 
-    private SharedPreferencesManager sharedPrefManager;
     private JSONObject citiesJson;
     private JSONObject districtsJson;
     private JSONArray neighborhoodsJson;
@@ -59,9 +58,7 @@ public class Register2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_2);
 
-        Utils.hideNavigationBar(this);
-
-        sharedPrefManager = new SharedPreferencesManager(this);
+        ScreenUtil.hideNavigationBar(this);
 
         initializeComponents();
         loadJsonData();
@@ -298,67 +295,67 @@ public class Register2 extends AppCompatActivity {
     }
 
     private void saveData() {
-        sharedPrefManager.saveString("addressName", addressName.getText().toString());
-        sharedPrefManager.saveString("addressName_name", name.getText().toString());
-        sharedPrefManager.saveString("addressName_surname", surname.getText().toString());
-        sharedPrefManager.saveString("addressName_countryCode", countryCode.getSelectedCountryCode());
-        sharedPrefManager.saveString("addressName_phoneNumber", phoneNumber.getText().toString());
-        sharedPrefManager.saveString("city", city.getText().toString());
-        sharedPrefManager.saveString("district", district.getText().toString());
-        sharedPrefManager.saveString("neighborhood", neighborhood.getText().toString());
-        sharedPrefManager.saveString("addressDetail", addressDetail.getText().toString());
-        sharedPrefManager.saveBoolean("confirmAddress", confirmAddress.isChecked());
+        SharedPreferencesManager.writeSharedPref("addressName", addressName.getText().toString(), this);
+        SharedPreferencesManager.writeSharedPref("name", name.getText().toString(), this);
+        SharedPreferencesManager.writeSharedPref("surname", surname.getText().toString(), this);
+        SharedPreferencesManager.writeSharedPref("countryCode", countryCode.getSelectedCountryCode(), this);
+        SharedPreferencesManager.writeSharedPref("phoneNumber", phoneNumber.getText().toString(), this);
+        SharedPreferencesManager.writeSharedPref("city", city.getText().toString(), this);
+        SharedPreferencesManager.writeSharedPref("district", district.getText().toString(), this);
+        SharedPreferencesManager.writeSharedPref("neighborhood", neighborhood.getText().toString(), this);
+        SharedPreferencesManager.writeSharedPref("addressDetail", addressDetail.getText().toString(), this);
+        SharedPreferencesManager.writeSharedPref("confirmAddress", confirmAddress.isChecked(), this);
     }
 
     private void loadSavedData() {
-        String addressNameValue = sharedPrefManager.getString("addressName");
-        if (addressNameValue != null && !addressNameValue.isEmpty()) {
+        String addressNameValue = SharedPreferencesManager.getSharedPref("addressName", this, "");
+        if (!addressNameValue.isEmpty()) {
             addressName.setText(addressNameValue);
         }
 
-        String nameValue = sharedPrefManager.getString("addressName_name");
-        if (nameValue != null && !nameValue.isEmpty()) {
+        String nameValue = SharedPreferencesManager.getSharedPref("name", this, "");
+        if (!nameValue.isEmpty()) {
             name.setText(nameValue);
         }
 
-        String surnameValue = sharedPrefManager.getString("addressName_surname");
-        if (surnameValue != null && !surnameValue.isEmpty()) {
+        String surnameValue = SharedPreferencesManager.getSharedPref("surname", this, "");
+        if (!surnameValue.isEmpty()) {
             surname.setText(surnameValue);
         }
 
-        String countryCodeValue = sharedPrefManager.getString("addressName_countryCode");
-        if (countryCodeValue != null && !countryCodeValue.isEmpty()) {
+        String countryCodeValue = SharedPreferencesManager.getSharedPref("countryCode", this, "");
+        if (!countryCodeValue.isEmpty()) {
             countryCode.setCountryForPhoneCode(Integer.parseInt(countryCodeValue));
         }
 
-        String phoneNumberValue = sharedPrefManager.getString("addressName_phoneNumber");
-        if (phoneNumberValue != null && !phoneNumberValue.isEmpty()) {
+        String phoneNumberValue = SharedPreferencesManager.getSharedPref("phoneNumber", this, "");
+        if (!phoneNumberValue.isEmpty()) {
             phoneNumber.setText(phoneNumberValue);
         }
 
-        String cityValue = sharedPrefManager.getString("city");
-        if (cityValue != null && !cityValue.isEmpty()) {
+        String cityValue = SharedPreferencesManager.getSharedPref("city", this, "");
+        if (!cityValue.isEmpty()) {
             city.setText(cityValue);
             loadDistricts(cityValue);
         }
 
-        String districtValue = sharedPrefManager.getString("district");
-        if (districtValue != null && !districtValue.isEmpty()) {
+        String districtValue = SharedPreferencesManager.getSharedPref("district", this, "");
+        if (!districtValue.isEmpty()) {
             district.setText(districtValue);
             loadNeighborhoods(cityValue, districtValue);
         }
 
-        String neighborhoodValue = sharedPrefManager.getString("neighborhood");
-        if (neighborhoodValue != null && !neighborhoodValue.isEmpty()) {
+        String neighborhoodValue = SharedPreferencesManager.getSharedPref("neighborhood", this, "");
+        if (!neighborhoodValue.isEmpty()) {
             neighborhood.setText(neighborhoodValue);
         }
 
-        String addressDetailValue = sharedPrefManager.getString("addressDetail");
-        if (addressDetailValue != null && !addressDetailValue.isEmpty()) {
+        String addressDetailValue = SharedPreferencesManager.getSharedPref("addressDetail", this, "");
+        if (!addressDetailValue.isEmpty()) {
             addressDetail.setText(addressDetailValue);
         }
 
-        boolean confirmAddressValue = sharedPrefManager.getBoolean("confirmAddress");
+        boolean confirmAddressValue = SharedPreferencesManager.getSharedPref("confirmAddress", this, false);
         confirmAddress.setChecked(confirmAddressValue);
     }
 
