@@ -63,6 +63,7 @@ android {
             versionName = "$major.$minor.$patch($versionCode)"
 
             buildConfigField("String", "BASE_URL", "\"http://160.20.111.42:3200/api/\"")
+            buildConfigField("String", "ONESIGNAL_APP_ID", "\"9cbe059f-be21-4512-a1f6-5a9fc0f77506\"")
 
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         }
@@ -137,6 +138,13 @@ dependencies {
         exclude(group = "com.google.code.findbugs", module = "jsr305")
         exclude(group = "net.jcip", module = "jcip-annotations")
     }
+
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.android.volley:volley:1.2.1")
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
 
     implementation(libs.core.ktx)
 

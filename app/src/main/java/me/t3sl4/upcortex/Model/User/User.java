@@ -4,51 +4,34 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class User implements Parcelable {
-
     private String userID;
     private String accessToken;
-    private String refreshToken;
 
-    private String role;
-    private String userName;
+    private String identityNumber;
     private String eMail;
     private String nameSurname;
     private String phoneNumber;
-    private String companyName;
-    private String ownerName;
-    private String createdAt;
-    private String isActive;
 
-    private String selectedLanguage;
-    private String selectedNightMode;
+    private String userState;
 
-    public User(String role, String userName, String eMail, String nameSurname, String phoneNumber, String companyName, String createdAt, String isActive, String selectedLanguage, String selectedNightMode) {
-        this.role = role;
-        this.userName = userName;
+    public User(String userID, String accessToken, String identityNumber, String eMail, String nameSurname, String phoneNumber, String userState) {
+        this.userID = userID;
+        this.accessToken = accessToken;
+
+        this.identityNumber = identityNumber;
         this.eMail = eMail;
         this.nameSurname = nameSurname;
         this.phoneNumber = phoneNumber;
-        this.companyName = companyName;
-        this.createdAt = createdAt;
-        this.isActive = isActive;
-        this.selectedLanguage = selectedLanguage;
-        this.selectedNightMode = selectedNightMode;
+
+        this.userState = userState;
     }
 
-    public String getRole() {
-        return role;
+    public String getIdentityNumber() {
+        return identityNumber;
     }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setIdentityNumber(String identityNumber) {
+        this.identityNumber = identityNumber;
     }
 
     public String geteMail() {
@@ -75,30 +58,6 @@ public class User implements Parcelable {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public String getOwnerName() {
-        return ownerName;
-    }
-
-    public void setOwnerName(String ownerName) {
-        this.ownerName = ownerName;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public String getUserID() {
         return userID;
     }
@@ -115,36 +74,12 @@ public class User implements Parcelable {
         this.accessToken = accessToken;
     }
 
-    public String getRefreshToken() {
-        return refreshToken;
+    public String getUserState() {
+        return userState;
     }
 
-    public void setRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
-    }
-
-    public String getIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(String isActive) {
-        this.isActive = isActive;
-    }
-
-    public String getSelectedLanguage() {
-        return selectedLanguage;
-    }
-
-    public void setSelectedLanguage(String selectedLanguage) {
-        this.selectedLanguage = selectedLanguage;
-    }
-
-    public String getSelectedNightMode() {
-        return selectedNightMode;
-    }
-
-    public void setSelectedNightMode(String selectedNightMode) {
-        this.selectedNightMode = selectedNightMode;
+    public void setUserState(String userState) {
+        this.userState = userState;
     }
 
     @Override
@@ -154,16 +89,14 @@ public class User implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(role);
-        dest.writeString(userName);
+        dest.writeString(userID);
+
+        dest.writeString(identityNumber);
         dest.writeString(eMail);
         dest.writeString(nameSurname);
         dest.writeString(phoneNumber);
-        dest.writeString(companyName);
-        dest.writeString(createdAt);
-        dest.writeString(isActive);
-        dest.writeString(selectedLanguage);
-        dest.writeString(selectedNightMode);
+
+        dest.writeString(userState);
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -179,15 +112,13 @@ public class User implements Parcelable {
     };
 
     protected User(Parcel in) {
-        role = in.readString();
-        userName = in.readString();
+        userID = in.readString();
+
+        identityNumber = in.readString();
         eMail = in.readString();
         nameSurname = in.readString();
         phoneNumber = in.readString();
-        companyName = in.readString();
-        createdAt = in.readString();
-        isActive = in.readString();
-        selectedLanguage = in.readString();
-        selectedNightMode = in.readString();
+
+        userState = in.readString();
     }
 }
