@@ -113,6 +113,9 @@
     <string name="error_age_error">Subscription plans cannot be selected for those under 12 years of age.</string>
     <string name="error_select_city_first">Please select your province first.</string>
     <string name="error_select_city_district_first">Please select your district first.</string>
+    <string name="error_empty_fields">You must fill in all fields.</string>
+    <string name="error_invalid_id_number">Your ID number cannot be more or less than 11 characters.</string>
+    <string name="error_login_failed">An error occurred while logging in, please try again.</string>
 
     <!-- Register 4 Screen Texts-->
     <string name="register_fourth_success">Your Subscription Has Been Successfully Received!</string>

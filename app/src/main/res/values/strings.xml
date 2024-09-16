@@ -119,6 +119,9 @@
     <string name="error_age_error">12 yaşından küçükler için abonelik planı seçilemez.</string>
     <string name="error_select_city_first">Lütfen önce ilinizi seçin.</string>
     <string name="error_select_city_district_first">Lütfen önce ilcenizi seçin.</string>
+    <string name="error_empty_fields">Tüm alanları doldurmalısınız.</string>
+    <string name="error_invalid_id_number">TC Kimlik numaranız 11 karakterden fazla ya da az olamaz.</string>
+    <string name="error_login_failed">Giriş yaparken hata meydana geldi lütfen tekrar deneyin.</string>
 
     <!-- Register 4 Screen Texts-->
     <string name="register_fourth_success">Aboneliğiniz Başarıyla Alındı!</string>
