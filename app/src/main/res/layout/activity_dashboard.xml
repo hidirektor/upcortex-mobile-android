@@ -150,6 +150,7 @@
                                 app:remainingTimeTextSize="16sp"
                                 app:strokeWidth="10dp"
                                 app:progressText="Kalan Süre:"
+                                app:preProgressText="true"
                                 app:duration="3300000"
                                 app:remainingTime="1800000"
                                 app:circleDiameter="200dp"
