@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat;
 
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
 import me.t3sl4.upcortex.UI.Screens.Auth.Login;
+import me.t3sl4.upcortex.UI.Screens.FirstSetup.FirstSetupError;
 import me.t3sl4.upcortex.UI.Screens.OnBoard.OnBoard1;
 import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
 import me.t3sl4.upcortex.Utility.SharedPreferences.SharedPreferencesManager;
@@ -169,13 +170,37 @@ public class SplashActivity extends AppCompatActivity {
                     redirectToMainActivity();
                 }
             } else {
-
+               Intent firstSetupIntent = new Intent(SplashActivity.this, FirstSetupError.class);
+               startActivity(firstSetupIntent);
+               finish();
             }
         } else {
-            String errorTitleMsg = getString(R.string.error_title);
-            String networkErrorMsg = getString(R.string.wifiFailure);
-            Sneaker.with(this).setTitle(errorTitleMsg).setMessage(networkErrorMsg).sneakError();
+            showNetworkErrorDialog();
         }
+    }
+
+    private void showNetworkErrorDialog() {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_network_error);
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.background_button_exams);
+
+        Button retryButton = dialog.findViewById(R.id.buttonRetry);
+        Button closeButton = dialog.findViewById(R.id.buttonClose);
+
+        retryButton.setOnClickListener(v -> {
+            dialog.dismiss();
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
+        });
+
+        closeButton.setOnClickListener(v -> {
+            dialog.dismiss();
+            finishAffinity();
+        });
+
+        dialog.setCancelable(false);
+        dialog.show();
     }
 
     private void redirectToMainActivity() {

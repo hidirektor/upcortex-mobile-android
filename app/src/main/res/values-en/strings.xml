@@ -13,6 +13,8 @@
     <string name="button_save_pass">Save Password</string>
     <string name="button_back_to_login">Back to Login</string>
     <string name="button_space">Space</string>
+    <string name="button_retry">Retry</string>
+    <string name="button_close_app">Close the App</string>
 
     <string name="permission_allow">Allow</string>
     <string name="permission_deny">Deny</string>
@@ -22,6 +24,9 @@
 
     <!-- Failure Texts -->
     <string name="wifiFailure">Please check your WiFi connection!</string>
+
+    <!-- Explanation Texts -->
+    <string name="wifiFailureDesc">You cannot access the application because you do not have an internet connection.\nPlease check your connection and try again.</string>
 
     <!-- Onboard Texts-->
     <string name="onboard_1_headline">Discover the Power of Your Mind</string>

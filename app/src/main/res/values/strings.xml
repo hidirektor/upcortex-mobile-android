@@ -15,6 +15,8 @@
     <string name="button_save_pass">Şifreni Güncelle</string>
     <string name="button_back_to_login">Giriş Ekranına Dön</string>
     <string name="button_space">Boşluk</string>
+    <string name="button_retry">Yeniden Dene</string>
+    <string name="button_close_app">Uygulamayı Kapat</string>
 
     <string name="permission_allow">İzin Ver</string>
     <string name="permission_deny">Şimdilik Reddet</string>
@@ -24,6 +26,9 @@
 
     <!-- Failure Texts -->
     <string name="wifiFailure">Lütfen internet bağlantınızı kontrol edin!</string>
+
+    <!-- Explanation Texts -->
+    <string name="wifiFailureDesc">İnternet bağlantınız olmadığı için uygulamaya erişim sağlayamıyorsunuz.\nLütfen bağlantınızı kontrol edip yeniden deneyin.</string>
 
     <!-- Onboard Texts-->
     <string name="onboard_1_headline">Zihninizin Gücünü Keşfedin</string>
