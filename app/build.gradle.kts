@@ -144,6 +144,8 @@ dependencies {
     implementation(libs.ccp)
     implementation(libs.pinview)
     implementation(libs.circleimageview)
+    implementation("com.github.YarikSOffice:lingver:1.3.0")
+    implementation("com.github.delight-im:Android-AdvancedWebView:v3.0.0")
 
     implementation(libs.appcompat)
     implementation(libs.material)
