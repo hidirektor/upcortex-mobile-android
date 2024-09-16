@@ -1,4 +1,4 @@
-package me.t3sl4.upcortex.Util.Web;
+package me.t3sl4.upcortex.Utility.Web;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;

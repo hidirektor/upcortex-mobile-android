@@ -10,7 +10,7 @@ import androidx.cardview.widget.CardView;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.CircularCountdown.CircularCountdownView;
-import me.t3sl4.upcortex.Util.Utils;
+import me.t3sl4.upcortex.Utility.Utils;
 
 public class Dashboard extends AppCompatActivity {
 

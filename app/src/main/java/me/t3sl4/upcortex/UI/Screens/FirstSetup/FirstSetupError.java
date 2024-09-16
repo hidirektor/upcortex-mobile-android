@@ -7,8 +7,8 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import me.t3sl4.upcortex.R;
-import me.t3sl4.upcortex.Util.Utils;
-import me.t3sl4.upcortex.Util.Web.WebUtil;
+import me.t3sl4.upcortex.Utility.Utils;
+import me.t3sl4.upcortex.Utility.Web.WebUtil;
 
 public class FirstSetupError extends AppCompatActivity {
 

@@ -23,8 +23,8 @@ import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.DatePicker.ExpiryDatePicker;
 import me.t3sl4.upcortex.UI.Components.PaymentOptions.PaymentOptions;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
-import me.t3sl4.upcortex.Util.SharedPreferences.SPUtil;
-import me.t3sl4.upcortex.Util.Utils;
+import me.t3sl4.upcortex.Utility.SharedPreferences.SharedPreferencesManager;
+import me.t3sl4.upcortex.Utility.Utils;
 
 public class Register3 extends AppCompatActivity implements ExpiryDatePicker.ExpiryDateSelectedListener  {
 
@@ -57,7 +57,7 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
     private TextInputEditText editTextCVV;
     private LinearLayout paymentOptionsButton;
 
-    private SPUtil sharedPrefManager;
+    private SharedPreferencesManager sharedPrefManager;
     private String uniqueID;
     private String packageName;
     private String selectedPaymentOption;
@@ -69,7 +69,7 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
 
         Utils.hideNavigationBar(this);
 
-        sharedPrefManager = new SPUtil(this);
+        sharedPrefManager = new SharedPreferencesManager(this);
 
         initializeComponents();
         loadSavedData(); // Kaydedilen verileri yükle

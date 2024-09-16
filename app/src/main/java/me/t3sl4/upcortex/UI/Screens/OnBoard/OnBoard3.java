@@ -8,9 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Screens.FirstSetup.FirstSetup;
-import me.t3sl4.upcortex.Util.Screen.ScreenUtil;
-import me.t3sl4.upcortex.Util.SharedPreferences.SPUtil;
-import me.t3sl4.upcortex.Util.Utils;
+import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
+import me.t3sl4.upcortex.Utility.SharedPreferences.SharedPreferencesManager;
+import me.t3sl4.upcortex.Utility.Utils;
 
 public class OnBoard3 extends AppCompatActivity {
 
@@ -38,7 +38,7 @@ public class OnBoard3 extends AppCompatActivity {
         nextButton.setOnClickListener(v -> {
             Intent loginIntent = new Intent(OnBoard3.this, FirstSetup.class);
             startActivity(loginIntent);
-            SPUtil.setFirstTime(OnBoard3.this, false);
+            SharedPreferencesManager.setFirstTime(OnBoard3.this, false);
             finish();
         });
     }

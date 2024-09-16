@@ -30,8 +30,8 @@ import java.util.List;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
-import me.t3sl4.upcortex.Util.SharedPreferences.SPUtil;
-import me.t3sl4.upcortex.Util.Utils;
+import me.t3sl4.upcortex.Utility.SharedPreferences.SharedPreferencesManager;
+import me.t3sl4.upcortex.Utility.Utils;
 
 public class Register2 extends AppCompatActivity {
 
@@ -49,7 +49,7 @@ public class Register2 extends AppCompatActivity {
     private Button backButton;
     private Button nextButton;
 
-    private SPUtil sharedPrefManager;
+    private SharedPreferencesManager sharedPrefManager;
     private JSONObject citiesJson;
     private JSONObject districtsJson;
     private JSONArray neighborhoodsJson;
@@ -61,7 +61,7 @@ public class Register2 extends AppCompatActivity {
 
         Utils.hideNavigationBar(this);
 
-        sharedPrefManager = new SPUtil(this);
+        sharedPrefManager = new SharedPreferencesManager(this);
 
         initializeComponents();
         loadJsonData();

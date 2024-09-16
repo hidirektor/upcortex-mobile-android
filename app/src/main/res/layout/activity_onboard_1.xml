@@ -21,7 +21,7 @@
         android:id="@+id/onboardIcon"
         android:layout_width="match_parent"
         android:layout_height="320dp"
-        android:src="@drawable/ikon_head"
+        android:src="@drawable/onboard_1"
         app:layout_constraintTop_toBottomOf="@+id/appLogo"/>
 
     <LinearLayout

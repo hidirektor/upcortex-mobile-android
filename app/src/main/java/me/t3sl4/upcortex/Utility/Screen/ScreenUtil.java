@@ -1,21 +1,68 @@
-package me.t3sl4.upcortex.Util;
+package me.t3sl4.upcortex.Utility.Screen;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
-import android.text.InputType;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.google.android.material.textfield.TextInputEditText;
+public class ScreenUtil {
 
-import me.t3sl4.upcortex.R;
+    public static void setSwipeListener(Activity currentActivity, Class<?> leftTargetActivity, Class<?> rightTargetActivity) {
+        GestureDetector gestureDetector = new GestureDetector(currentActivity, new SwipeGestureDetector(currentActivity, leftTargetActivity, rightTargetActivity));
+        currentActivity.findViewById(android.R.id.content).setOnTouchListener((v, event) -> gestureDetector.onTouchEvent(event));
+    }
 
-public class Utils {
-    public static String SUPPORT_URL = "https://github.com/hidirektor";
+    private static class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
+        private static final int SWIPE_THRESHOLD = 100;
+        private static final int SWIPE_VELOCITY_THRESHOLD = 100;
+        private Activity currentActivity;
+        private Class<?> leftTargetActivity;
+        private Class<?> rightTargetActivity;
+
+        SwipeGestureDetector(Activity currentActivity, Class<?> leftTargetActivity, Class<?> rightTargetActivity) {
+            this.currentActivity = currentActivity;
+            this.leftTargetActivity = leftTargetActivity;
+            this.rightTargetActivity = rightTargetActivity;
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            float diffX = e2.getX() - e1.getX();
+            float diffY = e2.getY() - e1.getY();
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+                if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                    if (diffX < 0) {
+                        onSwipeLeft();
+                    } else {
+                        onSwipeRight();
+                    }
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void onSwipeLeft() {
+            if(leftTargetActivity != null) {
+                Intent intent = new Intent(currentActivity, leftTargetActivity);
+                currentActivity.startActivity(intent);
+                currentActivity.finish();
+            }
+        }
+
+        private void onSwipeRight() {
+            if(rightTargetActivity != null) {
+                Intent intent = new Intent(currentActivity, rightTargetActivity);
+                currentActivity.startActivity(intent);
+                currentActivity.finish();
+            }
+        }
+    }
 
     public static void hideStatusBar(Activity mainActivity) {
         if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
@@ -75,32 +122,5 @@ public class Utils {
             winParams.flags &= ~bits;
         }
         win.setAttributes(winParams);
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    public static void passwordListener(TextInputEditText password) {
-        password.setOnTouchListener(new View.OnTouchListener() {
-            boolean isPasswordVisible = false;
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                final int DRAWABLE_END = 2;
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= (password.getRight() - password.getCompoundDrawables()[DRAWABLE_END].getBounds().width())) {
-                        if (isPasswordVisible) {
-                            password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                            password.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ikon_login_pass, 0, R.drawable.ikon_show_pass, 0);
-                        } else {
-                            password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                            password.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ikon_login_pass, 0, R.drawable.ikon_hide_pass, 0);
-                        }
-                        isPasswordVisible = !isPasswordVisible;
-                        password.setSelection(password.getText().length());
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
     }
 }

@@ -18,8 +18,8 @@ import java.util.Calendar;
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.DatePicker.DatePickerBottomSheet;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
-import me.t3sl4.upcortex.Util.SharedPreferences.SPUtil;
-import me.t3sl4.upcortex.Util.Utils;
+import me.t3sl4.upcortex.Utility.SharedPreferences.SharedPreferencesManager;
+import me.t3sl4.upcortex.Utility.Utils;
 
 public class Register1 extends AppCompatActivity {
 
@@ -35,7 +35,7 @@ public class Register1 extends AppCompatActivity {
     private TextView termsViewerTextView;
     private Button nextButton;
 
-    private SPUtil sharedPrefManager;
+    private SharedPreferencesManager sharedPrefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class Register1 extends AppCompatActivity {
 
         Utils.hideNavigationBar(this);
 
-        sharedPrefManager = new SPUtil(this);
+        sharedPrefManager = new SharedPreferencesManager(this);
 
         initializeComponents();
         loadSavedData(); // Kaydedilen verileri yükle

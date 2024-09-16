@@ -10,8 +10,8 @@ import androidx.core.content.ContextCompat;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Screens.Auth.AuthSelection;
-import me.t3sl4.upcortex.Util.SharedPreferences.SPUtil;
-import me.t3sl4.upcortex.Util.Utils;
+import me.t3sl4.upcortex.Utility.SharedPreferences.SharedPreferencesManager;
+import me.t3sl4.upcortex.Utility.Utils;
 
 public class FirstSetup extends AppCompatActivity {
 
@@ -30,7 +30,7 @@ public class FirstSetup extends AppCompatActivity {
     boolean heartStatus;
     boolean brainStatus;
 
-    private SPUtil sharedPrefManager;
+    private SharedPreferencesManager sharedPrefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class FirstSetup extends AppCompatActivity {
         Utils.hideNavigationBar(this);
         Utils.hideStatusBar(this);
 
-        sharedPrefManager = new SPUtil(this);
+        sharedPrefManager = new SharedPreferencesManager(this);
 
         initializeComponents();
         buttonClickListener();

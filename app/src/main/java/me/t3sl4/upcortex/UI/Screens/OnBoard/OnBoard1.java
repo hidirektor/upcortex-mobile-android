@@ -8,9 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Screens.FirstSetup.FirstSetup;
-import me.t3sl4.upcortex.Util.Screen.ScreenUtil;
-import me.t3sl4.upcortex.Util.SharedPreferences.SPUtil;
-import me.t3sl4.upcortex.Util.Utils;
+import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
+import me.t3sl4.upcortex.Utility.SharedPreferences.SharedPreferencesManager;
+import me.t3sl4.upcortex.Utility.Utils;
 
 public class OnBoard1 extends AppCompatActivity {
 
@@ -46,7 +46,7 @@ public class OnBoard1 extends AppCompatActivity {
         skipButton.setOnClickListener(v -> {
             Intent loginIntent = new Intent(OnBoard1.this, FirstSetup.class);
             startActivity(loginIntent);
-            SPUtil.setFirstTime(OnBoard1.this, false);
+            SharedPreferencesManager.setFirstTime(OnBoard1.this, false);
             finish();
         });
     }

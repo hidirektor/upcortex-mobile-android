@@ -11,8 +11,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.hbb20.CountryCodePicker;
 
 import me.t3sl4.upcortex.R;
-import me.t3sl4.upcortex.Util.Utils;
-import me.t3sl4.upcortex.Util.Web.WebUtil;
+import me.t3sl4.upcortex.Utility.Utils;
+import me.t3sl4.upcortex.Utility.Web.WebUtil;
 
 public class ResetPass1 extends AppCompatActivity {
 

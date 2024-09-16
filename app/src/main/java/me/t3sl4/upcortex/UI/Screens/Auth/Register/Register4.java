@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Screens.Auth.Login;
-import me.t3sl4.upcortex.Util.Utils;
+import me.t3sl4.upcortex.Utility.Utils;
 
 public class Register4 extends AppCompatActivity {
 
