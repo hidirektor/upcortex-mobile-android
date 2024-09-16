@@ -116,6 +116,7 @@
     <string name="error_empty_fields">You must fill in all fields.</string>
     <string name="error_invalid_id_number">Your ID number cannot be more or less than 11 characters.</string>
     <string name="error_login_failed">An error occurred while logging in, please try again.</string>
+    <string name="locationPermError">Location must be enabled. Please restart the application.</string>
 
     <!-- Register 4 Screen Texts-->
     <string name="register_fourth_success">Your Subscription Has Been Successfully Received!</string>
@@ -154,6 +155,7 @@
     <!-- Dashboard Texts-->
     <string name="dashboard_instructure">Instructions for Use</string>
     <string name="dashboard_instructure_desc">It is recommended to use it 5 days a week.</string>
+    <string name="add_device">Add a Device</string>
 
     <!-- Game Texts-->
     <string name="game_header">Digital Memory Game</string>
@@ -169,5 +171,10 @@
     <string name="permLocationDesc">By activating location services, you can make after-sales support more efficient by ensuring that your location is recorded in the system when pairing devices.</string>
     <string name="permNotificationTitle">Notification</string>
     <string name="permNotificationDesc">With notification permission, you can be informed about new updates and developments.</string>
-    <string name="locationPermError">Location must be enabled. Please restart the application.</string>
+    <string name="permBluetoothTitle">Bluetooth</string>
+    <string name="permBluetoothDesc">You need to give Bluetooth permission in order to pair and use the devices you purchased.</string>
+
+    <!-- Bluetooth Texts -->
+    <string name="connected_title">Connection Successful</string>
+    <string name="connected_desc">Your UpCortex device connection has been completed successfully.</string>
 </resources>

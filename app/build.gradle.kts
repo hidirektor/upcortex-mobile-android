@@ -62,7 +62,7 @@ android {
             versionCode = realVersionCode
             versionName = "$major.$minor.$patch($versionCode)"
 
-            buildConfigField("String", "BASE_URL", "\"http://160.20.111.42:3200/api/\"")
+            buildConfigField("String", "BASE_URL", "\"http://160.20.111.45:3200/\"")
             buildConfigField("String", "ONESIGNAL_APP_ID", "\"9cbe059f-be21-4512-a1f6-5a9fc0f77506\"")
 
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

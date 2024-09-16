@@ -86,7 +86,7 @@ public class AuthService {
                         Log.d("Login", "Success: " + responseBody);
 
                         JSONObject responseJson = new JSONObject(responseBody);
-                        JSONObject payload = responseJson.getJSONObject("payload");
+                        JSONObject payload = responseJson.getJSONObject("response");
                         JSONObject userInfo = payload.getJSONObject("userInformation");
 
                         String userID = userInfo.getString("id");

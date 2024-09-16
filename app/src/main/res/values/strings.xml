@@ -122,6 +122,7 @@
     <string name="error_empty_fields">Tüm alanları doldurmalısınız.</string>
     <string name="error_invalid_id_number">TC Kimlik numaranız 11 karakterden fazla ya da az olamaz.</string>
     <string name="error_login_failed">Giriş yaparken hata meydana geldi lütfen tekrar deneyin.</string>
+    <string name="locationPermError">Konum izni gereklidir. Lütfen uygulamayı yeniden başlatın.</string>
 
     <!-- Register 4 Screen Texts-->
     <string name="register_fourth_success">Aboneliğiniz Başarıyla Alındı!</string>
@@ -160,6 +161,7 @@
     <!-- Dashboard Texts-->
     <string name="dashboard_instructure">Kullanım Talimatı</string>
     <string name="dashboard_instructure_desc">Haftada 5 Gün kullanmanız öneriliyor.</string>
+    <string name="add_device">Cihaz Ekleyin</string>
 
     <!-- Game Texts-->
     <string name="game_header">Sayısal Hafıza Oyunu</string>
@@ -175,5 +177,10 @@
     <string name="permLocationDesc">Konum servislerini aktif ederek cihaz eşleştirmelerinde konumunuzun da sisteme kaydedilmesini sağlayarak satış sonrası desteği daha verimli bir hale getirebilirsiniz.</string>
     <string name="permNotificationTitle">Bildirim İzni</string>
     <string name="permNotificationDesc">Bildirim izni ile yeni güncellemelerden ve gelişmelerden haberdar olabilirsiniz.</string>
-    <string name="locationPermError">Konum izni gereklidir. Lütfen uygulamayı yeniden başlatın.</string>
+    <string name="permBluetoothTitle">Bluetooth</string>
+    <string name="permBluetoothDesc">Satın aldığınız cihazları eşleyerek kullanabilmeniz için bluetooth izni vermeniz gerekmektedir.</string>
+
+    <!-- Bluetooth Texts -->
+    <string name="connected_title">Bağlantı Başarılı</string>
+    <string name="connected_desc">UpCortex cihaz bağlantınız başarıyla gerçekleşti.</string>
 </resources>

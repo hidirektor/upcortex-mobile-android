@@ -9,6 +9,7 @@
         android:id="@+id/mainScroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/subLayout">
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -102,7 +103,7 @@
                                 android:layout_gravity="center">
                                 <ImageView
                                     android:layout_width="match_parent"
-                                    android:layout_height="25dp"
+                                    android:layout_height="40dp"
                                     android:layout_gravity="center"
                                     android:src="@drawable/logo_splash"/>
                             </LinearLayout>
@@ -281,9 +282,9 @@
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
         android:layout_marginTop="12dp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/subLayout">
+        app:layout_constraintBottom_toTopOf="@id/subLayout">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -356,7 +357,7 @@
                     android:layout_gravity="center">
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="25dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:src="@drawable/logo_splash"/>
                 </LinearLayout>
@@ -383,32 +384,35 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/addDeviceLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_marginBottom="20dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/checkList">
-                <me.t3sl4.upcortex.UI.Components.CircularCountdown.CircularCountdownView
-                    android:id="@+id/circularCountdownView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1.0"
+                android:gravity="center"
+                android:layout_gravity="center">
+
+                <FrameLayout
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_gravity="center"
-                    app:progressColor="@color/ratingColor"
-                    app:backgroundColor="@color/secondaryColor"
-                    app:progressTextColor="@color/white"
-                    app:remainingTimeTextColor="@color/white"
-                    app:progressTextSize="16sp"
-                    app:remainingTimeTextSize="16sp"
-                    app:strokeWidth="10dp"
-                    app:progressText="Kalan Süre:"
-                    app:duration="3300000"
-                    app:remainingTime="1800000"
-                    app:circleDiameter="200dp"
-                    app:clockwise="false"
-                    app:softProgress="true" />
+                    android:background="@drawable/circle_border"
+                    android:layout_marginBottom="10dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ikon_plus"
+                        android:tint="@color/white"
+                        android:layout_gravity="center" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_device"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/white"
+                    android:gravity="center" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -539,7 +543,7 @@
             </LinearLayout>
         </com.google.android.material.bottomappbar.BottomAppBar>
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/qrConstraint"
+            android:id="@+id/homeConstraint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:pointerIcon="wait"

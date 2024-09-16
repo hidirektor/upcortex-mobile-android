@@ -1,15 +1,23 @@
 package me.t3sl4.upcortex.UI.Screens.General;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import java.util.Set;
+
 import me.t3sl4.upcortex.R;
+import me.t3sl4.upcortex.Service.UserDataService;
 import me.t3sl4.upcortex.UI.Components.CircularCountdown.CircularCountdownView;
+import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
 import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
 
 public class Dashboard extends AppCompatActivity {
@@ -19,6 +27,10 @@ public class Dashboard extends AppCompatActivity {
 
     private ScrollView mainScroll;
     private CardView nonSetupCard;
+
+    private LinearLayout addDeviceLayout;
+
+    private BluetoothAdapter bluetoothAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +42,15 @@ public class Dashboard extends AppCompatActivity {
         initializeComponents();
 
         nonSetup();
+
+        addDeviceLayout.setOnClickListener(v -> startBluetoothDeviceSelection());
     }
 
     private void initializeComponents() {
         mainScroll = findViewById(R.id.mainScroll);
         nonSetupCard = findViewById(R.id.nonSetupCard);
+
+        addDeviceLayout = findViewById(R.id.addDeviceLayout);
 
         circularCountdownView = findViewById(R.id.circularCountdownView);
         circularCountdownView.setDuration(countdownDuration);
@@ -62,5 +78,31 @@ public class Dashboard extends AppCompatActivity {
         nonSetupCard.setVisibility(View.GONE);
 
         startCountdown(countdownDuration);
+    }
+
+    private void startBluetoothDeviceSelection() {
+        if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, 1);
+        } else {
+            Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
+            if (pairedDevices.size() > 0) {
+                for (BluetoothDevice device : pairedDevices) {
+                    if (device.getName().startsWith("UpCortex -")) {
+                        connectToDevice(device);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    private void connectToDevice(BluetoothDevice device) {
+        Sneaker.with(Dashboard.this)
+                .setTitle(getString(R.string.connected_title))
+                .setMessage(getString(R.string.connected_desc))
+                .sneakSuccess();
+
+        UserDataService.setUserDeviceID(this, device.getAddress());
     }
 }

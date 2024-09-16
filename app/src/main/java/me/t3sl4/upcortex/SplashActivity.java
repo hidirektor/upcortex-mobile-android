@@ -1,6 +1,5 @@
 package me.t3sl4.upcortex;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -17,13 +16,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
+import me.t3sl4.upcortex.Service.UserDataService;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
 import me.t3sl4.upcortex.UI.Screens.Auth.Login;
 import me.t3sl4.upcortex.UI.Screens.FirstSetup.FirstSetupError;
+import me.t3sl4.upcortex.UI.Screens.General.Dashboard;
 import me.t3sl4.upcortex.UI.Screens.OnBoard.OnBoard1;
+import me.t3sl4.upcortex.Utility.Permission.PermissionUtil;
 import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
 import me.t3sl4.upcortex.Utility.SharedPreferences.SharedPreferencesManager;
 import me.t3sl4.upcortex.Utility.Utils;
@@ -31,14 +31,9 @@ import me.t3sl4.upcortex.Utility.Utils;
 public class SplashActivity extends AppCompatActivity {
 
     private static final int SPLASH_DELAY = 2000;
-    Intent redirectIntent;
-    private SharedPreferencesManager sharedPrefManager;
-
     private ImageView appLogo;
     private Animation fadeIn;
     private Animation fadeOut;
-
-    private Dialog uyariDiyalog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +44,14 @@ public class SplashActivity extends AppCompatActivity {
 
         startLoadingAnimation();
 
-        if (checkLocationPermission()) {
-            if (checkNotificationPermission()) {
-                continueAppFlow();
+        // İzinleri kontrol et ve izin pop-up'larını göster
+        if (PermissionUtil.hasLocationPermission(this)) {
+            if (PermissionUtil.hasNotificationPermission(this)) {
+                if (PermissionUtil.hasBluetoothPermission(this)) {
+                    continueAppFlow();
+                } else {
+                    showPermissionPopup(3); // Bluetooth izni
+                }
             } else {
                 showPermissionPopup(2); // Bildirim izni
             }
@@ -60,44 +60,36 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
-    private boolean checkLocationPermission() {
-        return ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-    }
-
-    private boolean checkNotificationPermission() {
-        return ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED;
-    }
-
-    private void requestLocationPermission() {
-        ActivityCompat.requestPermissions(this,
-                new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                101);
-    }
-
-    private void requestNotificationPermission() {
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.POST_NOTIFICATIONS},
-                102);
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 101) {
+        if (requestCode == PermissionUtil.LOCATION_PERMISSION_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                if (!checkNotificationPermission()) {
+                if (!PermissionUtil.hasNotificationPermission(this)) {
                     showPermissionPopup(2);
+                } else if (!PermissionUtil.hasBluetoothPermission(this)) {
+                    showPermissionPopup(3);
                 } else {
                     continueAppFlow();
                 }
             } else {
                 showPermissionPopup(1);
             }
-        } else if (requestCode == 102) {
+        } else if (requestCode == PermissionUtil.NOTIFICATION_PERMISSION_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (!PermissionUtil.hasBluetoothPermission(this)) {
+                    showPermissionPopup(3);
+                } else {
+                    continueAppFlow();
+                }
+            } else {
+                showPermissionPopup(2);
+            }
+        } else if (requestCode == PermissionUtil.BLUETOOTH_PERMISSION_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 continueAppFlow();
             } else {
-                showPermissionPopup(2);
+                showPermissionPopup(3); // Bluetooth izni
             }
         }
     }
@@ -124,30 +116,39 @@ public class SplashActivity extends AppCompatActivity {
         String notificationPermTitle = getString(R.string.permNotificationTitle);
         String notificationPermDesc = getString(R.string.permNotificationDesc);
 
-        if(permStatus == 1) {
+        String bluetoothPermTitle = getString(R.string.permBluetoothTitle);
+        String bluetoothPermDesc = getString(R.string.permBluetoothDesc);
+
+        if (permStatus == 1) {
             permIcon.setImageDrawable(getDrawable(R.drawable.ikon_location_perm));
             permTitleText.setText(locationPermTitle);
             permDescText.setText(locationPermDesc);
-        } else {
+        } else if (permStatus == 2) {
             permIcon.setImageDrawable(getDrawable(R.drawable.ikon_notification_perm));
             permTitleText.setText(notificationPermTitle);
             permDescText.setText(notificationPermDesc);
+        } else if (permStatus == 3) {
+            permIcon.setImageDrawable(getDrawable(R.drawable.ikon_bluetooth_perm)); // Yeni ikon
+            permTitleText.setText(bluetoothPermTitle);
+            permDescText.setText(bluetoothPermDesc);
         }
 
         alertBuilder.setCancelable(true);
         acceptButton.setOnClickListener(v -> {
             alert.dismiss();
             if (permStatus == 1) {
-                requestLocationPermission();
-            } else {
-                requestNotificationPermission();
+                PermissionUtil.requestLocationPermission(SplashActivity.this);
+            } else if (permStatus == 2) {
+                PermissionUtil.requestNotificationPermission(SplashActivity.this);
+            } else if (permStatus == 3) {
+                PermissionUtil.requestBluetoothPermission(SplashActivity.this);
             }
         });
 
         denyButton.setOnClickListener(v -> {
             String permErrorMsg = getString(R.string.locationPermError);
             String errorTitleMsg = getString(R.string.error_title);
-            if(permStatus == 1) {
+            if (permStatus == 1) {
                 Sneaker.with(this).setTitle(errorTitleMsg).setMessage(permErrorMsg).sneakError();
             }
             alert.dismiss();
@@ -160,19 +161,18 @@ public class SplashActivity extends AppCompatActivity {
     private void continueAppFlow() {
         boolean isFirstTime = SharedPreferencesManager.getSharedPref("isFirstTime", this, true);
         boolean canAccess = SharedPreferencesManager.getSharedPref("canAccess", this, true);
-        //Utils.setSystemLanguage(this);
 
-        if(Utils.isNetworkAvailable(this)) {
-            if(canAccess) {
-                if(isFirstTime) {
+        if (Utils.isNetworkAvailable(this)) {
+            if (canAccess) {
+                if (isFirstTime) {
                     setupOnboarding();
                 } else {
                     redirectToMainActivity();
                 }
             } else {
-               Intent firstSetupIntent = new Intent(SplashActivity.this, FirstSetupError.class);
-               startActivity(firstSetupIntent);
-               finish();
+                Intent firstSetupIntent = new Intent(SplashActivity.this, FirstSetupError.class);
+                startActivity(firstSetupIntent);
+                finish();
             }
         } else {
             showNetworkErrorDialog();
@@ -206,9 +206,14 @@ public class SplashActivity extends AppCompatActivity {
     private void redirectToMainActivity() {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(() -> {
+            Intent loginIntent;
             stopLoadingAnimation();
-            Intent intent = new Intent(SplashActivity.this, Login.class);
-            startActivity(intent);
+            if (UserDataService.getAccessToken(this) != null && !UserDataService.getAccessToken(this).isEmpty()) {
+                loginIntent = new Intent(SplashActivity.this, Dashboard.class);
+            } else {
+                loginIntent = new Intent(SplashActivity.this, Login.class);
+            }
+            startActivity(loginIntent);
             finish();
         }, SPLASH_DELAY);
     }
@@ -226,8 +231,6 @@ public class SplashActivity extends AppCompatActivity {
         appLogo = findViewById(R.id.appLogo);
         fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
         fadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out);
-
-        uyariDiyalog = new Dialog(this);
     }
 
     private void startLoadingAnimation() {

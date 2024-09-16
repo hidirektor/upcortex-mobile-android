@@ -17,7 +17,6 @@ import me.t3sl4.upcortex.UI.Screens.General.Dashboard;
 import me.t3sl4.upcortex.UI.Screens.ResetPass.ResetPass1;
 import me.t3sl4.upcortex.Utility.HTTP.Requests.Auth.AuthService;
 import me.t3sl4.upcortex.Utility.Screen.ScreenListeners;
-import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
 
 public class Login extends AppCompatActivity {
 
@@ -32,8 +31,6 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        ScreenUtil.hideNavigationBar(this);
 
         initializeComponents();
         buttonClickListeners();
@@ -61,8 +58,7 @@ public class Login extends AppCompatActivity {
         });
 
         loginButton.setOnClickListener(v -> {
-            Intent dashboardIntent = new Intent(Login.this, Dashboard.class);
-            startActivity(dashboardIntent);
+            sendLoginRequest();
         });
     }
 
