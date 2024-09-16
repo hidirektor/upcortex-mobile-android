@@ -6,17 +6,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ScrollView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.CircularCountdown.CircularCountdownView;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
+import me.t3sl4.upcortex.Utility.Bluetooth.BluetoothScanDialog;
 import me.t3sl4.upcortex.Utility.Bluetooth.BluetoothUtil;
 import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
 
@@ -31,6 +35,9 @@ public class Dashboard extends AppCompatActivity {
     private LinearLayout addDeviceLayout;
 
     private BluetoothAdapter bluetoothAdapter;
+    private ArrayAdapter<String> deviceListAdapter;
+    private ArrayList<String> deviceList = new ArrayList<>();
+    private ListView listViewDevices;
     private BluetoothUtil bluetoothUtil;
 
     @Override
@@ -84,19 +91,45 @@ public class Dashboard extends AppCompatActivity {
     }
 
     private void startBluetoothDeviceSelection() {
-        if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled()) {
+        if (bluetoothAdapter == null) {
+            Sneaker.with(this).setTitle("Bluetooth Özelliği Yok")
+                    .setMessage("Cihazınızda Bluetooth özelliği bulunmuyor.")
+                    .sneakError();
+            return;
+        }
+
+        if (!bluetoothAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, 1);
-        } else {
-            Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
-            if (pairedDevices.size() > 0) {
-                for (BluetoothDevice device : pairedDevices) {
-                    if (device.getName().startsWith("UpCortex -")) {
-                        connectToDevice(device);
-                        break;
-                    }
+            return;
+        }
+
+        // Eşleşmiş cihazları al
+        Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
+        if (pairedDevices.size() > 0) {
+            boolean foundDevice = false;
+            for (BluetoothDevice device : pairedDevices) {
+                if (device.getName().startsWith("UpCortex -")) {
+                    connectToDevice(device);
+                    foundDevice = true;
+                    break;
                 }
             }
+
+            if (!foundDevice) {
+                Sneaker.with(this).setTitle("Cihaz Bulunamadı")
+                        .setMessage("Eşleşmiş cihazlar arasında uygun cihaz bulunamadı.")
+                        .sneakWarning();
+            }
+
+        } else {
+            Sneaker.with(this)
+                    .setTitle("Eşleşmiş Cihaz Yok")
+                    .setMessage("Cihazınızda daha önce eşleştirilmiş bir Bluetooth cihazı bulunmuyor.")
+                    .sneakWarning();
+
+            BluetoothScanDialog bluetoothScanDialog = new BluetoothScanDialog();
+            bluetoothScanDialog.show(getSupportFragmentManager(), "BluetoothScanDialog");
         }
     }
 
