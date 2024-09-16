@@ -188,7 +188,6 @@ public class SplashActivity extends AppCompatActivity {
         }, SPLASH_DELAY);
     }
 
-    //Buraca canAccess eklenecek
     private void setupOnboarding() {
         SharedPreferencesManager.writeSharedPref("isFirstTime", false, this);
         Intent intent = new Intent(SplashActivity.this, OnBoard1.class);
