@@ -8,7 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.LinkedList;
 import java.util.Locale;
 
 import me.t3sl4.upcortex.Model.Exam.Exam;
@@ -24,7 +24,7 @@ public class ExamService {
     private static final String USER_ALL_EXAMS = "/exam/list";
     private static final String USER_EXAM_URL = "/user-exam/get-user-exam";
 
-    public static void getAllExams(Context context, Runnable onSuccess, Runnable onFailure, List<Exam> examList) {
+    public static void getAllExams(Context context, Runnable onSuccess, Runnable onFailure, LinkedList<Exam> examList) {
         String token = UserDataService.getAccessToken(context);
         Call<ResponseBody> call = HttpHelper.makeRequest("GET", USER_ALL_EXAMS, null, null, token);
 

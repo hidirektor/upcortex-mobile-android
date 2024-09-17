@@ -16,7 +16,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/headerSection"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:visibility="visible">
                 <androidx.cardview.widget.CardView
                     android:id="@+id/headerCard"
                     android:layout_width="match_parent"
@@ -165,6 +166,7 @@
                     android:layout_height="match_parent"
                     app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="20dp"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@+id/headerCard"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -230,7 +232,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/nonSetupCard"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="match_parent"
                 app:cardBackgroundColor="@color/transparent"
                 app:cardCornerRadius="50sp"
                 android:layout_marginStart="12dp"

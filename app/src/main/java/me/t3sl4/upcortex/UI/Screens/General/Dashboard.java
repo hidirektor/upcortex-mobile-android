@@ -15,13 +15,12 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 import java.util.Set;
 
 import me.t3sl4.upcortex.Model.Exam.Adapter.ExamAdapter;
@@ -39,7 +38,8 @@ public class Dashboard extends AppCompatActivity {
     private CircularCountdownView circularCountdownView;
     private long countdownDuration = 5600000;
 
-    private ConstraintLayout headerSection;
+    private CardView headerCard;
+    private CardView usingDetailCard;
     private CardView nonSetupCard;
 
     private LinearLayout addDeviceLayout;
@@ -53,7 +53,7 @@ public class Dashboard extends AppCompatActivity {
     private BluetoothUtil bluetoothUtil;
 
     private ExamAdapter examAdapter;
-    private List<Exam> examList = new ArrayList<>();
+    private LinkedList<Exam> examList = new LinkedList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +71,8 @@ public class Dashboard extends AppCompatActivity {
     }
 
     private void initializeComponents() {
-        headerSection = findViewById(R.id.headerSection);
+        headerCard = findViewById(R.id.headerCard);
+        usingDetailCard = findViewById(R.id.usingDetailCard);
         nonSetupCard = findViewById(R.id.nonSetupCard);
 
         addDeviceLayout = findViewById(R.id.addDeviceLayout);
@@ -121,12 +122,14 @@ public class Dashboard extends AppCompatActivity {
     }
 
     private void nonSetup() {
-        headerSection.setVisibility(View.GONE);
+        headerCard.setVisibility(View.GONE);
+        usingDetailCard.setVisibility(View.GONE);
         nonSetupCard.setVisibility(View.VISIBLE);
     }
 
     private void showStandartScreen() {
-        headerSection.setVisibility(View.VISIBLE);
+        headerCard.setVisibility(View.VISIBLE);
+        usingDetailCard.setVisibility(View.VISIBLE);
         nonSetupCard.setVisibility(View.GONE);
 
         startCountdown(countdownDuration);
