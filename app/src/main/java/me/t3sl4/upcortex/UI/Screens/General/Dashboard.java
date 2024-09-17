@@ -1,8 +1,10 @@
 package me.t3sl4.upcortex.UI.Screens.General;
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.ScrollView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -22,6 +25,7 @@ import me.t3sl4.upcortex.UI.Components.CircularCountdown.CircularCountdownView;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
 import me.t3sl4.upcortex.Utility.Bluetooth.BluetoothScanDialog;
 import me.t3sl4.upcortex.Utility.Bluetooth.BluetoothUtil;
+import me.t3sl4.upcortex.Utility.HTTP.Requests.Exam.ExamService;
 import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
 
 public class Dashboard extends AppCompatActivity {
@@ -49,7 +53,7 @@ public class Dashboard extends AppCompatActivity {
 
         initializeComponents();
 
-        nonSetup();
+        fetchExamData();
 
         addDeviceLayout.setOnClickListener(v -> startBluetoothDeviceSelection());
     }
@@ -90,6 +94,14 @@ public class Dashboard extends AppCompatActivity {
         startCountdown(countdownDuration);
     }
 
+    private void fetchExamData() {
+        ExamService.getUserExam(this, () -> {
+            showStandartScreen();
+        }, () -> {
+            nonSetup();
+        });
+    }
+
     private void startBluetoothDeviceSelection() {
         if (bluetoothAdapter == null) {
             Sneaker.with(this).setTitle("Bluetooth Özelliği Yok")
@@ -100,6 +112,9 @@ public class Dashboard extends AppCompatActivity {
 
         if (!bluetoothAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
             startActivityForResult(enableBtIntent, 1);
             return;
         }

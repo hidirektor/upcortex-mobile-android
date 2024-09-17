@@ -5,15 +5,19 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 
 import me.t3sl4.upcortex.R;
 
 public class CircularCountdownView extends View {
+
+    private Typeface robotoFlexTypeface;
 
     private Paint progressPaint;
     private Paint backgroundPaint;
@@ -52,6 +56,9 @@ public class CircularCountdownView extends View {
     }
 
     private void init(Context context, @Nullable AttributeSet attrs) {
+
+        robotoFlexTypeface = ResourcesCompat.getFont(context, R.font.roboto_flex);
+
         if (attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CircularCountdownView);
             progressColor = typedArray.getColor(R.styleable.CircularCountdownView_progressColor, ContextCompat.getColor(context, R.color.ratingColor));
@@ -100,16 +107,19 @@ public class CircularCountdownView extends View {
             progressTextPaint.setColor(progressTextColor);
             progressTextPaint.setTextSize(progressTextSize);
             progressTextPaint.setTextAlign(Paint.Align.CENTER);
+            progressTextPaint.setTypeface(robotoFlexTypeface);
 
             remainingTimeTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             remainingTimeTextPaint.setColor(remainingTimeTextColor);
             remainingTimeTextPaint.setTextSize(remainingTimeTextSize);
             remainingTimeTextPaint.setTextAlign(Paint.Align.CENTER);
+            remainingTimeTextPaint.setTypeface(robotoFlexTypeface);
         } else {
             remainingTimeTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             remainingTimeTextPaint.setColor(remainingTimeTextColor);
             remainingTimeTextPaint.setTextSize(remainingTimeTextSize);
             remainingTimeTextPaint.setTextAlign(Paint.Align.CENTER);
+            remainingTimeTextPaint.setTypeface(robotoFlexTypeface);
         }
 
         rectF = new RectF();
@@ -138,8 +148,11 @@ public class CircularCountdownView extends View {
         String timeText = formatRemainingTime(remainingTime);
 
         if (preProgressText) {
-            canvas.drawText(progressText, getWidth() / 2, getHeight() - remainingTimeTextSize, progressTextPaint);
-            canvas.drawText(timeText, getWidth() / 2, getHeight() + remainingTimeTextSize, remainingTimeTextPaint);
+            float textYPosition = (rectF.centerY() + (remainingTimeTextSize / 2));  // Çemberin ortası
+            float progressTextYPosition = textYPosition + remainingTimeTextSize + 2;  // 2dp boşluk
+
+            canvas.drawText(progressText, rectF.centerX(), textYPosition, progressTextPaint);
+            canvas.drawText(timeText, rectF.centerX(), progressTextYPosition, remainingTimeTextPaint);
         } else {
             canvas.drawText(timeText, getWidth() / 2, rectF.height() / 2 + (remainingTimeTextSize / 2), remainingTimeTextPaint);
         }
