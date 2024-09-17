@@ -65,10 +65,10 @@ public class AuthService {
         });
     }
 
-    public static void login(Context context, String email, String password, Runnable onSuccess, Runnable onFailure) {
+    public static void login(Context context, String identityNumber, String password, Runnable onSuccess, Runnable onFailure) {
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("email", email);
+            jsonObject.put("identityNumber", identityNumber);
             jsonObject.put("password", password);
             jsonObject.put("platform", "mobile");  // Platform her zaman mobile olacak
         } catch (JSONException e) {
