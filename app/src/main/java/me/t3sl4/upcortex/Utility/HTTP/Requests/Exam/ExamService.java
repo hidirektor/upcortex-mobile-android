@@ -8,8 +8,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Locale;
+import java.util.Map;
 
 import me.t3sl4.upcortex.Model.Exam.Exam;
 import me.t3sl4.upcortex.Model.Exam.ExamState;
@@ -101,9 +103,12 @@ public class ExamService {
         });
     }
 
-    public static void getUserExam(Context context, Runnable onSuccess, Runnable onFailure) {
+    public static void getExamDetail(Context context, Runnable onSuccess, Runnable onFailure, String examID) {
         String token = UserDataService.getAccessToken(context);
-        Call<ResponseBody> call = HttpHelper.makeRequest("GET", USER_EXAM_URL, null, null, token);
+        Map<String, String> params = new HashMap<>();
+        params.put("examId", examID);
+
+        Call<ResponseBody> call = HttpHelper.makeRequest("GET", USER_EXAM_URL, params, null, token);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

@@ -88,5 +88,7 @@
         <activity android:name=".UI.Screens.ResetPass.ResetPass2" android:windowSoftInputMode="adjustPan" />
 
         <activity android:name=".UI.Screens.General.Dashboard" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+
+        <activity android:name=".UI.Screens.Exam.ExamStart" />
     </application>
 </manifest>

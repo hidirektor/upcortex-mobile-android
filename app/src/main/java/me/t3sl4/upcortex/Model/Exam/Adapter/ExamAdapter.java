@@ -1,6 +1,7 @@
 package me.t3sl4.upcortex.Model.Exam.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import me.t3sl4.upcortex.Model.Exam.Exam;
 import me.t3sl4.upcortex.R;
+import me.t3sl4.upcortex.UI.Screens.Exam.ExamStart;
 
 public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.ExamViewHolder> {
 
@@ -64,6 +66,12 @@ public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.ExamViewHolder
         holder.isExamNecessary.setTextColor(defaultColor);
         holder.examTitle.setText(examItem.getExamName());
         holder.examDescription.setText(examItem.getExamDescription());
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ExamStart.class);
+            intent.putExtra("exam", examItem);
+            context.startActivity(intent);
+        });
     }
 
     @Override
