@@ -15,6 +15,7 @@
     <string name="button_space">Space</string>
     <string name="button_retry">Retry</string>
     <string name="button_close_app">Close the App</string>
+    <string name="button_exams">Exams</string>
 
     <string name="permission_allow">Allow</string>
     <string name="permission_deny">Deny</string>
@@ -117,6 +118,7 @@
     <string name="error_invalid_id_number">Your ID number cannot be more or less than 11 characters.</string>
     <string name="error_login_failed">An error occurred while logging in, please try again.</string>
     <string name="locationPermError">Location must be enabled. Please restart the application.</string>
+    <string name="get_exams_error">Cant retrieve your exams data. Please refresh the screen.</string>
 
     <!-- Register 4 Screen Texts-->
     <string name="register_fourth_success">Your Subscription Has Been Successfully Received!</string>
@@ -177,4 +179,8 @@
     <!-- Bluetooth Texts -->
     <string name="connected_title">Connection Successful</string>
     <string name="connected_desc">Your UpCortex device connection has been completed successfully.</string>
+
+    <!-- Exams Texts -->
+    <string name="exam_must_be">Necessary</string>
+    <string name="exam_optional">Optional</string>
 </resources>

@@ -7,19 +7,25 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
+import me.t3sl4.upcortex.Model.Exam.Adapter.ExamAdapter;
+import me.t3sl4.upcortex.Model.Exam.Exam;
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.CircularCountdown.CircularCountdownView;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
@@ -33,16 +39,21 @@ public class Dashboard extends AppCompatActivity {
     private CircularCountdownView circularCountdownView;
     private long countdownDuration = 5600000;
 
-    private ScrollView mainScroll;
+    private ConstraintLayout headerSection;
     private CardView nonSetupCard;
 
     private LinearLayout addDeviceLayout;
+
+    private RecyclerView examsRecyclerView;
 
     private BluetoothAdapter bluetoothAdapter;
     private ArrayAdapter<String> deviceListAdapter;
     private ArrayList<String> deviceList = new ArrayList<>();
     private ListView listViewDevices;
     private BluetoothUtil bluetoothUtil;
+
+    private ExamAdapter examAdapter;
+    private List<Exam> examList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +64,14 @@ public class Dashboard extends AppCompatActivity {
 
         initializeComponents();
 
-        fetchExamData();
+        checkBluetoothDeviceStatus();
+        loadExamList();
 
         addDeviceLayout.setOnClickListener(v -> startBluetoothDeviceSelection());
     }
 
     private void initializeComponents() {
-        mainScroll = findViewById(R.id.mainScroll);
+        headerSection = findViewById(R.id.headerSection);
         nonSetupCard = findViewById(R.id.nonSetupCard);
 
         addDeviceLayout = findViewById(R.id.addDeviceLayout);
@@ -67,7 +79,33 @@ public class Dashboard extends AppCompatActivity {
         circularCountdownView = findViewById(R.id.circularCountdownView);
         circularCountdownView.setDuration(countdownDuration);
 
+        examsRecyclerView = findViewById(R.id.examsRecyclerView);
+
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        bluetoothUtil = new BluetoothUtil();
+    }
+
+    private void loadExamList() {
+        //Boolean isFirstExam = SharedPreferencesManager.getSharedPref("firstExam", this, false);
+
+        ExamService.getAllExams(this, () -> {
+            examsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+            runOnUiThread(() -> {
+                if (examList != null && !examList.isEmpty()) {
+                    examAdapter = new ExamAdapter(Dashboard.this, examList);
+                    examsRecyclerView.setAdapter(examAdapter);
+                    Log.d("setupExamRecyclerView", "Adapter RecyclerView'a başarıyla atandı");
+                } else {
+                    Log.e("setupExamRecyclerView", "News list is empty or null");
+                }
+            });
+        }, () -> {
+            Sneaker.with(Dashboard.this)
+                    .setTitle(getString(R.string.error_title))
+                    .setMessage(getString(R.string.get_exams_error))
+                    .sneakError();
+        }, examList);
     }
 
     private void startCountdown(long duration) {
@@ -83,23 +121,25 @@ public class Dashboard extends AppCompatActivity {
     }
 
     private void nonSetup() {
-        mainScroll.setVisibility(View.GONE);
+        headerSection.setVisibility(View.GONE);
         nonSetupCard.setVisibility(View.VISIBLE);
     }
 
     private void showStandartScreen() {
-        mainScroll.setVisibility(View.VISIBLE);
+        headerSection.setVisibility(View.VISIBLE);
         nonSetupCard.setVisibility(View.GONE);
 
         startCountdown(countdownDuration);
     }
 
-    private void fetchExamData() {
-        ExamService.getUserExam(this, () -> {
+    private void checkBluetoothDeviceStatus() {
+        String savedDeviceAddress = bluetoothUtil.getSavedDeviceAddress(Dashboard.this);
+
+        if (savedDeviceAddress != null) {
             showStandartScreen();
-        }, () -> {
+        } else {
             nonSetup();
-        });
+        }
     }
 
     private void startBluetoothDeviceSelection() {

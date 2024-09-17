@@ -17,6 +17,7 @@
     <string name="button_space">Boşluk</string>
     <string name="button_retry">Yeniden Dene</string>
     <string name="button_close_app">Uygulamayı Kapat</string>
+    <string name="button_exams">Sınavlar</string>
 
     <string name="permission_allow">İzin Ver</string>
     <string name="permission_deny">Şimdilik Reddet</string>
@@ -123,7 +124,7 @@
     <string name="error_invalid_id_number">TC Kimlik numaranız 11 karakterden fazla ya da az olamaz.</string>
     <string name="error_login_failed">Giriş yaparken hata meydana geldi lütfen tekrar deneyin.</string>
     <string name="locationPermError">Konum izni gereklidir. Lütfen uygulamayı yeniden başlatın.</string>
-
+    <string name="get_exams_error">Sınav verilerinize ulaşılamadı. Lütfen ekranı yenileyin.</string>
     <!-- Register 4 Screen Texts-->
     <string name="register_fourth_success">Aboneliğiniz Başarıyla Alındı!</string>
     <string name="register_fourth_shipment">Kargo Bilgileri Önizleme</string>
@@ -183,4 +184,8 @@
     <!-- Bluetooth Texts -->
     <string name="connected_title">Bağlantı Başarılı</string>
     <string name="connected_desc">UpCortex cihaz bağlantınız başarıyla gerçekleşti.</string>
+
+    <!-- Exams Texts -->
+    <string name="exam_must_be">Zorunlu</string>
+    <string name="exam_optional">İsteğe Bağlı</string>
 </resources>

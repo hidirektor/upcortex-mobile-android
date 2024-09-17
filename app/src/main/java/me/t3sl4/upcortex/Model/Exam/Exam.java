@@ -4,26 +4,51 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Exam implements Parcelable {
-    private String id;
-    private String name;
+
+    private String examID;
+    private String examName;
     private boolean approvalState;
-    private int scale;
-    private int max;
+    private int examScale;
+    private int examMax;
     private boolean isDefault;
-    private String examState;
+    private String examCreatedBy;
+    private String examApprovedBy;
+    private ExamState userExamState;
+    private int examTime;
+    private String examDescription;
+    private String examInstructions;
+    private String beforeText;
 
-    public Exam() {
-
+    public Exam(String examID, String examName, boolean approvalState, int examScale, int examMax, boolean isDefault, String examCreatedBy, String examApprovedBy, ExamState userExamState, int examTime, String examDescription, String examInstructions, String beforeText) {
+        this.examID = examID;
+        this.examName = examName;
+        this.approvalState = approvalState;
+        this.examScale = examScale;
+        this.examMax = examMax;
+        this.isDefault = isDefault;
+        this.examCreatedBy = examCreatedBy;
+        this.examApprovedBy = examApprovedBy;
+        this.userExamState = userExamState;
+        this.examTime = examTime;
+        this.examDescription = examDescription;
+        this.examInstructions = examInstructions;
+        this.beforeText = beforeText;
     }
 
-    public Exam(Parcel in) {
-        id = in.readString();
-        name = in.readString();
+    protected Exam(Parcel in) {
+        examID = in.readString();
+        examName = in.readString();
         approvalState = in.readByte() != 0;
-        scale = in.readInt();
-        max = in.readInt();
+        examScale = in.readInt();
+        examMax = in.readInt();
         isDefault = in.readByte() != 0;
-        examState = in.readString();
+        examCreatedBy = in.readString();
+        examApprovedBy = in.readString();
+        userExamState = ExamState.valueOf(in.readString()); // Assuming ExamState is an Enum
+        examTime = in.readInt();
+        examDescription = in.readString();
+        examInstructions = in.readString();
+        beforeText = in.readString();
     }
 
     public static final Creator<Exam> CREATOR = new Creator<Exam>() {
@@ -44,30 +69,36 @@ public class Exam implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(name);
-        dest.writeByte((byte) (approvalState ? 1 : 0));
-        dest.writeInt(scale);
-        dest.writeInt(max);
-        dest.writeByte((byte) (isDefault ? 1 : 0));
-        dest.writeString(examState);
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(examID);
+        parcel.writeString(examName);
+        parcel.writeByte((byte) (approvalState ? 1 : 0));
+        parcel.writeInt(examScale);
+        parcel.writeInt(examMax);
+        parcel.writeByte((byte) (isDefault ? 1 : 0));
+        parcel.writeString(examCreatedBy);
+        parcel.writeString(examApprovedBy);
+        parcel.writeString(userExamState.name());
+        parcel.writeInt(examTime);
+        parcel.writeString(examDescription);
+        parcel.writeString(examInstructions);
+        parcel.writeString(beforeText);
     }
 
-    public String getId() {
-        return id;
+    public String getExamID() {
+        return examID;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setExamID(String examID) {
+        this.examID = examID;
     }
 
-    public String getName() {
-        return name;
+    public String getExamName() {
+        return examName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setExamName(String examName) {
+        this.examName = examName;
     }
 
     public boolean isApprovalState() {
@@ -78,20 +109,20 @@ public class Exam implements Parcelable {
         this.approvalState = approvalState;
     }
 
-    public int getScale() {
-        return scale;
+    public int getExamScale() {
+        return examScale;
     }
 
-    public void setScale(int scale) {
-        this.scale = scale;
+    public void setExamScale(int examScale) {
+        this.examScale = examScale;
     }
 
-    public int getMax() {
-        return max;
+    public int getExamMax() {
+        return examMax;
     }
 
-    public void setMax(int max) {
-        this.max = max;
+    public void setExamMax(int examMax) {
+        this.examMax = examMax;
     }
 
     public boolean isDefault() {
@@ -102,11 +133,59 @@ public class Exam implements Parcelable {
         isDefault = aDefault;
     }
 
-    public String getExamState() {
-        return examState;
+    public String getExamCreatedBy() {
+        return examCreatedBy;
     }
 
-    public void setExamState(String examState) {
-        this.examState = examState;
+    public void setExamCreatedBy(String examCreatedBy) {
+        this.examCreatedBy = examCreatedBy;
+    }
+
+    public String getExamApprovedBy() {
+        return examApprovedBy;
+    }
+
+    public void setExamApprovedBy(String examApprovedBy) {
+        this.examApprovedBy = examApprovedBy;
+    }
+
+    public ExamState getUserExamState() {
+        return userExamState;
+    }
+
+    public void setUserExamState(ExamState userExamState) {
+        this.userExamState = userExamState;
+    }
+
+    public int getExamTime() {
+        return examTime;
+    }
+
+    public void setExamTime(int examTime) {
+        this.examTime = examTime;
+    }
+
+    public String getExamDescription() {
+        return examDescription;
+    }
+
+    public void setExamDescription(String examDescription) {
+        this.examDescription = examDescription;
+    }
+
+    public String getExamInstructions() {
+        return examInstructions;
+    }
+
+    public void setExamInstructions(String examInstructions) {
+        this.examInstructions = examInstructions;
+    }
+
+    public String getBeforeText() {
+        return beforeText;
+    }
+
+    public void setBeforeText(String beforeText) {
+        this.beforeText = beforeText;
     }
 }
