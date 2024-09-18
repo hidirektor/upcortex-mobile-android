@@ -29,9 +29,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1.0"
             android:orientation="vertical"
-            android:layout_marginTop="22dp">
+            android:layout_marginTop="22dp"
+            android:layout_gravity="center"
+            android:gravity="center">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -84,7 +87,7 @@
 
             <View
                 android:layout_width="100dp"
-                android:layout_height="1dp"
+                android:layout_height="2dp"
                 android:background="@color/lightBaseColor"
                 android:layout_marginTop="16dp"
                 android:layout_marginStart="8dp"
@@ -114,7 +117,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/exam_instructions_1"
                         android:textColor="@color/darkBaseColor"
-                        android:textSize="12sp"
+                        android:textSize="16sp"
                         android:layout_marginStart="4dp"
                         android:layout_gravity="center"/>
                 </LinearLayout>
@@ -134,7 +137,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/exam_instructions_2"
                         android:textColor="@color/darkBaseColor"
-                        android:textSize="12sp"
+                        android:textSize="16sp"
                         android:layout_marginStart="4dp"
                         android:layout_gravity="center"/>
                 </LinearLayout>
@@ -154,7 +157,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/exam_instructions_3"
                         android:textColor="@color/darkBaseColor"
-                        android:textSize="12sp"
+                        android:textSize="16sp"
                         android:layout_marginStart="4dp"
                         android:layout_gravity="center"/>
                 </LinearLayout>
@@ -174,7 +177,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/exam_instructions_4"
                         android:textColor="@color/darkBaseColor"
-                        android:textSize="12sp"
+                        android:textSize="16sp"
                         android:layout_marginStart="4dp"
                         android:layout_gravity="center"/>
                 </LinearLayout>
