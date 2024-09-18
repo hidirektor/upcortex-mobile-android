@@ -18,6 +18,8 @@
     <string name="button_retry">Yeniden Dene</string>
     <string name="button_close_app">Uygulamayı Kapat</string>
     <string name="button_exams">Sınavlar</string>
+    <string name="button_exam_start">Sınava Başla</string>
+    <string name="button_exam_back">Daha Sonra Tamamla</string>
 
     <string name="permission_allow">İzin Ver</string>
     <string name="permission_deny">Şimdilik Reddet</string>
@@ -188,4 +190,11 @@
     <!-- Exams Texts -->
     <string name="exam_must_be">Zorunlu</string>
     <string name="exam_optional">İsteğe Bağlı</string>
+    <string name="exam_info">Sınav Bilgilendirmesi</string>
+    <string name="exam_hello">Merhaba !</string>
+    <string name="exam_detail">Bu sınav, elektro dalgaları ile hafıza ve zihinsel gelişimi takip etmenize yardımcı olmak için tasarlanmıştır.</string>
+    <string name="exam_instructions_1">Beş farklı bellek kategorisinden oluşan bir hafıza testi içerir.</string>
+    <string name="exam_instructions_2">Test sonuçları grafikler ve tablolar ile görselleştirilir.</string>
+    <string name="exam_instructions_3">Geçmiş performansınızı takip edebilirsiniz.</string>
+    <string name="exam_instructions_4">Hafıza ve zihinsel gelişimi geliştirmeye yönelik tavsiyeler sunar.</string>
 </resources>

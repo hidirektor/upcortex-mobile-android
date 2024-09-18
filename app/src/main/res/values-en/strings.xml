@@ -16,6 +16,8 @@
     <string name="button_retry">Retry</string>
     <string name="button_close_app">Close the App</string>
     <string name="button_exams">Exams</string>
+    <string name="button_exam_start">Begin Exam</string>
+    <string name="button_exam_back">Begin Later</string>
 
     <string name="permission_allow">Allow</string>
     <string name="permission_deny">Deny</string>
@@ -183,4 +185,11 @@
     <!-- Exams Texts -->
     <string name="exam_must_be">Necessary</string>
     <string name="exam_optional">Optional</string>
+    <string name="exam_info">Exam Instructions</string>
+    <string name="exam_hello">Hello !</string>
+    <string name="exam_detail">This test is designed to help you track memory and mental development with electro waves.</string>
+    <string name="exam_instructions_1">It includes a memory test consisting of five different memory categories.</string>
+    <string name="exam_instructions_2">Test results are visualized with graphs and tables.</string>
+    <string name="exam_instructions_3">You can track your past performance.</string>
+    <string name="exam_instructions_4">Provides advice on improving memory and mental development.</string>
 </resources>
