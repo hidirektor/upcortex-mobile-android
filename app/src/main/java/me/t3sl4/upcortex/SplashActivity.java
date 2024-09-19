@@ -2,6 +2,9 @@ package me.t3sl4.upcortex;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.bluetooth.BluetoothGatt;
+import android.bluetooth.BluetoothGattCallback;
+import android.bluetooth.BluetoothProfile;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -175,12 +178,40 @@ public class SplashActivity extends AppCompatActivity {
                     setupOnboarding();
                 } else {
                     if (savedDeviceAddress != null) {
-                        bluetoothUtil.connectToDevice(savedDeviceAddress, isConnected -> {
+                        BluetoothGattCallback gattCallback = new BluetoothGattCallback() {
+                            @Override
+                            public void onConnectionStateChange(final BluetoothGatt gatt, int status, int newState) {
+                                super.onConnectionStateChange(gatt, status, newState);
+                                if (newState == BluetoothProfile.STATE_CONNECTED) {
+                                    runOnUiThread(() -> {
+                                        Sneaker.with(SplashActivity.this)
+                                                .setTitle(getString(R.string.connected_title))
+                                                .setMessage(getString(R.string.connected_desc))
+                                                .sneakSuccess();
+                                    });
+                                } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
+                                    // Handle disconnection
+                                }
+                            }
+                            // Implement other callback methods as needed
+                        };
+
+                        bluetoothUtil.connectToDevice(this, savedDeviceAddress, isConnected -> {
                             if (isConnected) {
-                                Sneaker.with(SplashActivity.this)
-                                        .setTitle(getString(R.string.connected_title))
-                                        .setMessage(getString(R.string.connected_desc))
-                                        .sneakSuccess();
+                                runOnUiThread(() -> {
+                                    Sneaker.with(SplashActivity.this)
+                                            .setTitle(getString(R.string.connected_title))
+                                            .setMessage(getString(R.string.connected_desc))
+                                            .sneakSuccess();
+                                });
+                            } else {
+                                // Handle connection failure
+                                runOnUiThread(() -> {
+                                    Sneaker.with(SplashActivity.this)
+                                            .setTitle("Connection Failed")
+                                            .setMessage("Could not connect to device.")
+                                            .sneakError();
+                                });
                             }
                         });
                     }

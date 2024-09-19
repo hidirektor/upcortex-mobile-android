@@ -122,7 +122,7 @@ public class UserDataService {
         editor.remove(KEY_USER_NAME_SURNAME);
         editor.remove(KEY_USER_PHONE);
         editor.remove(KEY_USER_STATE);
-        BluetoothUtil.clearSavedDeviceAddress(context);
+        new BluetoothUtil().clearSavedDeviceAddress(context);
 
         editor.apply();
     }
