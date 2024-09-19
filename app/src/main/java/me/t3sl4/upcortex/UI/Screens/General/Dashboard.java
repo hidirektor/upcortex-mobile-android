@@ -1,29 +1,17 @@
 package me.t3sl4.upcortex.UI.Screens.General;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothGatt;
-import android.bluetooth.BluetoothGattCallback;
-import android.bluetooth.BluetoothGattCharacteristic;
-import android.bluetooth.BluetoothProfile;
-import android.bluetooth.le.BluetoothLeScanner;
-import android.bluetooth.le.ScanCallback;
-import android.bluetooth.le.ScanResult;
-import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -33,13 +21,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
+import java.util.Set;
 
 import me.t3sl4.upcortex.Model.Exam.Adapter.ExamAdapter;
 import me.t3sl4.upcortex.Model.Exam.Exam;
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.CircularCountdown.CircularCountdownView;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
+import me.t3sl4.upcortex.Utility.Bluetooth.BluetoothScanDialog;
+import me.t3sl4.upcortex.Utility.Bluetooth.BluetoothUtil;
 import me.t3sl4.upcortex.Utility.HTTP.Requests.Exam.ExamService;
 import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
 
@@ -56,18 +46,14 @@ public class Dashboard extends AppCompatActivity {
 
     private RecyclerView examsRecyclerView;
 
+    private BluetoothAdapter bluetoothAdapter;
+    private ArrayAdapter<String> deviceListAdapter;
+    private ArrayList<String> deviceList = new ArrayList<>();
+    private ListView listViewDevices;
+    private BluetoothUtil bluetoothUtil;
+
     private ExamAdapter examAdapter;
     private LinkedList<Exam> examList = new LinkedList<>();
-
-    private BluetoothAdapter bluetoothAdapter;
-    private BluetoothLeScanner bluetoothLeScanner;
-    public boolean scanning;
-    public Handler handler;
-    public static final long SCAN_PERIOD = 10000; // 10 seconds
-    public List<BluetoothDevice> scannedDevices;
-    public ArrayAdapter<String> deviceListAdapter;
-    public AlertDialog deviceSelectionDialog;
-    public List<String> deviceNames = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,17 +68,6 @@ public class Dashboard extends AppCompatActivity {
         loadExamList();
 
         addDeviceLayout.setOnClickListener(v -> startBluetoothDeviceSelection());
-
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (bluetoothAdapter != null) {
-            // Get BluetoothLeScanner instance from BluetoothAdapter
-            bluetoothLeScanner = bluetoothAdapter.getBluetoothLeScanner();
-        } else {
-            Toast.makeText(this, "Bluetooth not supported on this device", Toast.LENGTH_SHORT).show();
-        }
-        scanning = false;
-        handler = new Handler();
-        scannedDevices = new ArrayList<>();
     }
 
     private void initializeComponents() {
@@ -106,6 +81,9 @@ public class Dashboard extends AppCompatActivity {
         circularCountdownView.setDuration(countdownDuration);
 
         examsRecyclerView = findViewById(R.id.examsRecyclerView);
+
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        bluetoothUtil = new BluetoothUtil();
     }
 
     private void loadExamList() {
@@ -158,8 +136,7 @@ public class Dashboard extends AppCompatActivity {
     }
 
     private void checkBluetoothDeviceStatus() {
-        //String savedDeviceAddress = bluetoothUtil.getSavedDeviceAddress(Dashboard.this);
-        String savedDeviceAddress = null;
+        String savedDeviceAddress = bluetoothUtil.getSavedDeviceAddress(Dashboard.this);
 
         if (savedDeviceAddress != null) {
             showStandartScreen();
@@ -169,132 +146,56 @@ public class Dashboard extends AppCompatActivity {
     }
 
     private void startBluetoothDeviceSelection() {
-        startScan(Dashboard.this);
-    }
-
-    public void startScan(Context context) {
-        if (!scanning) {
-            handler.postDelayed(() -> {
-                scanning = false;
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
-                    return;
-                }
-                bluetoothLeScanner.stopScan(leScanCallback);
-            }, SCAN_PERIOD);
-
-            scanning = true;
-            bluetoothLeScanner.startScan(leScanCallback);
-            showDeviceSelectionDialog(context);
-        } else {
-            scanning = false;
-            bluetoothLeScanner.stopScan(leScanCallback);
-        }
-    }
-
-    public void stopScan() {
-        if (bluetoothLeScanner != null && scanning) {
-            scanning = false;
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            bluetoothLeScanner.stopScan(leScanCallback);
-        }
-    }
-
-    private final ScanCallback leScanCallback = new ScanCallback() {
-        @Override
-        public void onScanResult(int callbackType, ScanResult result) {
-            BluetoothDevice device = result.getDevice();
-            if (!scannedDevices.contains(device)) {
-                scannedDevices.add(device);
-                String deviceInfo = getDeviceName(device) + "\n" + device.getAddress();
-                deviceNames.add(deviceInfo);
-                deviceListAdapter.notifyDataSetChanged();
-            }
-        }
-    };
-
-    private void showDeviceSelectionDialog(Context context) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        View dialogView = View.inflate(context, R.layout.dialog_bluetooth_scan, null);
-        ListView listViewDevices = dialogView.findViewById(R.id.listViewDevices);
-
-        // Initialize the ArrayAdapter for displaying device names
-        deviceListAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, deviceNames);
-        listViewDevices.setAdapter(deviceListAdapter);
-
-        listViewDevices.setOnItemClickListener((parent, view, position, id) -> {
-            BluetoothDevice selectedDevice = scannedDevices.get(position);
-            connectToDevice(selectedDevice, context); // Perform connection with selected device
-            if (deviceSelectionDialog != null && deviceSelectionDialog.isShowing()) {
-                deviceSelectionDialog.dismiss(); // Close dialog after selection
-            }
-        });
-
-        builder.setView(dialogView);
-        builder.setOnCancelListener(dialog -> stopScan()); // Stop scanning if dialog is cancelled
-        deviceSelectionDialog = builder.create();
-        deviceSelectionDialog.show();
-    }
-
-    private void connectToDevice(BluetoothDevice device, Context context) {
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED
-                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            ActivityCompat.requestPermissions((Activity) context,
-                    new String[]{Manifest.permission.BLUETOOTH_CONNECT}, 1001);
+        if (bluetoothAdapter == null) {
+            Sneaker.with(this).setTitle("Bluetooth Özelliği Yok")
+                    .setMessage("Cihazınızda Bluetooth özelliği bulunmuyor.")
+                    .sneakError();
             return;
         }
 
-        BluetoothGatt bluetoothGatt = device.connectGatt(context, false, new BluetoothGattCallback() {
-            @Override
-            public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
-                if (newState == BluetoothProfile.STATE_CONNECTED) {
-                    Log.d("BluetoothScanner", "Connected to GATT server.");
+        if (!bluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            startActivityForResult(enableBtIntent, 1);
+            return;
+        }
 
-                    if (ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-                        return;
-                    }
-                    gatt.discoverServices();
-
-                    runOnUiThread(() -> {
-                        Toast.makeText(context, "Connected to " + getDeviceName(device), Toast.LENGTH_SHORT).show();
-                    });
-                } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
-                    Log.d("BluetoothScanner", "Disconnected from GATT server.");
-
-                    runOnUiThread(() -> {
-                        Toast.makeText(context, "Disconnected from " + getDeviceName(device), Toast.LENGTH_SHORT).show();
-                    });
+        // Eşleşmiş cihazları al
+        Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
+        if (pairedDevices.size() > 0) {
+            boolean foundDevice = false;
+            for (BluetoothDevice device : pairedDevices) {
+                if (device.getName().startsWith("UpCortex -")) {
+                    connectToDevice(device);
+                    foundDevice = true;
+                    break;
                 }
             }
 
-            @Override
-            public void onServicesDiscovered(BluetoothGatt gatt, int status) {
-                if (status == BluetoothGatt.GATT_SUCCESS) {
-                    Log.d("BluetoothScanner", "Services discovered.");
-                    // Here you can interact with the discovered services and characteristics.
-                } else {
-                    Log.w("BluetoothScanner", "onServicesDiscovered received: " + status);
-                }
+            if (!foundDevice) {
+                Sneaker.with(this).setTitle("Cihaz Bulunamadı")
+                        .setMessage("Eşleşmiş cihazlar arasında uygun cihaz bulunamadı.")
+                        .sneakWarning();
             }
 
-            @Override
-            public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
-                if (status == BluetoothGatt.GATT_SUCCESS) {
-                    Log.d("BluetoothScanner", "Characteristic read: " + characteristic.getValue());
-                    // You can process the characteristic value here
-                }
-            }
-        });
+        } else {
+            Sneaker.with(this)
+                    .setTitle("Eşleşmiş Cihaz Yok")
+                    .setMessage("Cihazınızda daha önce eşleştirilmiş bir Bluetooth cihazı bulunmuyor.")
+                    .sneakWarning();
 
-        Log.d("BluetoothScanner", "Attempting to connect to " + device.getName());
+            BluetoothScanDialog bluetoothScanDialog = new BluetoothScanDialog();
+            bluetoothScanDialog.show(getSupportFragmentManager(), "BluetoothScanDialog");
+        }
     }
 
-    private String getDeviceName(BluetoothDevice device) {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-            return null;
-        }
-        String name = device.getName();
-        return (name != null && !name.isEmpty()) ? name : "Unknown Device";
+    private void connectToDevice(BluetoothDevice device) {
+        bluetoothUtil.saveDeviceAddress(this, device.getAddress());
+        Sneaker.with(Dashboard.this)
+                .setTitle(getString(R.string.connected_title))
+                .setMessage(getString(R.string.connected_desc))
+                .sneakSuccess();
     }
 }
