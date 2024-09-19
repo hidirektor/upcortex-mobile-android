@@ -1,25 +1,29 @@
 package me.t3sl4.upcortex.UI.Screens.General;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothProfile;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanResult;
-import android.content.Intent;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -30,14 +34,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.UUID;
 
 import me.t3sl4.upcortex.Model.Exam.Adapter.ExamAdapter;
 import me.t3sl4.upcortex.Model.Exam.Exam;
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.CircularCountdown.CircularCountdownView;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
-import me.t3sl4.upcortex.Utility.Bluetooth.BluetoothUtil;
 import me.t3sl4.upcortex.Utility.HTTP.Requests.Exam.ExamService;
 import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
 
@@ -54,47 +56,43 @@ public class Dashboard extends AppCompatActivity {
 
     private RecyclerView examsRecyclerView;
 
-    private BluetoothAdapter bluetoothAdapter;
-    private BluetoothLeScanner bluetoothLeScanner;
-    private BluetoothGatt bluetoothGatt;
-    private BluetoothUtil bluetoothUtil;
-
     private ExamAdapter examAdapter;
     private LinkedList<Exam> examList = new LinkedList<>();
 
-    private List<BluetoothDevice> scannedDevices = new ArrayList<>();
-
-    private static final int REQUEST_ENABLE_BT = 1;
-    private static final int REQUEST_PERMISSION_LOCATION = 2;
-    private static final int REQUEST_PERMISSION_CONNECT = 3;
-    private static final long SCAN_PERIOD = 10000; // 10 seconds
-
-    // UUIDs for your BLE device's
-    private static final UUID SERVICE_UUID = null;
-    private static final UUID CHARACTERISTIC_UUID = null;
+    private BluetoothAdapter bluetoothAdapter;
+    private BluetoothLeScanner bluetoothLeScanner;
+    public boolean scanning;
+    public Handler handler;
+    public static final long SCAN_PERIOD = 10000; // 10 seconds
+    public List<BluetoothDevice> scannedDevices;
+    public ArrayAdapter<String> deviceListAdapter;
+    public AlertDialog deviceSelectionDialog;
+    public List<String> deviceNames = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-
         ScreenUtil.hideNavigationBar(this);
 
         initializeComponents();
 
+        checkBluetoothDeviceStatus();
         loadExamList();
 
-        addDeviceLayout.setOnClickListener(v -> startBLEDeviceScan());
+        addDeviceLayout.setOnClickListener(v -> startBluetoothDeviceSelection());
 
-        // Attempt to connect to saved device in the background
-        String savedDeviceAddress = bluetoothUtil.getSavedDeviceAddress(Dashboard.this);
-        if (savedDeviceAddress != null) {
-            showStandartScreen();
-            connectToSavedDeviceInBackground(savedDeviceAddress);
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (bluetoothAdapter != null) {
+            // Get BluetoothLeScanner instance from BluetoothAdapter
+            bluetoothLeScanner = bluetoothAdapter.getBluetoothLeScanner();
         } else {
-            nonSetup();
+            Toast.makeText(this, "Bluetooth not supported on this device", Toast.LENGTH_SHORT).show();
         }
+        scanning = false;
+        handler = new Handler();
+        scannedDevices = new ArrayList<>();
     }
 
     private void initializeComponents() {
@@ -108,13 +106,11 @@ public class Dashboard extends AppCompatActivity {
         circularCountdownView.setDuration(countdownDuration);
 
         examsRecyclerView = findViewById(R.id.examsRecyclerView);
-
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        bluetoothLeScanner = bluetoothAdapter.getBluetoothLeScanner();
-        bluetoothUtil = new BluetoothUtil();
     }
 
     private void loadExamList() {
+        //Boolean isFirstExam = SharedPreferencesManager.getSharedPref("firstExam", this, false);
+
         ExamService.getAllExams(this, () -> {
             examsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
@@ -122,9 +118,9 @@ public class Dashboard extends AppCompatActivity {
                 if (examList != null && !examList.isEmpty()) {
                     examAdapter = new ExamAdapter(Dashboard.this, examList);
                     examsRecyclerView.setAdapter(examAdapter);
-                    Log.d("setupExamRecyclerView", "Adapter assigned to RecyclerView successfully");
+                    Log.d("setupExamRecyclerView", "Adapter RecyclerView'a başarıyla atandı");
                 } else {
-                    Log.e("setupExamRecyclerView", "Exam list is empty or null");
+                    Log.e("setupExamRecyclerView", "News list is empty or null");
                 }
             });
         }, () -> {
@@ -161,53 +157,43 @@ public class Dashboard extends AppCompatActivity {
         startCountdown(countdownDuration);
     }
 
-    private void startBLEDeviceScan() {
-        if (bluetoothAdapter == null || bluetoothLeScanner == null) {
-            Sneaker.with(this).setTitle("Bluetooth Not Supported")
-                    .setMessage("Your device does not support Bluetooth.")
-                    .sneakError();
-            return;
+    private void checkBluetoothDeviceStatus() {
+        //String savedDeviceAddress = bluetoothUtil.getSavedDeviceAddress(Dashboard.this);
+        String savedDeviceAddress = null;
+
+        if (savedDeviceAddress != null) {
+            showStandartScreen();
+        } else {
+            nonSetup();
         }
-
-        if (!bluetoothAdapter.isEnabled()) {
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-            return;
-        }
-
-        // Check permissions
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED ||
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED ||
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.BLUETOOTH_SCAN,
-                            Manifest.permission.BLUETOOTH_CONNECT,
-                            Manifest.permission.ACCESS_FINE_LOCATION},
-                    REQUEST_PERMISSION_LOCATION);
-            return;
-        }
-
-        scannedDevices.clear();
-        // Start scanning
-        bluetoothLeScanner.startScan(leScanCallback);
-
-        // Stop scanning after SCAN_PERIOD milliseconds
-        new Handler().postDelayed(() -> {
-            stopBLEDeviceScan();
-            if (scannedDevices.isEmpty()) {
-                Sneaker.with(this)
-                        .setTitle("No Devices Found")
-                        .setMessage("No devices starting with 'upCortex' were found.")
-                        .sneakWarning();
-            } else {
-                showDeviceSelectionDialog();
-            }
-        }, SCAN_PERIOD);
     }
 
-    private void stopBLEDeviceScan() {
-        if (bluetoothLeScanner != null) {
+    private void startBluetoothDeviceSelection() {
+        startScan(Dashboard.this);
+    }
+
+    public void startScan(Context context) {
+        if (!scanning) {
+            handler.postDelayed(() -> {
+                scanning = false;
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+                bluetoothLeScanner.stopScan(leScanCallback);
+            }, SCAN_PERIOD);
+
+            scanning = true;
+            bluetoothLeScanner.startScan(leScanCallback);
+            showDeviceSelectionDialog(context);
+        } else {
+            scanning = false;
+            bluetoothLeScanner.stopScan(leScanCallback);
+        }
+    }
+
+    public void stopScan() {
+        if (bluetoothLeScanner != null && scanning) {
+            scanning = false;
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
@@ -219,258 +205,96 @@ public class Dashboard extends AppCompatActivity {
         @Override
         public void onScanResult(int callbackType, ScanResult result) {
             BluetoothDevice device = result.getDevice();
-            if (ActivityCompat.checkSelfPermission(Dashboard.this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            if (device.getName() != null && device.getName().startsWith("upCortex")) {
-                if (!scannedDevices.contains(device)) {
-                    scannedDevices.add(device);
-                }
-            }
-        }
-
-        @Override
-        public void onBatchScanResults(List<ScanResult> results) {
-            for (ScanResult result : results) {
-                BluetoothDevice device = result.getDevice();
-                if (ActivityCompat.checkSelfPermission(Dashboard.this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-                    return;
-                }
-                if (device.getName() != null && device.getName().startsWith("upCortex")) {
-                    if (!scannedDevices.contains(device)) {
-                        scannedDevices.add(device);
-                    }
-                }
-            }
-        }
-
-        @Override
-        public void onScanFailed(int errorCode) {
-            Sneaker.with(Dashboard.this)
-                    .setTitle("Scan Failed")
-                    .setMessage("Error code: " + errorCode)
-                    .sneakError();
-        }
-    };
-
-    private void showDeviceSelectionDialog() {
-        List<String> deviceNames = new ArrayList<>();
-        for (BluetoothDevice device : scannedDevices) {
-            if (ActivityCompat.checkSelfPermission(Dashboard.this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            deviceNames.add(device.getName() + "\n" + device.getAddress());
-        }
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select a Device");
-        builder.setItems(deviceNames.toArray(new String[0]), (dialog, which) -> {
-
-            BluetoothDevice selectedDevice = scannedDevices.get(which);
-            connectToDevice(selectedDevice);
-        });
-
-        builder.setOnCancelListener(dialog -> {
-            // Stop scanning when dialog is cancelled
-            stopBLEDeviceScan();
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
-    private void connectToDevice(BluetoothDevice device) {
-        stopBLEDeviceScan();
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.BLUETOOTH_CONNECT},
-                    REQUEST_PERMISSION_CONNECT);
-            return;
-        }
-
-        bluetoothGatt = device.connectGatt(this, false, gattCallback);
-
-        // Save device address
-        bluetoothUtil.saveDeviceAddress(this, device.getAddress());
-
-        Sneaker.with(Dashboard.this)
-                .setTitle("Connecting")
-                .setMessage("Connecting to " + device.getName())
-                .sneakWarning();
-    }
-
-    private void connectToSavedDeviceInBackground(String deviceAddress) {
-        Handler handler = new Handler();
-        handler.post(() -> {
-            BluetoothDevice device = bluetoothAdapter.getRemoteDevice(deviceAddress);
-            if (device != null) {
-                connectToDevice(device);
-            } else {
-                runOnUiThread(this::nonSetup);
-            }
-        });
-    }
-
-    private final BluetoothGattCallback gattCallback = new BluetoothGattCallback() {
-        @Override
-        public void onConnectionStateChange(final BluetoothGatt gatt, int status, int newState) {
-            if (newState == BluetoothProfile.STATE_CONNECTED) {
-                Log.d("BLE", "Connected to GATT server.");
-                if (ActivityCompat.checkSelfPermission(Dashboard.this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-                    return;
-                }
-                bluetoothGatt = gatt;
-                bluetoothUtil.setBluetoothGatt(bluetoothGatt);
-
-                runOnUiThread(() -> {
-                    Sneaker.with(Dashboard.this)
-                            .setTitle("Connected")
-                            .setMessage("Connected to " + gatt.getDevice().getName())
-                            .sneakSuccess();
-                    showStandartScreen(); // Call showStandartScreen() on successful connection
-                });
-                // Discover services
-                gatt.discoverServices();
-            } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
-                Log.d("BLE", "Disconnected from GATT server.");
-                runOnUiThread(() -> {
-                    Sneaker.with(Dashboard.this)
-                            .setTitle("Disconnected")
-                            .setMessage("Disconnected from " + gatt.getDevice().getName())
-                            .sneakError();
-                    nonSetup();
-                });
-            }
-        }
-
-        @Override
-        public void onServicesDiscovered(final BluetoothGatt gatt, int status) {
-            if (status == BluetoothGatt.GATT_SUCCESS) {
-                Log.d("BLE", "Services discovered.");
-                // Enable notifications or read characteristics as needed
-                BluetoothGattCharacteristic characteristic = gatt
-                        .getService(SERVICE_UUID)
-                        .getCharacteristic(CHARACTERISTIC_UUID);
-                if (characteristic != null) {
-                    enableNotifications(gatt, characteristic);
-                }
-            } else {
-                Log.w("BLE", "onServicesDiscovered received: " + status);
-            }
-        }
-
-        @Override
-        public void onCharacteristicRead(final BluetoothGatt gatt,
-                                         final BluetoothGattCharacteristic characteristic,
-                                         int status) {
-            if (status == BluetoothGatt.GATT_SUCCESS) {
-                byte[] data = characteristic.getValue();
-                Log.d("BLE", "Characteristic read: " + bytesToHex(data));
-            }
-        }
-
-        @Override
-        public void onCharacteristicChanged(final BluetoothGatt gatt,
-                                            final BluetoothGattCharacteristic characteristic) {
-            // This is called when notifications are received
-            byte[] data = characteristic.getValue();
-            Log.d("BLE", "Notification received: " + bytesToHex(data));
-        }
-
-        @Override
-        public void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
-            // After enabling notifications, this method is called
-            if (status == BluetoothGatt.GATT_SUCCESS) {
-                Log.d("BLE", "Descriptor write successful");
-            } else {
-                Log.e("BLE", "Descriptor write failed with status: " + status);
+            if (!scannedDevices.contains(device)) {
+                scannedDevices.add(device);
+                String deviceInfo = getDeviceName(device) + "\n" + device.getAddress();
+                deviceNames.add(deviceInfo);
+                deviceListAdapter.notifyDataSetChanged();
             }
         }
     };
 
-    private void enableNotifications(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.BLUETOOTH_CONNECT},
-                    REQUEST_PERMISSION_CONNECT);
+    private void showDeviceSelectionDialog(Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View dialogView = View.inflate(context, R.layout.dialog_bluetooth_scan, null);
+        ListView listViewDevices = dialogView.findViewById(R.id.listViewDevices);
+
+        // Initialize the ArrayAdapter for displaying device names
+        deviceListAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, deviceNames);
+        listViewDevices.setAdapter(deviceListAdapter);
+
+        listViewDevices.setOnItemClickListener((parent, view, position, id) -> {
+            BluetoothDevice selectedDevice = scannedDevices.get(position);
+            connectToDevice(selectedDevice, context); // Perform connection with selected device
+            if (deviceSelectionDialog != null && deviceSelectionDialog.isShowing()) {
+                deviceSelectionDialog.dismiss(); // Close dialog after selection
+            }
+        });
+
+        builder.setView(dialogView);
+        builder.setOnCancelListener(dialog -> stopScan()); // Stop scanning if dialog is cancelled
+        deviceSelectionDialog = builder.create();
+        deviceSelectionDialog.show();
+    }
+
+    private void connectToDevice(BluetoothDevice device, Context context) {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            ActivityCompat.requestPermissions((Activity) context,
+                    new String[]{Manifest.permission.BLUETOOTH_CONNECT}, 1001);
             return;
         }
 
-        gatt.setCharacteristicNotification(characteristic, true);
+        BluetoothGatt bluetoothGatt = device.connectGatt(context, false, new BluetoothGattCallback() {
+            @Override
+            public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
+                if (newState == BluetoothProfile.STATE_CONNECTED) {
+                    Log.d("BluetoothScanner", "Connected to GATT server.");
 
-        // Write to the descriptor to enable notifications
-        BluetoothGattDescriptor descriptor = characteristic.getDescriptor(
-                UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"));
-        if (descriptor != null) {
-            descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
-            gatt.writeDescriptor(descriptor);
-        } else {
-            Log.e("BLE", "Descriptor not found for characteristic " + characteristic.getUuid());
-        }
-    }
-
-    private String bytesToHex(byte[] bytes) {
-        StringBuilder stringBuilder = new StringBuilder(bytes.length * 2);
-        for (byte b : bytes) {
-            stringBuilder.append(String.format("%02X ", b));
-        }
-        return stringBuilder.toString();
-    }
-
-    // Function to read data from the device
-    private void readDataFromDevice() {
-        boolean success = bluetoothUtil.readCharacteristic(Dashboard.this, SERVICE_UUID, CHARACTERISTIC_UUID);
-        if (!success) {
-            Log.e("BLE", "Failed to initiate characteristic read");
-        }
-    }
-
-    // Function to send data to the device
-    private void sendDataToDevice(byte[] data) {
-        boolean success = bluetoothUtil.writeCharacteristic(Dashboard.this, SERVICE_UUID, CHARACTERISTIC_UUID, data);
-        if (!success) {
-            Log.e("BLE", "Failed to write characteristic");
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_PERMISSION_LOCATION) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startBLEDeviceScan();
-            } else {
-                Sneaker.with(this).setTitle("Permission Denied")
-                        .setMessage("Location permission is required for BLE scanning.")
-                        .sneakError();
-            }
-        } else if (requestCode == REQUEST_PERMISSION_CONNECT) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Retry connecting to the device
-                if (bluetoothGatt != null) {
-                    if (ActivityCompat.checkSelfPermission(Dashboard.this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
                         return;
                     }
-                    bluetoothGatt.connect();
+                    gatt.discoverServices();
+
+                    runOnUiThread(() -> {
+                        Toast.makeText(context, "Connected to " + getDeviceName(device), Toast.LENGTH_SHORT).show();
+                    });
+                } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
+                    Log.d("BluetoothScanner", "Disconnected from GATT server.");
+
+                    runOnUiThread(() -> {
+                        Toast.makeText(context, "Disconnected from " + getDeviceName(device), Toast.LENGTH_SHORT).show();
+                    });
                 }
-            } else {
-                Sneaker.with(this).setTitle("Permission Denied")
-                        .setMessage("Bluetooth connect permission is required.")
-                        .sneakError();
             }
-        }
+
+            @Override
+            public void onServicesDiscovered(BluetoothGatt gatt, int status) {
+                if (status == BluetoothGatt.GATT_SUCCESS) {
+                    Log.d("BluetoothScanner", "Services discovered.");
+                    // Here you can interact with the discovered services and characteristics.
+                } else {
+                    Log.w("BluetoothScanner", "onServicesDiscovered received: " + status);
+                }
+            }
+
+            @Override
+            public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
+                if (status == BluetoothGatt.GATT_SUCCESS) {
+                    Log.d("BluetoothScanner", "Characteristic read: " + characteristic.getValue());
+                    // You can process the characteristic value here
+                }
+            }
+        });
+
+        Log.d("BluetoothScanner", "Attempting to connect to " + device.getName());
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (bluetoothGatt != null) {
-            if (ActivityCompat.checkSelfPermission(Dashboard.this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            bluetoothGatt.close();
-            bluetoothGatt = null;
+    private String getDeviceName(BluetoothDevice device) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+            return null;
         }
+        String name = device.getName();
+        return (name != null && !name.isEmpty()) ? name : "Unknown Device";
     }
 }
