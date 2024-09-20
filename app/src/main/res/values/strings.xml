@@ -197,4 +197,28 @@
     <string name="exam_instructions_2">Test sonuçları grafikler ve tablolar ile görselleştirilir.</string>
     <string name="exam_instructions_3">Geçmiş performansınızı takip edebilirsiniz.</string>
     <string name="exam_instructions_4">Hafıza ve zihinsel gelişimi geliştirmeye yönelik tavsiyeler sunar.</string>
+    <string name="exam_results">Sınav Değerlendirmesi !</string>
+    <string name="exam_congrats">Tebrikler !</string>
+    <string name="exam_finished">Testinizi başarıyla tamamladınız !</string>
+    <string name="exam_before">Bir Önceki Sınav</string>
+    <string name="exam_current">Güncel Sınav</string>
+    <string name="exam_result_test">Bu skor aralığındaki kişiler, Alzheimer veya bilişsel bozukluk açısından düşük risk altındadır. Düşük risk grubundaki kişiler, günlük yaşamlarında genellikle bilişsel problemler yaşamazlar. Ancak risk düzeyini Orta Düzeye Çıkarmamak ve erken önlem almak için düzenli egzersizlerini yapmalarını öneririz.</string>
+    <string name="exam_treatment_test">Önerilen terapi protokolü, haftada 2 gün, her seans 30 dakika olmak üzere 1.0 mA  uygulanmasını içerir ve toplamda 1 yıl sürer.</string>
+    <string name="exam_close">Sayfayı Kapat</string>
+    <string name="exam_recycler_warning">Bu sınava ait farklı kategorilerdeki puanlarınızı içermektedir.</string>
+    <string name="exam_sub_name">Çok İyi</string>
+    <string name="exam_sub_desc">Görsel bellek yetenekleri mükemmeldir. Görsel bilgileri hızlı bir şekilde öğrenir ve hatırlarlar. Bu, mekan tanıma ve yön bulma gibi günlük görevlerde büyük bir avantaj sağlar.</string>
+
+    <!-- Exams Classification Texts -->
+    <string name="exam_no_risk">Risk Yok</string>
+    <string name="exam_low_risk">Düşük Risk</string>
+    <string name="exam_mid_risk">Orta Düzey Risk</string>
+    <string name="exam_high_risk">Yüksek Risk</string>
+    <string name="exam_very_high_risk">Çok Yüksek Risk</string>
+
+    <!-- Exam Category Texts -->
+    <string name="exam_category_1">Kısa Süreli Bellek</string>
+    <string name="exam_category_2">Uzun Süreli Bellek</string>
+    <string name="exam_category_3">Görsel Bellek</string>
+    <string name="exam_category_4">İşlemsel Bellek</string>
 </resources>

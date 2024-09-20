@@ -87,4 +87,16 @@
         <attr name="firstPercentColor" format="color" />
         <attr name="secondPercentColor" format="color" />
     </declare-styleable>
+
+    <declare-styleable name="RadialPercent">
+        <attr name="baseColor" format="color"/>
+        <attr name="percentColor" format="color"/>
+        <attr name="currentPercent" format="integer"/>
+        <attr name="percentStrokeWidth" format="dimension"/>
+        <attr name="percentRadius" format="dimension"/>
+        <attr name="percentClockwise" format="boolean"/>
+        <attr name="percentTextColor" format="color"/>
+        <attr name="percentTextFont" format="reference"/>
+        <attr name="percentTextSize" format="dimension"/>
+    </declare-styleable>
 </resources>

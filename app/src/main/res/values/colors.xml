@@ -47,4 +47,6 @@
     <color name="medium_risk">#003CD7</color>
     <color name="low_risk">#003CD7</color>
     <color name="no_risk">#07193A</color>
+
+    <color name="exam_text">#263238</color>
 </resources>

@@ -7,253 +7,452 @@
     android:padding="16dp"
     android:fitsSystemWindows="true">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@drawable/background_exams_recycler"
         android:padding="16dp">
         <ImageView
+            android:id="@+id/appLogo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/logo_app_black"/>
+            android:src="@drawable/logo_app_black"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <View
+            android:id="@+id/seperator"
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@color/lightBaseColor"
             android:layout_marginTop="16dp"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"/>
+            android:layout_marginEnd="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/appLogo"/>
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/seperator"
+            app:layout_constraintBottom_toTopOf="@id/closeExamButton">
             <LinearLayout
-                android:id="@+id/examStartLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:visibility="gone">
+                android:orientation="vertical" >
                 <LinearLayout
+                    android:id="@+id/examStartLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1.0"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:layout_marginTop="22dp"
-                    android:layout_gravity="center"
-                    android:gravity="center">
+                    android:visibility="gone">
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:layout_height="0dp"
+                        android:layout_weight="1.0"
+                        android:orientation="vertical"
+                        android:layout_marginTop="22dp"
                         android:layout_gravity="center"
                         android:gravity="center">
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:layout_marginRight="6dp"
-                            android:src="@drawable/ikon_bubbles"
-                            app:tint="@color/ratingColor"/>
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/exam_info"
+                            android:orientation="horizontal"
+                            android:layout_gravity="center"
+                            android:gravity="center">
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_marginRight="6dp"
+                                android:src="@drawable/ikon_bubbles"
+                                app:tint="@color/ratingColor"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/exam_info"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/ratingColor"
+                                android:fontFamily="@font/roboto_flex"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="14dp"
+                            android:layout_marginBottom="18dp">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/exam_hello"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textSize="16sp"
+                                android:fontFamily="@font/roboto_flex"
+                                android:textColor="@color/darkBaseColor"
+                                android:layout_marginBottom="4dp"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/exam_detail"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textSize="16sp"
+                                android:fontFamily="@font/roboto_flex"
+                                android:textColor="@color/darkBaseColor"
+                                android:layout_marginBottom="4dp"/>
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="100dp"
+                            android:layout_height="2dp"
+                            android:background="@color/lightBaseColor"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="18dp"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_gravity="center"
+                            android:padding="16dp">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginBottom="12dp">
+                                <ImageView
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:src="@drawable/ikon_exam_instructions_1"
+                                    app:tint="@color/ratingColor"
+                                    android:layout_gravity="center"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/exam_instructions_1"
+                                    android:textColor="@color/darkBaseColor"
+                                    android:textSize="16sp"
+                                    android:layout_marginStart="4dp"
+                                    android:layout_gravity="center"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginBottom="12dp">
+                                <ImageView
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:src="@drawable/ikon_exam_instructions_2"
+                                    app:tint="@color/ratingColor"
+                                    android:layout_gravity="center"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/exam_instructions_2"
+                                    android:textColor="@color/darkBaseColor"
+                                    android:textSize="16sp"
+                                    android:layout_marginStart="4dp"
+                                    android:layout_gravity="center"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginBottom="12dp">
+                                <ImageView
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:src="@drawable/ikon_exam_instructions_3"
+                                    app:tint="@color/ratingColor"
+                                    android:layout_gravity="center"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/exam_instructions_3"
+                                    android:textColor="@color/darkBaseColor"
+                                    android:textSize="16sp"
+                                    android:layout_marginStart="4dp"
+                                    android:layout_gravity="center"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginBottom="12dp">
+                                <ImageView
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:src="@drawable/ikon_exam_instructions_4"
+                                    app:tint="@color/ratingColor"
+                                    android:layout_gravity="center"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/exam_instructions_4"
+                                    android:textColor="@color/darkBaseColor"
+                                    android:textSize="16sp"
+                                    android:layout_marginStart="4dp"
+                                    android:layout_gravity="center"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="center">
+                        <Button
+                            android:id="@+id/startButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/button_next_2"
+                            android:text="@string/button_exam_start"
+                            android:textColor="@color/white"
+                            android:textAllCaps="false"
                             android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/ratingColor"
-                            android:fontFamily="@font/roboto_flex"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="14dp"
-                        android:layout_marginBottom="18dp">
-                        <TextView
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginBottom="16dp"
+                            android:layout_marginTop="16dp"/>
+                        <Button
+                            android:id="@+id/backButton"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/exam_hello"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:textSize="16sp"
-                            android:fontFamily="@font/roboto_flex"
+                            android:text="@string/button_exam_back"
                             android:textColor="@color/darkBaseColor"
-                            android:layout_marginBottom="4dp"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/exam_detail"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:textSize="16sp"
-                            android:fontFamily="@font/roboto_flex"
-                            android:textColor="@color/darkBaseColor"
-                            android:layout_marginBottom="4dp"/>
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="100dp"
-                        android:layout_height="2dp"
-                        android:background="@color/lightBaseColor"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="18dp"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_gravity="center"
-                        android:padding="16dp">
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginBottom="12dp">
-                            <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:src="@drawable/ikon_exam_instructions_1"
-                                app:tint="@color/ratingColor"
-                                android:layout_gravity="center"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/exam_instructions_1"
-                                android:textColor="@color/darkBaseColor"
-                                android:textSize="16sp"
-                                android:layout_marginStart="4dp"
-                                android:layout_gravity="center"/>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginBottom="12dp">
-                            <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:src="@drawable/ikon_exam_instructions_2"
-                                app:tint="@color/ratingColor"
-                                android:layout_gravity="center"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/exam_instructions_2"
-                                android:textColor="@color/darkBaseColor"
-                                android:textSize="16sp"
-                                android:layout_marginStart="4dp"
-                                android:layout_gravity="center"/>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginBottom="12dp">
-                            <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:src="@drawable/ikon_exam_instructions_3"
-                                app:tint="@color/ratingColor"
-                                android:layout_gravity="center"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/exam_instructions_3"
-                                android:textColor="@color/darkBaseColor"
-                                android:textSize="16sp"
-                                android:layout_marginStart="4dp"
-                                android:layout_gravity="center"/>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginBottom="12dp">
-                            <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:src="@drawable/ikon_exam_instructions_4"
-                                app:tint="@color/ratingColor"
-                                android:layout_gravity="center"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/exam_instructions_4"
-                                android:textColor="@color/darkBaseColor"
-                                android:textSize="16sp"
-                                android:layout_marginStart="4dp"
-                                android:layout_gravity="center"/>
-                        </LinearLayout>
+                            android:background="@drawable/button_fs_no"
+                            android:textAllCaps="false"
+                            android:textSize="18sp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginBottom="16dp"/>
                     </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:layout_gravity="center">
-                    <Button
-                        android:id="@+id/startButton"
+                    android:visibility="visible"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="12dp">
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/button_next_2"
-                        android:text="@string/button_exam_start"
-                        android:textColor="@color/white"
-                        android:textAllCaps="false"
-                        android:textSize="18sp"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginBottom="16dp"
-                        android:layout_marginTop="16dp"/>
-                    <Button
-                        android:id="@+id/backButton"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_gravity="center"
+                            android:gravity="center">
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:layout_marginRight="6dp"
+                                android:src="@drawable/ikon_bubbles"
+                                app:tint="@color/ratingColor"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/exam_results"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/ratingColor"
+                                android:fontFamily="@font/roboto_flex"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginTop="14dp"
+                            android:layout_marginBottom="18dp">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/exam_congrats"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textSize="16sp"
+                                android:fontFamily="@font/roboto_flex"
+                                android:textColor="@color/darkBaseColor"
+                                android:layout_marginBottom="4dp"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/exam_finished"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textSize="16sp"
+                                android:fontFamily="@font/roboto_flex"
+                                android:textColor="@color/darkBaseColor"
+                                android:layout_marginBottom="4dp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/button_exam_back"
-                        android:textColor="@color/darkBaseColor"
-                        android:background="@drawable/button_fs_no"
-                        android:textAllCaps="false"
-                        android:textSize="18sp"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginBottom="16dp"/>
+                        android:orientation="vertical"
+                        android:background="@drawable/frame_exam_results">
+                        <me.t3sl4.upcortex.UI.Components.CircularStats.Speedometer
+                            android:id="@+id/speedometer"
+                            android:layout_width="300dp"
+                            android:layout_height="300dp"
+                            app:maxPercent="100"
+                            app:borderSize="24dp"
+                            app:borderColor="@color/secondaryColor"
+                            app:mode="1"
+                            app:firstQuarterColor="@color/very_high_risk"
+                            app:secondQuarterColor="@color/high_risk"
+                            app:thirthQuarterColor="@color/low_risk"
+                            app:fourthQuarterColor="@color/no_risk"
+                            app:tickBorder="false"
+                            app:percentText="false"
+                            app:firstPercent="51"
+                            app:secondPercent="80"
+                            app:firstPercentColor="@color/no_risk"
+                            app:secondPercentColor="@color/ratingColor"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="12dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/exam_low_risk"
+                            android:layout_gravity="center"
+                            android:textSize="24sp"
+                            android:textColor="@color/ratingColor"
+                            android:fontFamily="@font/roboto_flex"
+                            android:layout_marginBottom="12dp"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginEnd="12dp"
+                            android:layout_marginBottom="12dp">
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="1.0"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginRight="4dp">
+                                <Button
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="30dp"
+                                    android:text="%60"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"
+                                    android:textSize="14sp"
+                                    android:fontFamily="@font/roboto_flex"
+                                    android:background="@drawable/background_percent_old"
+                                    android:layout_marginRight="8dp"/>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/exam_before"
+                                    android:fontFamily="@font/roboto_flex"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/exam_text"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="1.0"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginRight="4dp">
+                                <Button
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="30dp"
+                                    android:text="%40"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"
+                                    android:textSize="14sp"
+                                    android:fontFamily="@font/roboto_flex"
+                                    android:background="@drawable/background_percent_current"
+                                    android:layout_marginRight="8dp"/>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/exam_current"
+                                    android:fontFamily="@font/roboto_flex"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/exam_text"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="14dp"
+                            android:padding="12dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/exam_result_test"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textSize="18sp"
+                                android:textColor="@color/darkBaseColor"
+                                android:fontFamily="@font/roboto_flex"
+                                android:layout_marginBottom="12dp"/>
+                            <View
+                                android:layout_width="150dp"
+                                android:layout_height="2dp"
+                                android:background="@color/lightBaseColor"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginBottom="20dp"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/exam_treatment_test"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textSize="18sp"
+                                android:textColor="@color/darkBaseColor"
+                                android:fontFamily="@font/roboto_flex" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/examDetailsCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="12dp"/>
                 </LinearLayout>
             </LinearLayout>
+        </ScrollView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:visibility="visible"
-                android:layout_marginTop="12dp">
-                <me.t3sl4.upcortex.UI.Components.CircularStats.Speedometer
-                    android:id="@+id/speedometer"
-                    android:layout_width="300dp"
-                    android:layout_height="300dp"
-                    app:maxPercent="100"
-                    app:borderSize="24dp"
-                    app:borderColor="@color/secondaryColor"
-                    app:mode="1"
-                    app:firstQuarterColor="@color/very_high_risk"
-                    app:secondQuarterColor="@color/high_risk"
-                    app:thirthQuarterColor="@color/low_risk"
-                    app:fourthQuarterColor="@color/no_risk"
-                    app:tickBorder="false"
-                    app:percentText="false"
-                    app:firstPercent="51"
-                    app:secondPercent="80"
-                    app:firstPercentColor="@color/no_risk"
-                    app:secondPercentColor="@color/ratingColor"
-                    android:layout_gravity="center"/>
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
+        <Button
+            android:id="@+id/closeExamButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_next_2"
+            android:text="@string/button_exam_start"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

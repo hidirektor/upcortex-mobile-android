@@ -192,4 +192,28 @@
     <string name="exam_instructions_2">Test results are visualized with graphs and tables.</string>
     <string name="exam_instructions_3">You can track your past performance.</string>
     <string name="exam_instructions_4">Provides advice on improving memory and mental development.</string>
+    <string name="exam_results">Exam Evaluation !</string>
+    <string name="exam_congrats">Congratulations !</string>
+    <string name="exam_finished">You have successfully completed your test!</string>
+    <string name="exam_before">Previous Exam</string>
+    <string name="exam_current">Current Exam</string>
+    <string name="exam_result_test">People in this score range are at low risk for Alzheimers or cognitive impairment. People in the low risk group generally do not experience cognitive problems in their daily lives. However, we recommend that they do regular exercise to prevent the risk level from reaching Moderate Level and to take early precautions.</string>
+    <string name="exam_treatment_test">The recommended therapy protocol includes the application of 1.0 mA 2 days a week, 30 minutes each session, and lasts 1 year in total.</string>
+    <string name="exam_close">Close the Page</string>
+    <string name="exam_recycler_warning">It contains your scores in different categories of this exam.</string>
+    <string name="exam_sub_name">Very Good</string>
+    <string name="exam_sub_desc">Their visual memory skills are excellent. They learn and remember visual information quickly. This provides a great advantage in daily tasks such as spatial recognition and navigation.</string>
+
+    <!-- Exams Classification Texts -->
+    <string name="exam_no_risk">No Risk</string>
+    <string name="exam_low_risk">Low Risk</string>
+    <string name="exam_mid_risk">Mid Level Risk</string>
+    <string name="exam_high_risk">High Risk</string>
+    <string name="exam_very_high_risk">Very High Risk</string>
+
+    <!-- Exam Category Texts -->
+    <string name="exam_category_1">Short Term Memory</string>
+    <string name="exam_category_2">Long Term Memory</string>
+    <string name="exam_category_3">Visual Memory</string>
+    <string name="exam_category_4">Procedural Memory</string>
 </resources>
