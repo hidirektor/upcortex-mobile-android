@@ -41,4 +41,10 @@
     <color name="membershipButtonColor">#F1F1F1</color>
 
     <color name="webview_background">#27292f</color>
+
+    <color name="very_high_risk">#4996FF</color>
+    <color name="high_risk">#0047FF</color>
+    <color name="medium_risk">#003CD7</color>
+    <color name="low_risk">#003CD7</color>
+    <color name="no_risk">#07193A</color>
 </resources>

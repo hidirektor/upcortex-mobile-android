@@ -1,7 +1,9 @@
 package me.t3sl4.upcortex.UI.Screens.Exam;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,6 +17,9 @@ public class ExamStart extends AppCompatActivity {
 
     private Button startButton;
     private Button backButton;
+
+    private LinearLayout examStartLayout;
+    private LinearLayout examStatsLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,9 @@ public class ExamStart extends AppCompatActivity {
     private void initializeComponents() {
         startButton = findViewById(R.id.startButton);
         backButton = findViewById(R.id.backButton);
+
+        examStartLayout = findViewById(R.id.examStartLayout);
+        examStartLayout.setVisibility(View.GONE);
     }
 
     private void buttonClickListeners() {

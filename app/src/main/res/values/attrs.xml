@@ -67,4 +67,24 @@
             <enum name="right" value="1"/>
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="Speedometer">
+        <attr name="maxPercent" format="integer" />
+        <attr name="borderSize" format="dimension" />
+        <attr name="textGap" format="dimension" />
+        <attr name="borderColor" format="color" />
+        <attr name="fillColor" format="color" />
+        <attr name="textColor" format="color" />
+        <attr name="tickBorder" format="boolean" />
+        <attr name="percentText" format="boolean" />
+        <attr name="mode" format="integer" />
+        <attr name="firstQuarterColor" format="color" />
+        <attr name="secondQuarterColor" format="color" />
+        <attr name="thirthQuarterColor" format="color" />
+        <attr name="fourthQuarterColor" format="color" />
+        <attr name="testPercent" format="integer" />
+        <attr name="secondTestPercent" format="integer" />
+        <attr name="testPercentColor" format="color" />
+        <attr name="secondTestPercentColor" format="color" />
+    </declare-styleable>
 </resources>
