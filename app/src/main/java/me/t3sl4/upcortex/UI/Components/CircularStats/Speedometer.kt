@@ -5,8 +5,10 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.Path
 import android.graphics.Rect
 import android.graphics.RectF
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
@@ -52,16 +54,16 @@ class Speedometer @JvmOverloads constructor(
     private var _textColor = Color.parseColor("#f5f5f5")
 
     @ColorInt
-    private var _testPercentColor = Color.parseColor("#f5f5f5")
+    private var _firstPercentColor = Color.parseColor("#f5f5f5")
 
     @ColorInt
-    private var _secondTestPercentColor = Color.parseColor("#f5f5f5")
+    private var _secondPercentColor = Color.parseColor("#f5f5f5")
 
     private var _tickBorder = true
     private var _percentText = false
     private var _mode = 0  // 0: Tek renk, 1: Çeyrek renklendirme
-    private var _testPercent = 0  // Test için kullanılacak yüzde
-    private var _secondTestPercent = 0  // Test için kullanılacak yüzde
+    private var _firstPercent = 0  // Test için kullanılacak yüzde
+    private var _secondPercent = 0  // Test için kullanılacak yüzde
 
     // Dynamic Values
     private val indicatorBorderRect = RectF()
@@ -153,31 +155,31 @@ class Speedometer @JvmOverloads constructor(
             invalidate()
         }
 
-    var testPercent: Int
-        get() = _testPercent
+    var firstPercent: Int
+        get() = _firstPercent
         set(value) {
-            _testPercent = value
+            _firstPercent = value
             invalidate()
         }
 
-    var secondTestPercent: Int
-        get() = _secondTestPercent
+    var secondPercent: Int
+        get() = _secondPercent
         set(value) {
-            _secondTestPercent = value
+            _secondPercent = value
             invalidate()
         }
 
-    var testPercentColor: Int
-        @ColorInt get() = _testPercentColor
+    var firstPercentColor: Int
+        @ColorInt get() = _firstPercentColor
         set(@ColorInt value) {
-            _testPercentColor = value
+            _firstPercentColor = value
             invalidate()
         }
 
-    var secondTestPercentColor: Int
-        @ColorInt get() = _secondTestPercentColor
+    var secondPercentColor: Int
+        @ColorInt get() = _secondPercentColor
         set(@ColorInt value) {
-            _secondTestPercentColor = value
+            _secondPercentColor = value
             invalidate()
         }
 
@@ -219,6 +221,13 @@ class Speedometer @JvmOverloads constructor(
     }
 
     private val paintIndicatorFill = Paint().apply {
+        isAntiAlias = true
+        style = Paint.Style.STROKE
+        strokeWidth = borderSize
+        strokeCap = Paint.Cap.ROUND
+    }
+
+    private val paintIndicatorNeedle = Paint().apply {
         isAntiAlias = true
         style = Paint.Style.STROKE
         strokeWidth = borderSize
@@ -346,21 +355,21 @@ class Speedometer @JvmOverloads constructor(
                     R.styleable.Speedometer_mode,
                     mode
                 )
-                testPercent = getInt(
-                    R.styleable.Speedometer_testPercent,
-                    testPercent
+                firstPercent = getInt(
+                    R.styleable.Speedometer_firstPercent,
+                    firstPercent
                 )
-                secondTestPercent = getInt(
-                    R.styleable.Speedometer_secondTestPercent,
-                    testPercent
+                secondPercent = getInt(
+                    R.styleable.Speedometer_secondPercent,
+                    firstPercent
                 )
-                testPercentColor = getInt(
-                    R.styleable.Speedometer_testPercentColor,
-                    testPercentColor
+                firstPercentColor = getInt(
+                    R.styleable.Speedometer_firstPercentColor,
+                    firstPercentColor
                 )
-                secondTestPercentColor = getInt(
-                    R.styleable.Speedometer_secondTestPercentColor,
-                    secondTestPercentColor
+                secondPercentColor = getInt(
+                    R.styleable.Speedometer_secondPercentColor,
+                    secondPercentColor
                 )
                 firstQuarterColor = getColor(
                     R.styleable.Speedometer_firstQuarterColor,
@@ -417,7 +426,71 @@ class Speedometer @JvmOverloads constructor(
         val centerX = indicatorBorderRect.centerX()
         val centerY = indicatorBorderRect.centerY()
 
+        val needleWidth = 30f // Adjust this to change the width of the needle
+        val baseOffset = 50 // Offset from center for the needles (adjust as needed)
+        val cornerRadius = 120f // Radius for rounded corners of the triangle
 
+        // Step 1: Drawable kullanarak ikon_ellipse'i tam merkeze yerleştirin
+        val ellipseDrawable: Drawable? = context.getDrawable(R.drawable.ikon_center_ellipse)
+        val iconSize = 100 // İkonun boyutu (istenirse değiştirilebilir)
+
+        ellipseDrawable?.let {
+            // İkonun sol üst köşesini ve sağ alt köşesini hesaplayın
+            val left = (centerX - iconSize / 2).toInt()
+            val top = (centerY - iconSize / 2).toInt()
+            val right = (centerX + iconSize / 2).toInt()
+            val bottom = (centerY + iconSize / 2).toInt()
+
+            // İkonun konumunu belirleyin
+            it.setBounds(left, top, right, bottom)
+
+            // İkonu canvas'a çizin
+            it.draw(canvas)
+        }
+
+        // Step 2: Draw the First Percent Bar (First Triangle)
+        if (firstPercent > 0) {
+            paintIndicatorNeedle.color = firstPercentColor
+            paintIndicatorNeedle.style = Paint.Style.FILL
+
+            val firstSweepAngle = (firstPercent / 100f) * SWEEP_ANGLE
+            val firstEndX = centerX + (centerX - borderSize - MAJOR_TICK_SIZE - baseOffset) * cos((START_ANGLE + firstSweepAngle).toRadian())
+            val firstEndY = centerY + (centerY - borderSize - MAJOR_TICK_SIZE - baseOffset) * sin((START_ANGLE + firstSweepAngle).toRadian())
+
+            val firstTrianglePath = createRoundedTrianglePath(
+                centerX, centerY, firstEndX, firstEndY, needleWidth
+            )
+
+            // Drawing with rounded corners
+            val roundedRect = RectF()
+            firstTrianglePath.computeBounds(roundedRect, true)
+            val roundedTrianglePath = Path()
+            roundedTrianglePath.addRoundRect(roundedRect, cornerRadius, cornerRadius, Path.Direction.CW)
+
+            canvas.drawPath(roundedTrianglePath, paintIndicatorNeedle)
+        }
+    }
+
+    fun createRoundedTrianglePath(startX: Float, startY: Float, endX: Float, endY: Float, width: Float): Path {
+        val path = Path()
+
+        // Base center is (centerX, centerY)
+        val baseLeftX = centerX - width / 2
+        val baseLeftY = centerY
+        val baseRightX = centerX + width / 2
+        val baseRightY = centerY
+
+        // Move to top vertex (end point of the triangle)
+        path.moveTo(endX, endY)
+
+        // Draw lines from top vertex to the base corners
+        path.lineTo(baseRightX, baseRightY)
+        path.lineTo(baseLeftX, baseLeftY)
+
+        // Close the path to form a triangle
+        path.close()
+
+        return path
     }
 
     private fun renderMinorTicks(canvas: Canvas) {
@@ -480,9 +553,9 @@ class Speedometer @JvmOverloads constructor(
             paintIndicatorFill.color = fillColor
         } else {
             paintIndicatorFill.color = when {
-                testPercent <= 25 -> _firstQuarterColor
-                testPercent in 26..50 -> _secondQuarterColor
-                testPercent in 51..75 -> _thirdQuarterColor
+                firstPercent <= 25 -> _firstQuarterColor
+                firstPercent in 26..50 -> _secondQuarterColor
+                firstPercent in 51..75 -> _thirdQuarterColor
                 else -> _fourthQuarterColor
             }
         }
@@ -537,7 +610,7 @@ class Speedometer @JvmOverloads constructor(
 
         private const val MIN_SPEED = 0
         private const val TICK_MARGIN = 10f
-        private const val TICK_TEXT_MARGIN = 30f
+        private const val TICK_TEXT_MARGIN = 0f
         private const val MAJOR_TICK_SIZE = 50f
         private const val MINOR_TICK_SIZE = 25f
         private const val MAJOR_TICK_WIDTH = 4f

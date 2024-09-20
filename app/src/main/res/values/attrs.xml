@@ -82,9 +82,9 @@
         <attr name="secondQuarterColor" format="color" />
         <attr name="thirthQuarterColor" format="color" />
         <attr name="fourthQuarterColor" format="color" />
-        <attr name="testPercent" format="integer" />
-        <attr name="secondTestPercent" format="integer" />
-        <attr name="testPercentColor" format="color" />
-        <attr name="secondTestPercentColor" format="color" />
+        <attr name="firstPercent" format="integer" />
+        <attr name="secondPercent" format="integer" />
+        <attr name="firstPercentColor" format="color" />
+        <attr name="secondPercentColor" format="color" />
     </declare-styleable>
 </resources>

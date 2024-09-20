@@ -247,10 +247,10 @@
                     app:fourthQuarterColor="@color/no_risk"
                     app:tickBorder="false"
                     app:percentText="false"
-                    app:testPercent="87"
-                    app:secondTestPercent="50"
-                    app:testPercentColor="@color/no_risk"
-                    app:secondTestPercentColor="@color/ratingColor"
+                    app:firstPercent="51"
+                    app:secondPercent="80"
+                    app:firstPercentColor="@color/no_risk"
+                    app:secondPercentColor="@color/ratingColor"
                     android:layout_gravity="center"/>
             </LinearLayout>
         </LinearLayout>
