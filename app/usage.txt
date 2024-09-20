@@ -39282,8 +39282,6 @@ androidx.core.content.res.ResourcesCompat$FontCallback:
     public synthetic abstract void lambda$callbackSuccessAsync$0()
 androidx.core.content.res.ResourcesCompat$ThemeCompat$Api23Impl
 androidx.core.content.res.ResourcesCompat$ThemeCompat
-androidx.core.content.res.ResourcesCompat:
-    public static android.graphics.Typeface getFont(android.content.Context,int)
 androidx.core.content.res.TypedArrayUtils:
     public static int getNamedInt(android.content.res.TypedArray,org.xmlpull.v1.XmlPullParser,java.lang.String,int,int)
     public static java.lang.String getNamedString(android.content.res.TypedArray,android.content.res.XmlResourceParser,java.lang.String,int)
@@ -39774,7 +39772,10 @@ androidx.core.view.WindowInsetsCompat$Impl:
     public void copyWindowDataInto(androidx.core.view.WindowInsetsCompat)
     public void setRootViewData(androidx.core.graphics.Insets)
     public void setStableInsets(androidx.core.graphics.Insets)
-androidx.core.view.WindowInsetsCompat$Type
+androidx.core.view.WindowInsetsCompat$Type:
+    public static int ime()
+    public static int mandatorySystemGestures()
+    public static int systemBars()
 androidx.core.view.WindowInsetsCompat:
     public static androidx.core.view.WindowInsetsCompat consumeDisplayCutout()
     public static androidx.core.view.WindowInsetsCompat consumeStableInsets()
@@ -46224,7 +46225,6 @@ kotlin.collections.CollectionsKt:
     public static java.util.ArrayList toMutableList(java.util.Collection)
 kotlin.collections.CollectionsKt__CollectionsKt:
     public static java.util.List emptyList()
-    public static varargs java.util.List listOf(java.lang.Object[])
     public static final java.util.List optimizeReadOnlyList(java.util.ArrayList)
     public static void throwIndexOverflow()
 kotlin.collections.CollectionsKt___CollectionsKt

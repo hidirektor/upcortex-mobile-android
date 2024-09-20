@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="300dp"
     android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginTop="12dp"
     android:padding="12dp">
 
     <LinearLayout
@@ -34,6 +37,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/examCategory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/exam_category_1"
@@ -64,11 +68,13 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_gravity="center"
-            android:gravity="center">
+            android:gravity="top
+">
             <TextView
+                android:id="@+id/categoryResultMain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/exam_sub_name"
@@ -78,10 +84,12 @@
                 android:fontFamily="@font/roboto_flex"
                 android:layout_marginBottom="6dp"/>
             <TextView
+                android:id="@+id/categoryResultDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/exam_sub_desc"
                 android:textColor="@color/darkBaseColor"
+                android:textAlignment="viewStart"
                 android:textSize="16sp"/>
         </LinearLayout>
 
