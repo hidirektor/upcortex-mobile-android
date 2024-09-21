@@ -82,83 +82,85 @@
             android:layout_marginEnd="8dp"
             app:layout_constraintTop_toBottomOf="@+id/appLogo"/>
 
+        <LinearLayout
+            android:id="@+id/questionHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/seperator">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1.0"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginRight="8dp"
+                android:layout_gravity="center">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/background_circle_category_count">
+                    <TextView
+                        android:id="@+id/categoryOrder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:fontFamily="@font/roboto_flex"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/categoryName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kısa Süreli Bellek"
+                    android:textSize="16sp"
+                    android:textColor="@color/darkBaseColor"
+                    android:fontFamily="@font/roboto_flex"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+            <me.t3sl4.upcortex.UI.Components.CircularCountdown.CircularCountdownView
+                android:id="@+id/circularCountdownView"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                app:progressColor="@color/ratingColor"
+                app:backgroundColor="@color/membershipButtonColor"
+                app:progressTextColor="@color/ratingColor"
+                app:remainingTimeTextColor="@color/ratingColor"
+                app:progressTextSize="16sp"
+                app:remainingTimeTextSize="16sp"
+                app:strokeWidth="8dp"
+                app:progressText="Test"
+                app:preProgressText="false"
+                app:duration="10000"
+                app:remainingTime="8000"
+                app:circleDiameter="200dp"
+                app:clockwise="false"
+                app:softProgress="true" />
+        </LinearLayout>
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/seperator"
+            app:layout_constraintTop_toBottomOf="@+id/questionHeader"
             app:layout_constraintBottom_toTopOf="@id/buttonSection">
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <LinearLayout
-                    android:id="@+id/questionHeader"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    app:layout_constraintTop_toTopOf="parent">
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="1.0"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginRight="8dp"
-                        android:layout_gravity="center">
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_marginEnd="12dp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/background_circle_category_count">
-                            <TextView
-                                android:id="@+id/categoryOrder"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="1"
-                                android:fontFamily="@font/roboto_flex"
-                                android:textColor="@color/white"
-                                android:textStyle="bold"
-                                android:textSize="16sp"
-                                android:gravity="center"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"/>
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        <TextView
-                            android:id="@+id/categoryName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Kısa Süreli Bellek"
-                            android:textSize="16sp"
-                            android:textColor="@color/darkBaseColor"
-                            android:fontFamily="@font/roboto_flex"
-                            android:layout_gravity="center"/>
-                    </LinearLayout>
-                    <me.t3sl4.upcortex.UI.Components.CircularCountdown.CircularCountdownView
-                        android:id="@+id/circularCountdownView"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_gravity="center"
-                        app:progressColor="@color/ratingColor"
-                        app:backgroundColor="@color/membershipButtonColor"
-                        app:progressTextColor="@color/ratingColor"
-                        app:remainingTimeTextColor="@color/ratingColor"
-                        app:progressTextSize="16sp"
-                        app:remainingTimeTextSize="16sp"
-                        app:strokeWidth="8dp"
-                        app:progressText="Test"
-                        app:preProgressText="false"
-                        app:duration="10000"
-                        app:remainingTime="8000"
-                        app:circleDiameter="200dp"
-                        app:clockwise="false"
-                        app:softProgress="true" />
-                </LinearLayout>
-
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
                 <LinearLayout
                     android:id="@+id/imageQuestionLayout"
                     android:layout_width="match_parent"
@@ -168,8 +170,7 @@
                     android:padding="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/questionHeader">
+                    app:layout_constraintStart_toStartOf="parent" >
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -349,7 +350,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_next_2"
-                android:text="@string/button_exam_start"
+                android:text="@string/button_exam_answer"
                 android:textColor="@color/white"
                 android:textAllCaps="false"
                 android:textSize="18sp"

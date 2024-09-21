@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -67,8 +68,8 @@ public class ExamProcess extends AppCompatActivity {
     private ImageView imageView4_2;
     private ImageView imageView4_3;
 
-    private long questionTime = 10000; // 10 saniye
-    private long answerTime = 10000;   // 10 saniye
+    private long questionTime = 10000; // 10 seconds for displaying the question
+    private long answerTime = 10000;   // 10 seconds for answering
 
     private List<CategoryInfo> categoryInfoList = new ArrayList<>();
     private int examPoint = 0;
@@ -80,32 +81,38 @@ public class ExamProcess extends AppCompatActivity {
     private List<Question> visualMemoryQuestions = new ArrayList<>();
     private List<Question> proceduralTermMemoryQuestions = new ArrayList<>();
 
-    private int currentCategoryIndex = 0; // İşlenecek mevcut kategori indeksi
+    private int currentCategoryIndex = 0; // Current category index
 
-    private int currentQuestionIndex = 0; // Soru indeksi
+    private int currentQuestionIndex = 0; // Current question index
     private Question currentQuestion;
     private List<QuestionOption> currentOptions = new ArrayList<>();
 
-    // Yeni Eklenen Listeler
+    // Newly Added Lists
     private List<QuestionOption> correctOptionsList = new ArrayList<>();
     private List<QuestionOption> allOptionsRandomizedList = new ArrayList<>();
     private List<ImageView> selectedImageViews = new ArrayList<>();
+
+    // Timers
+    private CountDownTimer questionTimer;
+    private CountDownTimer answerTimer;
+    private boolean hasAnswered = false; // Flag to check if user has answered
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exam_process);
 
-        // JSON verisini al ve Exam nesnesine dönüştür
+        // Retrieve JSON data and convert to Exam object
         String examJson = getIntent().getStringExtra("examJson");
         if (examJson != null) {
             Gson gson = new Gson();
             receivedExam = gson.fromJson(examJson, Exam.class);
-            Log.d("ExamProcess", "Exam nesnesi başarıyla alındı: " + receivedExam.getExamName());
+            Log.d("ExamProcess", "Exam object successfully received: " + receivedExam.getExamName());
         } else {
-            Log.e("ExamProcess", "Exam JSON verisi alınamadı!");
-            // Hata durumunda geri dön veya kullanıcıya bildirim göster
+            Log.e("ExamProcess", "Exam JSON data could not be retrieved!");
+            // Handle error by closing the activity or notifying the user
             finish();
+            return;
         }
 
         ScreenUtil.hideNavAndStatus(ExamProcess.this);
@@ -118,23 +125,30 @@ public class ExamProcess extends AppCompatActivity {
         processCurrentCategory();
     }
 
+    /**
+     * Initialize all UI components and set up listeners.
+     */
     private void initializeComponents() {
+        // Initialize Difficulty Stars
         difficultyStarOne = findViewById(R.id.difficultyStarOne);
         difficultyStarTwo = findViewById(R.id.difficultyStarTwo);
         difficultyStarThree = findViewById(R.id.difficultyStarThree);
 
+        // Initialize TextViews and Countdown
         difficultyText = findViewById(R.id.difficultyText);
         categoryOrder = findViewById(R.id.categoryOrder);
         categoryName = findViewById(R.id.categoryName);
         circularCountdownView = findViewById(R.id.circularCountdownView);
 
+        // Initialize Buttons and Main Text
         preTextButton = findViewById(R.id.preTextButton);
         answerButton = findViewById(R.id.answerButton);
         mainText = findViewById(R.id.mainText);
 
+        // Initialize Image Question Layout
         imageQuestionLayout = findViewById(R.id.imageQuestionLayout);
 
-        // Image Question Layout
+        // Initialize ImageViews
         imageView1_1 = findViewById(R.id.imageView1_1);
         imageView1_2 = findViewById(R.id.imageView1_2);
         imageView1_3 = findViewById(R.id.imageView1_3);
@@ -148,6 +162,7 @@ public class ExamProcess extends AppCompatActivity {
         imageView4_2 = findViewById(R.id.imageView4_2);
         imageView4_3 = findViewById(R.id.imageView4_3);
 
+        // Add all ImageViews to the list for easy management
         imageViewList.add(imageView1_1);
         imageViewList.add(imageView1_2);
         imageViewList.add(imageView1_3);
@@ -161,21 +176,21 @@ public class ExamProcess extends AppCompatActivity {
         imageViewList.add(imageView4_2);
         imageViewList.add(imageView4_3);
 
-        // Başlangıçta imageQuestionLayout görünmez yap
+        // Initially hide the imageQuestionLayout
         imageQuestionLayout.setVisibility(View.GONE);
 
-        // AnswerButton ve mainText başlangıçta görünmez
+        // Initially hide answerButton and mainText
         answerButton.setVisibility(View.GONE);
         mainText.setVisibility(View.GONE);
 
-        // AnswerButton'a tıklama dinleyicisi ekle
+        // Set up AnswerButton click listener
         answerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 checkUserAnswers(new CategoryCompletionListener() {
                     @Override
                     public void onCategoryCompleted() {
-                        // Kategori tamamlandı, sonraki kategoriye geç
+                        // Category completed, proceed to next category
                         currentCategoryIndex++;
                         processCurrentCategory();
                     }
@@ -183,7 +198,7 @@ public class ExamProcess extends AppCompatActivity {
             }
         });
 
-        // preTextButton'ın işlevselliği sadece metni göstermek ile sınırlı
+        // Set up preTextButton click listener
         preTextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -191,60 +206,76 @@ public class ExamProcess extends AppCompatActivity {
                 mainText.setVisibility(View.VISIBLE);
             }
         });
+
+        // Add click listeners to all ImageViews for selection
+        for (ImageView imageView : imageViewList) {
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    handleImageClick(imageView);
+                }
+            });
+        }
     }
 
+    /**
+     * Processes the received exam data by categorizing and counting questions.
+     */
     private void processExamData() {
         if (receivedExam != null && receivedExam.getQuestions() != null) {
             LinkedList<QuestionCategory> categories = receivedExam.getQuestionCategories();
             if (categories != null) {
-                Log.d("ProcessExamData", "Kategori sayısı: " + categories.size());
+                Log.d("ProcessExamData", "Number of categories: " + categories.size());
                 for (QuestionCategory category : categories) {
-                    Log.d("ProcessExamData", "Kategori: " + category.getName() + ", Sıra: " + category.getOrder());
+                    Log.d("ProcessExamData", "Category: " + category.getName() + ", Order: " + category.getOrder());
                     CategoryInfo info = new CategoryInfo(category.getName(), category.getOrder());
                     categoryInfoList.add(info);
                 }
 
-                // Kategori sırasına göre sırala
+                // Sort categories based on their order
                 Collections.sort(categoryInfoList, Comparator.comparingInt(CategoryInfo::getOrder));
 
-                // Sıralandıktan sonra logla
-                Log.d("ProcessExamData", "Sıralandıktan sonra kategori listesi:");
+                // Log sorted categories
+                Log.d("ProcessExamData", "Sorted category list:");
                 for (CategoryInfo info : categoryInfoList) {
-                    Log.d("ProcessExamData", "Kategori: " + info.getName() + ", Sıra: " + info.getOrder());
+                    Log.d("ProcessExamData", "Category: " + info.getName() + ", Order: " + info.getOrder());
                 }
             } else {
-                Log.d("ProcessExamData", "Kategoriler null veya boş");
+                Log.d("ProcessExamData", "Categories are null or empty");
             }
 
-            // Soruları kategorilere göre say
+            // Count questions per category
             LinkedList<Question> questions = receivedExam.getQuestions();
             if (questions != null) {
-                Log.d("ProcessExamData", "Soru sayısı: " + questions.size());
+                Log.d("ProcessExamData", "Number of questions: " + questions.size());
                 for (Question question : questions) {
                     String categoryName = question.getCategoryName();
-                    Log.d("ProcessExamData", "Soru kategorisi: " + categoryName);
+                    Log.d("ProcessExamData", "Question category: " + categoryName);
                     boolean matched = false;
                     for (CategoryInfo info : categoryInfoList) {
                         if (info.getName().trim().equalsIgnoreCase(categoryName.trim())) {
                             info.incrementQuestionCount();
                             matched = true;
-                            Log.d("ProcessExamData", "Kategori eşleşti: " + categoryName);
+                            Log.d("ProcessExamData", "Category matched: " + categoryName);
                             break;
                         }
                     }
                     if (!matched) {
-                        Log.d("ProcessExamData", "Kategori eşleşmedi: " + categoryName);
+                        Log.d("ProcessExamData", "Category did not match: " + categoryName);
                     }
                 }
             } else {
-                Log.d("ProcessExamData", "Sorular null veya boş");
+                Log.d("ProcessExamData", "Questions are null or empty");
             }
             displayCategoryInfo();
         } else {
-            Log.d("ProcessExamData", "receivedExam veya questions null");
+            Log.d("ProcessExamData", "receivedExam or questions are null");
         }
     }
 
+    /**
+     * Sorts questions into their respective categories.
+     */
     private void sortQuestions() {
         for (Question question : receivedExam.getQuestions()) {
             String categoryName = question.getCategoryName();
@@ -260,30 +291,38 @@ public class ExamProcess extends AppCompatActivity {
         }
     }
 
+    /**
+     * Displays detailed information about each category for debugging purposes.
+     */
     private void displayCategoryInfo() {
         for (CategoryInfo info : categoryInfoList) {
-            Log.d("CategoryInfo", "Kategori: " + info.getName() +
-                    ", Sıra: " + info.getOrder() +
-                    ", Soru Sayısı: " + info.getQuestionCount() +
-                    ", Kullanıcı Puanı: " + info.getUserPoint());
+            Log.d("CategoryInfo", "Category: " + info.getName() +
+                    ", Order: " + info.getOrder() +
+                    ", Question Count: " + info.getQuestionCount() +
+                    ", User Points: " + info.getUserPoint());
         }
 
-        Log.d("ExamPoint", "Toplam Sınav Puanı: " + examPoint);
+        Log.d("ExamPoint", "Total Exam Points: " + examPoint);
     }
 
+    /**
+     * Sets the difficulty mode by updating star colors and difficulty text.
+     *
+     * @param difficultyEnum The difficulty level of the current question.
+     */
     private void difficultyMode(Difficulty difficultyEnum) {
         String difficultyString = "";
-        if (difficultyEnum.name().equals("beginner")) {
+        if (difficultyEnum == Difficulty.BEGINNER) {
             setStarColor(difficultyStarOne, R.color.warningColor);
             setStarColor(difficultyStarTwo, R.color.darkOnTop);
             setStarColor(difficultyStarThree, R.color.darkOnTop);
             difficultyString = getString(R.string.exam_difficulty_beginner);
-        } else if (difficultyEnum.name().equals("medium")) {
+        } else if (difficultyEnum == Difficulty.MEDIUM) {
             setStarColor(difficultyStarOne, R.color.warningColor);
             setStarColor(difficultyStarTwo, R.color.warningColor);
             setStarColor(difficultyStarThree, R.color.darkOnTop);
             difficultyString = getString(R.string.exam_difficulty_medium);
-        } else if (difficultyEnum.name().equals("hard")) {
+        } else if (difficultyEnum == Difficulty.HARD) {
             setStarColor(difficultyStarOne, R.color.warningColor);
             setStarColor(difficultyStarTwo, R.color.warningColor);
             setStarColor(difficultyStarThree, R.color.warningColor);
@@ -293,33 +332,46 @@ public class ExamProcess extends AppCompatActivity {
         difficultyText.setText(difficultyString);
     }
 
+    /**
+     * Sets the color of a star ImageView based on the provided color resource ID.
+     *
+     * @param star       The ImageView representing the star.
+     * @param colorResId The color resource ID to apply.
+     */
     private void setStarColor(ImageView star, int colorResId) {
         int color = ContextCompat.getColor(this, colorResId);
         star.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN));
     }
 
-    // Sayaç tamamlandığında tetiklenecek dinleyici arayüzü
+    // Listener Interfaces
     interface CountdownListener {
         void onCountdownFinished();
     }
 
-    // Kategori tamamlandığında tetiklenecek dinleyici arayüzü
     interface CategoryCompletionListener {
         void onCategoryCompleted();
     }
 
-    // Seçenekler gösterildiğinde tetiklenecek dinleyici arayüzü
     interface OptionsDisplayListener {
         void onOptionsDisplayed();
     }
 
-    // Seçenekler rastgeleleştirildiğinde tetiklenecek dinleyici arayüzü
     interface OptionsRandomizedListener {
         void onOptionsRandomized();
     }
 
-    private void startCountdown(long duration, CountdownListener listener) {
-        new CountDownTimer(duration, 1000) {
+    /**
+     * Starts the initial question display countdown.
+     *
+     * @param duration The duration of the countdown in milliseconds.
+     * @param listener The listener to invoke when the countdown finishes.
+     */
+    private void startQuestionTimer(long duration, CountdownListener listener) {
+        if (questionTimer != null) {
+            questionTimer.cancel();
+        }
+
+        questionTimer = new CountDownTimer(duration, 1000) {
             public void onTick(long millisUntilFinished) {
                 circularCountdownView.setRemainingTime(millisUntilFinished);
             }
@@ -333,11 +385,37 @@ public class ExamProcess extends AppCompatActivity {
         }.start();
     }
 
+    /**
+     * Starts the answer phase countdown.
+     *
+     * @param duration The duration of the countdown in milliseconds.
+     * @param listener The listener to invoke when the countdown finishes.
+     */
+    private void startAnswerTimer(long duration, CountdownListener listener) {
+        if (answerTimer != null) {
+            answerTimer.cancel();
+        }
+
+        answerTimer = new CountDownTimer(duration, 1000) {
+            public void onTick(long millisUntilFinished) {
+                circularCountdownView.setRemainingTime(millisUntilFinished);
+            }
+
+            public void onFinish() {
+                circularCountdownView.setRemainingTime(0);
+                if (listener != null) {
+                    listener.onCountdownFinished();
+                }
+            }
+        }.start();
+    }
+
+    /**
+     * Processes the current category by initiating the corresponding exam flow.
+     */
     private void processCurrentCategory() {
         if (currentCategoryIndex >= categoryInfoList.size()) {
-            // Tüm kategoriler tamamlandı
-            Log.d("ExamProcess", "Tüm kategoriler tamamlandı.");
-            // Gerekirse sonuçları göster veya başka işlemler yap
+            Log.d("ExamProcess", "All categories have been completed.");
             showFinalScore();
             return;
         }
@@ -346,42 +424,54 @@ public class ExamProcess extends AppCompatActivity {
         categoryName.setText(currentCategory.getName());
         categoryOrder.setText(String.valueOf(currentCategory.getOrder()));
 
-        if (currentCategory.getName().equals("Kısa Süreli Bellek")) {
-            imageQuestionLayout.setVisibility(View.VISIBLE);
-            startShortTermExam(new CategoryCompletionListener() {
-                @Override
-                public void onCategoryCompleted() {
-                    // Bu kategori tamamlandı, sonraki kategoriye geç
-                    currentCategoryIndex++;
-                    processCurrentCategory();
-                }
-            });
-        } else {
-            imageQuestionLayout.setVisibility(View.GONE);
-            // Diğer kategoriler için gerekli işlemleri ekleyin
-            // Şu anda sadece "Kısa Süreli Bellek" işleniyor
-            currentCategoryIndex++;
-            processCurrentCategory();
+        switch (currentCategory.getName()) {
+            case "Kısa Süreli Bellek":
+                imageQuestionLayout.setVisibility(View.VISIBLE);
+                startShortTermExam(new CategoryCompletionListener() {
+                    @Override
+                    public void onCategoryCompleted() {
+                        // Category completed, proceed to next category
+                        currentCategoryIndex++;
+                        processCurrentCategory();
+                    }
+                });
+                break;
+            // Add cases for other categories as needed
+            default:
+                imageQuestionLayout.setVisibility(View.GONE);
+                // Handle other categories here
+                currentCategoryIndex++;
+                processCurrentCategory();
+                break;
         }
     }
 
+    /**
+     * Initiates the short-term memory exam category.
+     *
+     * @param listener The listener to invoke when the category is completed.
+     */
     private void startShortTermExam(CategoryCompletionListener listener) {
         if (shortTermMemoryQuestions.isEmpty()) {
-            Log.d("ExamProcess", "Kısa Süreli Bellek kategorisinde hiç soru yok.");
+            Log.d("ExamProcess", "No questions available in Kısa Süreli Bellek category.");
             listener.onCategoryCompleted();
             return;
         }
 
-        currentQuestionIndex = 0; // Soru indeksini sıfırla
-        examPoint = 0; // Puanı sıfırla
+        currentQuestionIndex = 0; // Reset question index
+        examPoint = 0; // Reset exam points
         displayNextQuestion(listener);
     }
 
+    /**
+     * Displays the next question in the current category.
+     *
+     * @param listener The listener to invoke when the category is completed.
+     */
     private void displayNextQuestion(CategoryCompletionListener listener) {
         if (currentQuestionIndex >= shortTermMemoryQuestions.size()) {
-            // Tüm sorular tamamlandı
             imageQuestionLayout.setVisibility(View.GONE);
-            Log.d("ExamProcess", "Kısa Süreli Bellek kategorisindeki tüm sorular tamamlandı.");
+            Log.d("ExamProcess", "All questions in Kısa Süreli Bellek category have been completed.");
             listener.onCategoryCompleted();
             return;
         }
@@ -390,16 +480,23 @@ public class ExamProcess extends AppCompatActivity {
         mainText.setText(currentQuestion.getMainText());
         preTextButton.setText(currentQuestion.getPreText());
 
-        // Difficulty Mode'u çağır
         difficultyMode(currentQuestion.getDifficulty());
 
-        // Layout ve butonları ayarla
         imageQuestionLayout.setVisibility(View.VISIBLE);
         preTextButton.setVisibility(View.VISIBLE);
         answerButton.setVisibility(View.GONE);
         mainText.setVisibility(View.GONE);
 
-        // Doğru ve tüm seçenekleri ayır
+        hasAnswered = false; // Reset the flag for the new question
+
+        // Reset selected images
+        selectedImageViews.clear();
+        for (ImageView imageView : imageViewList) {
+            imageView.setAlpha(1.0f); // Reset opacity
+            imageView.setTag(null);
+        }
+
+        // Separate correct and incorrect options
         correctOptionsList.clear();
         List<QuestionOption> incorrectOptions = new ArrayList<>();
 
@@ -411,72 +508,91 @@ public class ExamProcess extends AppCompatActivity {
             }
         }
 
-        // Doğru seçenekleri order'a göre sırala
+        // Sort correct options based on their order
         Collections.sort(correctOptionsList, Comparator.comparingInt(QuestionOption::getOrder));
 
-        // Tüm seçenekleri birleştir ve karıştır
+        // Randomize all options
         allOptionsRandomizedList.clear();
         allOptionsRandomizedList.addAll(currentQuestion.getQuestionOptions());
         Collections.shuffle(allOptionsRandomizedList);
 
-        // İlk 10 saniye için doğru görselleri göster
+        // Collect file names of correct options
         List<String> correctImageFileNames = new ArrayList<>();
         for (QuestionOption option : correctOptionsList) {
             correctImageFileNames.add(option.getFileName());
         }
 
+        // Locate and display correct images
         locateImages(currentQuestion.getCorrectOptionsCount(), correctImageFileNames);
 
-        // preTextButton'ın tıklanması sadece metni göstermek içindir
-        preTextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                preTextButton.setVisibility(View.GONE);
-                mainText.setVisibility(View.VISIBLE);
-            }
-        });
-
-        // İlk 10 saniyelik sayaç başlat
-        startCountdown(questionTime, new CountdownListener() {
+        // Start the initial question display timer (10 seconds)
+        startQuestionTimer(questionTime, new CountdownListener() {
             @Override
             public void onCountdownFinished() {
-                // Tüm görselleri rastgele sırala ve göster
-                List<String> allImageFileNames = new ArrayList<>();
-                for (QuestionOption option : allOptionsRandomizedList) {
-                    allImageFileNames.add(option.getFileName());
-                }
-
-                locateImages(currentQuestion.getTotalOptionsCount(), allImageFileNames);
-
-                // 2. sayaç için answerButton'ı göster ve preTextButton'ı gizle
-                answerButton.setVisibility(View.VISIBLE);
+                // After 10 seconds, allow answering
                 preTextButton.setVisibility(View.GONE);
+                mainText.setVisibility(View.VISIBLE);
+                answerButton.setVisibility(View.VISIBLE);
+
+                // Start the answer timer (10 seconds)
+                startAnswerTimer(answerTime, new CountdownListener() {
+                    @Override
+                    public void onCountdownFinished() {
+                        if (!hasAnswered) {
+                            Log.d("ExamProcess", "User did not answer in time. Awarding 0 points.");
+                            // Move to the next question without awarding points
+                            currentQuestionIndex++;
+                            displayNextQuestion(listener);
+                        }
+                    }
+                });
             }
         });
     }
 
-    private void handleImageClick(ImageView imageView, QuestionOption option) {
-        if (selectedImageViews.contains(imageView)) {
-            // Görsel zaten seçilmişse, seçimi kaldır
+    /**
+     * Handles user clicks on ImageViews for selecting answers.
+     *
+     * @param imageView The ImageView that was clicked.
+     */
+    private void handleImageClick(ImageView imageView) {
+        if (imageView.getTag() != null && imageView.getTag().equals("selected")) {
+            // Image is already selected, deselect it
             selectedImageViews.remove(imageView);
             imageView.setAlpha(1.0f);
             imageView.setTag(null);
         } else {
-            // Doğru seçenek sayısına ulaşıldıysa ekleme yapma
+            // Check if maximum selections have been reached
             if (selectedImageViews.size() < currentQuestion.getCorrectOptionsCount()) {
                 selectedImageViews.add(imageView);
-                imageView.setAlpha(0.5f); // Seçildiğini belirtmek için opaklığı azalt
+                imageView.setAlpha(0.5f); // Indicate selection
                 imageView.setTag("selected");
+            } else {
+                // Inform the user that no more selections are allowed
+                Toast.makeText(this, "You can only select " + currentQuestion.getCorrectOptionsCount() + " images.", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
+    /**
+     * Checks the user's selected answers and updates the score accordingly.
+     *
+     * @param listener The listener to invoke when the category is completed.
+     */
     private void checkUserAnswers(CategoryCompletionListener listener) {
+        // User has answered
+        hasAnswered = true;
+
+        // Cancel the answer timer as the user has responded
+        if (answerTimer != null) {
+            answerTimer.cancel();
+        }
+
         int correctSelections = 0;
 
         for (ImageView imageView : selectedImageViews) {
             int index = imageViewList.indexOf(imageView);
-            if (index < allOptionsRandomizedList.size()) { // allOptionsRandomizedList kullanıldı
+            if (index < allOptionsRandomizedList.size()) { // Ensure index is within bounds
                 QuestionOption option = allOptionsRandomizedList.get(index);
                 if (option.isCorrect()) {
                     correctSelections++;
@@ -485,74 +601,119 @@ public class ExamProcess extends AppCompatActivity {
         }
 
         if (correctSelections == currentQuestion.getCorrectOptionsCount()) {
-            // Doğru cevap, puan ekle
+            // Correct answer, add points
             examPoint += currentQuestion.getPoint();
-            Log.d("ExamProcess", "Doğru cevap! Puan: " + currentQuestion.getPoint());
+            Log.d("ExamProcess", "Correct answer! Points awarded: " + currentQuestion.getPoint());
+            Toast.makeText(this, "Correct! +" + currentQuestion.getPoint() + " points.", Toast.LENGTH_SHORT).show();
         } else {
-            // Yanlış cevap, puan ekleme
-            Log.d("ExamProcess", "Yanlış cevap! Puan alamadınız.");
+            // Incorrect answer, no points
+            Log.d("ExamProcess", "Incorrect answer! No points awarded.");
+            Toast.makeText(this, "Incorrect! No points awarded.", Toast.LENGTH_SHORT).show();
         }
 
-        // AnswerButton'ı görünmez yap
+        // Reset selections
+        selectedImageViews.clear();
+        for (ImageView imageView : imageViewList) {
+            imageView.setAlpha(1.0f); // Reset opacity
+            imageView.setTag(null);
+        }
+
+        // Hide AnswerButton and mainText
         answerButton.setVisibility(View.GONE);
         mainText.setVisibility(View.GONE);
 
-        // Bir sonraki soruya geç
+        // Proceed to the next question
         currentQuestionIndex++;
         displayNextQuestion(listener);
     }
 
+    /**
+     * Assigns images to ImageViews based on the number of correct options and their file names.
+     *
+     * @param imageCount        The number of images to display.
+     * @param imageFileNames    The list of image file names to load.
+     */
     private void locateImages(int imageCount, List<String> imageFileNames) {
-        if(imageCount == 2) {
-            changeImageVisibility(View.GONE);
+        // First, hide all ImageViews
+        changeImageVisibility(View.GONE);
+
+        // Determine which ImageViews to make visible based on imageCount
+        // This logic can be adjusted based on your UI design
+        if (imageCount == 2) {
             imageView1_1.setVisibility(View.VISIBLE);
             imageView1_2.setVisibility(View.VISIBLE);
-        } else if(imageCount == 4) {
-            changeImageVisibility(View.GONE);
+        } else if (imageCount == 4) {
             imageView1_1.setVisibility(View.VISIBLE);
             imageView1_2.setVisibility(View.VISIBLE);
             imageView2_1.setVisibility(View.VISIBLE);
             imageView2_2.setVisibility(View.VISIBLE);
-        } else if(imageCount == 6) {
-            changeImageVisibility(View.GONE);
+        } else if (imageCount == 6) {
             imageView1_1.setVisibility(View.VISIBLE);
             imageView1_2.setVisibility(View.VISIBLE);
             imageView2_1.setVisibility(View.VISIBLE);
             imageView2_2.setVisibility(View.VISIBLE);
             imageView3_1.setVisibility(View.VISIBLE);
             imageView3_2.setVisibility(View.VISIBLE);
-        } else if(imageCount == 8) {
-            changeImageVisibility(View.GONE);
-            imageView1_1.setVisibility(View.INVISIBLE);
+        } else if (imageCount == 8) {
+            imageView1_1.setVisibility(View.VISIBLE);
             imageView1_2.setVisibility(View.VISIBLE);
-            imageView1_3.setVisibility(View.INVISIBLE);
+            imageView1_3.setVisibility(View.VISIBLE);
             imageView2_1.setVisibility(View.VISIBLE);
             imageView2_2.setVisibility(View.VISIBLE);
             imageView2_3.setVisibility(View.VISIBLE);
             imageView3_1.setVisibility(View.VISIBLE);
             imageView3_2.setVisibility(View.VISIBLE);
             imageView3_3.setVisibility(View.VISIBLE);
-            imageView4_1.setVisibility(View.INVISIBLE);
+            imageView4_1.setVisibility(View.VISIBLE);
             imageView4_2.setVisibility(View.VISIBLE);
-            imageView4_3.setVisibility(View.INVISIBLE);
-        } else if(imageCount == 12) {
+            imageView4_3.setVisibility(View.VISIBLE);
+        } else if (imageCount == 12) {
             changeImageVisibility(View.VISIBLE);
+        } else {
+            // Handle unexpected image counts gracefully
+            Log.w("locateImages", "Unexpected imageCount: " + imageCount);
         }
 
-        // İlk 'imageCount' kadar ImageView'i kullanarak görselleri yükle
-        for(int i = 0; i < imageFileNames.size() && i < imageViewList.size(); i++) {
+        // Assign each imageFileName to a unique visible ImageView
+        int assignedImages = 0;
+        for (int i = 0; i < imageFileNames.size(); i++) {
+            if (assignedImages >= imageViewList.size()) {
+                break; // Prevent index out of bounds
+            }
             ImageView imageView = imageViewList.get(i);
-            loadImageIntoImageView(imageView, imageFileNames.get(i));
+            if (imageView.getVisibility() == View.VISIBLE) {
+                String fileName = imageFileNames.get(i);
+                loadImageIntoImageView(imageView, fileName);
+                imageView.setVisibility(View.VISIBLE);
+                assignedImages++;
+            }
+        }
+
+        // Hide any extra ImageViews that are not needed
+        for (int i = imageFileNames.size(); i < imageViewList.size(); i++) {
+            ImageView imageView = imageViewList.get(i);
+            imageView.setVisibility(View.GONE);
         }
     }
 
+    /**
+     * Changes the visibility of all ImageViews.
+     *
+     * @param visibility The desired visibility (e.g., View.VISIBLE, View.GONE).
+     */
     private void changeImageVisibility(int visibility) {
         for (ImageView imageView : imageViewList) {
             imageView.setVisibility(visibility);
         }
-        Log.d("ChangeImageVisibility", "Tüm ImageView'ların görünürlüğü değiştirildi: " + visibility);
+        Log.d("ChangeImageVisibility", "All ImageViews visibility set to: " + visibility);
     }
 
+    /**
+     * Loads an image into an ImageView using Glide.
+     *
+     * @param imageView The ImageView where the image will be loaded.
+     * @param fileName  The name of the image file to load.
+     */
     private void loadImageIntoImageView(ImageView imageView, String fileName) {
         String baseUrl = "http://160.20.111.45:3200/file-upload/get-file?fileName=";
         String imageUrl = baseUrl + fileName;
@@ -562,12 +723,29 @@ public class ExamProcess extends AppCompatActivity {
                 .into(imageView);
     }
 
+    /**
+     * Displays the final score in an AlertDialog.
+     */
     private void showFinalScore() {
-        // Örneğin, bir dialog ile toplam puanı göster
         new AlertDialog.Builder(this)
-                .setTitle("Sınav Tamamlandı")
-                .setMessage("Toplam Puanınız: " + examPoint)
-                .setPositiveButton("Tamam", null)
+                .setTitle("Exam Completed")
+                .setMessage("Your Total Score: " + examPoint)
+                .setPositiveButton("OK", null)
+                .setCancelable(false)
                 .show();
+    }
+
+    /**
+     * Cancels any running timers to prevent memory leaks.
+     */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (questionTimer != null) {
+            questionTimer.cancel();
+        }
+        if (answerTimer != null) {
+            answerTimer.cancel();
+        }
     }
 }

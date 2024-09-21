@@ -18,6 +18,7 @@
     <string name="button_exams">Exams</string>
     <string name="button_exam_start">Begin Exam</string>
     <string name="button_exam_back">Begin Later</string>
+    <string name="button_exam_answer">Answer</string>
 
     <string name="permission_allow">Allow</string>
     <string name="permission_deny">Deny</string>
