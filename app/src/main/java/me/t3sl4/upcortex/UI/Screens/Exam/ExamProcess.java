@@ -96,6 +96,7 @@ public class ExamProcess extends AppCompatActivity {
     private CountDownTimer questionTimer;
     private CountDownTimer answerTimer;
     private boolean hasAnswered = false; // Flag to check if user has answered
+    private boolean isAnswerPhase = false; // Flag to determine the current phase
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -488,6 +489,7 @@ public class ExamProcess extends AppCompatActivity {
         mainText.setVisibility(View.GONE);
 
         hasAnswered = false; // Reset the flag for the new question
+        isAnswerPhase = false; // Initially in question display phase
 
         // Reset selected images
         selectedImageViews.clear();
@@ -516,23 +518,38 @@ public class ExamProcess extends AppCompatActivity {
         allOptionsRandomizedList.addAll(currentQuestion.getQuestionOptions());
         Collections.shuffle(allOptionsRandomizedList);
 
-        // Collect file names of correct options
+        // Collect file names of correct options with type 'image'
         List<String> correctImageFileNames = new ArrayList<>();
         for (QuestionOption option : correctOptionsList) {
-            correctImageFileNames.add(option.getFileName());
+            if ("image".equalsIgnoreCase(option.getType())) {
+                correctImageFileNames.add(option.getFileName());
+            }
         }
 
-        // Locate and display correct images
-        locateImages(currentQuestion.getCorrectOptionsCount(), correctImageFileNames);
+        // Locate and display correct images (Phase 1)
+        locateImages(correctImageFileNames, false);
 
         // Start the initial question display timer (10 seconds)
         startQuestionTimer(questionTime, new CountdownListener() {
             @Override
             public void onCountdownFinished() {
-                // After 10 seconds, allow answering
+                // After 10 seconds, show all image options and allow answering
                 preTextButton.setVisibility(View.GONE);
                 mainText.setVisibility(View.VISIBLE);
                 answerButton.setVisibility(View.VISIBLE);
+
+                isAnswerPhase = true; // Now in answer phase
+
+                // Collect all image file names with type 'image'
+                List<String> allImageFileNames = new ArrayList<>();
+                for (QuestionOption option : currentQuestion.getQuestionOptions()) {
+                    if ("image".equalsIgnoreCase(option.getType())) {
+                        allImageFileNames.add(option.getFileName());
+                    }
+                }
+
+                // Locate and display all images (Phase 2)
+                locateImages(allImageFileNames, true);
 
                 // Start the answer timer (10 seconds)
                 startAnswerTimer(answerTime, new CountdownListener() {
@@ -628,17 +645,17 @@ public class ExamProcess extends AppCompatActivity {
     }
 
     /**
-     * Assigns images to ImageViews based on the number of correct options and their file names.
+     * Assigns images to ImageViews based on the provided file names and phase.
      *
-     * @param imageCount        The number of images to display.
-     * @param imageFileNames    The list of image file names to load.
+     * @param imageFileNames The list of image file names to load.
+     * @param isAnswerPhase  Indicates whether it's the answer phase.
      */
-    private void locateImages(int imageCount, List<String> imageFileNames) {
+    private void locateImages(List<String> imageFileNames, boolean isAnswerPhase) {
         // First, hide all ImageViews
         changeImageVisibility(View.GONE);
 
         // Determine which ImageViews to make visible based on imageCount
-        // This logic can be adjusted based on your UI design
+        int imageCount = imageFileNames.size();
         if (imageCount == 2) {
             imageView1_1.setVisibility(View.VISIBLE);
             imageView1_2.setVisibility(View.VISIBLE);
@@ -694,6 +711,13 @@ public class ExamProcess extends AppCompatActivity {
             ImageView imageView = imageViewList.get(i);
             imageView.setVisibility(View.GONE);
         }
+
+        // Enable or disable ImageView clicks based on the phase
+        for (ImageView imageView : imageViewList) {
+            imageView.setClickable(isAnswerPhase);
+        }
+
+        Log.d("locateImages", "Images located for phase: " + (isAnswerPhase ? "Answer" : "Question"));
     }
 
     /**
