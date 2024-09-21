@@ -87,7 +87,7 @@
             android:layout_height="0dp"
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@+id/seperator"
-            app:layout_constraintBottom_toTopOf="@id/preTextButton">
+            app:layout_constraintBottom_toTopOf="@id/buttonSection">
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -158,24 +158,25 @@
                         app:clockwise="false"
                         app:softProgress="true" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/imageQuestionLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:gravity="center"
+                    android:orientation="vertical"
                     android:padding="16dp"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/questionHeader"
-                    app:layout_constraintBottom_toBottomOf="parent">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/questionHeader">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:layout_marginBottom="8dp"
                         android:gravity="center"
-                        android:layout_marginBottom="8dp">
+                        android:orientation="horizontal">
 
                         <ImageView
                             android:id="@+id/imageView1_1"
@@ -184,7 +185,7 @@
                             android:layout_marginEnd="4dp"
                             android:background="@drawable/background_image_question"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/ikon_question_template"/>
+                            android:src="@drawable/ikon_question_template" />
 
                         <ImageView
                             android:id="@+id/imageView1_2"
@@ -193,7 +194,7 @@
                             android:layout_marginEnd="4dp"
                             android:background="@drawable/background_image_question"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/ikon_question_template"/>
+                            android:src="@drawable/ikon_question_template" />
 
                         <ImageView
                             android:id="@+id/imageView1_3"
@@ -201,16 +202,16 @@
                             android:layout_height="80dp"
                             android:background="@drawable/background_image_question"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/ikon_question_template"/>
+                            android:src="@drawable/ikon_question_template" />
                     </LinearLayout>
 
                     <!-- Satır 2 -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:layout_marginBottom="8dp"
                         android:gravity="center"
-                        android:layout_marginBottom="8dp">
+                        android:orientation="horizontal">
 
                         <ImageView
                             android:id="@+id/imageView2_1"
@@ -219,7 +220,7 @@
                             android:layout_marginEnd="4dp"
                             android:background="@drawable/background_image_question"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/ikon_question_template"/>
+                            android:src="@drawable/ikon_question_template" />
 
                         <ImageView
                             android:id="@+id/imageView2_2"
@@ -228,7 +229,7 @@
                             android:layout_marginEnd="4dp"
                             android:background="@drawable/background_image_question"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/ikon_question_template"/>
+                            android:src="@drawable/ikon_question_template" />
 
                         <ImageView
                             android:id="@+id/imageView2_3"
@@ -236,16 +237,16 @@
                             android:layout_height="80dp"
                             android:background="@drawable/background_image_question"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/ikon_question_template"/>
+                            android:src="@drawable/ikon_question_template" />
                     </LinearLayout>
 
                     <!-- Satır 3 -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:layout_marginBottom="8dp"
                         android:gravity="center"
-                        android:layout_marginBottom="8dp">
+                        android:orientation="horizontal">
 
                         <ImageView
                             android:id="@+id/imageView3_1"
@@ -254,7 +255,7 @@
                             android:layout_marginEnd="4dp"
                             android:background="@drawable/background_image_question"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/ikon_question_template"/>
+                            android:src="@drawable/ikon_question_template" />
 
                         <ImageView
                             android:id="@+id/imageView3_2"
@@ -263,7 +264,7 @@
                             android:layout_marginEnd="4dp"
                             android:background="@drawable/background_image_question"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/ikon_question_template"/>
+                            android:src="@drawable/ikon_question_template" />
 
                         <ImageView
                             android:id="@+id/imageView3_3"
@@ -271,15 +272,15 @@
                             android:layout_height="80dp"
                             android:background="@drawable/background_image_question"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/ikon_question_template"/>
+                            android:src="@drawable/ikon_question_template" />
                     </LinearLayout>
 
                     <!-- Satır 4 -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
                         <ImageView
                             android:id="@+id/imageView4_1"
@@ -288,7 +289,7 @@
                             android:layout_marginEnd="4dp"
                             android:background="@drawable/background_image_question"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/ikon_question_template"/>
+                            android:src="@drawable/ikon_question_template" />
 
                         <ImageView
                             android:id="@+id/imageView4_2"
@@ -297,7 +298,7 @@
                             android:layout_marginEnd="4dp"
                             android:background="@drawable/background_image_question"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/ikon_question_template"/>
+                            android:src="@drawable/ikon_question_template" />
 
                         <ImageView
                             android:id="@+id/imageView4_3"
@@ -305,27 +306,59 @@
                             android:layout_height="80dp"
                             android:background="@drawable/background_image_question"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/ikon_question_template"/>
+                            android:src="@drawable/ikon_question_template" />
                     </LinearLayout>
 
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
-        <Button
-            android:id="@+id/preTextButton"
+        <LinearLayout
+            android:id="@+id/buttonSection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_pre_text"
-            android:text="Renkleri Hafızanızda Tutmaya Çalışın"
-            android:textColor="@color/darkBaseColor"
-            android:textAllCaps="false"
-            android:textSize="18sp"
-            android:padding="24dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent">
+            <TextView
+                android:id="@+id/mainText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kısa Süreli Bellek"
+                android:textSize="24sp"
+                android:textColor="@color/darkBaseColor"
+                android:fontFamily="@font/roboto_flex"
+                android:layout_gravity="center"
+                android:visibility="gone"/>
+            <Button
+                android:id="@+id/preTextButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_pre_text"
+                android:text="Renkleri Hafızanızda Tutmaya Çalışın"
+                android:textColor="@color/darkBaseColor"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                android:padding="24dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <Button
+                android:id="@+id/answerButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_next_2"
+                android:text="@string/button_exam_start"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"/>
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
