@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 public class Question {
     private String categoryName;
+    private int categoryOrder;
 
     private String id;
     private String preText;
@@ -20,8 +21,9 @@ public class Question {
     private int totalOptionsCount;
     private LinkedList<QuestionOption> questionOptions;
 
-    public Question(String categoryName, String id, String preText, String mainText, String subText, String fileName, float point, boolean isParent, Difficulty difficulty, QuestionType type, String parentId, String format, int correctOptionsCount, int totalOptionsCount, LinkedList<QuestionOption> questionOptions) {
+    public Question(String categoryName, int categoryOrder, String id, String preText, String mainText, String subText, String fileName, float point, boolean isParent, Difficulty difficulty, QuestionType type, String parentId, String format, int correctOptionsCount, int totalOptionsCount, LinkedList<QuestionOption> questionOptions) {
         this.categoryName = categoryName;
+        this.categoryOrder = categoryOrder;
         this.id = id;
         this.preText = preText;
         this.mainText = mainText;
@@ -44,6 +46,14 @@ public class Question {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public int getCategoryOrder() {
+        return categoryOrder;
+    }
+
+    public void setCategoryOrder(int categoryOrder) {
+        this.categoryOrder = categoryOrder;
     }
 
     public String getId() {

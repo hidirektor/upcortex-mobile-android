@@ -214,6 +214,7 @@ public class ExamService {
                             for (int i = 0; i < questionsByCategories.length(); i++) {
                                 JSONObject category = questionsByCategories.getJSONObject(i);
                                 String categoryName = category.getString("name"); // Extract the category name
+                                int categoryOrder = category.getInt("order");
 
                                 // Retrieve the "questions" JSONArray within the current category
                                 JSONArray questionsArray = category.getJSONArray("questions");
@@ -273,6 +274,7 @@ public class ExamService {
                                     // Create a Question object with the extracted data and add it to the questions list
                                     Question question = new Question(
                                             categoryName,      // categoryName from the current category
+                                            categoryOrder,
                                             id,
                                             preText,
                                             mainText,
