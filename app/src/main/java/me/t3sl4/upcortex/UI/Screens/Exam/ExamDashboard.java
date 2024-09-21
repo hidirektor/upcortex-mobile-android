@@ -125,7 +125,10 @@ public class ExamDashboard extends AppCompatActivity {
 
     private void startExamProcess() {
         Intent examIntent = new Intent(ExamDashboard.this, ExamProcess.class);
-        examIntent.putExtra("exam", receivedExam);
+        Gson gson = new Gson();
+        String examJson = gson.toJson(receivedExam);
+
+        examIntent.putExtra("examJson", examJson);
         startActivity(examIntent);
     }
 }
