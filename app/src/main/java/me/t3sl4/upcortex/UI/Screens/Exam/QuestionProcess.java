@@ -18,6 +18,8 @@ public class QuestionProcess extends AppCompatActivity {
     private ImageView difficultyStarTwo;
     private ImageView difficultyStarThree;
 
+    private int questionTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
