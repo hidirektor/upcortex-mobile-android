@@ -4,8 +4,10 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,10 +45,28 @@ public class ExamProcess extends AppCompatActivity {
 
     private Button preTextButton;
 
+    private LinearLayout imageQuestionLayout;
+
+    //Image Question Layout
+    private ImageView imageView1_1;
+    private ImageView imageView1_2;
+    private ImageView imageView1_3;
+    private ImageView imageView2_1;
+    private ImageView imageView2_2;
+    private ImageView imageView2_3;
+    private ImageView imageView3_1;
+    private ImageView imageView3_2;
+    private ImageView imageView3_3;
+    private ImageView imageView4_1;
+    private ImageView imageView4_2;
+    private ImageView imageView4_3;
+
     private int questionTime;
 
     private List<CategoryInfo> categoryInfoList = new ArrayList<>();
     private int examPoint = 0;
+
+    private List<ImageView> imageViewList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +100,80 @@ public class ExamProcess extends AppCompatActivity {
         circularCountdownView = findViewById(R.id.circularCountdownView);
 
         preTextButton = findViewById(R.id.preTextButton);
+
+        imageQuestionLayout = findViewById(R.id.imageQuestionLayout);
+
+        //Image Question Layout
+        imageView1_1 = findViewById(R.id.imageView1_1);
+        imageView1_2 = findViewById(R.id.imageView1_2);
+        imageView1_3 = findViewById(R.id.imageView1_3);
+        imageView2_1 = findViewById(R.id.imageView2_1);
+        imageView2_2 = findViewById(R.id.imageView2_2);
+        imageView2_3 = findViewById(R.id.imageView2_3);
+        imageView3_1 = findViewById(R.id.imageView3_1);
+        imageView3_2 = findViewById(R.id.imageView3_2);
+        imageView3_3 = findViewById(R.id.imageView3_3);
+        imageView4_1 = findViewById(R.id.imageView4_1);
+        imageView4_2 = findViewById(R.id.imageView4_2);
+        imageView4_3 = findViewById(R.id.imageView4_3);
+
+        imageViewList.add(findViewById(R.id.imageView1_1));
+        imageViewList.add(findViewById(R.id.imageView1_2));
+        imageViewList.add(findViewById(R.id.imageView1_3));
+        imageViewList.add(findViewById(R.id.imageView2_1));
+        imageViewList.add(findViewById(R.id.imageView2_2));
+        imageViewList.add(findViewById(R.id.imageView2_3));
+        imageViewList.add(findViewById(R.id.imageView3_1));
+        imageViewList.add(findViewById(R.id.imageView3_2));
+        imageViewList.add(findViewById(R.id.imageView3_3));
+        imageViewList.add(findViewById(R.id.imageView4_1));
+        imageViewList.add(findViewById(R.id.imageView4_2));
+        imageViewList.add(findViewById(R.id.imageView4_3));
+    }
+
+    private void locateImages(int imageCount) {
+        if(imageCount == 2) {
+            changeImageVisibility(View.GONE);
+            imageView1_1.setVisibility(View.VISIBLE);
+            imageView1_2.setVisibility(View.VISIBLE);
+        } else if(imageCount == 4) {
+            changeImageVisibility(View.GONE);
+            imageView1_1.setVisibility(View.VISIBLE);
+            imageView1_2.setVisibility(View.VISIBLE);
+            imageView2_1.setVisibility(View.VISIBLE);
+            imageView2_2.setVisibility(View.VISIBLE);
+        } else if(imageCount == 6) {
+            changeImageVisibility(View.GONE);
+            imageView1_1.setVisibility(View.VISIBLE);
+            imageView1_2.setVisibility(View.VISIBLE);
+            imageView2_1.setVisibility(View.VISIBLE);
+            imageView2_2.setVisibility(View.VISIBLE);
+            imageView3_1.setVisibility(View.VISIBLE);
+            imageView3_2.setVisibility(View.VISIBLE);
+        } else if(imageCount == 8) {
+            changeImageVisibility(View.GONE);
+            imageView1_1.setVisibility(View.INVISIBLE);
+            imageView1_2.setVisibility(View.VISIBLE);
+            imageView1_3.setVisibility(View.INVISIBLE);
+            imageView2_1.setVisibility(View.VISIBLE);
+            imageView2_2.setVisibility(View.VISIBLE);
+            imageView2_3.setVisibility(View.VISIBLE);
+            imageView3_1.setVisibility(View.VISIBLE);
+            imageView3_2.setVisibility(View.VISIBLE);
+            imageView3_3.setVisibility(View.VISIBLE);
+            imageView4_1.setVisibility(View.INVISIBLE);
+            imageView4_2.setVisibility(View.VISIBLE);
+            imageView4_3.setVisibility(View.INVISIBLE);
+        } else if(imageCount == 12) {
+            changeImageVisibility(View.VISIBLE);
+        }
+    }
+
+    private void changeImageVisibility(int visibility) {
+        for (ImageView imageView : imageViewList) {
+            imageView.setVisibility(visibility);
+        }
+        Log.d("ChangeImageVisibility", "Tüm ImageView'ların görünürlüğü değiştirildi: " + visibility);
     }
 
     private void processExamData() {
@@ -94,12 +188,7 @@ public class ExamProcess extends AppCompatActivity {
                 }
 
                 // Kategori sırasına göre sırala
-                Collections.sort(categoryInfoList, new Comparator<CategoryInfo>() {
-                    @Override
-                    public int compare(CategoryInfo o1, CategoryInfo o2) {
-                        return Integer.compare(o1.getOrder(), o2.getOrder());
-                    }
-                });
+                Collections.sort(categoryInfoList, Comparator.comparingInt(CategoryInfo::getOrder));
 
                 // Sıralandıktan sonra logla
                 Log.d("ProcessExamData", "Sıralandıktan sonra kategori listesi:");
