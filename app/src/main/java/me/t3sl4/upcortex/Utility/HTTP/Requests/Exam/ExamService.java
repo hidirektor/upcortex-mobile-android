@@ -3,6 +3,9 @@ package me.t3sl4.upcortex.Utility.HTTP.Requests.Exam;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,7 +17,9 @@ import java.util.Locale;
 import java.util.Map;
 
 import me.t3sl4.upcortex.Model.Exam.Exam;
+import me.t3sl4.upcortex.Model.Exam.ExamDetail.ExamDetailResponse;
 import me.t3sl4.upcortex.Model.Exam.ExamState;
+import me.t3sl4.upcortex.Model.Exam.Interface.ExamDetailCallback;
 import me.t3sl4.upcortex.Service.UserDataService;
 import me.t3sl4.upcortex.Utility.HTTP.HttpHelper;
 import okhttp3.ResponseBody;
@@ -103,7 +108,7 @@ public class ExamService {
         });
     }
 
-    public static void getExamDetail(Context context, Runnable onSuccess, Runnable onFailure, String examID) {
+    public static void getExamDetail(Context context, final ExamDetailCallback callback, String examID) {
         String token = UserDataService.getAccessToken(context);
         Map<String, String> params = new HashMap<>();
         params.put("examId", examID);
@@ -117,26 +122,34 @@ public class ExamService {
                         String responseBody = response.body().string();
                         Log.d("Exam", "Success: " + responseBody);
 
+                        Gson gson = new GsonBuilder().create();
                         JSONObject responseJson = new JSONObject(responseBody);
                         JSONObject examData = responseJson.getJSONObject("response");
 
-                        //Tüm sınavlar için question list çekilecek
+                        // Gson ile JSON'u model sınıfına dönüştürme
+                        ExamDetailResponse examDetail = gson.fromJson(examData.toString(), ExamDetailResponse.class);
 
-                        if (onSuccess != null) {
-                            onSuccess.run();
+                        if (callback != null) {
+                            callback.onSuccess(examDetail);
                         }
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
+                        if (callback != null) {
+                            callback.onFailure(e.getMessage());
+                        }
                     }
                 } else {
                     try {
-                        Log.e("Exam", "Failure: " + response.errorBody().string());
-
-                        if (onFailure != null) {
-                            onFailure.run();
+                        String errorBody = response.errorBody().string();
+                        Log.e("Exam", "Failure: " + errorBody);
+                        if (callback != null) {
+                            callback.onFailure(errorBody);
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
+                        if (callback != null) {
+                            callback.onFailure(e.getMessage());
+                        }
                     }
                 }
             }
@@ -144,6 +157,9 @@ public class ExamService {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.e("Exam", "Error: " + t.getMessage());
+                if (callback != null) {
+                    callback.onFailure(t.getMessage());
+                }
             }
         });
     }
