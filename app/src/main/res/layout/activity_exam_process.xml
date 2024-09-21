@@ -168,6 +168,7 @@
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="16dp"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" >
@@ -310,6 +311,250 @@
                             android:src="@drawable/ikon_question_template" />
                     </LinearLayout>
 
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/textQuestionLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_gravity="start"
+                        android:background="@drawable/background_circle_category_count_light">
+                        <TextView
+                            android:id="@+id/questionOrder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1"
+                            android:fontFamily="@font/roboto_flex"
+                            android:textColor="@color/ratingColor"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:gravity="start"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:id="@+id/mainQuestionText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kısa Süreli Bellek"
+                        android:textSize="22sp"
+                        android:textColor="@color/darkBaseColor"
+                        android:fontFamily="@font/roboto_flex"
+                        android:layout_gravity="center"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="12dp">
+                        <LinearLayout
+                            android:id="@+id/option1Layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:padding="14dp"
+                            android:layout_marginBottom="12dp"
+                            android:background="@drawable/background_question_options">
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_gravity="start"
+                                android:background="@drawable/background_circle_category_count_light">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="A"
+                                    android:fontFamily="@font/roboto_flex"
+                                    android:textColor="@color/ratingColor"
+                                    android:textStyle="bold"
+                                    android:textSize="16sp"
+                                    android:gravity="start"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent"/>
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <TextView
+                                android:id="@+id/option1Text"
+                                android:layout_width="0dp"
+                                android:layout_weight="1.0"
+                                android:layout_height="wrap_content"
+                                android:text="Kısa Süreli Bellek"
+                                android:textSize="16sp"
+                                android:textColor="@color/darkBaseColor"
+                                android:fontFamily="@font/roboto_flex"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="8dp"/>
+
+                            <ImageView
+                                android:id="@+id/option1Tick"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center|end"
+                                android:src="@drawable/ikon_question_tick"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/option2Layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:padding="14dp"
+                            android:layout_marginBottom="12dp"
+                            android:background="@drawable/background_question_options">
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_gravity="start"
+                                android:background="@drawable/background_circle_category_count_light">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="B"
+                                    android:fontFamily="@font/roboto_flex"
+                                    android:textColor="@color/ratingColor"
+                                    android:textStyle="bold"
+                                    android:textSize="16sp"
+                                    android:gravity="start"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent"/>
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <TextView
+                                android:id="@+id/option2Text"
+                                android:layout_width="0dp"
+                                android:layout_weight="1.0"
+                                android:layout_height="wrap_content"
+                                android:text="Kısa Süreli Bellek"
+                                android:textSize="16sp"
+                                android:textColor="@color/darkBaseColor"
+                                android:fontFamily="@font/roboto_flex"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="8dp"/>
+
+                            <ImageView
+                                android:id="@+id/option2Tick"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center|end"
+                                android:src="@drawable/ikon_question_tick"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/option3Layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:padding="14dp"
+                            android:layout_marginBottom="12dp"
+                            android:background="@drawable/background_question_options">
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_gravity="start"
+                                android:background="@drawable/background_circle_category_count_light">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="C"
+                                    android:fontFamily="@font/roboto_flex"
+                                    android:textColor="@color/ratingColor"
+                                    android:textStyle="bold"
+                                    android:textSize="16sp"
+                                    android:gravity="start"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent"/>
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <TextView
+                                android:id="@+id/option3Text"
+                                android:layout_width="0dp"
+                                android:layout_weight="1.0"
+                                android:layout_height="wrap_content"
+                                android:text="Kısa Süreli Bellek"
+                                android:textSize="16sp"
+                                android:textColor="@color/darkBaseColor"
+                                android:fontFamily="@font/roboto_flex"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="8dp"/>
+
+                            <ImageView
+                                android:id="@+id/option3Tick"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center|end"
+                                android:src="@drawable/ikon_question_tick"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/option4Layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:padding="14dp"
+                            android:layout_marginBottom="12dp"
+                            android:background="@drawable/background_question_options">
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_gravity="start"
+                                android:background="@drawable/background_circle_category_count_light">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="D"
+                                    android:fontFamily="@font/roboto_flex"
+                                    android:textColor="@color/ratingColor"
+                                    android:textStyle="bold"
+                                    android:textSize="16sp"
+                                    android:gravity="start"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintBottom_toBottomOf="parent"/>
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <TextView
+                                android:id="@+id/option4Text"
+                                android:layout_width="0dp"
+                                android:layout_weight="1.0"
+                                android:layout_height="wrap_content"
+                                android:text="Kısa Süreli Bellek"
+                                android:textSize="16sp"
+                                android:textColor="@color/darkBaseColor"
+                                android:fontFamily="@font/roboto_flex"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="8dp"/>
+
+                            <ImageView
+                                android:id="@+id/option4Tick"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center|end"
+                                android:src="@drawable/ikon_question_tick"/>
+                        </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

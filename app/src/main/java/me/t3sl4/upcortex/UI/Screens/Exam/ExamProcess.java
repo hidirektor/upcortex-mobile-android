@@ -68,6 +68,24 @@ public class ExamProcess extends AppCompatActivity {
     private ImageView imageView4_2;
     private ImageView imageView4_3;
 
+    //Text Option Components
+    private LinearLayout textQuestionLayout;
+    private TextView questionNumber;
+    private TextView mainQuestionText;
+
+    private LinearLayout option1Layout;
+    private TextView option1Text;
+    private ImageView option1Tick;
+    private LinearLayout option2Layout;
+    private TextView option2Text;
+    private ImageView option2Tick;
+    private LinearLayout option3Layout;
+    private TextView option3Text;
+    private ImageView option3Tick;
+    private LinearLayout option4Layout;
+    private TextView option4Text;
+    private ImageView option4Tick;
+
     private long questionTime = 10000; // 10 seconds for displaying the question
     private long answerTime = 10000;   // 10 seconds for answering
 
@@ -179,6 +197,23 @@ public class ExamProcess extends AppCompatActivity {
 
         // Initially hide the imageQuestionLayout
         imageQuestionLayout.setVisibility(View.GONE);
+
+        textQuestionLayout = findViewById(R.id.textQuestionLayout);
+        questionNumber = findViewById(R.id.questionOrder);
+        mainQuestionText = findViewById(R.id.mainQuestionText);
+
+        option1Layout = findViewById(R.id.option1Layout);
+        option1Text = findViewById(R.id.option1Text);
+        option1Tick = findViewById(R.id.option1Tick);
+        option2Layout = findViewById(R.id.option2Layout);
+        option2Text = findViewById(R.id.option2Text);
+        option2Tick = findViewById(R.id.option2Tick);
+        option3Layout = findViewById(R.id.option3Layout);
+        option3Text = findViewById(R.id.option3Text);
+        option3Tick = findViewById(R.id.option3Tick);
+        option4Layout = findViewById(R.id.option4Layout);
+        option4Text = findViewById(R.id.option4Text);
+        option4Tick = findViewById(R.id.option4Tick);
 
         // Initially hide answerButton and mainText
         answerButton.setVisibility(View.GONE);
