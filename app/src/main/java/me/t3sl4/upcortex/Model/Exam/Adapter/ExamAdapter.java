@@ -18,7 +18,7 @@ import java.util.List;
 
 import me.t3sl4.upcortex.Model.Exam.Exam;
 import me.t3sl4.upcortex.R;
-import me.t3sl4.upcortex.UI.Screens.Exam.ExamProcess;
+import me.t3sl4.upcortex.UI.Screens.Exam.ExamDashboard;
 
 public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.ExamViewHolder> {
 
@@ -68,7 +68,7 @@ public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.ExamViewHolder
         holder.examDescription.setText(examItem.getExamDescription());
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, ExamProcess.class);
+            Intent intent = new Intent(context, ExamDashboard.class);
             intent.putExtra("exam", examItem);
             context.startActivity(intent);
         });

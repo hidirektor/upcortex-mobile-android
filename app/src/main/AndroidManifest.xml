@@ -92,7 +92,7 @@
 
         <activity android:name=".UI.Screens.General.Dashboard" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
+        <activity android:name=".UI.Screens.Exam.ExamDashboard" />
         <activity android:name=".UI.Screens.Exam.ExamProcess" />
-        <activity android:name=".UI.Screens.Exam.QuestionProcess" />
     </application>
 </manifest>
