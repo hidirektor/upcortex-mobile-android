@@ -3,6 +3,8 @@ package me.t3sl4.upcortex.Model.Exam;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.LinkedList;
+
 public class Exam implements Parcelable {
 
     private String examID;
@@ -18,8 +20,12 @@ public class Exam implements Parcelable {
     private String examDescription;
     private String examInstructions;
     private String beforeText;
+    private int userPoint;
+    private LinkedList<QuestionCategory> questionCategories;
+    private LinkedList<Question> questions;
+    private LinkedList<GeneralClassification> examClassifications;
 
-    public Exam(String examID, String examName, boolean approvalState, int examScale, int examMax, boolean isDefault, String examCreatedBy, String examApprovedBy, ExamState userExamState, int examTime, String examDescription, String examInstructions, String beforeText) {
+    public Exam(String examID, String examName, boolean approvalState, int examScale, int examMax, boolean isDefault, String examCreatedBy, String examApprovedBy, ExamState userExamState, int examTime, String examDescription, String examInstructions, String beforeText, int userPoint) {
         this.examID = examID;
         this.examName = examName;
         this.approvalState = approvalState;
@@ -33,6 +39,7 @@ public class Exam implements Parcelable {
         this.examDescription = examDescription;
         this.examInstructions = examInstructions;
         this.beforeText = beforeText;
+        this.userPoint = userPoint;
     }
 
     protected Exam(Parcel in) {
@@ -49,6 +56,7 @@ public class Exam implements Parcelable {
         examDescription = in.readString();
         examInstructions = in.readString();
         beforeText = in.readString();
+        userPoint = in.readInt();
     }
 
     public static final Creator<Exam> CREATOR = new Creator<Exam>() {
@@ -83,6 +91,7 @@ public class Exam implements Parcelable {
         parcel.writeString(examDescription);
         parcel.writeString(examInstructions);
         parcel.writeString(beforeText);
+        parcel.writeInt(userPoint);
     }
 
     public String getExamID() {
@@ -187,5 +196,37 @@ public class Exam implements Parcelable {
 
     public void setBeforeText(String beforeText) {
         this.beforeText = beforeText;
+    }
+
+    public int getUserPoint() {
+        return userPoint;
+    }
+
+    public void setUserPoint(int userPoint) {
+        this.userPoint = userPoint;
+    }
+
+    public LinkedList<QuestionCategory> getQuestionCategories() {
+        return questionCategories;
+    }
+
+    public void setQuestionCategories(LinkedList<QuestionCategory> questionCategories) {
+        this.questionCategories = questionCategories;
+    }
+
+    public LinkedList<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(LinkedList<Question> questions) {
+        this.questions = questions;
+    }
+
+    public LinkedList<GeneralClassification> getExamClassifications() {
+        return examClassifications;
+    }
+
+    public void setExamClassifications(LinkedList<GeneralClassification> examClassifications) {
+        this.examClassifications = examClassifications;
     }
 }

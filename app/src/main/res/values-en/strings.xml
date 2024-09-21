@@ -121,6 +121,7 @@
     <string name="error_login_failed">An error occurred while logging in, please try again.</string>
     <string name="locationPermError">Location must be enabled. Please restart the application.</string>
     <string name="get_exams_error">Cant retrieve your exams data. Please refresh the screen.</string>
+    <string name="exam_detail_cant_retrieve">Cant retrieve exam details.</string>
 
     <!-- Register 4 Screen Texts-->
     <string name="register_fourth_success">Your Subscription Has Been Successfully Received!</string>

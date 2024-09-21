@@ -16,10 +16,15 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Map;
 
+import me.t3sl4.upcortex.Model.Exam.CategoryClassification;
+import me.t3sl4.upcortex.Model.Exam.Difficulty;
 import me.t3sl4.upcortex.Model.Exam.Exam;
-import me.t3sl4.upcortex.Model.Exam.ExamDetail.ExamDetailResponse;
 import me.t3sl4.upcortex.Model.Exam.ExamState;
-import me.t3sl4.upcortex.Model.Exam.Interface.ExamDetailCallback;
+import me.t3sl4.upcortex.Model.Exam.GeneralClassification;
+import me.t3sl4.upcortex.Model.Exam.Question;
+import me.t3sl4.upcortex.Model.Exam.QuestionCategory;
+import me.t3sl4.upcortex.Model.Exam.QuestionOption;
+import me.t3sl4.upcortex.Model.Exam.QuestionType;
 import me.t3sl4.upcortex.Service.UserDataService;
 import me.t3sl4.upcortex.Utility.HTTP.HttpHelper;
 import okhttp3.ResponseBody;
@@ -76,7 +81,8 @@ public class ExamService {
                                     examTime,
                                     examDescription,
                                     examInstructions,
-                                    beforeText
+                                    beforeText,
+                                    0
                             );
 
                             examList.add(exam);
@@ -108,7 +114,7 @@ public class ExamService {
         });
     }
 
-    public static void getExamDetail(Context context, final ExamDetailCallback callback, String examID) {
+    public static void getExamDetail(Context context, Runnable onSuccess, Runnable onFailure, String examID, Exam currentExam) {
         String token = UserDataService.getAccessToken(context);
         Map<String, String> params = new HashMap<>();
         params.put("examId", examID);
@@ -125,31 +131,186 @@ public class ExamService {
                         Gson gson = new GsonBuilder().create();
                         JSONObject responseJson = new JSONObject(responseBody);
                         JSONObject examData = responseJson.getJSONObject("response");
+                        JSONArray questionsByCategories = examData.getJSONArray("questionsByCategories");
+                        JSONArray questionCategoriesClassification = examData.getJSONArray("questionCategoriesClassification");
+                        JSONArray generalClassification = examData.getJSONArray("generalClassification");
 
-                        // Gson ile JSON'u model sınıfına dönüştürme
-                        ExamDetailResponse examDetail = gson.fromJson(examData.toString(), ExamDetailResponse.class);
+                        LinkedList<QuestionCategory> questionCategoryList = new LinkedList<>();
+                        try {
+                            for (int i = 0; i < questionCategoriesClassification.length(); i++) {
+                                JSONObject categoryObject = questionCategoriesClassification.getJSONObject(i);
 
-                        if (callback != null) {
-                            callback.onSuccess(examDetail);
+                                // Kategori temel bilgilerini al
+                                String categoryId = categoryObject.getString("id");
+                                String categoryName = categoryObject.getString("name");
+                                int categoryOrder = categoryObject.getInt("order");
+
+                                // SubCategories dizisini al
+                                JSONArray subCategoriesArray = categoryObject.getJSONArray("subCategories");
+                                LinkedList<CategoryClassification> categoryClassifications = new LinkedList<>();
+
+                                for (int j = 0; j < subCategoriesArray.length(); j++) {
+                                    JSONObject subCategoryObject = subCategoriesArray.getJSONObject(j);
+
+                                    String subCategoryId = subCategoryObject.getString("id");
+                                    String subCategoryName = subCategoryObject.getString("name");
+                                    int minVal = subCategoryObject.getInt("min");
+                                    int maxVal = subCategoryObject.getInt("max");
+
+                                    // CategoryClassification nesnesini oluştur
+                                    CategoryClassification categoryClassification = new CategoryClassification(
+                                            subCategoryId,
+                                            subCategoryName,
+                                            minVal,
+                                            maxVal
+                                    );
+
+                                    // Listeye ekle
+                                    categoryClassifications.add(categoryClassification);
+                                }
+
+                                // QuestionCategory nesnesini oluştur
+                                QuestionCategory questionCategory = new QuestionCategory(
+                                        categoryId,
+                                        categoryName,
+                                        categoryOrder,
+                                        categoryClassifications
+                                );
+
+                                // Listeye ekle
+                                questionCategoryList.add(questionCategory);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        LinkedList<GeneralClassification> examClassifications = new LinkedList<>();
+                        try {
+                            for (int i = 0; i < generalClassification.length(); i++) {
+                                JSONObject classificationObject = generalClassification.getJSONObject(i);
+
+                                // JSON alanlarını al
+                                String classificationId = classificationObject.getString("id");
+                                String classificationName = classificationObject.getString("name");
+                                int minVal = classificationObject.getInt("min");
+                                int maxVal = classificationObject.getInt("max");
+
+                                // GeneralClassification nesnesini oluştur
+                                GeneralClassification classification = new GeneralClassification(
+                                        classificationId,
+                                        classificationName,
+                                        minVal,
+                                        maxVal
+                                );
+
+                                examClassifications.add(classification);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        LinkedList<Question> questions = new LinkedList<>();
+                        try {
+                            for (int i = 0; i < questionsByCategories.length(); i++) {
+                                JSONObject category = questionsByCategories.getJSONObject(i);
+                                String categoryName = category.getString("name"); // Extract the category name
+
+                                // Retrieve the "questions" JSONArray within the current category
+                                JSONArray questionsArray = category.getJSONArray("questions");
+
+                                // Iterate through each question in the "questions" array
+                                for (int j = 0; j < questionsArray.length(); j++) {
+                                    JSONObject questionJson = questionsArray.getJSONObject(j);
+
+                                    // Extract question fields
+                                    String id = questionJson.getString("id");
+                                    String preText = questionJson.optString("preText", "");
+                                    String mainText = questionJson.optString("mainText", "");
+                                    String subText = questionJson.optString("subText", "");
+                                    String fileName = questionJson.isNull("fileName") ? null : questionJson.getString("fileName");
+                                    float point = Float.parseFloat(questionJson.getString("point"));
+                                    boolean isParent = questionJson.getBoolean("isParent");
+
+                                    // Parse enums for difficulty and type
+                                    Difficulty difficulty = Difficulty.valueOf(questionJson.getString("difficulty").toUpperCase(Locale.ENGLISH));
+                                    QuestionType type = QuestionType.valueOf(questionJson.getString("type").toUpperCase(Locale.ENGLISH));
+
+                                    String parentId = questionJson.optString("parentId", null);
+                                    String format = questionJson.getString("format");
+                                    int correctOptionsCount = questionJson.getInt("correctOptionsCount");
+                                    int totalOptionsCount = questionJson.getInt("totalOptionsCount");
+
+                                    // Initialize the LinkedList to hold question options
+                                    LinkedList<QuestionOption> questionOptions = new LinkedList<>();
+
+                                    // Retrieve the "questionOptions" JSONArray for the current question
+                                    JSONArray optionsArray = questionJson.getJSONArray("questionOptions");
+
+                                    // Iterate through each option in the "questionOptions" array
+                                    for (int k = 0; k < optionsArray.length(); k++) {
+                                        JSONObject optionJson = optionsArray.getJSONObject(k);
+
+                                        // Extract option fields
+                                        String optionId = optionJson.getString("id");
+                                        String text = optionJson.getString("text");
+                                        boolean isCorrect = optionJson.getBoolean("isCorrect");
+                                        String optionType = optionJson.getString("type");
+                                        String optionFileName = optionJson.isNull("fileName") ? null : optionJson.getString("fileName");
+                                        int order = optionJson.getInt("order");
+
+                                        // Create a QuestionOption object and add it to the list
+                                        QuestionOption questionOption = new QuestionOption(
+                                                optionId,
+                                                text,
+                                                isCorrect,
+                                                optionType,
+                                                optionFileName,
+                                                order
+                                        );
+                                        questionOptions.add(questionOption);
+                                    }
+
+                                    // Create a Question object with the extracted data and add it to the questions list
+                                    Question question = new Question(
+                                            categoryName,      // categoryName from the current category
+                                            id,
+                                            preText,
+                                            mainText,
+                                            subText,
+                                            fileName,
+                                            point,
+                                            isParent,
+                                            difficulty,
+                                            type,
+                                            parentId,
+                                            format,
+                                            correctOptionsCount,
+                                            totalOptionsCount,
+                                            questionOptions
+                                    );
+                                    questions.add(question);
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        currentExam.setQuestionCategories(questionCategoryList);
+                        currentExam.setExamClassifications(examClassifications);
+                        currentExam.setQuestions(questions);
+
+                        if (onSuccess != null) {
+                            onSuccess.run();
                         }
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
-                        if (callback != null) {
-                            callback.onFailure(e.getMessage());
+                        if(onFailure != null) {
+                            onFailure.run();
                         }
                     }
                 } else {
-                    try {
-                        String errorBody = response.errorBody().string();
-                        Log.e("Exam", "Failure: " + errorBody);
-                        if (callback != null) {
-                            callback.onFailure(errorBody);
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        if (callback != null) {
-                            callback.onFailure(e.getMessage());
-                        }
+                    if(onFailure != null) {
+                        onFailure.run();
                     }
                 }
             }
@@ -157,8 +318,8 @@ public class ExamService {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.e("Exam", "Error: " + t.getMessage());
-                if (callback != null) {
-                    callback.onFailure(t.getMessage());
+                if(onFailure != null) {
+                    onFailure.run();
                 }
             }
         });

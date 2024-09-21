@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightBaseColor"
-    android:padding="16dp"
     android:fitsSystemWindows="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,6 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@drawable/background_exams_recycler"
+        android:layout_margin="16dp"
         android:padding="16dp">
         <ImageView
             android:id="@+id/appLogo"
@@ -47,7 +47,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="visible">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
@@ -204,45 +204,14 @@
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_gravity="center">
-                        <Button
-                            android:id="@+id/startButton"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/button_next_2"
-                            android:text="@string/button_exam_start"
-                            android:textColor="@color/white"
-                            android:textAllCaps="false"
-                            android:textSize="18sp"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
-                            android:layout_marginBottom="16dp"
-                            android:layout_marginTop="16dp"/>
-                        <Button
-                            android:id="@+id/backButton"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/button_exam_back"
-                            android:textColor="@color/darkBaseColor"
-                            android:background="@drawable/button_fs_no"
-                            android:textAllCaps="false"
-                            android:textSize="18sp"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
-                            android:layout_marginBottom="16dp"/>
-                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/examStatsLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:layout_marginTop="12dp"
                     android:layout_marginBottom="12dp">
                     <LinearLayout
@@ -440,15 +409,49 @@
             </LinearLayout>
         </ScrollView>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent">
+            <Button
+                android:id="@+id/startButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_next_2"
+                android:text="@string/button_exam_start"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"/>
+            <Button
+                android:id="@+id/backButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_exam_back"
+                android:textColor="@color/darkBaseColor"
+                android:background="@drawable/button_fs_no"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="16dp"/>
+        </LinearLayout>
+
         <Button
             android:id="@+id/closeExamButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/button_next_2"
-            android:text="@string/button_exam_start"
+            android:text="@string/exam_close"
             android:textColor="@color/white"
             android:textAllCaps="false"
             android:textSize="18sp"
+            android:visibility="gone"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
             android:layout_marginTop="16dp"
