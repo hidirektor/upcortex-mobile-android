@@ -223,4 +223,9 @@
     <string name="exam_category_2">Uzun Süreli Bellek</string>
     <string name="exam_category_3">Görsel Bellek</string>
     <string name="exam_category_4">İşlemsel Bellek</string>
+
+    <!-- Exam Difficulty Texts -->
+    <string name="exam_difficulty_beginner">Kolay Seviye</string>
+    <string name="exam_difficulty_medium">Orta Seviye</string>
+    <string name="exam_difficulty_hard">Zor Seviye</string>
 </resources>

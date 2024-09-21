@@ -4,7 +4,9 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -23,6 +25,7 @@ import me.t3sl4.upcortex.Model.Exam.Exam;
 import me.t3sl4.upcortex.Model.Exam.Question;
 import me.t3sl4.upcortex.Model.Exam.QuestionCategory;
 import me.t3sl4.upcortex.R;
+import me.t3sl4.upcortex.UI.Components.CircularCountdown.CircularCountdownView;
 import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
 
 public class ExamProcess extends AppCompatActivity {
@@ -32,6 +35,13 @@ public class ExamProcess extends AppCompatActivity {
     private ImageView difficultyStarOne;
     private ImageView difficultyStarTwo;
     private ImageView difficultyStarThree;
+
+    private TextView difficultyText;
+    private TextView categoryOrder;
+    private TextView categoryName;
+    private CircularCountdownView circularCountdownView;
+
+    private Button preTextButton;
 
     private int questionTime;
 
@@ -63,6 +73,13 @@ public class ExamProcess extends AppCompatActivity {
         difficultyStarOne = findViewById(R.id.difficultyStarOne);
         difficultyStarTwo = findViewById(R.id.difficultyStarTwo);
         difficultyStarThree = findViewById(R.id.difficultyStarThree);
+
+        difficultyText = findViewById(R.id.difficultyText);
+        categoryOrder = findViewById(R.id.categoryOrder);
+        categoryName = findViewById(R.id.categoryName);
+        circularCountdownView = findViewById(R.id.circularCountdownView);
+
+        preTextButton = findViewById(R.id.preTextButton);
     }
 
     private void processExamData() {
@@ -147,19 +164,25 @@ public class ExamProcess extends AppCompatActivity {
     }
 
     private void difficultyMode(Difficulty difficultyEnum) {
+        String difficultyString = "";
         if(difficultyEnum.name().equals("beginner")) {
             setStarColor(difficultyStarOne, R.color.warningColor);
             setStarColor(difficultyStarTwo, R.color.darkOnTop);
             setStarColor(difficultyStarThree, R.color.darkOnTop);
+            difficultyString = getString(R.string.exam_difficulty_beginner);
         } else if(difficultyEnum.name().equals("medium")) {
             setStarColor(difficultyStarOne, R.color.warningColor);
             setStarColor(difficultyStarTwo, R.color.warningColor);
             setStarColor(difficultyStarThree, R.color.darkOnTop);
+            difficultyString = getString(R.string.exam_difficulty_medium);
         } else if(difficultyEnum.name().equals("hard")) {
             setStarColor(difficultyStarOne, R.color.warningColor);
             setStarColor(difficultyStarTwo, R.color.warningColor);
             setStarColor(difficultyStarThree, R.color.warningColor);
+            difficultyString = getString(R.string.exam_difficulty_hard);
         }
+
+        difficultyText.setText(difficultyString);
     }
 
     private void setStarColor(ImageView star, int colorResId) {

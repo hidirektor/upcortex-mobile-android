@@ -217,4 +217,9 @@
     <string name="exam_category_2">Long Term Memory</string>
     <string name="exam_category_3">Visual Memory</string>
     <string name="exam_category_4">Procedural Memory</string>
+
+    <!-- Exam Difficulty Texts -->
+    <string name="exam_difficulty_beginner">Beginner</string>
+    <string name="exam_difficulty_medium">Medium</string>
+    <string name="exam_difficulty_hard">Hard</string>
 </resources>
