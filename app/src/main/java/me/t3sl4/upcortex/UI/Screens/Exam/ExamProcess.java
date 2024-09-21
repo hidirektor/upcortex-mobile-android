@@ -1,6 +1,7 @@
 package me.t3sl4.upcortex.UI.Screens.Exam;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -73,7 +74,7 @@ public class ExamProcess extends AppCompatActivity {
                 @Override
                 public void onSuccess(ExamDetailResponse examDetail) {
                     List<QuestionsByCategory> categories = examDetail.getQuestionsByCategories();
-
+                    Log.d("Exam Data", String.valueOf(categories.get(0).getQuestions()));
                 }
 
                 @Override
@@ -99,6 +100,10 @@ public class ExamProcess extends AppCompatActivity {
     }
 
     private void startExamProcess() {
-
+        //Sınav process:
+        //İlk ekran bilgilendirme ekranı olmalı.
+        //Eğer kullanıcı startExam butonuna basarsa sınav başlayacak
+        //Sınav başladığında her kategorinin (Kısa Süreli Bellek, Uzun Süreli Bellek, Görsel Bellek, İşlemsel Bellek) soru sayısı alınacak (response.questionsByCategories.questions)
+        //
     }
 }

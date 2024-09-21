@@ -167,7 +167,7 @@ public class Dashboard extends AppCompatActivity {
         if (pairedDevices.size() > 0) {
             boolean foundDevice = false;
             for (BluetoothDevice device : pairedDevices) {
-                if (device.getName().startsWith("UpCortex -")) {
+                if (device.getName().startsWith("upCortex HW")) {
                     connectToDevice(device);
                     foundDevice = true;
                     break;
