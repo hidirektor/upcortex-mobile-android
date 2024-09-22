@@ -24,6 +24,7 @@ import me.t3sl4.upcortex.Utility.HTTP.Requests.Exam.ExamService;
 import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
 
 public class ExamDashboard extends AppCompatActivity {
+    private static final int EXAM_REQUEST_CODE = 1;
 
     private Exam receivedExam;
 
@@ -129,6 +130,27 @@ public class ExamDashboard extends AppCompatActivity {
         String examJson = gson.toJson(receivedExam);
 
         examIntent.putExtra("examJson", examJson);
-        startActivity(examIntent);
+        startActivityForResult(examIntent, EXAM_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == EXAM_REQUEST_CODE && resultCode == RESULT_OK) {
+            if (data != null) {
+                String updatedExamJson = data.getStringExtra("updatedExamJson");
+                if (updatedExamJson != null) {
+                    Gson gson = new Gson();
+                    receivedExam = gson.fromJson(updatedExamJson, Exam.class);
+
+                    loadTempDetails();
+                    examStartLayout.setVisibility(View.GONE);
+                    startButton.setVisibility(View.GONE);
+                    backButton.setVisibility(View.GONE);
+                    examStatsLayout.setVisibility(View.VISIBLE);
+                    closeExamButton.setVisibility(View.VISIBLE);
+                }
+            }
+        }
     }
 }

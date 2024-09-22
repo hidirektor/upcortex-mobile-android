@@ -1,6 +1,7 @@
 package me.t3sl4.upcortex.UI.Screens.Exam;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
@@ -1050,13 +1051,20 @@ public class ExamProcess extends AppCompatActivity {
 
         finalScoreDialog.show();
 
-        // Dismiss the dialog after 5 seconds
+        // Dismiss the dialog after 5 seconds and return to ExamDashboard with results
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 finalScoreDialog.dismiss();
-                // Optionally, you can finish the activity or navigate elsewhere
-                finish();
+
+                // Prepare the updated Exam object
+                Gson gson = new Gson();
+                String updatedExamJson = gson.toJson(receivedExam); // receivedExam içinde categoryInfoList ve examPoint güncel olmalı
+
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("updatedExamJson", updatedExamJson);
+                setResult(RESULT_OK, resultIntent); // Sonucu ayarla
+                finish(); // Aktiviteyi sonlandır
             }
         }, 5000); // 5000 milliseconds = 5 seconds
     }

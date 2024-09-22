@@ -47919,7 +47919,6 @@ com.google.gson.Gson:
     public static java.lang.Object fromJson()
     public static java.lang.Object fromJson$1()
     public static java.lang.Object fromJson$2()
-    public static java.lang.Object fromJson$3()
     public static com.google.gson.TypeAdapter getAdapter()
     public final com.google.gson.TypeAdapter getDelegateAdapter(com.google.gson.TypeAdapterFactory,com.google.gson.reflect.TypeToken)
     public final com.google.gson.stream.JsonReader newJsonReader(java.io.Reader)
