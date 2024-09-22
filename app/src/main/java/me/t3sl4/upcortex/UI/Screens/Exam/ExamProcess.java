@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
@@ -69,6 +70,18 @@ public class ExamProcess extends AppCompatActivity {
     private ImageView imageView4_1;
     private ImageView imageView4_2;
     private ImageView imageView4_3;
+    private CardView cardView1_1;
+    private CardView cardView1_2;
+    private CardView cardView1_3;
+    private CardView cardView2_1;
+    private CardView cardView2_2;
+    private CardView cardView2_3;
+    private CardView cardView3_1;
+    private CardView cardView3_2;
+    private CardView cardView3_3;
+    private CardView cardView4_1;
+    private CardView cardView4_2;
+    private CardView cardView4_3;
 
     // Text Option Components
     private LinearLayout textQuestionLayout;
@@ -95,6 +108,7 @@ public class ExamProcess extends AppCompatActivity {
     private int examPoint = 0;
 
     private List<ImageView> imageViewList = new ArrayList<>();
+    private List<CardView> cardViewList = new ArrayList<>();
 
     private List<Question> shortTermMemoryQuestions = new ArrayList<>();
     private List<Question> longTermMemoryQuestions = new ArrayList<>();
@@ -184,6 +198,18 @@ public class ExamProcess extends AppCompatActivity {
         imageView4_1 = findViewById(R.id.imageView4_1);
         imageView4_2 = findViewById(R.id.imageView4_2);
         imageView4_3 = findViewById(R.id.imageView4_3);
+        cardView1_1 = findViewById(R.id.cardView1_1);
+        cardView1_2 = findViewById(R.id.cardView1_2);
+        cardView1_3 = findViewById(R.id.cardView1_3);
+        cardView2_1 = findViewById(R.id.cardView2_1);
+        cardView2_2 = findViewById(R.id.cardView2_2);
+        cardView2_3 = findViewById(R.id.cardView2_3);
+        cardView3_1 = findViewById(R.id.cardView3_1);
+        cardView3_2 = findViewById(R.id.cardView3_2);
+        cardView3_3 = findViewById(R.id.cardView3_3);
+        cardView4_1 = findViewById(R.id.cardView4_1);
+        cardView4_2 = findViewById(R.id.cardView4_2);
+        cardView4_3 = findViewById(R.id.cardView4_3);
 
         // Add all ImageViews to the list for easy management
         imageViewList.add(imageView1_1);
@@ -198,6 +224,18 @@ public class ExamProcess extends AppCompatActivity {
         imageViewList.add(imageView4_1);
         imageViewList.add(imageView4_2);
         imageViewList.add(imageView4_3);
+        cardViewList.add(cardView1_1);
+        cardViewList.add(cardView1_2);
+        cardViewList.add(cardView1_3);
+        cardViewList.add(cardView2_1);
+        cardViewList.add(cardView2_2);
+        cardViewList.add(cardView2_3);
+        cardViewList.add(cardView3_1);
+        cardViewList.add(cardView3_2);
+        cardViewList.add(cardView3_3);
+        cardViewList.add(cardView4_1);
+        cardViewList.add(cardView4_2);
+        cardViewList.add(cardView4_3);
 
         // Initially hide the imageQuestionLayout
         imageQuestionLayout.setVisibility(View.GONE);
@@ -716,11 +754,17 @@ public class ExamProcess extends AppCompatActivity {
         if (imageCount == 2) {
             imageView1_1.setVisibility(View.VISIBLE);
             imageView1_2.setVisibility(View.VISIBLE);
+            cardView1_1.setVisibility(View.VISIBLE);
+            cardView1_2.setVisibility(View.VISIBLE);
         } else if (imageCount == 4) {
             imageView1_1.setVisibility(View.VISIBLE);
             imageView1_2.setVisibility(View.VISIBLE);
             imageView2_1.setVisibility(View.VISIBLE);
             imageView2_2.setVisibility(View.VISIBLE);
+            cardView1_1.setVisibility(View.VISIBLE);
+            cardView1_2.setVisibility(View.VISIBLE);
+            cardView2_1.setVisibility(View.VISIBLE);
+            cardView2_2.setVisibility(View.VISIBLE);
         } else if (imageCount == 6) {
             imageView1_1.setVisibility(View.VISIBLE);
             imageView1_2.setVisibility(View.VISIBLE);
@@ -728,6 +772,12 @@ public class ExamProcess extends AppCompatActivity {
             imageView2_2.setVisibility(View.VISIBLE);
             imageView3_1.setVisibility(View.VISIBLE);
             imageView3_2.setVisibility(View.VISIBLE);
+            cardView1_1.setVisibility(View.VISIBLE);
+            cardView1_2.setVisibility(View.VISIBLE);
+            cardView2_1.setVisibility(View.VISIBLE);
+            cardView2_2.setVisibility(View.VISIBLE);
+            cardView3_1.setVisibility(View.VISIBLE);
+            cardView3_2.setVisibility(View.VISIBLE);
         } else if (imageCount == 8) {
             imageView1_1.setVisibility(View.VISIBLE);
             imageView1_2.setVisibility(View.VISIBLE);
@@ -741,6 +791,18 @@ public class ExamProcess extends AppCompatActivity {
             imageView4_1.setVisibility(View.VISIBLE);
             imageView4_2.setVisibility(View.VISIBLE);
             imageView4_3.setVisibility(View.VISIBLE);
+            cardView1_1.setVisibility(View.VISIBLE);
+            cardView1_2.setVisibility(View.VISIBLE);
+            cardView1_3.setVisibility(View.VISIBLE);
+            cardView2_1.setVisibility(View.VISIBLE);
+            cardView2_2.setVisibility(View.VISIBLE);
+            cardView2_3.setVisibility(View.VISIBLE);
+            cardView3_1.setVisibility(View.VISIBLE);
+            cardView3_2.setVisibility(View.VISIBLE);
+            cardView3_3.setVisibility(View.VISIBLE);
+            cardView4_1.setVisibility(View.VISIBLE);
+            cardView4_2.setVisibility(View.VISIBLE);
+            cardView4_3.setVisibility(View.VISIBLE);
         } else if (imageCount == 12) {
             changeImageVisibility(View.VISIBLE);
         } else {
@@ -755,11 +817,13 @@ public class ExamProcess extends AppCompatActivity {
                 break; // Prevent index out of bounds
             }
             ImageView imageView = imageViewList.get(i);
-            if (imageView.getVisibility() == View.VISIBLE) {
+            CardView cardView = cardViewList.get(i);
+            if (imageView.getVisibility() == View.VISIBLE && cardView.getVisibility() == View.VISIBLE) {
                 String fileName = imageFileNames.get(i);
                 loadImageIntoImageView(imageView, fileName);
                 imageView.setContentDescription(fileName);
                 imageView.setVisibility(View.VISIBLE);
+                cardView.setVisibility(View.VISIBLE);
                 assignedImages++;
             }
         }
@@ -767,7 +831,9 @@ public class ExamProcess extends AppCompatActivity {
         // Hide any extra ImageViews that are not needed
         for (int i = imageFileNames.size(); i < imageViewList.size(); i++) {
             ImageView imageView = imageViewList.get(i);
+            CardView cardView = cardViewList.get(i);
             imageView.setVisibility(View.GONE);
+            cardView.setVisibility(View.GONE);
         }
 
         // Enable or disable ImageView clicks based on the phase
@@ -786,6 +852,9 @@ public class ExamProcess extends AppCompatActivity {
     private void changeImageVisibility(int visibility) {
         for (ImageView imageView : imageViewList) {
             imageView.setVisibility(visibility);
+        }
+        for (CardView cardView : cardViewList) {
+            cardView.setVisibility(visibility);
         }
         Log.d("ChangeImageVisibility", "All ImageViews visibility set to: " + visibility);
     }
