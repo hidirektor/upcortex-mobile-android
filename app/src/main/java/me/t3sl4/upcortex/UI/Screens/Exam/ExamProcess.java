@@ -88,8 +88,8 @@ public class ExamProcess extends AppCompatActivity {
     private TextView option4Text;
     private ImageView option4Tick;
 
-    private long questionTime = 10000; // 10 seconds for displaying the question
-    private long answerTime = 10000;   // 10 seconds for answering
+    private long questionTime = 2000; // 10 seconds for displaying the question
+    private long answerTime = 2000;   // 10 seconds for answering
 
     private List<CategoryInfo> categoryInfoList = new ArrayList<>();
     private int examPoint = 0;
@@ -540,7 +540,7 @@ public class ExamProcess extends AppCompatActivity {
             textQuestionLayout.setVisibility(View.VISIBLE);
             preTextButton.setVisibility(View.GONE);
             answerButton.setVisibility(View.VISIBLE);
-            mainText.setVisibility(View.VISIBLE);
+            mainText.setVisibility(View.GONE);
             setupTextQuestion(listener, questionList);
         }
     }
@@ -613,40 +613,34 @@ public class ExamProcess extends AppCompatActivity {
         locateImages(correctImageFileNames, false);
 
         // Start the initial question display timer (10 seconds)
-        startQuestionTimer(questionTime, new CountdownListener() {
-            @Override
-            public void onCountdownFinished() {
-                // After 10 seconds, show all image options and allow answering
-                preTextButton.setVisibility(View.GONE);
-                mainText.setVisibility(View.VISIBLE);
-                answerButton.setVisibility(View.VISIBLE);
+        startQuestionTimer(questionTime, () -> {
+            // After 10 seconds, show all image options and allow answering
+            preTextButton.setVisibility(View.GONE);
+            mainText.setVisibility(View.VISIBLE);
+            answerButton.setVisibility(View.VISIBLE);
 
-                isAnswerPhase = true; // Now in answer phase
+            isAnswerPhase = true; // Now in answer phase
 
-                // Collect all image file names with type 'image'
-                List<String> allImageFileNames = new ArrayList<>();
-                for (QuestionOption option : currentQuestion.getQuestionOptions()) {
-                    if ("image".equalsIgnoreCase(option.getType())) {
-                        allImageFileNames.add(option.getFileName());
-                    }
+            // Collect all image file names with type 'image'
+            List<String> allImageFileNames = new ArrayList<>();
+            for (QuestionOption option : currentQuestion.getQuestionOptions()) {
+                if ("image".equalsIgnoreCase(option.getType())) {
+                    allImageFileNames.add(option.getFileName());
                 }
-
-                // Locate and display all images (Phase 2)
-                locateImages(allImageFileNames, true);
-
-                // Start the answer timer (10 seconds)
-                startAnswerTimer(answerTime, new CountdownListener() {
-                    @Override
-                    public void onCountdownFinished() {
-                        if (!hasAnswered) {
-                            Log.d("ExamProcess", "User did not answer in time. Awarding 0 points.");
-                            // Move to the next question without awarding points
-                            currentQuestionIndex++;
-                            displayNextQuestion(questionList, listener);
-                        }
-                    }
-                });
             }
+
+            // Locate and display all images (Phase 2)
+            locateImages(allImageFileNames, true);
+
+            // Start the answer timer (10 seconds)
+            startAnswerTimer(answerTime, () -> {
+                if (!hasAnswered) {
+                    Log.d("ExamProcess", "User did not answer in time. Awarding 0 points.");
+                    // Move to the next question without awarding points
+                    currentQuestionIndex++;
+                    displayNextQuestion(questionList, listener);
+                }
+            });
         });
     }
 
@@ -657,7 +651,7 @@ public class ExamProcess extends AppCompatActivity {
      * @param questionList The list of questions for the current category.
      */
     private void setupTextQuestion(CategoryCompletionListener listener, List<Question> questionList) {
-        questionNumber.setText("Soru " + (currentQuestionIndex + 1));
+        questionNumber.setText(String.valueOf(currentQuestionIndex + 1));
         mainQuestionText.setText(currentQuestion.getMainText());
 
         // Set question order if needed
@@ -1066,7 +1060,7 @@ public class ExamProcess extends AppCompatActivity {
                 setResult(RESULT_OK, resultIntent); // Sonucu ayarla
                 finish(); // Aktiviteyi sonlandır
             }
-        }, 5000); // 5000 milliseconds = 5 seconds
+        }, 3000); // 5000 milliseconds = 5 seconds
     }
 
     /**
