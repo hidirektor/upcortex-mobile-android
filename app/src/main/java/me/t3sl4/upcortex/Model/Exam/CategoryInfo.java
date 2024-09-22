@@ -84,7 +84,7 @@ public class CategoryInfo implements Parcelable {
         this.questionCount++;
     }
 
-    public void addUserPoint(int points) {
+    public void addUserPoint(float points) {
         this.userPoint += points;
     }
 }

@@ -5,6 +5,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -116,6 +117,8 @@ public class ExamProcess extends AppCompatActivity {
     private boolean hasAnswered = false; // Flag to check if user has answered
     private boolean isAnswerPhase = false; // Flag to determine the current phase
 
+    private Handler handler = new Handler(); // Handler for delayed dialog dismissal
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -221,30 +224,11 @@ public class ExamProcess extends AppCompatActivity {
         mainText.setVisibility(View.GONE);
 
         // Set up AnswerButton click listener
-        answerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                handleAnswerButtonClick();
-            }
-        });
-
-        // Set up preTextButton click listener
-        preTextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                preTextButton.setVisibility(View.GONE);
-                mainText.setVisibility(View.VISIBLE);
-            }
-        });
+        answerButton.setOnClickListener(view -> handleAnswerButtonClick());
 
         // Add click listeners to all ImageViews for selection
         for (ImageView imageView : imageViewList) {
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    handleImageClick(imageView);
-                }
-            });
+            imageView.setOnClickListener(view -> handleImageClick(imageView));
         }
 
         // Add click listeners to text option layouts
@@ -461,49 +445,37 @@ public class ExamProcess extends AppCompatActivity {
             case "Kısa Süreli Bellek":
                 imageQuestionLayout.setVisibility(View.VISIBLE);
                 textQuestionLayout.setVisibility(View.GONE);
-                startCategoryExam(shortTermMemoryQuestions, new CategoryCompletionListener() {
-                    @Override
-                    public void onCategoryCompleted() {
-                        // Category completed, proceed to next category
-                        currentCategoryIndex++;
-                        processCurrentCategory();
-                    }
+                startCategoryExam(shortTermMemoryQuestions, () -> {
+                    // Category completed, proceed to next category
+                    currentCategoryIndex++;
+                    processCurrentCategory();
                 });
                 break;
             case "Uzun Süreli Bellek":
                 imageQuestionLayout.setVisibility(View.VISIBLE);
                 textQuestionLayout.setVisibility(View.GONE);
-                startCategoryExam(longTermMemoryQuestions, new CategoryCompletionListener() {
-                    @Override
-                    public void onCategoryCompleted() {
-                        // Category completed, proceed to next category
-                        currentCategoryIndex++;
-                        processCurrentCategory();
-                    }
+                startCategoryExam(longTermMemoryQuestions, () -> {
+                    // Category completed, proceed to next category
+                    currentCategoryIndex++;
+                    processCurrentCategory();
                 });
                 break;
             case "Görsel Bellek":
                 imageQuestionLayout.setVisibility(View.VISIBLE);
                 textQuestionLayout.setVisibility(View.GONE);
-                startCategoryExam(visualMemoryQuestions, new CategoryCompletionListener() {
-                    @Override
-                    public void onCategoryCompleted() {
-                        // Category completed, proceed to next category
-                        currentCategoryIndex++;
-                        processCurrentCategory();
-                    }
+                startCategoryExam(visualMemoryQuestions, () -> {
+                    // Category completed, proceed to next category
+                    currentCategoryIndex++;
+                    processCurrentCategory();
                 });
                 break;
             case "İşlemsel Bellek":
                 imageQuestionLayout.setVisibility(View.GONE);
                 textQuestionLayout.setVisibility(View.VISIBLE);
-                startCategoryExam(proceduralTermMemoryQuestions, new CategoryCompletionListener() {
-                    @Override
-                    public void onCategoryCompleted() {
-                        // Category completed, proceed to next category
-                        currentCategoryIndex++;
-                        processCurrentCategory();
-                    }
+                startCategoryExam(proceduralTermMemoryQuestions, () -> {
+                    // Category completed, proceed to next category
+                    currentCategoryIndex++;
+                    processCurrentCategory();
                 });
                 break;
             default:
@@ -552,8 +524,8 @@ public class ExamProcess extends AppCompatActivity {
 
         difficultyMode(currentQuestion.getDifficulty());
 
-        // Determine if the question is image type or text type based on the current category
-        boolean isImageQuestion = isImageCategory(currentCategoryIndex);
+        // Determine if the question is image type or text type
+        boolean isImageQuestion = isImageQuestion(currentQuestion);
 
         if (isImageQuestion) {
             imageQuestionLayout.setVisibility(View.VISIBLE);
@@ -573,28 +545,18 @@ public class ExamProcess extends AppCompatActivity {
     }
 
     /**
-     * Determines if the current category is image-based.
+     * Determines if a question is of type image based on its options.
      *
-     * @param categoryIndex The index of the current category.
-     * @return True if the category is image-based, false if text-based.
+     * @param question The question to check.
+     * @return True if at least one option is of type image, false otherwise.
      */
-    private boolean isImageCategory(int categoryIndex) {
-        if (categoryIndex >= categoryInfoList.size()) {
-            return false;
-        }
-
-        String categoryName = categoryInfoList.get(categoryIndex).getName();
-        // Define which categories are image-based. "İşlemsel Bellek" is text-based.
-        switch (categoryName) {
-            case "Kısa Süreli Bellek":
-            case "Uzun Süreli Bellek":
-            case "Görsel Bellek":
+    private boolean isImageQuestion(Question question) {
+        for (QuestionOption option : question.getQuestionOptions()) {
+            if ("image".equalsIgnoreCase(option.getType())) {
                 return true;
-            case "İşlemsel Bellek":
-                return false;
-            default:
-                return false;
+            }
         }
+        return false;
     }
 
     /**
@@ -881,36 +843,16 @@ public class ExamProcess extends AppCompatActivity {
      */
     private void setupTextOptionClickListeners() {
         // Option1
-        option1Layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggleTextOption(option1Tick);
-            }
-        });
+        option1Layout.setOnClickListener(view -> toggleTextOption(option1Tick));
 
         // Option2
-        option2Layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggleTextOption(option2Tick);
-            }
-        });
+        option2Layout.setOnClickListener(view -> toggleTextOption(option2Tick));
 
         // Option3
-        option3Layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggleTextOption(option3Tick);
-            }
-        });
+        option3Layout.setOnClickListener(view -> toggleTextOption(option3Tick));
 
         // Option4
-        option4Layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggleTextOption(option4Tick);
-            }
-        });
+        option4Layout.setOnClickListener(view -> toggleTextOption(option4Tick));
     }
 
     /**
@@ -930,23 +872,17 @@ public class ExamProcess extends AppCompatActivity {
      * Handles the AnswerButton click by checking user answers based on question type.
      */
     private void handleAnswerButtonClick() {
-        if (isImageCategory(currentCategoryIndex)) {
-            checkUserImageAnswers(new CategoryCompletionListener() {
-                @Override
-                public void onCategoryCompleted() {
-                    // Category completed, proceed to next category
-                    currentCategoryIndex++;
-                    processCurrentCategory();
-                }
+        if (isImageQuestion(currentQuestion)) {
+            checkUserImageAnswers(() -> {
+                // Category completed, proceed to next category
+                currentCategoryIndex++;
+                processCurrentCategory();
             });
         } else {
-            checkUserTextAnswers(new CategoryCompletionListener() {
-                @Override
-                public void onCategoryCompleted() {
-                    // Category completed, proceed to next category
-                    currentCategoryIndex++;
-                    processCurrentCategory();
-                }
+            checkUserTextAnswers(() -> {
+                // Category completed, proceed to next category
+                currentCategoryIndex++;
+                processCurrentCategory();
             });
         }
     }
@@ -965,21 +901,36 @@ public class ExamProcess extends AppCompatActivity {
             answerTimer.cancel();
         }
 
-        int correctSelections = 0;
+        // Retrieve the correct options in order
+        List<QuestionOption> correctOptions = new ArrayList<>(correctOptionsList);
 
-        for (ImageView imageView : selectedImageViews) {
-            int index = imageViewList.indexOf(imageView);
-            if (index < allOptionsRandomizedList.size()) { // Ensure index is within bounds
-                QuestionOption option = allOptionsRandomizedList.get(index);
-                if (option.isCorrect()) {
-                    correctSelections++;
+        // Check if selected images match the correct options in the correct order
+        boolean isCorrect = true;
+        if (selectedImageViews.size() != correctOptions.size()) {
+            isCorrect = false;
+        } else {
+            for (int i = 0; i < selectedImageViews.size(); i++) {
+                ImageView selectedImageView = selectedImageViews.get(i);
+                int index = imageViewList.indexOf(selectedImageView);
+                if (index < allOptionsRandomizedList.size()) {
+                    QuestionOption selectedOption = allOptionsRandomizedList.get(index);
+                    QuestionOption correctOption = correctOptions.get(i);
+                    if (!selectedOption.getFileName().equals(correctOption.getFileName())) {
+                        isCorrect = false;
+                        break;
+                    }
+                } else {
+                    isCorrect = false;
+                    break;
                 }
             }
         }
 
-        if (correctSelections == currentQuestion.getCorrectOptionsCount()) {
+        if (isCorrect) {
             // Correct answer, add points
             examPoint += currentQuestion.getPoint();
+            // Also add to category-specific points
+            categoryInfoList.get(currentCategoryIndex).addUserPoint(currentQuestion.getPoint());
             Log.d("ExamProcess", "Correct answer! Points awarded: " + currentQuestion.getPoint());
             Toast.makeText(this, "Doğru! +" + currentQuestion.getPoint() + " puan.", Toast.LENGTH_SHORT).show();
         } else {
@@ -1041,6 +992,8 @@ public class ExamProcess extends AppCompatActivity {
 
         if (allCorrect) {
             examPoint += currentQuestion.getPoint();
+            // Also add to category-specific points
+            categoryInfoList.get(currentCategoryIndex).addUserPoint(currentQuestion.getPoint());
             Log.d("ExamProcess", "Correct answer! Points awarded: " + currentQuestion.getPoint());
             Toast.makeText(this, "Doğru! +" + currentQuestion.getPoint() + " puan.", Toast.LENGTH_SHORT).show();
         } else {
@@ -1077,6 +1030,38 @@ public class ExamProcess extends AppCompatActivity {
     }
 
     /**
+     * Displays the final score in an AlertDialog, showing both total and category-based scores.
+     * The dialog is displayed for 5 seconds and then automatically dismissed.
+     */
+    private void showFinalScore() {
+        // Build the message string with total score and category-wise scores
+        StringBuilder messageBuilder = new StringBuilder();
+        messageBuilder.append("Total Score: ").append(examPoint).append("\n\n");
+        messageBuilder.append("Category Scores:\n");
+        for (CategoryInfo info : categoryInfoList) {
+            messageBuilder.append(info.getName()).append(": ").append(info.getUserPoint()).append(" puan\n");
+        }
+
+        AlertDialog finalScoreDialog = new AlertDialog.Builder(this)
+                .setTitle("Exam Completed")
+                .setMessage(messageBuilder.toString())
+                .setCancelable(false)
+                .create();
+
+        finalScoreDialog.show();
+
+        // Dismiss the dialog after 5 seconds
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finalScoreDialog.dismiss();
+                // Optionally, you can finish the activity or navigate elsewhere
+                finish();
+            }
+        }, 5000); // 5000 milliseconds = 5 seconds
+    }
+
+    /**
      * Retrieves the current question list based on the current category.
      *
      * @return The list of questions for the current category.
@@ -1104,18 +1089,6 @@ public class ExamProcess extends AppCompatActivity {
     }
 
     /**
-     * Displays the final score in an AlertDialog.
-     */
-    private void showFinalScore() {
-        new AlertDialog.Builder(this)
-                .setTitle("Exam Completed")
-                .setMessage("Your Total Score: " + examPoint)
-                .setPositiveButton("OK", null)
-                .setCancelable(false)
-                .show();
-    }
-
-    /**
      * Cancels any running timers to prevent memory leaks.
      */
     @Override
@@ -1127,5 +1100,6 @@ public class ExamProcess extends AppCompatActivity {
         if (answerTimer != null) {
             answerTimer.cancel();
         }
+        handler.removeCallbacksAndMessages(null);
     }
 }
