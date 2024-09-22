@@ -101,8 +101,8 @@ public class ExamProcess extends AppCompatActivity {
     private TextView option4Text;
     private ImageView option4Tick;
 
-    private long questionTime = 3000; // 10 seconds for displaying the question
-    private long answerTime = 3000;   // 10 seconds for answering
+    private long questionTime = 4000; // 10 seconds for displaying the question
+    private long answerTime = 4000;   // 10 seconds for answering
 
     private List<CategoryInfo> categoryInfoList = new ArrayList<>();
     private int examPoint = 0;
