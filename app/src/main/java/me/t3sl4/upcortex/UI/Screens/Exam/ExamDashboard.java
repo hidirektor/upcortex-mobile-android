@@ -13,10 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import me.t3sl4.upcortex.Model.Exam.Adapter.ExamResultAdapter;
+import me.t3sl4.upcortex.Model.Exam.CategoryInfo;
 import me.t3sl4.upcortex.Model.Exam.Exam;
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
@@ -65,7 +69,6 @@ public class ExamDashboard extends AppCompatActivity {
         examDetailsCard = findViewById(R.id.examDetailsCard);
 
         if(receivedExam.getUserPoint() != 0) {
-            loadTempDetails();
             examStartLayout.setVisibility(View.GONE);
             startButton.setVisibility(View.GONE);
             backButton.setVisibility(View.GONE);
@@ -110,12 +113,17 @@ public class ExamDashboard extends AppCompatActivity {
         }
     }
 
-    private void loadTempDetails() {
+    private void loadExamStats(HashMap<String, Integer> categoryPoints, int generalPoint) {
+        List<String> categoryList = new ArrayList<>();
+        List<Integer> percentList = new ArrayList<>();
+
+        for (Map.Entry<String, Integer> entry : categoryPoints.entrySet()) {
+            categoryList.add(entry.getKey());
+            percentList.add(entry.getValue());
+        }
         // Örnek String ve Integer verileri
-        List<String> categoryList = Arrays.asList("Kısa Süreli Bellek", "Uzun Süreli Bellek", "Görsel Bellek", "İşlemsel Bellek");
         List<String> subNameList = Arrays.asList("Çok İyi Seviye", "İyi Seviye", "Yüksek Tahribat", "Düşük Seviye");
         List<String> subDescList = Arrays.asList("Görsel bellek yetenekleri mükemmeldir. Görsel bilgileri hızlı bir şekilde öğrenir ve hatırlarlar. Bu, mekan tanıma ve yön bulma gibi günlük görevlerde büyük bir avantaj sağlar.", "Görsel bellek yetenekleri mükemmeldir. Görsel bilgileri hızlı bir şekilde öğrenir ve hatırlarlar. Bu, mekan tanıma ve yön bulma gibi günlük görevlerde büyük bir avantaj sağlar.", "Görsel bellek yetenekleri mükemmeldir. Görsel bilgileri hızlı bir şekilde öğrenir ve hatırlarlar. Bu, mekan tanıma ve yön bulma gibi günlük görevlerde büyük bir avantaj sağlar.", "Görsel bellek yetenekleri mükemmeldir. Görsel bilgileri hızlı bir şekilde öğrenir ve hatırlarlar. Bu, mekan tanıma ve yön bulma gibi günlük görevlerde büyük bir avantaj sağlar.");
-        List<Integer> percentList = Arrays.asList(75, 60, 90, 45);
 
         // Adapter ve layout manager ayarlanması
         ExamResultAdapter examResultAdapter = new ExamResultAdapter(categoryList, subNameList, subDescList, percentList);
@@ -143,7 +151,14 @@ public class ExamDashboard extends AppCompatActivity {
                     Gson gson = new Gson();
                     receivedExam = gson.fromJson(updatedExamJson, Exam.class);
 
-                    loadTempDetails();
+                    HashMap<String, Integer> categoryPoints = new HashMap<>();
+                    int generalPoint = receivedExam.getUserPoint();
+
+                    for(CategoryInfo currentInfo : receivedExam.getCategoryInfoList()) {
+                        categoryPoints.put(currentInfo.getName(), currentInfo.getUserPoint());
+                    }
+
+                    loadExamStats(categoryPoints, generalPoint);
                     examStartLayout.setVisibility(View.GONE);
                     startButton.setVisibility(View.GONE);
                     backButton.setVisibility(View.GONE);

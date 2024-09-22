@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class Exam implements Parcelable {
 
@@ -24,6 +25,7 @@ public class Exam implements Parcelable {
     private LinkedList<QuestionCategory> questionCategories;
     private LinkedList<Question> questions;
     private LinkedList<GeneralClassification> examClassifications;
+    private List<CategoryInfo> categoryInfoList;
 
     public Exam(String examID, String examName, boolean approvalState, int examScale, int examMax, boolean isDefault, String examCreatedBy, String examApprovedBy, ExamState userExamState, int examTime, String examDescription, String examInstructions, String beforeText, int userPoint) {
         this.examID = examID;
@@ -228,5 +230,13 @@ public class Exam implements Parcelable {
 
     public void setExamClassifications(LinkedList<GeneralClassification> examClassifications) {
         this.examClassifications = examClassifications;
+    }
+
+    public List<CategoryInfo> getCategoryInfoList() {
+        return categoryInfoList;
+    }
+
+    public void setCategoryInfoList(List<CategoryInfo> categoryInfoList) {
+        this.categoryInfoList = categoryInfoList;
     }
 }

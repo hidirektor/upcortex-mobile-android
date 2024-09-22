@@ -726,15 +726,12 @@ public class ExamProcess extends AppCompatActivity {
         option4Tick.setVisibility(View.INVISIBLE);
 
         // Start the answer timer (10 seconds)
-        startAnswerTimer(answerTime, new CountdownListener() {
-            @Override
-            public void onCountdownFinished() {
-                if (!hasAnswered) {
-                    Log.d("ExamProcess", "User did not answer in time. Awarding 0 points.");
-                    // Move to the next question without awarding points
-                    currentQuestionIndex++;
-                    displayNextQuestion(questionList, listener);
-                }
+        startAnswerTimer(answerTime, () -> {
+            if (!hasAnswered) {
+                Log.d("ExamProcess", "User did not answer in time. Awarding 0 points.");
+                // Move to the next question without awarding points
+                currentQuestionIndex++;
+                displayNextQuestion(questionList, listener);
             }
         });
     }
@@ -1116,21 +1113,18 @@ public class ExamProcess extends AppCompatActivity {
         finalScoreDialog.show();
 
         // Dismiss the dialog after 5 seconds and return to ExamDashboard with results
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                finalScoreDialog.dismiss();
+        handler.postDelayed(() -> {
+            finalScoreDialog.dismiss();
 
-                // Prepare the updated Exam object
-                Gson gson = new Gson();
-                String updatedExamJson = gson.toJson(receivedExam); // receivedExam içinde categoryInfoList ve examPoint güncel olmalı
+            // Prepare the updated Exam object
+            Gson gson = new Gson();
+            String updatedExamJson = gson.toJson(receivedExam); // receivedExam içinde categoryInfoList ve examPoint güncel olmalı
 
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra("updatedExamJson", updatedExamJson);
-                setResult(RESULT_OK, resultIntent); // Sonucu ayarla
-                finish(); // Aktiviteyi sonlandır
-            }
-        }, 3000); // 5000 milliseconds = 5 seconds
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("updatedExamJson", updatedExamJson);
+            setResult(RESULT_OK, resultIntent); // Sonucu ayarla
+            finish(); // Aktiviteyi sonlandır
+        }, 3000); // 3000 milliseconds = 3 seconds
     }
 
     /**
