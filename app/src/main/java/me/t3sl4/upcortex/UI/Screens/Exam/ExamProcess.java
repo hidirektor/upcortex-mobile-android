@@ -68,7 +68,7 @@ public class ExamProcess extends AppCompatActivity {
     private ImageView imageView4_2;
     private ImageView imageView4_3;
 
-    //Text Option Components
+    // Text Option Components
     private LinearLayout textQuestionLayout;
     private TextView questionNumber;
     private TextView mainQuestionText;
@@ -198,6 +198,7 @@ public class ExamProcess extends AppCompatActivity {
         // Initially hide the imageQuestionLayout
         imageQuestionLayout.setVisibility(View.GONE);
 
+        // Initialize Text Question Layout
         textQuestionLayout = findViewById(R.id.textQuestionLayout);
         questionNumber = findViewById(R.id.questionOrder);
         mainQuestionText = findViewById(R.id.mainQuestionText);
@@ -215,7 +216,7 @@ public class ExamProcess extends AppCompatActivity {
         option4Text = findViewById(R.id.option4Text);
         option4Tick = findViewById(R.id.option4Tick);
 
-        // Initially hide answerButton and mainText
+        // Initially hide answerButton and mainText for image questions
         answerButton.setVisibility(View.GONE);
         mainText.setVisibility(View.GONE);
 
@@ -223,14 +224,7 @@ public class ExamProcess extends AppCompatActivity {
         answerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkUserAnswers(new CategoryCompletionListener() {
-                    @Override
-                    public void onCategoryCompleted() {
-                        // Category completed, proceed to next category
-                        currentCategoryIndex++;
-                        processCurrentCategory();
-                    }
-                });
+                handleAnswerButtonClick();
             }
         });
 
@@ -252,6 +246,9 @@ public class ExamProcess extends AppCompatActivity {
                 }
             });
         }
+
+        // Add click listeners to text option layouts
+        setupTextOptionClickListeners();
     }
 
     /**
@@ -463,7 +460,8 @@ public class ExamProcess extends AppCompatActivity {
         switch (currentCategory.getName()) {
             case "Kısa Süreli Bellek":
                 imageQuestionLayout.setVisibility(View.VISIBLE);
-                startShortTermExam(new CategoryCompletionListener() {
+                textQuestionLayout.setVisibility(View.GONE);
+                startCategoryExam(shortTermMemoryQuestions, new CategoryCompletionListener() {
                     @Override
                     public void onCategoryCompleted() {
                         // Category completed, proceed to next category
@@ -472,10 +470,44 @@ public class ExamProcess extends AppCompatActivity {
                     }
                 });
                 break;
-            // Add cases for other categories as needed
-            default:
+            case "Uzun Süreli Bellek":
+                imageQuestionLayout.setVisibility(View.VISIBLE);
+                textQuestionLayout.setVisibility(View.GONE);
+                startCategoryExam(longTermMemoryQuestions, new CategoryCompletionListener() {
+                    @Override
+                    public void onCategoryCompleted() {
+                        // Category completed, proceed to next category
+                        currentCategoryIndex++;
+                        processCurrentCategory();
+                    }
+                });
+                break;
+            case "Görsel Bellek":
+                imageQuestionLayout.setVisibility(View.VISIBLE);
+                textQuestionLayout.setVisibility(View.GONE);
+                startCategoryExam(visualMemoryQuestions, new CategoryCompletionListener() {
+                    @Override
+                    public void onCategoryCompleted() {
+                        // Category completed, proceed to next category
+                        currentCategoryIndex++;
+                        processCurrentCategory();
+                    }
+                });
+                break;
+            case "İşlemsel Bellek":
                 imageQuestionLayout.setVisibility(View.GONE);
-                // Handle other categories here
+                textQuestionLayout.setVisibility(View.VISIBLE);
+                startCategoryExam(proceduralTermMemoryQuestions, new CategoryCompletionListener() {
+                    @Override
+                    public void onCategoryCompleted() {
+                        // Category completed, proceed to next category
+                        currentCategoryIndex++;
+                        processCurrentCategory();
+                    }
+                });
+                break;
+            default:
+                Log.w("ExamProcess", "Unknown category: " + currentCategory.getName());
                 currentCategoryIndex++;
                 processCurrentCategory();
                 break;
@@ -483,54 +515,107 @@ public class ExamProcess extends AppCompatActivity {
     }
 
     /**
-     * Initiates the short-term memory exam category.
+     * Initiates the exam flow for a given category.
      *
-     * @param listener The listener to invoke when the category is completed.
+     * @param questionList The list of questions for the current category.
+     * @param listener     The listener to invoke when the category is completed.
      */
-    private void startShortTermExam(CategoryCompletionListener listener) {
-        if (shortTermMemoryQuestions.isEmpty()) {
-            Log.d("ExamProcess", "No questions available in Kısa Süreli Bellek category.");
+    private void startCategoryExam(List<Question> questionList, CategoryCompletionListener listener) {
+        if (questionList.isEmpty()) {
+            Log.d("ExamProcess", "No questions available in " + categoryName.getText().toString() + " category.");
             listener.onCategoryCompleted();
             return;
         }
 
         currentQuestionIndex = 0; // Reset question index
-        examPoint = 0; // Reset exam points
-        displayNextQuestion(listener);
+        displayNextQuestion(questionList, listener);
     }
 
     /**
-     * Displays the next question in the current category.
+     * Displays the next question in the given question list.
      *
-     * @param listener The listener to invoke when the category is completed.
+     * @param questionList The list of questions for the current category.
+     * @param listener     The listener to invoke when the category is completed.
      */
-    private void displayNextQuestion(CategoryCompletionListener listener) {
-        if (currentQuestionIndex >= shortTermMemoryQuestions.size()) {
+    private void displayNextQuestion(List<Question> questionList, CategoryCompletionListener listener) {
+        if (currentQuestionIndex >= questionList.size()) {
             imageQuestionLayout.setVisibility(View.GONE);
-            Log.d("ExamProcess", "All questions in Kısa Süreli Bellek category have been completed.");
+            textQuestionLayout.setVisibility(View.GONE);
+            Log.d("ExamProcess", "All questions in " + categoryName.getText().toString() + " category have been completed.");
             listener.onCategoryCompleted();
             return;
         }
 
-        currentQuestion = shortTermMemoryQuestions.get(currentQuestionIndex);
+        currentQuestion = questionList.get(currentQuestionIndex);
         mainText.setText(currentQuestion.getMainText());
         preTextButton.setText(currentQuestion.getPreText());
 
         difficultyMode(currentQuestion.getDifficulty());
 
-        imageQuestionLayout.setVisibility(View.VISIBLE);
-        preTextButton.setVisibility(View.VISIBLE);
-        answerButton.setVisibility(View.GONE);
-        mainText.setVisibility(View.GONE);
+        // Determine if the question is image type or text type based on the current category
+        boolean isImageQuestion = isImageCategory(currentCategoryIndex);
 
-        hasAnswered = false; // Reset the flag for the new question
-        isAnswerPhase = false; // Initially in question display phase
+        if (isImageQuestion) {
+            imageQuestionLayout.setVisibility(View.VISIBLE);
+            textQuestionLayout.setVisibility(View.GONE);
+            preTextButton.setVisibility(View.VISIBLE);
+            answerButton.setVisibility(View.GONE);
+            mainText.setVisibility(View.GONE);
+            setupImageQuestion(listener, questionList);
+        } else {
+            imageQuestionLayout.setVisibility(View.GONE);
+            textQuestionLayout.setVisibility(View.VISIBLE);
+            preTextButton.setVisibility(View.GONE);
+            answerButton.setVisibility(View.VISIBLE);
+            mainText.setVisibility(View.VISIBLE);
+            setupTextQuestion(listener, questionList);
+        }
+    }
+
+    /**
+     * Determines if the current category is image-based.
+     *
+     * @param categoryIndex The index of the current category.
+     * @return True if the category is image-based, false if text-based.
+     */
+    private boolean isImageCategory(int categoryIndex) {
+        if (categoryIndex >= categoryInfoList.size()) {
+            return false;
+        }
+
+        String categoryName = categoryInfoList.get(categoryIndex).getName();
+        // Define which categories are image-based. "İşlemsel Bellek" is text-based.
+        switch (categoryName) {
+            case "Kısa Süreli Bellek":
+            case "Uzun Süreli Bellek":
+            case "Görsel Bellek":
+                return true;
+            case "İşlemsel Bellek":
+                return false;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Sets up the image question by loading images and starting timers.
+     *
+     * @param listener     The listener to invoke when the category is completed.
+     * @param questionList The list of questions for the current category.
+     */
+    private void setupImageQuestion(CategoryCompletionListener listener, List<Question> questionList) {
+        if (currentQuestion.getQuestionOptions() == null || currentQuestion.getQuestionOptions().isEmpty()) {
+            Log.e("setupImageQuestion", "No options available for the current image question.");
+            listener.onCategoryCompleted();
+            return;
+        }
 
         // Reset selected images
         selectedImageViews.clear();
         for (ImageView imageView : imageViewList) {
             imageView.setAlpha(1.0f); // Reset opacity
             imageView.setTag(null);
+            imageView.setClickable(false); // Disable clicks initially
         }
 
         // Separate correct and incorrect options
@@ -594,7 +679,7 @@ public class ExamProcess extends AppCompatActivity {
                             Log.d("ExamProcess", "User did not answer in time. Awarding 0 points.");
                             // Move to the next question without awarding points
                             currentQuestionIndex++;
-                            displayNextQuestion(listener);
+                            displayNextQuestion(questionList, listener);
                         }
                     }
                 });
@@ -603,80 +688,60 @@ public class ExamProcess extends AppCompatActivity {
     }
 
     /**
-     * Handles user clicks on ImageViews for selecting answers.
+     * Sets up the text question by displaying texts and starting timers.
      *
-     * @param imageView The ImageView that was clicked.
+     * @param listener     The listener to invoke when the category is completed.
+     * @param questionList The list of questions for the current category.
      */
-    private void handleImageClick(ImageView imageView) {
-        if (imageView.getTag() != null && imageView.getTag().equals("selected")) {
-            // Image is already selected, deselect it
-            selectedImageViews.remove(imageView);
-            imageView.setAlpha(1.0f);
-            imageView.setTag(null);
+    private void setupTextQuestion(CategoryCompletionListener listener, List<Question> questionList) {
+        questionNumber.setText("Soru " + (currentQuestionIndex + 1));
+        mainQuestionText.setText(currentQuestion.getMainText());
+
+        // Set question order if needed
+        categoryOrder.setText(String.valueOf(currentCategoryIndex + 1));
+
+        // Seçenekleri doldurun
+        List<QuestionOption> options = currentQuestion.getQuestionOptions();
+        if (options.size() >= 4) {
+            option1Text.setText(options.get(0).getText());
+            option2Text.setText(options.get(1).getText());
+            option3Text.setText(options.get(2).getText());
+            option4Text.setText(options.get(3).getText());
         } else {
-            // Check if maximum selections have been reached
-            if (selectedImageViews.size() < currentQuestion.getCorrectOptionsCount()) {
-                selectedImageViews.add(imageView);
-                imageView.setAlpha(0.5f); // Indicate selection
-                imageView.setTag("selected");
-            } else {
-                // Inform the user that no more selections are allowed
-                Toast.makeText(this, "You can only select " + currentQuestion.getCorrectOptionsCount() + " images.", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    /**
-     * Checks the user's selected answers and updates the score accordingly.
-     *
-     * @param listener The listener to invoke when the category is completed.
-     */
-    private void checkUserAnswers(CategoryCompletionListener listener) {
-        // User has answered
-        hasAnswered = true;
-
-        // Cancel the answer timer as the user has responded
-        if (answerTimer != null) {
-            answerTimer.cancel();
+            // Handle cases where there are fewer than 4 options
+            option1Text.setText(options.size() > 0 ? options.get(0).getText() : "");
+            option2Text.setText(options.size() > 1 ? options.get(1).getText() : "");
+            option3Text.setText(options.size() > 2 ? options.get(2).getText() : "");
+            option4Text.setText(options.size() > 3 ? options.get(3).getText() : "");
         }
 
-        int correctSelections = 0;
+        // Reset option ticks
+        resetOptions();
 
-        for (ImageView imageView : selectedImageViews) {
-            int index = imageViewList.indexOf(imageView);
-            if (index < allOptionsRandomizedList.size()) { // Ensure index is within bounds
-                QuestionOption option = allOptionsRandomizedList.get(index);
-                if (option.isCorrect()) {
-                    correctSelections++;
+        // Enable option layouts
+        option1Layout.setClickable(true);
+        option2Layout.setClickable(true);
+        option3Layout.setClickable(true);
+        option4Layout.setClickable(true);
+
+        // Reset ticks
+        option1Tick.setVisibility(View.INVISIBLE);
+        option2Tick.setVisibility(View.INVISIBLE);
+        option3Tick.setVisibility(View.INVISIBLE);
+        option4Tick.setVisibility(View.INVISIBLE);
+
+        // Start the answer timer (10 seconds)
+        startAnswerTimer(answerTime, new CountdownListener() {
+            @Override
+            public void onCountdownFinished() {
+                if (!hasAnswered) {
+                    Log.d("ExamProcess", "User did not answer in time. Awarding 0 points.");
+                    // Move to the next question without awarding points
+                    currentQuestionIndex++;
+                    displayNextQuestion(questionList, listener);
                 }
             }
-        }
-
-        if (correctSelections == currentQuestion.getCorrectOptionsCount()) {
-            // Correct answer, add points
-            examPoint += currentQuestion.getPoint();
-            Log.d("ExamProcess", "Correct answer! Points awarded: " + currentQuestion.getPoint());
-            Toast.makeText(this, "Correct! +" + currentQuestion.getPoint() + " points.", Toast.LENGTH_SHORT).show();
-        } else {
-            // Incorrect answer, no points
-            Log.d("ExamProcess", "Incorrect answer! No points awarded.");
-            Toast.makeText(this, "Incorrect! No points awarded.", Toast.LENGTH_SHORT).show();
-        }
-
-        // Reset selections
-        selectedImageViews.clear();
-        for (ImageView imageView : imageViewList) {
-            imageView.setAlpha(1.0f); // Reset opacity
-            imageView.setTag(null);
-        }
-
-        // Hide AnswerButton and mainText
-        answerButton.setVisibility(View.GONE);
-        mainText.setVisibility(View.GONE);
-
-        // Proceed to the next question
-        currentQuestionIndex++;
-        displayNextQuestion(listener);
+        });
     }
 
     /**
@@ -780,6 +845,262 @@ public class ExamProcess extends AppCompatActivity {
         Glide.with(this)
                 .load(imageUrl)
                 .into(imageView);
+    }
+
+    /**
+     * Handles user clicks on ImageViews for selecting answers.
+     *
+     * @param imageView The ImageView that was clicked.
+     */
+    private void handleImageClick(ImageView imageView) {
+        if (!isAnswerPhase) {
+            // If not in answer phase, ignore clicks
+            return;
+        }
+
+        if (imageView.getTag() != null && imageView.getTag().equals("selected")) {
+            // Image is already selected, deselect it
+            selectedImageViews.remove(imageView);
+            imageView.setAlpha(1.0f);
+            imageView.setTag(null);
+        } else {
+            // Check if maximum selections have been reached
+            if (selectedImageViews.size() < currentQuestion.getCorrectOptionsCount()) {
+                selectedImageViews.add(imageView);
+                imageView.setAlpha(0.5f); // Indicate selection
+                imageView.setTag("selected");
+            } else {
+                // Inform the user that no more selections are allowed
+                Toast.makeText(this, "You can only select " + currentQuestion.getCorrectOptionsCount() + " images.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    /**
+     * Sets up click listeners for text option layouts.
+     */
+    private void setupTextOptionClickListeners() {
+        // Option1
+        option1Layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toggleTextOption(option1Tick);
+            }
+        });
+
+        // Option2
+        option2Layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toggleTextOption(option2Tick);
+            }
+        });
+
+        // Option3
+        option3Layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toggleTextOption(option3Tick);
+            }
+        });
+
+        // Option4
+        option4Layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toggleTextOption(option4Tick);
+            }
+        });
+    }
+
+    /**
+     * Toggles the visibility of a text option's tick.
+     *
+     * @param tickView The ImageView representing the tick.
+     */
+    private void toggleTextOption(ImageView tickView) {
+        if (tickView.getVisibility() == View.VISIBLE) {
+            tickView.setVisibility(View.INVISIBLE);
+        } else {
+            tickView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
+     * Handles the AnswerButton click by checking user answers based on question type.
+     */
+    private void handleAnswerButtonClick() {
+        if (isImageCategory(currentCategoryIndex)) {
+            checkUserImageAnswers(new CategoryCompletionListener() {
+                @Override
+                public void onCategoryCompleted() {
+                    // Category completed, proceed to next category
+                    currentCategoryIndex++;
+                    processCurrentCategory();
+                }
+            });
+        } else {
+            checkUserTextAnswers(new CategoryCompletionListener() {
+                @Override
+                public void onCategoryCompleted() {
+                    // Category completed, proceed to next category
+                    currentCategoryIndex++;
+                    processCurrentCategory();
+                }
+            });
+        }
+    }
+
+    /**
+     * Checks the user's selected image answers and updates the score accordingly.
+     *
+     * @param listener The listener to invoke when the category is completed.
+     */
+    private void checkUserImageAnswers(CategoryCompletionListener listener) {
+        // User has answered
+        hasAnswered = true;
+
+        // Cancel the answer timer as the user has responded
+        if (answerTimer != null) {
+            answerTimer.cancel();
+        }
+
+        int correctSelections = 0;
+
+        for (ImageView imageView : selectedImageViews) {
+            int index = imageViewList.indexOf(imageView);
+            if (index < allOptionsRandomizedList.size()) { // Ensure index is within bounds
+                QuestionOption option = allOptionsRandomizedList.get(index);
+                if (option.isCorrect()) {
+                    correctSelections++;
+                }
+            }
+        }
+
+        if (correctSelections == currentQuestion.getCorrectOptionsCount()) {
+            // Correct answer, add points
+            examPoint += currentQuestion.getPoint();
+            Log.d("ExamProcess", "Correct answer! Points awarded: " + currentQuestion.getPoint());
+            Toast.makeText(this, "Doğru! +" + currentQuestion.getPoint() + " puan.", Toast.LENGTH_SHORT).show();
+        } else {
+            // Incorrect answer, no points
+            Log.d("ExamProcess", "Incorrect answer! No points awarded.");
+            Toast.makeText(this, "Yanlış! Puan verilmedi.", Toast.LENGTH_SHORT).show();
+        }
+
+        // Reset selections
+        selectedImageViews.clear();
+        for (ImageView imageView : imageViewList) {
+            imageView.setAlpha(1.0f); // Reset opacity
+            imageView.setTag(null);
+        }
+
+        // Hide AnswerButton and mainText
+        answerButton.setVisibility(View.GONE);
+        mainText.setVisibility(View.GONE);
+
+        // Proceed to the next question
+        currentQuestionIndex++;
+        displayNextQuestion(getCurrentQuestionList(), listener);
+    }
+
+    /**
+     * Checks the user's selected text answers and updates the score accordingly.
+     *
+     * @param listener The listener to invoke when the category is completed.
+     */
+    private void checkUserTextAnswers(CategoryCompletionListener listener) {
+        hasAnswered = true;
+
+        // Cancel the answer timer as the user has responded
+        if (answerTimer != null) {
+            answerTimer.cancel();
+        }
+
+        // Kullanıcının seçtiği seçenekleri kontrol et
+        List<QuestionOption> options = currentQuestion.getQuestionOptions();
+        List<Integer> selectedIndices = new ArrayList<>();
+
+        if (option1Tick.getVisibility() == View.VISIBLE) selectedIndices.add(0);
+        if (option2Tick.getVisibility() == View.VISIBLE) selectedIndices.add(1);
+        if (option3Tick.getVisibility() == View.VISIBLE) selectedIndices.add(2);
+        if (option4Tick.getVisibility() == View.VISIBLE) selectedIndices.add(3);
+
+        boolean allCorrect = true;
+        for (int i = 0; i < options.size(); i++) {
+            QuestionOption option = options.get(i);
+            if (option.isCorrect() && !selectedIndices.contains(i)) {
+                allCorrect = false;
+                break;
+            }
+            if (!option.isCorrect() && selectedIndices.contains(i)) {
+                allCorrect = false;
+                break;
+            }
+        }
+
+        if (allCorrect) {
+            examPoint += currentQuestion.getPoint();
+            Log.d("ExamProcess", "Correct answer! Points awarded: " + currentQuestion.getPoint());
+            Toast.makeText(this, "Doğru! +" + currentQuestion.getPoint() + " puan.", Toast.LENGTH_SHORT).show();
+        } else {
+            // Incorrect answer, no points
+            Log.d("ExamProcess", "Incorrect answer! No points awarded.");
+            Toast.makeText(this, "Yanlış! Puan verilmedi.", Toast.LENGTH_SHORT).show();
+        }
+
+        // Reset selections
+        resetOptions();
+
+        // Proceed to the next question
+        currentQuestionIndex++;
+        displayNextQuestion(getCurrentQuestionList(), listener);
+    }
+
+    /**
+     * Resets both image and text option selections.
+     */
+    private void resetOptions() {
+        // Reset image selections
+        selectedImageViews.clear();
+        for (ImageView imageView : imageViewList) {
+            imageView.setAlpha(1.0f); // Reset opacity
+            imageView.setTag(null);
+            imageView.setClickable(false); // Disable clicks after reset
+        }
+
+        // Reset text option ticks
+        option1Tick.setVisibility(View.INVISIBLE);
+        option2Tick.setVisibility(View.INVISIBLE);
+        option3Tick.setVisibility(View.INVISIBLE);
+        option4Tick.setVisibility(View.INVISIBLE);
+    }
+
+    /**
+     * Retrieves the current question list based on the current category.
+     *
+     * @return The list of questions for the current category.
+     */
+    private List<Question> getCurrentQuestionList() {
+        if (currentCategoryIndex >= categoryInfoList.size()) {
+            return new ArrayList<>();
+        }
+
+        CategoryInfo currentCategory = categoryInfoList.get(currentCategoryIndex);
+        String categoryName = currentCategory.getName();
+
+        switch (categoryName) {
+            case "Kısa Süreli Bellek":
+                return shortTermMemoryQuestions;
+            case "Uzun Süreli Bellek":
+                return longTermMemoryQuestions;
+            case "Görsel Bellek":
+                return visualMemoryQuestions;
+            case "İşlemsel Bellek":
+                return proceduralTermMemoryQuestions;
+            default:
+                return new ArrayList<>();
+        }
     }
 
     /**
