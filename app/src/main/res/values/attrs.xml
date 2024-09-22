@@ -15,6 +15,7 @@
         <attr name="clockwise" format="boolean" />
         <attr name="softProgress" format="boolean" />
         <attr name="timeFormat" format="boolean" />
+        <attr name="onlySeconds" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="CircleStepper">

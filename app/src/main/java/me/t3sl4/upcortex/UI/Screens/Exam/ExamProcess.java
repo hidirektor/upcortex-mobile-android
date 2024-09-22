@@ -88,8 +88,8 @@ public class ExamProcess extends AppCompatActivity {
     private TextView option4Text;
     private ImageView option4Tick;
 
-    private long questionTime = 2000; // 10 seconds for displaying the question
-    private long answerTime = 2000;   // 10 seconds for answering
+    private long questionTime = 3000; // 10 seconds for displaying the question
+    private long answerTime = 3000;   // 10 seconds for answering
 
     private List<CategoryInfo> categoryInfoList = new ArrayList<>();
     private int examPoint = 0;
@@ -758,6 +758,7 @@ public class ExamProcess extends AppCompatActivity {
             if (imageView.getVisibility() == View.VISIBLE) {
                 String fileName = imageFileNames.get(i);
                 loadImageIntoImageView(imageView, fileName);
+                imageView.setContentDescription(fileName);
                 imageView.setVisibility(View.VISIBLE);
                 assignedImages++;
             }
@@ -907,10 +908,10 @@ public class ExamProcess extends AppCompatActivity {
             for (int i = 0; i < selectedImageViews.size(); i++) {
                 ImageView selectedImageView = selectedImageViews.get(i);
                 int index = imageViewList.indexOf(selectedImageView);
-                if (index < allOptionsRandomizedList.size()) {
-                    QuestionOption selectedOption = allOptionsRandomizedList.get(index);
+                if(index < correctOptionsList.size()) {
+                    QuestionOption selectedOption =correctOptions.get(index);
                     QuestionOption correctOption = correctOptions.get(i);
-                    if (!selectedOption.getFileName().equals(correctOption.getFileName())) {
+                    if (!correctOption.getFileName().equals(selectedImageView.getContentDescription().toString())) {
                         isCorrect = false;
                         break;
                     }

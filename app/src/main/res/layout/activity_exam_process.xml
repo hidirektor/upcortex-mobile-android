@@ -140,7 +140,7 @@
                 app:progressTextColor="@color/ratingColor"
                 app:remainingTimeTextColor="@color/ratingColor"
                 app:progressTextSize="16sp"
-                app:remainingTimeTextSize="16sp"
+                app:remainingTimeTextSize="22sp"
                 app:strokeWidth="8dp"
                 app:progressText="Test"
                 app:preProgressText="false"
@@ -148,7 +148,8 @@
                 app:remainingTime="8000"
                 app:circleDiameter="200dp"
                 app:clockwise="false"
-                app:softProgress="true" />
+                app:softProgress="true"
+                app:onlySeconds="true" />
         </LinearLayout>
 
         <ScrollView
@@ -168,7 +169,7 @@
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="16dp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" >
@@ -180,31 +181,50 @@
                         android:gravity="center"
                         android:orientation="horizontal">
 
-                        <ImageView
-                            android:id="@+id/imageView1_1"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_marginEnd="4dp"
-                            android:background="@drawable/background_image_question"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ikon_question_template" />
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            app:cardCornerRadius="8dp"
+                            android:layout_margin="5dp"
+                            android:elevation="10dp">
+                            <ImageView
+                                android:id="@+id/imageView1_1"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/background_image_question"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ikon_question_template" />
+                        </androidx.cardview.widget.CardView>
 
-                        <ImageView
-                            android:id="@+id/imageView1_2"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_marginEnd="4dp"
-                            android:background="@drawable/background_image_question"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ikon_question_template" />
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            app:cardCornerRadius="8dp"
+                            android:layout_margin="5dp"
+                            android:elevation="10dp">
+                            <ImageView
+                                android:id="@+id/imageView1_2"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/background_image_question"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ikon_question_template" />
+                        </androidx.cardview.widget.CardView>
 
-                        <ImageView
-                            android:id="@+id/imageView1_3"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:background="@drawable/background_image_question"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ikon_question_template" />
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            app:cardCornerRadius="8dp"
+                            android:layout_margin="5dp"
+                            android:elevation="10dp">
+                            <ImageView
+                                android:id="@+id/imageView1_3"
+                                android:layout_width="100dp"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/background_image_question"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ikon_question_template" />
+                        </androidx.cardview.widget.CardView>
                     </LinearLayout>
 
                     <!-- Satır 2 -->
@@ -215,31 +235,50 @@
                         android:gravity="center"
                         android:orientation="horizontal">
 
-                        <ImageView
-                            android:id="@+id/imageView2_1"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_marginEnd="4dp"
-                            android:background="@drawable/background_image_question"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ikon_question_template" />
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            app:cardCornerRadius="8dp"
+                            android:layout_margin="5dp"
+                            android:elevation="10dp">
+                            <ImageView
+                                android:id="@+id/imageView2_1"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/background_image_question"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ikon_question_template" />
+                        </androidx.cardview.widget.CardView>
 
-                        <ImageView
-                            android:id="@+id/imageView2_2"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_marginEnd="4dp"
-                            android:background="@drawable/background_image_question"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ikon_question_template" />
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            app:cardCornerRadius="8dp"
+                            android:layout_margin="5dp"
+                            android:elevation="10dp">
+                            <ImageView
+                                android:id="@+id/imageView2_2"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/background_image_question"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ikon_question_template" />
+                        </androidx.cardview.widget.CardView>
 
-                        <ImageView
-                            android:id="@+id/imageView2_3"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:background="@drawable/background_image_question"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ikon_question_template" />
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            app:cardCornerRadius="8dp"
+                            android:layout_margin="5dp"
+                            android:elevation="10dp">
+                            <ImageView
+                                android:id="@+id/imageView2_3"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/background_image_question"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ikon_question_template" />
+                        </androidx.cardview.widget.CardView>
                     </LinearLayout>
 
                     <!-- Satır 3 -->
@@ -250,31 +289,50 @@
                         android:gravity="center"
                         android:orientation="horizontal">
 
-                        <ImageView
-                            android:id="@+id/imageView3_1"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_marginEnd="4dp"
-                            android:background="@drawable/background_image_question"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ikon_question_template" />
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            app:cardCornerRadius="8dp"
+                            android:layout_margin="5dp"
+                            android:elevation="10dp">
+                            <ImageView
+                                android:id="@+id/imageView3_1"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/background_image_question"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ikon_question_template" />
+                        </androidx.cardview.widget.CardView>
 
-                        <ImageView
-                            android:id="@+id/imageView3_2"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_marginEnd="4dp"
-                            android:background="@drawable/background_image_question"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ikon_question_template" />
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            app:cardCornerRadius="8dp"
+                            android:layout_margin="5dp"
+                            android:elevation="10dp">
+                            <ImageView
+                                android:id="@+id/imageView3_2"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/background_image_question"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ikon_question_template" />
+                        </androidx.cardview.widget.CardView>
 
-                        <ImageView
-                            android:id="@+id/imageView3_3"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:background="@drawable/background_image_question"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ikon_question_template" />
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            app:cardCornerRadius="8dp"
+                            android:layout_margin="5dp"
+                            android:elevation="10dp">
+                            <ImageView
+                                android:id="@+id/imageView3_3"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/background_image_question"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ikon_question_template" />
+                        </androidx.cardview.widget.CardView>
                     </LinearLayout>
 
                     <!-- Satır 4 -->
@@ -284,31 +342,50 @@
                         android:gravity="center"
                         android:orientation="horizontal">
 
-                        <ImageView
-                            android:id="@+id/imageView4_1"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_marginEnd="4dp"
-                            android:background="@drawable/background_image_question"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ikon_question_template" />
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            app:cardCornerRadius="8dp"
+                            android:layout_margin="5dp"
+                            android:elevation="10dp">
+                            <ImageView
+                                android:id="@+id/imageView4_1"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/background_image_question"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ikon_question_template" />
+                        </androidx.cardview.widget.CardView>
 
-                        <ImageView
-                            android:id="@+id/imageView4_2"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_marginEnd="4dp"
-                            android:background="@drawable/background_image_question"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ikon_question_template" />
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            app:cardCornerRadius="8dp"
+                            android:layout_margin="5dp"
+                            android:elevation="10dp">
+                            <ImageView
+                                android:id="@+id/imageView4_2"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/background_image_question"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ikon_question_template" />
+                        </androidx.cardview.widget.CardView>
 
-                        <ImageView
-                            android:id="@+id/imageView4_3"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:background="@drawable/background_image_question"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ikon_question_template" />
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            app:cardCornerRadius="8dp"
+                            android:layout_margin="5dp"
+                            android:elevation="10dp">
+                            <ImageView
+                                android:id="@+id/imageView4_3"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/background_image_question"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ikon_question_template" />
+                        </androidx.cardview.widget.CardView>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -317,6 +394,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
@@ -585,9 +663,11 @@
                 android:textAllCaps="false"
                 android:textSize="18sp"
                 android:padding="24dp"
+                android:shadowRadius="0"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
             <Button

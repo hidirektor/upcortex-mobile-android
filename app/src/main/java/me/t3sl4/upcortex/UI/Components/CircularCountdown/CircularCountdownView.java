@@ -39,6 +39,7 @@ public class CircularCountdownView extends View {
     private boolean clockwise = true;
     private boolean softProgress = false;
     private boolean timeFormat = false;
+    private boolean onlySeconds = false;
 
     public CircularCountdownView(Context context) {
         super(context);
@@ -76,6 +77,7 @@ public class CircularCountdownView extends View {
             clockwise = typedArray.getBoolean(R.styleable.CircularCountdownView_clockwise, true);
             softProgress = typedArray.getBoolean(R.styleable.CircularCountdownView_softProgress, false);
             timeFormat = typedArray.getBoolean(R.styleable.CircularCountdownView_timeFormat, false);
+            onlySeconds = typedArray.getBoolean(R.styleable.CircularCountdownView_onlySeconds, false);
             typedArray.recycle();
         } else {
             progressColor = ContextCompat.getColor(context, R.color.ratingColor);
@@ -171,7 +173,10 @@ public class CircularCountdownView extends View {
         long seconds = (millis / 1000) % 60;
         long minutes = (millis / (1000 * 60)) % 60;
         long hours = (millis / (1000 * 60 * 60)) % 24;
-        if(timeFormat) {
+
+        if (onlySeconds) {
+            return String.format("%01d", seconds);
+        } else if(timeFormat) {
             return String.format("%02d Sa %02d Dk. %02d Sn.", hours, minutes, seconds);
         } else {
             return String.format("%02d:%02d", minutes, seconds);
