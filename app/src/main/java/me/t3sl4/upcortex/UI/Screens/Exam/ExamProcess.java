@@ -20,6 +20,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -101,8 +102,9 @@ public class ExamProcess extends AppCompatActivity {
     private TextView option4Text;
     private ImageView option4Tick;
 
-    private long questionTime = 4000; // 10 seconds for displaying the question
-    private long answerTime = 4000;   // 10 seconds for answering
+    private long questionTime = 4000; // 4 seconds for displaying the question
+    private long answerTime = 4000;   // 4 seconds for answering
+    private boolean answerTimerVal = false;
 
     private List<CategoryInfo> categoryInfoList = new ArrayList<>();
     private int examPoint = 0;
@@ -110,6 +112,7 @@ public class ExamProcess extends AppCompatActivity {
     private List<ImageView> imageViewList = new ArrayList<>();
     private List<CardView> cardViewList = new ArrayList<>();
 
+    private List<Question> questionList = new ArrayList<>();
     private List<Question> shortTermMemoryQuestions = new ArrayList<>();
     private List<Question> longTermMemoryQuestions = new ArrayList<>();
     private List<Question> visualMemoryQuestions = new ArrayList<>();
@@ -119,7 +122,6 @@ public class ExamProcess extends AppCompatActivity {
 
     private int currentQuestionIndex = 0; // Current question index
     private Question currentQuestion;
-    private List<QuestionOption> currentOptions = new ArrayList<>();
 
     // Newly Added Lists
     private List<QuestionOption> correctOptionsList = new ArrayList<>();
@@ -408,14 +410,6 @@ public class ExamProcess extends AppCompatActivity {
         void onCategoryCompleted();
     }
 
-    interface OptionsDisplayListener {
-        void onOptionsDisplayed();
-    }
-
-    interface OptionsRandomizedListener {
-        void onOptionsRandomized();
-    }
-
     /**
      * Starts the initial question display countdown.
      *
@@ -611,6 +605,8 @@ public class ExamProcess extends AppCompatActivity {
             return;
         }
 
+        circularCountdownView.setVisibility(View.VISIBLE);
+
         // Reset selected images
         selectedImageViews.clear();
         for (ImageView imageView : imageViewList) {
@@ -619,27 +615,32 @@ public class ExamProcess extends AppCompatActivity {
             imageView.setClickable(false); // Disable clicks initially
         }
 
-        // Separate correct and incorrect options
-        correctOptionsList.clear();
-        List<QuestionOption> incorrectOptions = new ArrayList<>();
-
-        for (QuestionOption option : currentQuestion.getQuestionOptions()) {
-            if (option.isCorrect()) {
-                correctOptionsList.add(option);
-            } else {
-                incorrectOptions.add(option);
-            }
-        }
-
-        // Sort correct options based on their order
-        Collections.sort(correctOptionsList, Comparator.comparingInt(QuestionOption::getOrder));
-
-        // Randomize all options
+        // **Step 1:** Add all QuestionOption objects to allOptionsRandomizedList
         allOptionsRandomizedList.clear();
         allOptionsRandomizedList.addAll(currentQuestion.getQuestionOptions());
-        Collections.shuffle(allOptionsRandomizedList);
+        Log.d("Option Count", String.valueOf(currentQuestion.getQuestionOptions().size()));
 
-        // Collect file names of correct options with type 'image'
+        // **Step 2:** Shuffle the allOptionsRandomizedList
+        Collections.shuffle(allOptionsRandomizedList);
+        Log.d("setupImageQuestion", "All options shuffled.");
+
+        // **Step 3:** Extract correct options from allOptionsRandomizedList based on correctOptionsCount
+        correctOptionsList.clear();
+        for (QuestionOption option : allOptionsRandomizedList) {
+            if (option.isCorrect()) {
+                correctOptionsList.add(option);
+                if (correctOptionsList.size() == currentQuestion.getCorrectOptionsCount()) {
+                    break; // Ensure only the specified number of correct options are added
+                }
+            }
+        }
+        Log.d("setupImageQuestion", "Correct options extracted based on correctOptionsCount.");
+
+        // **Step 4:** Sort correctOptionsList by order ascending
+        Collections.sort(correctOptionsList, Comparator.comparingInt(QuestionOption::getOrder));
+        Log.d("setupImageQuestion", "Correct options sorted by order.");
+
+        // Phase 1: Show only correct images in sorted order
         List<String> correctImageFileNames = new ArrayList<>();
         for (QuestionOption option : correctOptionsList) {
             if ("image".equalsIgnoreCase(option.getType())) {
@@ -647,38 +648,46 @@ public class ExamProcess extends AppCompatActivity {
             }
         }
 
-        // Locate and display correct images (Phase 1)
-        locateImages(correctImageFileNames, false);
+        locateImages(correctImageFileNames, false); // Phase 1: Display correct images
 
-        // Start the initial question display timer (10 seconds)
+        // Start the initial question display timer (e.g., 4 seconds)
         startQuestionTimer(questionTime, () -> {
-            // After 10 seconds, show all image options and allow answering
+            // After timer, proceed to Phase 2: Show all images
             preTextButton.setVisibility(View.GONE);
             mainText.setVisibility(View.VISIBLE);
             answerButton.setVisibility(View.VISIBLE);
 
             isAnswerPhase = true; // Now in answer phase
 
-            // Collect all image file names with type 'image'
+            // Phase 2: Show all images (correct and incorrect) from allOptionsRandomizedList up to totalOptionsCount
             List<String> allImageFileNames = new ArrayList<>();
-            for (QuestionOption option : currentQuestion.getQuestionOptions()) {
-                if ("image".equalsIgnoreCase(option.getType())) {
-                    allImageFileNames.add(option.getFileName());
-                }
+            for (int i = 0; i < allOptionsRandomizedList.size(); i++) {
+                QuestionOption option = allOptionsRandomizedList.get(i);
+                Log.d("Option " + i, option.getFileName());
+                allImageFileNames.add(option.getFileName());
             }
 
-            // Locate and display all images (Phase 2)
-            locateImages(allImageFileNames, true);
+            locateImages(allImageFileNames, true); // Phase 2: Display all images
 
-            // Start the answer timer (10 seconds)
-            startAnswerTimer(answerTime, () -> {
-                if (!hasAnswered) {
-                    Log.d("ExamProcess", "User did not answer in time. Awarding 0 points.");
-                    // Move to the next question without awarding points
-                    currentQuestionIndex++;
-                    displayNextQuestion(questionList, listener);
-                }
-            });
+            circularCountdownView.setVisibility(View.INVISIBLE);
+
+            // Enable image selection
+            for (ImageView imageView : imageViewList) {
+                imageView.setClickable(true);
+            }
+
+            // Start the answer timer (e.g., 4 seconds)
+            if (answerTimerVal) {
+                startAnswerTimer(answerTime, () -> {
+                    if (!hasAnswered) {
+                        Log.d("ExamProcess", "User did not answer in time. Awarding 0 points.");
+                        Toast.makeText(this, "Süre doldu! Puan verilmedi.", Toast.LENGTH_SHORT).show();
+                        // Move to the next question without awarding points
+                        currentQuestionIndex++;
+                        displayNextQuestion(questionList, listener);
+                    }
+                });
+            }
         });
     }
 
@@ -725,7 +734,7 @@ public class ExamProcess extends AppCompatActivity {
         option3Tick.setVisibility(View.INVISIBLE);
         option4Tick.setVisibility(View.INVISIBLE);
 
-        // Start the answer timer (10 seconds)
+        // Start the answer timer (e.g., 4 seconds)
         startAnswerTimer(answerTime, () -> {
             if (!hasAnswered) {
                 Log.d("ExamProcess", "User did not answer in time. Awarding 0 points.");
@@ -748,12 +757,24 @@ public class ExamProcess extends AppCompatActivity {
 
         // Determine which ImageViews to make visible based on imageCount
         int imageCount = imageFileNames.size();
+        Log.d("Image file Name Count", String.valueOf(imageCount));
+
         if (imageCount == 2) {
+            // Pattern:
+            // 1 1 0
+            // 0 0 0
+            // 0 0 0
+            // 0 0 0
             imageView1_1.setVisibility(View.VISIBLE);
             imageView1_2.setVisibility(View.VISIBLE);
             cardView1_1.setVisibility(View.VISIBLE);
             cardView1_2.setVisibility(View.VISIBLE);
         } else if (imageCount == 4) {
+            // Pattern:
+            // 1 1 0
+            // 1 1 0
+            // 0 0 0
+            // 0 0 0
             imageView1_1.setVisibility(View.VISIBLE);
             imageView1_2.setVisibility(View.VISIBLE);
             imageView2_1.setVisibility(View.VISIBLE);
@@ -763,6 +784,11 @@ public class ExamProcess extends AppCompatActivity {
             cardView2_1.setVisibility(View.VISIBLE);
             cardView2_2.setVisibility(View.VISIBLE);
         } else if (imageCount == 6) {
+            // Pattern:
+            // 1 1 0
+            // 1 1 0
+            // 1 1 0
+            // 0 0 0
             imageView1_1.setVisibility(View.VISIBLE);
             imageView1_2.setVisibility(View.VISIBLE);
             imageView2_1.setVisibility(View.VISIBLE);
@@ -776,61 +802,86 @@ public class ExamProcess extends AppCompatActivity {
             cardView3_1.setVisibility(View.VISIBLE);
             cardView3_2.setVisibility(View.VISIBLE);
         } else if (imageCount == 8) {
-            imageView1_1.setVisibility(View.VISIBLE);
+            // Pattern:
+            // 0 1 0
+            // 1 1 1
+            // 1 1 1
+            // 0 1 0
+
+            // Row 1
             imageView1_2.setVisibility(View.VISIBLE);
-            imageView1_3.setVisibility(View.VISIBLE);
+            cardView1_2.setVisibility(View.VISIBLE);
+
+            // Row 2
             imageView2_1.setVisibility(View.VISIBLE);
             imageView2_2.setVisibility(View.VISIBLE);
             imageView2_3.setVisibility(View.VISIBLE);
-            imageView3_1.setVisibility(View.VISIBLE);
-            imageView3_2.setVisibility(View.VISIBLE);
-            imageView3_3.setVisibility(View.VISIBLE);
-            imageView4_1.setVisibility(View.VISIBLE);
-            imageView4_2.setVisibility(View.VISIBLE);
-            imageView4_3.setVisibility(View.VISIBLE);
-            cardView1_1.setVisibility(View.VISIBLE);
-            cardView1_2.setVisibility(View.VISIBLE);
-            cardView1_3.setVisibility(View.VISIBLE);
             cardView2_1.setVisibility(View.VISIBLE);
             cardView2_2.setVisibility(View.VISIBLE);
             cardView2_3.setVisibility(View.VISIBLE);
+
+            // Row 3
+            imageView3_1.setVisibility(View.VISIBLE);
+            imageView3_2.setVisibility(View.VISIBLE);
+            imageView3_3.setVisibility(View.VISIBLE);
             cardView3_1.setVisibility(View.VISIBLE);
             cardView3_2.setVisibility(View.VISIBLE);
             cardView3_3.setVisibility(View.VISIBLE);
-            cardView4_1.setVisibility(View.VISIBLE);
+
+            // Row 4
+            imageView4_2.setVisibility(View.VISIBLE);
             cardView4_2.setVisibility(View.VISIBLE);
-            cardView4_3.setVisibility(View.VISIBLE);
         } else if (imageCount == 12) {
+            // Pattern:
+            // 1 1 1
+            // 1 1 1
+            // 1 1 1
+            // 1 1 1
             changeImageVisibility(View.VISIBLE);
         } else {
             // Handle unexpected image counts gracefully
             Log.w("locateImages", "Unexpected imageCount: " + imageCount);
         }
 
-        // Assign each imageFileName to a unique visible ImageView
-        int assignedImages = 0;
-        for (int i = 0; i < imageFileNames.size(); i++) {
-            if (assignedImages >= imageViewList.size()) {
-                break; // Prevent index out of bounds
-            }
-            ImageView imageView = imageViewList.get(i);
-            CardView cardView = cardViewList.get(i);
-            if (imageView.getVisibility() == View.VISIBLE && cardView.getVisibility() == View.VISIBLE) {
-                String fileName = imageFileNames.get(i);
-                loadImageIntoImageView(imageView, fileName);
-                imageView.setContentDescription(fileName);
-                imageView.setVisibility(View.VISIBLE);
-                cardView.setVisibility(View.VISIBLE);
-                assignedImages++;
-            }
-        }
+        // Assign each imageFileName to a unique visible ImageView sequentially
+        Log.d("File Name Count", String.valueOf(imageFileNames.size()));
 
-        // Hide any extra ImageViews that are not needed
-        for (int i = imageFileNames.size(); i < imageViewList.size(); i++) {
+        int imageIndex = 0; // Separate index for imageFileNames
+        for (int i = 0; i < imageViewList.size(); i++) {
             ImageView imageView = imageViewList.get(i);
             CardView cardView = cardViewList.get(i);
-            imageView.setVisibility(View.GONE);
-            cardView.setVisibility(View.GONE);
+
+            if (imageView.getVisibility() == View.VISIBLE && cardView.getVisibility() == View.VISIBLE) {
+                if (imageIndex >= imageFileNames.size()) {
+                    break; // Prevent index out of bounds
+                }
+
+                String fileName = imageFileNames.get(imageIndex);
+                Log.d("File Name", fileName);
+
+                loadImageIntoImageView(imageView, fileName);
+
+                // Assign contentDescription based on the phase
+                if (!isAnswerPhase) {
+                    // Phase 1: Assign sorted correct option texts
+                    // Find the corresponding correct option
+                    String optionText = "";
+                    for (QuestionOption option : correctOptionsList) {
+                        if (option.getFileName().equals(fileName)) {
+                            optionText = option.getText();
+                            break;
+                        }
+                    }
+                    imageView.setContentDescription(optionText); // Assign text to contentDescription
+                } else {
+                    if (imageIndex < allOptionsRandomizedList.size()) {
+                        QuestionOption option = allOptionsRandomizedList.get(imageIndex);
+                        imageView.setContentDescription(option.getText()); // Assign text to contentDescription
+                    }
+                }
+
+                imageIndex++; // Move to the next image
+            }
         }
 
         // Enable or disable ImageView clicks based on the phase
@@ -847,12 +898,10 @@ public class ExamProcess extends AppCompatActivity {
      * @param visibility The desired visibility (e.g., View.VISIBLE, View.GONE).
      */
     private void changeImageVisibility(int visibility) {
-        for (ImageView imageView : imageViewList) {
-            imageView.setVisibility(visibility);
-        }
-        for (CardView cardView : cardViewList) {
-            cardView.setVisibility(visibility);
-        }
+       for(int i=0; i<imageViewList.size(); i++) {
+           imageViewList.get(i).setVisibility(visibility);
+           cardViewList.get(i).setVisibility(visibility);
+       }
         Log.d("ChangeImageVisibility", "All ImageViews visibility set to: " + visibility);
     }
 
@@ -868,6 +917,8 @@ public class ExamProcess extends AppCompatActivity {
 
         Glide.with(this)
                 .load(imageUrl)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .into(imageView);
     }
 
@@ -886,7 +937,7 @@ public class ExamProcess extends AppCompatActivity {
             // Image is already selected, deselect it
             selectedImageViews.remove(imageView);
             imageView.setAlpha(1.0f);
-            imageView.setTag(null);
+            imageView.setTag("unselected");
         } else {
             // Check if maximum selections have been reached
             if (selectedImageViews.size() < currentQuestion.getCorrectOptionsCount()) {
@@ -963,25 +1014,25 @@ public class ExamProcess extends AppCompatActivity {
             answerTimer.cancel();
         }
 
-        // Retrieve the correct options in order
-        List<QuestionOption> correctOptions = new ArrayList<>(correctOptionsList);
+        // Collect selected contentDescriptions
+        List<String> selectedAnswers = new ArrayList<>();
+        for (ImageView imageView : selectedImageViews) {
+            selectedAnswers.add(imageView.getContentDescription().toString());
+        }
 
-        // Check if selected images match the correct options in the correct order
+        // Collect correct answers' texts
+        List<String> correctAnswers = new ArrayList<>();
+        for (QuestionOption option : correctOptionsList) {
+            correctAnswers.add(option.getText());
+        }
+
+        // Check if selected answers match the correct answers in order
         boolean isCorrect = true;
-        if (selectedImageViews.size() != correctOptions.size()) {
+        if (selectedAnswers.size() != correctAnswers.size()) {
             isCorrect = false;
         } else {
-            for (int i = 0; i < selectedImageViews.size(); i++) {
-                ImageView selectedImageView = selectedImageViews.get(i);
-                int index = imageViewList.indexOf(selectedImageView);
-                if(index < correctOptionsList.size()) {
-                    QuestionOption selectedOption =correctOptions.get(index);
-                    QuestionOption correctOption = correctOptions.get(i);
-                    if (!correctOption.getFileName().equals(selectedImageView.getContentDescription().toString())) {
-                        isCorrect = false;
-                        break;
-                    }
-                } else {
+            for (int i = 0; i < selectedAnswers.size(); i++) {
+                if (!correctAnswers.get(i).equals(selectedAnswers.get(i))) {
                     isCorrect = false;
                     break;
                 }
@@ -1005,7 +1056,7 @@ public class ExamProcess extends AppCompatActivity {
         selectedImageViews.clear();
         for (ImageView imageView : imageViewList) {
             imageView.setAlpha(1.0f); // Reset opacity
-            imageView.setTag(null);
+            imageView.setTag("unselected"); // Reset tag
         }
 
         // Hide AnswerButton and mainText
@@ -1014,7 +1065,7 @@ public class ExamProcess extends AppCompatActivity {
 
         // Proceed to the next question
         currentQuestionIndex++;
-        displayNextQuestion(getCurrentQuestionList(), listener);
+        displayNextQuestion(questionList, listener);
     }
 
     /**
@@ -1069,7 +1120,7 @@ public class ExamProcess extends AppCompatActivity {
 
         // Proceed to the next question
         currentQuestionIndex++;
-        displayNextQuestion(getCurrentQuestionList(), listener);
+        displayNextQuestion(questionList, listener);
     }
 
     /**

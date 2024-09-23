@@ -47,7 +47,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:visibility="visible">
+                    android:visibility="gone">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
@@ -211,7 +211,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:layout_marginTop="12dp"
                     android:layout_marginBottom="12dp">
                     <LinearLayout
@@ -275,7 +275,7 @@
                         android:orientation="vertical"
                         android:background="@drawable/frame_exam_results">
                         <me.t3sl4.upcortex.UI.Components.CircularStats.Speedometer
-                            android:id="@+id/speedometer"
+                            android:id="@+id/currentExamGeneralStat"
                             android:layout_width="300dp"
                             android:layout_height="300dp"
                             app:maxPercent="100"
@@ -288,13 +288,12 @@
                             app:fourthQuarterColor="@color/no_risk"
                             app:tickBorder="false"
                             app:percentText="false"
-                            app:firstPercent="51"
-                            app:secondPercent="80"
+                            app:firstPercent="1"
                             app:firstPercentColor="@color/no_risk"
-                            app:secondPercentColor="@color/ratingColor"
                             android:layout_gravity="center"
                             android:layout_marginTop="12dp"/>
                         <TextView
+                            android:id="@+id/generalExamResult"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/exam_low_risk"
@@ -307,14 +306,16 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
+                            android:layout_gravity="center"
+                            android:gravity="center"
                             android:layout_marginStart="12dp"
                             android:layout_marginEnd="12dp"
                             android:layout_marginBottom="12dp">
                             <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_weight="1.0"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
+                                android:visibility="gone"
                                 android:layout_marginRight="4dp">
                                 <Button
                                     android:layout_width="wrap_content"
@@ -335,12 +336,12 @@
                                     android:textColor="@color/exam_text"/>
                             </LinearLayout>
                             <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_weight="1.0"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
                                 android:layout_marginRight="4dp">
                                 <Button
+                                    android:id="@+id/currentExamPercent"
                                     android:layout_width="wrap_content"
                                     android:layout_height="30dp"
                                     android:text="%40"
@@ -368,6 +369,7 @@
                             android:layout_marginBottom="14dp"
                             android:padding="12dp">
                             <TextView
+                                android:id="@+id/generalExamDesc"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/exam_result_test"
@@ -387,6 +389,7 @@
                                 android:layout_marginEnd="8dp"
                                 android:layout_marginBottom="20dp"/>
                             <TextView
+                                android:id="@+id/generalExamDiagnose"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/exam_treatment_test"

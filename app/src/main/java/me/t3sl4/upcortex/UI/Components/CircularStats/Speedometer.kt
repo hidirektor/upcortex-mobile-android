@@ -548,7 +548,7 @@ class Speedometer @JvmOverloads constructor(
     }
 
     private fun renderBorderFill(canvas: Canvas) {
-        val sweepAngle = MIN_ANGLE - angle
+        val sweepAngle = (firstPercent / maxPercent.toFloat()) * SWEEP_ANGLE
         if (mode == 0) {
             paintIndicatorFill.color = fillColor
         } else {
@@ -576,18 +576,22 @@ class Speedometer @JvmOverloads constructor(
         return (MIN_SPEED + ((maxPercent - MIN_SPEED) / (MAX_ANGLE - MIN_ANGLE)) * (angle - MIN_ANGLE)).toInt()
     }
 
-    fun setSpeed(s: Int, d: Long, onEnd: (() -> Unit)? = null) {
+    fun setPercent(s: Int, d: Long, onEnd: (() -> Unit)? = null) {
+        val newPercent = s.coerceIn(MIN_SPEED, maxPercent)
+
         animator.apply {
-            setFloatValues(mapSpeedToAngle(speed), mapSpeedToAngle(s))
+            setFloatValues(mapSpeedToAngle(firstPercent), mapSpeedToAngle(newPercent))
 
             addUpdateListener {
                 angle = it.animatedValue as Float
-                speed = mapAngleToSpeed(angle)
+                firstPercent = mapAngleToSpeed(angle)
                 invalidate()
             }
+
             doOnEnd {
                 onEnd?.invoke()
             }
+
             duration = d
             start()
         }

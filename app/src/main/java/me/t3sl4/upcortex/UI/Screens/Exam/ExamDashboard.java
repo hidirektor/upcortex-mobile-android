@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,6 +27,7 @@ import me.t3sl4.upcortex.Model.Exam.Exam;
 import me.t3sl4.upcortex.Model.Exam.GeneralClassification;
 import me.t3sl4.upcortex.Model.Exam.QuestionCategory;
 import me.t3sl4.upcortex.R;
+import me.t3sl4.upcortex.UI.Components.CircularStats.Speedometer;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
 import me.t3sl4.upcortex.Utility.HTTP.Requests.Exam.ExamService;
 import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
@@ -37,6 +40,12 @@ public class ExamDashboard extends AppCompatActivity {
     private Button startButton;
     private Button backButton;
     private Button closeExamButton;
+
+    private TextView generalExamResult;
+    private Button currentExamPercent;
+    private Speedometer currentExamGeneralStat;
+    private TextView generalExamDesc;
+    private TextView generalExamDiagnose;
 
     private LinearLayout examStartLayout;
     private LinearLayout examStatsLayout;
@@ -69,6 +78,12 @@ public class ExamDashboard extends AppCompatActivity {
         examStatsLayout = findViewById(R.id.examStatsLayout);
 
         examDetailsCard = findViewById(R.id.examDetailsCard);
+
+        generalExamResult = findViewById(R.id.generalExamResult);
+        currentExamGeneralStat = findViewById(R.id.currentExamGeneralStat);
+        currentExamPercent = findViewById(R.id.currentExamPercent);
+        generalExamDesc = findViewById(R.id.generalExamDesc);
+        generalExamDiagnose = findViewById(R.id.generalExamDiagnose);
 
         if(receivedExam.getUserPoint() != 0) {
             examStartLayout.setVisibility(View.GONE);
@@ -129,6 +144,15 @@ public class ExamDashboard extends AppCompatActivity {
                 break;
             }
         }
+
+        currentExamPercent.setText("% " + generalPoint);
+        generalExamResult.setText(generalName);
+        generalExamDesc.setText(generalDesc);
+        currentExamGeneralStat.setPercent(generalPoint, 2000L, () -> {
+            Toast.makeText(this, "Hız güncellendi!", Toast.LENGTH_SHORT).show();
+            return null;
+        });
+        generalExamDiagnose.setVisibility(View.GONE);
 
         // 2. Kategori Sınıflandırmalarını Bulma
         List<String> subNameList = new ArrayList<>();
