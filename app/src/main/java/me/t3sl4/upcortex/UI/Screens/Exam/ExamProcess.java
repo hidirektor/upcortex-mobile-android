@@ -1112,20 +1112,21 @@ public class ExamProcess extends AppCompatActivity {
 
         finalScoreDialog.show();
 
-        // Dismiss the dialog after 5 seconds and return to ExamDashboard with results
+        // Dismiss the dialog after 3 seconds and return categoryInfoList with results
         handler.postDelayed(() -> {
             finalScoreDialog.dismiss();
 
-            // Prepare the updated Exam object
+            // Prepare the updated categoryInfoList as JSON
             Gson gson = new Gson();
-            String updatedExamJson = gson.toJson(receivedExam); // receivedExam içinde categoryInfoList ve examPoint güncel olmalı
+            String updatedCategoryListJson = gson.toJson(categoryInfoList);
 
             Intent resultIntent = new Intent();
-            resultIntent.putExtra("updatedExamJson", updatedExamJson);
-            setResult(RESULT_OK, resultIntent); // Sonucu ayarla
-            finish(); // Aktiviteyi sonlandır
+            resultIntent.putExtra("updatedCategoryListJson", updatedCategoryListJson);
+            setResult(RESULT_OK, resultIntent); // Send the result back
+            finish(); // End activity
         }, 3000); // 3000 milliseconds = 3 seconds
     }
+
 
     /**
      * Retrieves the current question list based on the current category.

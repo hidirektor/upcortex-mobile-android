@@ -24,14 +24,15 @@
                 android:layout_height="100dp"
                 app:baseColor="@color/membershipButtonColor"
                 app:percentColor="@color/ratingColor"
-                app:currentPercent="75"
+                app:currentPercent="20"
                 app:percentStrokeWidth="16dp"
                 app:percentRadius="45dp"
                 app:percentClockwise="true"
                 app:percentTextColor="@color/ratingColor"
                 app:percentTextFont="@font/roboto_flex"
                 app:percentTextSize="14sp"
-                android:layout_marginEnd="12dp"/>
+                android:layout_marginEnd="12dp"
+                app:percentMax="25" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

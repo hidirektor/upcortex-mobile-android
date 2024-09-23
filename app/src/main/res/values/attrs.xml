@@ -99,5 +99,6 @@
         <attr name="percentTextColor" format="color"/>
         <attr name="percentTextFont" format="reference"/>
         <attr name="percentTextSize" format="dimension"/>
+        <attr name="percentMax" format="integer" />
     </declare-styleable>
 </resources>

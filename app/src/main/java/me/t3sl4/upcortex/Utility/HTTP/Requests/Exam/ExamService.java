@@ -154,12 +154,14 @@ public class ExamService {
                                     String subCategoryName = subCategoryObject.getString("name");
                                     int minVal = subCategoryObject.getInt("min");
                                     int maxVal = subCategoryObject.getInt("max");
+                                    String description = subCategoryObject.getString("description");
 
                                     CategoryClassification categoryClassification = new CategoryClassification(
                                             subCategoryId,
                                             subCategoryName,
                                             minVal,
-                                            maxVal
+                                            maxVal,
+                                            description
                                     );
 
                                     categoryClassifications.add(categoryClassification);
@@ -187,12 +189,14 @@ public class ExamService {
                                 String classificationName = classificationObject.getString("name");
                                 int minVal = classificationObject.getInt("min");
                                 int maxVal = classificationObject.getInt("max");
+                                String description = classificationObject.getString("description");
 
                                 GeneralClassification classification = new GeneralClassification(
                                         classificationId,
                                         classificationName,
                                         minVal,
-                                        maxVal
+                                        maxVal,
+                                        description
                                 );
 
                                 examClassifications.add(classification);

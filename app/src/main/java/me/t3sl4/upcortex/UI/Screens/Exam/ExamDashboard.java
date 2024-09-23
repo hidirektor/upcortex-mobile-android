@@ -14,14 +14,16 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import me.t3sl4.upcortex.Model.Exam.Adapter.ExamResultAdapter;
+import me.t3sl4.upcortex.Model.Exam.CategoryClassification;
 import me.t3sl4.upcortex.Model.Exam.CategoryInfo;
 import me.t3sl4.upcortex.Model.Exam.Exam;
+import me.t3sl4.upcortex.Model.Exam.GeneralClassification;
+import me.t3sl4.upcortex.Model.Exam.QuestionCategory;
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
 import me.t3sl4.upcortex.Utility.HTTP.Requests.Exam.ExamService;
@@ -113,19 +115,63 @@ public class ExamDashboard extends AppCompatActivity {
         }
     }
 
-    private void loadExamStats(HashMap<String, Integer> categoryPoints, int generalPoint) {
+    private void loadExamStats(HashMap<String, Integer> categoryPoints, int generalPoint, Exam currentExam) {
         List<String> categoryList = new ArrayList<>();
         List<Integer> percentList = new ArrayList<>();
 
-        for (Map.Entry<String, Integer> entry : categoryPoints.entrySet()) {
-            categoryList.add(entry.getKey());
-            percentList.add(entry.getValue());
+        // 1. Genel Sınıflandırmayı Bulma
+        String generalName = "Bilinmiyor";
+        String generalDesc = "Açıklama mevcut değil.";
+        for (GeneralClassification gc : currentExam.getExamClassifications()) {
+            if (generalPoint >= gc.getMinVal() && generalPoint <= gc.getMaxVal()) {
+                generalName = gc.getName();
+                generalDesc = gc.getDescription();
+                break;
+            }
         }
-        // Örnek String ve Integer verileri
-        List<String> subNameList = Arrays.asList("Çok İyi Seviye", "İyi Seviye", "Yüksek Tahribat", "Düşük Seviye");
-        List<String> subDescList = Arrays.asList("Görsel bellek yetenekleri mükemmeldir. Görsel bilgileri hızlı bir şekilde öğrenir ve hatırlarlar. Bu, mekan tanıma ve yön bulma gibi günlük görevlerde büyük bir avantaj sağlar.", "Görsel bellek yetenekleri mükemmeldir. Görsel bilgileri hızlı bir şekilde öğrenir ve hatırlarlar. Bu, mekan tanıma ve yön bulma gibi günlük görevlerde büyük bir avantaj sağlar.", "Görsel bellek yetenekleri mükemmeldir. Görsel bilgileri hızlı bir şekilde öğrenir ve hatırlarlar. Bu, mekan tanıma ve yön bulma gibi günlük görevlerde büyük bir avantaj sağlar.", "Görsel bellek yetenekleri mükemmeldir. Görsel bilgileri hızlı bir şekilde öğrenir ve hatırlarlar. Bu, mekan tanıma ve yön bulma gibi günlük görevlerde büyük bir avantaj sağlar.");
 
-        // Adapter ve layout manager ayarlanması
+        // 2. Kategori Sınıflandırmalarını Bulma
+        List<String> subNameList = new ArrayList<>();
+        List<String> subDescList = new ArrayList<>();
+
+        for (Map.Entry<String, Integer> entry : categoryPoints.entrySet()) {
+            String categoryName = entry.getKey();
+            int categoryPoint = entry.getValue();
+
+            categoryList.add(categoryName);
+            percentList.add(categoryPoint);
+
+            // İlgili Kategoriyi Bulma
+            QuestionCategory matchedCategory = null;
+            for (QuestionCategory qc : currentExam.getQuestionCategories()) {
+                if (qc.getName().equalsIgnoreCase(categoryName)) {
+                    matchedCategory = qc;
+                    break;
+                }
+            }
+
+            if (matchedCategory != null) {
+                // Kategoriye Ait Sınıflandırmaları Dolaşma
+                boolean classificationFound = false;
+                for (CategoryClassification cc : matchedCategory.getCategoryClassifications()) {
+                    if (categoryPoint >= cc.getMinVal() && categoryPoint <= cc.getMaxVal()) {
+                        subNameList.add(cc.getName());
+                        subDescList.add(cc.getDescription());
+                        classificationFound = true;
+                        break;
+                    }
+                }
+                if (!classificationFound) {
+                    subNameList.add("Sınıflandırma Bulunamadı");
+                    subDescList.add("Bu kategori için uygun bir sınıflandırma bulunamadı.");
+                }
+            } else {
+                subNameList.add("Kategori Bulunamadı");
+                subDescList.add("Bu kategoriye ait veriler mevcut değil.");
+            }
+        }
+
+        // Adapter ve Layout Manager Ayarlanması
         ExamResultAdapter examResultAdapter = new ExamResultAdapter(categoryList, subNameList, subDescList, percentList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         examDetailsCard.setLayoutManager(layoutManager);
@@ -146,19 +192,21 @@ public class ExamDashboard extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == EXAM_REQUEST_CODE && resultCode == RESULT_OK) {
             if (data != null) {
-                String updatedExamJson = data.getStringExtra("updatedExamJson");
-                if (updatedExamJson != null) {
+                String updatedCategoryListJson = data.getStringExtra("updatedCategoryListJson");
+                if (updatedCategoryListJson != null) {
                     Gson gson = new Gson();
-                    receivedExam = gson.fromJson(updatedExamJson, Exam.class);
+                    CategoryInfo[] updatedCategoryList = gson.fromJson(updatedCategoryListJson, CategoryInfo[].class);
 
                     HashMap<String, Integer> categoryPoints = new HashMap<>();
-                    int generalPoint = receivedExam.getUserPoint();
+                    int generalPoint = 0;
 
-                    for(CategoryInfo currentInfo : receivedExam.getCategoryInfoList()) {
+                    // Update the general point and category points from the list
+                    for (CategoryInfo currentInfo : updatedCategoryList) {
                         categoryPoints.put(currentInfo.getName(), currentInfo.getUserPoint());
+                        generalPoint += currentInfo.getUserPoint(); // Sum up the points for a general score
                     }
 
-                    loadExamStats(categoryPoints, generalPoint);
+                    loadExamStats(categoryPoints, generalPoint, receivedExam); // Assuming loadExamStats uses the category points and general point
                     examStartLayout.setVisibility(View.GONE);
                     startButton.setVisibility(View.GONE);
                     backButton.setVisibility(View.GONE);

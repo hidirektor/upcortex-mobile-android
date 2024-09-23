@@ -3,6 +3,7 @@ package me.t3sl4.upcortex.Model.Exam;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -42,6 +43,7 @@ public class Exam implements Parcelable {
         this.examInstructions = examInstructions;
         this.beforeText = beforeText;
         this.userPoint = userPoint;
+        this.categoryInfoList = new ArrayList<>();
     }
 
     protected Exam(Parcel in) {

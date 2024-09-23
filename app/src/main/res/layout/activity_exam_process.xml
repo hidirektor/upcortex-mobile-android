@@ -192,7 +192,7 @@
                                 android:id="@+id/imageView1_1"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
+                                android:scaleType="fitXY"
                                 android:src="@drawable/ikon_question_template" />
                         </androidx.cardview.widget.CardView>
 
@@ -208,7 +208,7 @@
                                 android:id="@+id/imageView1_2"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
+                                android:scaleType="fitXY"
                                 android:src="@drawable/ikon_question_template" />
                         </androidx.cardview.widget.CardView>
 
@@ -224,7 +224,7 @@
                                 android:id="@+id/imageView1_3"
                                 android:layout_width="100dp"
                                 android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
+                                android:scaleType="fitXY"
                                 android:src="@drawable/ikon_question_template" />
                         </androidx.cardview.widget.CardView>
                     </LinearLayout>
@@ -248,7 +248,7 @@
                                 android:id="@+id/imageView2_1"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
+                                android:scaleType="fitXY"
                                 android:src="@drawable/ikon_question_template" />
                         </androidx.cardview.widget.CardView>
 
@@ -264,7 +264,7 @@
                                 android:id="@+id/imageView2_2"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
+                                android:scaleType="fitXY"
                                 android:src="@drawable/ikon_question_template" />
                         </androidx.cardview.widget.CardView>
 
@@ -280,7 +280,7 @@
                                 android:id="@+id/imageView2_3"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
+                                android:scaleType="fitXY"
                                 android:src="@drawable/ikon_question_template" />
                         </androidx.cardview.widget.CardView>
                     </LinearLayout>
@@ -304,7 +304,7 @@
                                 android:id="@+id/imageView3_1"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
+                                android:scaleType="fitXY"
                                 android:src="@drawable/ikon_question_template" />
                         </androidx.cardview.widget.CardView>
 
@@ -320,7 +320,7 @@
                                 android:id="@+id/imageView3_2"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
+                                android:scaleType="fitXY"
                                 android:src="@drawable/ikon_question_template" />
                         </androidx.cardview.widget.CardView>
 
@@ -336,7 +336,7 @@
                                 android:id="@+id/imageView3_3"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
+                                android:scaleType="fitXY"
                                 android:src="@drawable/ikon_question_template" />
                         </androidx.cardview.widget.CardView>
                     </LinearLayout>
@@ -360,7 +360,7 @@
                                 android:id="@+id/imageView4_1"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
+                                android:scaleType="fitXY"
                                 android:src="@drawable/ikon_question_template" />
                         </androidx.cardview.widget.CardView>
 
@@ -376,7 +376,7 @@
                                 android:id="@+id/imageView4_2"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
+                                android:scaleType="fitXY"
                                 android:src="@drawable/ikon_question_template" />
                         </androidx.cardview.widget.CardView>
 
@@ -392,7 +392,7 @@
                                 android:id="@+id/imageView4_3"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
+                                android:scaleType="fitXY"
                                 android:src="@drawable/ikon_question_template" />
                         </androidx.cardview.widget.CardView>
                     </LinearLayout>

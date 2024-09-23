@@ -5,12 +5,14 @@ public class CategoryClassification {
     private String name;
     private int minVal;
     private int maxVal;
+    private String description;
 
-    public CategoryClassification(String id, String name, int minVal, int maxVal) {
+    public CategoryClassification(String id, String name, int minVal, int maxVal, String description) {
         this.id = id;
         this.name = name;
         this.minVal = minVal;
         this.maxVal = maxVal;
+        this.description = description;
     }
 
     public String getId() {
@@ -43,5 +45,13 @@ public class CategoryClassification {
 
     public void setMaxVal(int maxVal) {
         this.maxVal = maxVal;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
