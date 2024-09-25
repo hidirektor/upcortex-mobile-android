@@ -2,8 +2,15 @@ package me.t3sl4.upcortex.UI.Screens.Exam;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.graphics.Rect;
+import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -18,6 +25,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -158,10 +166,15 @@ public class ExamProcess extends AppCompatActivity {
         ScreenUtil.fullScreenMode(ExamProcess.this);
 
         initializeComponents();
-        processExamData();
-        sortQuestions();
+        if(receivedExam.getExamName().equals("Risk Düzeyi Hesaplama Sınavı")) {
+            //Risk Düzeyi Belirleme Sınavı
+            processExamData();
+            sortQuestions();
 
-        processCurrentCategory();
+            processCurrentCategory();
+        } else {
+            //Normal Sınav
+        }
     }
 
     /**
@@ -938,16 +951,74 @@ public class ExamProcess extends AppCompatActivity {
             selectedImageViews.remove(imageView);
             imageView.setAlpha(1.0f);
             imageView.setTag("unselected");
+            // Remove the circle if deselected
+            imageView.setForeground(null);
+
+            // Update the numbers on the remaining selected images
+            updateSelectedImageNumbers();
         } else {
             // Check if maximum selections have been reached
             if (selectedImageViews.size() < currentQuestion.getCorrectOptionsCount()) {
                 selectedImageViews.add(imageView);
                 imageView.setAlpha(0.5f); // Indicate selection
                 imageView.setTag("selected");
+
+                // Add a circle with the selection number
+                addCircleWithNumber(imageView, selectedImageViews.size());
             } else {
                 // Inform the user that no more selections are allowed
                 Toast.makeText(this, "You can only select " + currentQuestion.getCorrectOptionsCount() + " images.", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    private void addCircleWithNumber(ImageView imageView, int number) {
+        // Use post() to ensure the ImageView dimensions are available
+        imageView.post(() -> {
+            // Create a bitmap for the circle and number with 42x42 size
+            Bitmap bitmap = Bitmap.createBitmap(42, 42, Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+
+            // Set up the paint for the circle (white color)
+            Paint paint = new Paint();
+            paint.setAntiAlias(true);
+            paint.setColor(Color.WHITE);
+            paint.setStyle(Paint.Style.FILL);
+
+            // Draw the circle at the center of the 42x42 ImageView
+            float cx = bitmap.getWidth() / 2f;
+            float cy = bitmap.getHeight() / 2f;
+            float radius = 12;  // Circle radius (21dp = 42dp diameter)
+            canvas.drawCircle(cx, cy, radius, paint);
+
+            // Set up the paint for the text (Roboto Flex font and @color/darkBaseColor)
+            Paint textPaint = new Paint();
+            textPaint.setColor(ContextCompat.getColor(imageView.getContext(), R.color.darkBaseColor));
+            textPaint.setTextSize(6 * imageView.getResources().getDisplayMetrics().density); // Set text size to 12sp
+            textPaint.setTextAlign(Paint.Align.CENTER);
+            textPaint.setAntiAlias(true);
+
+            // Load the Roboto Flex font from resources
+            Typeface typeface = ResourcesCompat.getFont(imageView.getContext(), R.font.roboto_flex);
+            textPaint.setTypeface(typeface);
+
+            // Draw the number at the center of the circle
+            Rect bounds = new Rect();
+            String numberText = String.valueOf(number);
+            textPaint.getTextBounds(numberText, 0, numberText.length(), bounds);
+            float textHeight = bounds.height();
+            canvas.drawText(numberText, cx, cy + textHeight / 2f, textPaint);
+
+            // Set the resulting bitmap as the foreground of the ImageView
+            imageView.setForeground(new BitmapDrawable(imageView.getResources(), bitmap));
+        });
+    }
+
+
+    private void updateSelectedImageNumbers() {
+        for (int i = 0; i < selectedImageViews.size(); i++) {
+            ImageView selectedImageView = selectedImageViews.get(i);
+            addCircleWithNumber(selectedImageView, i + 1); // Update the circle with the new number
         }
     }
 
