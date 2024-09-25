@@ -11,9 +11,9 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 923,
-      "versionName": "1.8.23(923)",
-      "outputFile": "UpCortex release_23-09-2024_v1.8.23(923).apk"
+      "versionCode": 947,
+      "versionName": "1.8.47(947)",
+      "outputFile": "UpCortex release_25-09-2024_v1.8.47(947).apk"
     }
   ],
   "elementType": "File",
@@ -22,14 +22,14 @@
       "minApi": 28,
       "maxApi": 30,
       "baselineProfiles": [
-        "baselineProfiles/1/UpCortex release_23-09-2024_v1.8.23(923).dm"
+        "baselineProfiles/1/UpCortex release_25-09-2024_v1.8.47(947).dm"
       ]
     },
     {
       "minApi": 31,
       "maxApi": 2147483647,
       "baselineProfiles": [
-        "baselineProfiles/0/UpCortex release_23-09-2024_v1.8.23(923).dm"
+        "baselineProfiles/0/UpCortex release_25-09-2024_v1.8.47(947).dm"
       ]
     }
   ],
