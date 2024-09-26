@@ -21,6 +21,7 @@
     <string name="button_exam_start">Sınava Başla</string>
     <string name="button_exam_back">Daha Sonra Tamamla</string>
     <string name="button_exam_answer">Cevapla</string>
+    <string name="button_launch">Lansman Modu</string>
 
     <string name="permission_allow">İzin Ver</string>
     <string name="permission_deny">Şimdilik Reddet</string>

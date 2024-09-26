@@ -2,15 +2,13 @@ package me.t3sl4.upcortex.UI.Screens.Exam;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.graphics.Rect;
-import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -25,7 +23,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -46,6 +43,7 @@ import me.t3sl4.upcortex.Model.Exam.QuestionOption;
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.CircularCountdown.CircularCountdownView;
 import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
+import me.t3sl4.upcortex.Utility.Screen.TextDrawable;
 
 public class ExamProcess extends AppCompatActivity {
     private Exam receivedExam;
@@ -973,44 +971,20 @@ public class ExamProcess extends AppCompatActivity {
     }
 
     private void addCircleWithNumber(ImageView imageView, int number) {
-        // Use post() to ensure the ImageView dimensions are available
         imageView.post(() -> {
-            // Create a bitmap for the circle and number with 42x42 size
-            Bitmap bitmap = Bitmap.createBitmap(42, 42, Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(bitmap);
+            // Çember oluşturma
+            ShapeDrawable circle = new ShapeDrawable(new OvalShape());
+            circle.getPaint().setColor(Color.WHITE);
+            circle.setIntrinsicWidth(24);
+            circle.setIntrinsicHeight(24);
 
-            // Set up the paint for the circle (white color)
-            Paint paint = new Paint();
-            paint.setAntiAlias(true);
-            paint.setColor(Color.WHITE);
-            paint.setStyle(Paint.Style.FILL);
+            // Text oluşturma
+            TextDrawable textDrawable = new TextDrawable(ExamProcess.this, String.valueOf(number), Color.BLACK, 16);
+            LayerDrawable layerDrawable = new LayerDrawable(new Drawable[]{circle, textDrawable});
+            layerDrawable.setLayerInset(1, 10, 10, 10, 10);
 
-            // Draw the circle at the center of the 42x42 ImageView
-            float cx = bitmap.getWidth() / 2f;
-            float cy = bitmap.getHeight() / 2f;
-            float radius = 12;  // Circle radius (21dp = 42dp diameter)
-            canvas.drawCircle(cx, cy, radius, paint);
-
-            // Set up the paint for the text (Roboto Flex font and @color/darkBaseColor)
-            Paint textPaint = new Paint();
-            textPaint.setColor(ContextCompat.getColor(imageView.getContext(), R.color.darkBaseColor));
-            textPaint.setTextSize(6 * imageView.getResources().getDisplayMetrics().density); // Set text size to 12sp
-            textPaint.setTextAlign(Paint.Align.CENTER);
-            textPaint.setAntiAlias(true);
-
-            // Load the Roboto Flex font from resources
-            Typeface typeface = ResourcesCompat.getFont(imageView.getContext(), R.font.roboto_flex);
-            textPaint.setTypeface(typeface);
-
-            // Draw the number at the center of the circle
-            Rect bounds = new Rect();
-            String numberText = String.valueOf(number);
-            textPaint.getTextBounds(numberText, 0, numberText.length(), bounds);
-            float textHeight = bounds.height();
-            canvas.drawText(numberText, cx, cy + textHeight / 2f, textPaint);
-
-            // Set the resulting bitmap as the foreground of the ImageView
-            imageView.setForeground(new BitmapDrawable(imageView.getResources(), bitmap));
+            // Foreground olarak ayarla
+            imageView.setForeground(layerDrawable);
         });
     }
 
@@ -1056,6 +1030,9 @@ public class ExamProcess extends AppCompatActivity {
      * Handles the AnswerButton click by checking user answers based on question type.
      */
     private void handleAnswerButtonClick() {
+        for (ImageView imageView : imageViewList) {
+            imageView.setForeground(null);
+        }
         if (isImageQuestion(currentQuestion)) {
             checkUserImageAnswers(() -> {
                 // Category completed, proceed to next category
