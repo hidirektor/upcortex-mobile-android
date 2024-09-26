@@ -31,6 +31,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -120,14 +121,11 @@ public class ExamProcess extends AppCompatActivity {
     private List<ImageView> imageViewList = new ArrayList<>();
     private List<CardView> cardViewList = new ArrayList<>();
 
+    private List<String> examCategories = new ArrayList<>();
     private List<Question> questionList = new ArrayList<>();
-    private List<Question> shortTermMemoryQuestions = new ArrayList<>();
-    private List<Question> longTermMemoryQuestions = new ArrayList<>();
-    private List<Question> visualMemoryQuestions = new ArrayList<>();
-    private List<Question> proceduralTermMemoryQuestions = new ArrayList<>();
+    private HashMap<String, List<Question>> categoryQuestionsMap = new HashMap<>();
 
     private int currentCategoryIndex = 0; // Current category index
-
     private int currentQuestionIndex = 0; // Current question index
     private Question currentQuestion;
 
@@ -167,7 +165,6 @@ public class ExamProcess extends AppCompatActivity {
 
         initializeComponents();
         processExamData();
-        sortQuestions();
 
         startExamTimer(totalExamTime, () -> {
             showFinalScore();
@@ -298,21 +295,13 @@ public class ExamProcess extends AppCompatActivity {
         if (receivedExam != null && receivedExam.getQuestions() != null) {
             LinkedList<QuestionCategory> categories = receivedExam.getQuestionCategories();
             if (categories != null) {
-                Log.d("ProcessExamData", "Number of categories: " + categories.size());
                 for (QuestionCategory category : categories) {
-                    Log.d("ProcessExamData", "Category: " + category.getName() + ", Order: " + category.getOrder());
                     CategoryInfo info = new CategoryInfo(category.getName(), category.getOrder());
                     categoryInfoList.add(info);
                 }
 
                 // Sort categories based on their order
                 Collections.sort(categoryInfoList, Comparator.comparingInt(CategoryInfo::getOrder));
-
-                // Log sorted categories
-                Log.d("ProcessExamData", "Sorted category list:");
-                for (CategoryInfo info : categoryInfoList) {
-                    Log.d("ProcessExamData", "Category: " + info.getName() + ", Order: " + info.getOrder());
-                }
             } else {
                 Log.d("ProcessExamData", "Categories are null or empty");
             }
@@ -320,16 +309,19 @@ public class ExamProcess extends AppCompatActivity {
             // Count questions per category
             LinkedList<Question> questions = receivedExam.getQuestions();
             if (questions != null) {
-                Log.d("ProcessExamData", "Number of questions: " + questions.size());
                 for (Question question : questions) {
                     String categoryName = question.getCategoryName();
-                    Log.d("ProcessExamData", "Question category: " + categoryName);
                     boolean matched = false;
+
                     for (CategoryInfo info : categoryInfoList) {
                         if (info.getName().trim().equalsIgnoreCase(categoryName.trim())) {
                             info.incrementQuestionCount();
+                            // Add question to the categoryQuestionsMap
+                            if (!categoryQuestionsMap.containsKey(categoryName)) {
+                                categoryQuestionsMap.put(categoryName, new ArrayList<>());
+                            }
+                            categoryQuestionsMap.get(categoryName).add(question);
                             matched = true;
-                            Log.d("ProcessExamData", "Category matched: " + categoryName);
                             break;
                         }
                     }
@@ -340,27 +332,16 @@ public class ExamProcess extends AppCompatActivity {
             } else {
                 Log.d("ProcessExamData", "Questions are null or empty");
             }
+
+            // Ensure that categories with no questions are skipped
+            for (CategoryInfo info : categoryInfoList) {
+                if (info.getQuestionCount() == 0) {
+                    Log.d("ProcessExamData", "No questions available in " + info.getName() + " category.");
+                }
+            }
             displayCategoryInfo();
         } else {
             Log.d("ProcessExamData", "receivedExam or questions are null");
-        }
-    }
-
-    /**
-     * Sorts questions into their respective categories.
-     */
-    private void sortQuestions() {
-        for (Question question : receivedExam.getQuestions()) {
-            String categoryName = question.getCategoryName();
-            if (categoryName.equals("Kısa Süreli Bellek")) {
-                shortTermMemoryQuestions.add(question);
-            } else if (categoryName.equals("Uzun Süreli Bellek")) {
-                longTermMemoryQuestions.add(question);
-            } else if (categoryName.equals("Görsel Bellek")) {
-                visualMemoryQuestions.add(question);
-            } else if (categoryName.equals("İşlemsel Bellek")) {
-                proceduralTermMemoryQuestions.add(question);
-            }
         }
     }
 
@@ -369,6 +350,7 @@ public class ExamProcess extends AppCompatActivity {
      */
     private void displayCategoryInfo() {
         for (CategoryInfo info : categoryInfoList) {
+            examCategories.add(info.getOrder()-1, info.getName());
             Log.d("CategoryInfo", "Category: " + info.getName() +
                     ", Order: " + info.getOrder() +
                     ", Question Count: " + info.getQuestionCount() +
@@ -480,52 +462,29 @@ public class ExamProcess extends AppCompatActivity {
         }
 
         CategoryInfo currentCategory = categoryInfoList.get(currentCategoryIndex);
+
+        // Skip the category if there are no questions
+        if (!categoryQuestionsMap.containsKey(currentCategory.getName()) || categoryQuestionsMap.get(currentCategory.getName()).isEmpty()) {
+            Log.d("ExamProcess", "No questions available in " + currentCategory.getName() + " category. Skipping...");
+            currentCategoryIndex++;
+            processCurrentCategory(); // Proceed to the next category
+            return;
+        }
+
         categoryName.setText(currentCategory.getName());
         categoryOrder.setText(String.valueOf(currentCategory.getOrder()));
 
-        switch (currentCategory.getName()) {
-            case "Kısa Süreli Bellek":
-                imageQuestionLayout.setVisibility(View.VISIBLE);
-                textQuestionLayout.setVisibility(View.GONE);
-                startCategoryExam(shortTermMemoryQuestions, () -> {
-                    // Category completed, proceed to next category
-                    currentCategoryIndex++;
-                    processCurrentCategory();
-                });
-                break;
-            case "Uzun Süreli Bellek":
-                imageQuestionLayout.setVisibility(View.VISIBLE);
-                textQuestionLayout.setVisibility(View.GONE);
-                startCategoryExam(longTermMemoryQuestions, () -> {
-                    // Category completed, proceed to next category
-                    currentCategoryIndex++;
-                    processCurrentCategory();
-                });
-                break;
-            case "Görsel Bellek":
-                imageQuestionLayout.setVisibility(View.VISIBLE);
-                textQuestionLayout.setVisibility(View.GONE);
-                startCategoryExam(visualMemoryQuestions, () -> {
-                    // Category completed, proceed to next category
-                    currentCategoryIndex++;
-                    processCurrentCategory();
-                });
-                break;
-            case "İşlemsel Bellek":
-                imageQuestionLayout.setVisibility(View.GONE);
-                textQuestionLayout.setVisibility(View.VISIBLE);
-                startCategoryExam(proceduralTermMemoryQuestions, () -> {
-                    // Category completed, proceed to next category
-                    currentCategoryIndex++;
-                    processCurrentCategory();
-                });
-                break;
-            default:
-                Log.w("ExamProcess", "Unknown category: " + currentCategory.getName());
-                currentCategoryIndex++;
-                processCurrentCategory();
-                break;
-        }
+        imageQuestionLayout.setVisibility(View.GONE);
+        textQuestionLayout.setVisibility(View.VISIBLE);
+
+        questionList = categoryQuestionsMap.get(examCategories.get(currentCategoryIndex));
+
+        // Soruları döngüyle değil sırayla gösterecek
+        startCategoryExam(questionList, () -> {
+            // Category completed, proceed to next category
+            currentCategoryIndex++;
+            processCurrentCategory();
+        });
     }
 
     /**
@@ -553,20 +512,22 @@ public class ExamProcess extends AppCompatActivity {
      */
     private void displayNextQuestion(List<Question> questionList, CategoryCompletionListener listener) {
         if (currentQuestionIndex >= questionList.size()) {
-            imageQuestionLayout.setVisibility(View.GONE);
-            textQuestionLayout.setVisibility(View.GONE);
             Log.d("ExamProcess", "All questions in " + categoryName.getText().toString() + " category have been completed.");
             listener.onCategoryCompleted();
             return;
         }
 
+        // Mevcut soruyu al
         currentQuestion = questionList.get(currentQuestionIndex);
+
+        // Soru detaylarını göster
         mainText.setText(currentQuestion.getMainText());
         preTextButton.setText(currentQuestion.getPreText());
 
+        // Zorluk modunu ayarla
         difficultyMode(currentQuestion.getDifficulty());
 
-        // Determine if the question is image type or text type
+        // Sorunun görüntü tipi olup olmadığını kontrol et
         boolean isImageQuestion = isImageQuestion(currentQuestion);
 
         if (isImageQuestion) {
@@ -575,14 +536,20 @@ public class ExamProcess extends AppCompatActivity {
             preTextButton.setVisibility(View.VISIBLE);
             answerButton.setVisibility(View.GONE);
             mainText.setVisibility(View.GONE);
-            setupImageQuestion(listener, questionList);
+            setupImageQuestion(() -> {
+                currentQuestionIndex++;
+                displayNextQuestion(questionList, listener);
+            }, questionList);
         } else {
             imageQuestionLayout.setVisibility(View.GONE);
             textQuestionLayout.setVisibility(View.VISIBLE);
             preTextButton.setVisibility(View.GONE);
             answerButton.setVisibility(View.VISIBLE);
             mainText.setVisibility(View.GONE);
-            setupTextQuestion(listener, questionList);
+            setupTextQuestion(() -> {
+                currentQuestionIndex++;
+                displayNextQuestion(questionList, listener);
+            }, questionList);
         }
     }
 
@@ -1217,33 +1184,6 @@ public class ExamProcess extends AppCompatActivity {
             setResult(RESULT_OK, resultIntent); // Send the result back
             finish(); // End activity
         }, 3000); // 3000 milliseconds = 3 seconds
-    }
-
-    /**
-     * Retrieves the current question list based on the current category.
-     *
-     * @return The list of questions for the current category.
-     */
-    private List<Question> getCurrentQuestionList() {
-        if (currentCategoryIndex >= categoryInfoList.size()) {
-            return new ArrayList<>();
-        }
-
-        CategoryInfo currentCategory = categoryInfoList.get(currentCategoryIndex);
-        String categoryName = currentCategory.getName();
-
-        switch (categoryName) {
-            case "Kısa Süreli Bellek":
-                return shortTermMemoryQuestions;
-            case "Uzun Süreli Bellek":
-                return longTermMemoryQuestions;
-            case "Görsel Bellek":
-                return visualMemoryQuestions;
-            case "İşlemsel Bellek":
-                return proceduralTermMemoryQuestions;
-            default:
-                return new ArrayList<>();
-        }
     }
 
     /**

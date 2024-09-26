@@ -11,9 +11,9 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 952,
-      "versionName": "1.8.52(952)",
-      "outputFile": "UpCortex release_26-09-2024_v1.8.52(952).apk"
+      "versionCode": 998,
+      "versionName": "1.8.98(998)",
+      "outputFile": "UpCortex release_27-09-2024_v1.8.98(998).apk"
     }
   ],
   "elementType": "File",
@@ -22,14 +22,14 @@
       "minApi": 28,
       "maxApi": 30,
       "baselineProfiles": [
-        "baselineProfiles/1/UpCortex release_26-09-2024_v1.8.52(952).dm"
+        "baselineProfiles/1/UpCortex release_27-09-2024_v1.8.98(998).dm"
       ]
     },
     {
       "minApi": 31,
       "maxApi": 2147483647,
       "baselineProfiles": [
-        "baselineProfiles/0/UpCortex release_26-09-2024_v1.8.52(952).dm"
+        "baselineProfiles/0/UpCortex release_27-09-2024_v1.8.98(998).dm"
       ]
     }
   ],
