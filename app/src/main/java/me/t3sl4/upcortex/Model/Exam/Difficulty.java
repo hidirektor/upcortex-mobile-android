@@ -10,5 +10,8 @@ public enum Difficulty {
     MEDIUM,
 
     @SerializedName("hard")
-    HARD
+    HARD,
+
+    @SerializedName("none")
+    NONE
 }

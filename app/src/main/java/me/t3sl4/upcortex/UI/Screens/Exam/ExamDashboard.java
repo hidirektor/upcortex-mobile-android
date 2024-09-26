@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -149,7 +148,6 @@ public class ExamDashboard extends AppCompatActivity {
         generalExamResult.setText(generalName);
         generalExamDesc.setText(generalDesc);
         currentExamGeneralStat.setPercent(generalPoint, 2000L, () -> {
-            Toast.makeText(this, "Hız güncellendi!", Toast.LENGTH_SHORT).show();
             return null;
         });
         generalExamDiagnose.setVisibility(View.GONE);

@@ -108,8 +108,11 @@ public class ExamProcess extends AppCompatActivity {
     private TextView option4Text;
     private ImageView option4Tick;
 
+    private LinearLayout difficultyLinearLayout;
+
     private long questionTime = 4000; // 4 seconds for displaying the question
     private long answerTime = 4000;   // 4 seconds for answering
+    private long totalExamTime = 30 * 60 * 1000;
     private boolean answerTimerVal = false;
 
     private List<CategoryInfo> categoryInfoList = new ArrayList<>();
@@ -137,6 +140,7 @@ public class ExamProcess extends AppCompatActivity {
     // Timers
     private CountDownTimer questionTimer;
     private CountDownTimer answerTimer;
+    private CountDownTimer examTimer;
     private boolean hasAnswered = false; // Flag to check if user has answered
     private boolean isAnswerPhase = false; // Flag to determine the current phase
 
@@ -172,6 +176,7 @@ public class ExamProcess extends AppCompatActivity {
             processCurrentCategory();
         } else {
             //Normal Sınav
+            setupNormalExam();
         }
     }
 
@@ -270,6 +275,8 @@ public class ExamProcess extends AppCompatActivity {
         option4Layout = findViewById(R.id.option4Layout);
         option4Text = findViewById(R.id.option4Text);
         option4Tick = findViewById(R.id.option4Tick);
+
+        difficultyLinearLayout = findViewById(R.id.difficultyLinearLayout);
 
         // Initially hide answerButton and mainText for image questions
         answerButton.setVisibility(View.GONE);
@@ -410,6 +417,69 @@ public class ExamProcess extends AppCompatActivity {
     private void setStarColor(ImageView star, int colorResId) {
         int color = ContextCompat.getColor(this, colorResId);
         star.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN));
+    }
+
+
+    private void setupNormalExam() {
+        // Zorluk seviyesi layout'unu gizle
+        difficultyLinearLayout.setVisibility(View.GONE); // Zorluk seviyesi layout'unu gizle
+
+        // preTextButton'u gizle
+        preTextButton.setVisibility(View.GONE); // preTextButton'u gizle
+
+        // Text question layoutunu görünür yap
+        textQuestionLayout.setVisibility(View.VISIBLE);
+        imageQuestionLayout.setVisibility(View.GONE);
+
+        // Seçenekleri sıfırla
+        resetOptions(); // Seçenekleri temizle
+
+        // Sınav verilerini al
+        Question question = receivedExam.getQuestions().get(currentQuestionIndex); // Genel sınav sayacı
+
+        // Soru numarasını ekrana yazdır
+        questionNumber.setText("Soru: " + (currentQuestionIndex + 1)); // Sınavda kaçıncı soruda olduğunuzu gösterir.
+
+        // mainText'i göster ve kullanıcıya soruyu sun
+        mainQuestionText.setText(question.getMainText());
+
+        // Seçenekleri doldurun
+        List<QuestionOption> options = question.getQuestionOptions();
+        if (options.size() >= 4) {
+            option1Text.setText(options.get(0).getText());
+            option2Text.setText(options.get(1).getText());
+            option3Text.setText(options.get(2).getText());
+            option4Text.setText(options.get(3).getText());
+        }
+
+        // Genel sınav zamanlayıcısını başlat
+        startExamTimer(totalExamTime);
+
+        // Zamanlayıcı başlat
+        startQuestionTimer(questionTime, () -> {
+            // Zamanlayıcı bittiğinde cevaplama süresi başlasın
+            startAnswerTimer(answerTime, () -> {
+                // Kullanıcı cevap vermediyse
+
+            });
+        });
+    }
+
+    private void startExamTimer(long duration) {
+        examTimer = new CountDownTimer(duration, 1000) {
+            public void onTick(long millisUntilFinished) {
+                // Kalan zamanı göster (örneğin bir TextView'de)
+                long minutes = (millisUntilFinished / 1000) / 60;
+                long seconds = (millisUntilFinished / 1000) % 60;
+                Log.d("ExamTimer", "Kalan süre: " + minutes + ":" + seconds);
+            }
+
+            public void onFinish() {
+                // Zaman doldu, sınavı bitir
+                Log.d("ExamTimer", "Sınav süresi doldu.");
+                showFinalScore(); // Son puanları göster
+            }
+        }.start();
     }
 
     // Listener Interfaces
@@ -1001,16 +1071,44 @@ public class ExamProcess extends AppCompatActivity {
      */
     private void setupTextOptionClickListeners() {
         // Option1
-        option1Layout.setOnClickListener(view -> toggleTextOption(option1Tick));
+        option1Layout.setOnClickListener(view -> {
+            toggleTextOption(option1Tick);
+            resetOtherOptions(option1Tick); // Diğer seçenekleri sıfırla
+        });
 
         // Option2
-        option2Layout.setOnClickListener(view -> toggleTextOption(option2Tick));
+        option2Layout.setOnClickListener(view -> {
+            toggleTextOption(option2Tick);
+            resetOtherOptions(option2Tick); // Diğer seçenekleri sıfırla
+        });
 
         // Option3
-        option3Layout.setOnClickListener(view -> toggleTextOption(option3Tick));
+        option3Layout.setOnClickListener(view -> {
+            toggleTextOption(option3Tick);
+            resetOtherOptions(option3Tick); // Diğer seçenekleri sıfırla
+        });
 
         // Option4
-        option4Layout.setOnClickListener(view -> toggleTextOption(option4Tick));
+        option4Layout.setOnClickListener(view -> {
+            toggleTextOption(option4Tick);
+            resetOtherOptions(option4Tick); // Diğer seçenekleri sıfırla
+        });
+    }
+
+    private void resetOtherOptions(ImageView selectedOptionTick) {
+        // Diğer tüm seçeneklerin işaretini kaldır
+        if (selectedOptionTick != option1Tick) {
+            option1Tick.setVisibility(View.INVISIBLE);
+        }
+        if (selectedOptionTick != option2Tick) {
+            option2Tick.setVisibility(View.INVISIBLE);
+        }
+        if (selectedOptionTick != option3Tick) {
+            option3Tick.setVisibility(View.INVISIBLE);
+        }
+        if (selectedOptionTick != option4Tick) {
+            option4Tick.setVisibility(View.INVISIBLE);
+        }
     }
 
     /**
