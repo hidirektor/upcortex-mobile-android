@@ -57,6 +57,7 @@ public class ExamProcess extends AppCompatActivity {
     private TextView categoryOrder;
     private TextView categoryName;
     private CircularCountdownView circularCountdownView;
+    private CircularCountdownView examCountdownView;
 
     private Button preTextButton;
     private Button answerButton;
@@ -111,9 +112,7 @@ public class ExamProcess extends AppCompatActivity {
     private LinearLayout difficultyLinearLayout;
 
     private long questionTime = 4000; // 4 seconds for displaying the question
-    private long answerTime = 4000;   // 4 seconds for answering
     private long totalExamTime = 30 * 60 * 1000;
-    private boolean answerTimerVal = false;
 
     private List<CategoryInfo> categoryInfoList = new ArrayList<>();
     private int examPoint = 0;
@@ -139,7 +138,6 @@ public class ExamProcess extends AppCompatActivity {
 
     // Timers
     private CountDownTimer questionTimer;
-    private CountDownTimer answerTimer;
     private CountDownTimer examTimer;
     private boolean hasAnswered = false; // Flag to check if user has answered
     private boolean isAnswerPhase = false; // Flag to determine the current phase
@@ -168,16 +166,14 @@ public class ExamProcess extends AppCompatActivity {
         ScreenUtil.fullScreenMode(ExamProcess.this);
 
         initializeComponents();
-        if(receivedExam.getExamName().equals("Risk Düzeyi Hesaplama Sınavı")) {
-            //Risk Düzeyi Belirleme Sınavı
-            processExamData();
-            sortQuestions();
+        processExamData();
+        sortQuestions();
 
-            processCurrentCategory();
-        } else {
-            //Normal Sınav
-            setupNormalExam();
-        }
+        startExamTimer(totalExamTime, () -> {
+            showFinalScore();
+        });
+
+        processCurrentCategory();
     }
 
     /**
@@ -194,6 +190,7 @@ public class ExamProcess extends AppCompatActivity {
         categoryOrder = findViewById(R.id.categoryOrder);
         categoryName = findViewById(R.id.categoryName);
         circularCountdownView = findViewById(R.id.circularCountdownView);
+        examCountdownView = findViewById(R.id.examCountdownView);
 
         // Initialize Buttons and Main Text
         preTextButton = findViewById(R.id.preTextButton);
@@ -419,69 +416,6 @@ public class ExamProcess extends AppCompatActivity {
         star.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN));
     }
 
-
-    private void setupNormalExam() {
-        // Zorluk seviyesi layout'unu gizle
-        difficultyLinearLayout.setVisibility(View.GONE); // Zorluk seviyesi layout'unu gizle
-
-        // preTextButton'u gizle
-        preTextButton.setVisibility(View.GONE); // preTextButton'u gizle
-
-        // Text question layoutunu görünür yap
-        textQuestionLayout.setVisibility(View.VISIBLE);
-        imageQuestionLayout.setVisibility(View.GONE);
-
-        // Seçenekleri sıfırla
-        resetOptions(); // Seçenekleri temizle
-
-        // Sınav verilerini al
-        Question question = receivedExam.getQuestions().get(currentQuestionIndex); // Genel sınav sayacı
-
-        // Soru numarasını ekrana yazdır
-        questionNumber.setText("Soru: " + (currentQuestionIndex + 1)); // Sınavda kaçıncı soruda olduğunuzu gösterir.
-
-        // mainText'i göster ve kullanıcıya soruyu sun
-        mainQuestionText.setText(question.getMainText());
-
-        // Seçenekleri doldurun
-        List<QuestionOption> options = question.getQuestionOptions();
-        if (options.size() >= 4) {
-            option1Text.setText(options.get(0).getText());
-            option2Text.setText(options.get(1).getText());
-            option3Text.setText(options.get(2).getText());
-            option4Text.setText(options.get(3).getText());
-        }
-
-        // Genel sınav zamanlayıcısını başlat
-        startExamTimer(totalExamTime);
-
-        // Zamanlayıcı başlat
-        startQuestionTimer(questionTime, () -> {
-            // Zamanlayıcı bittiğinde cevaplama süresi başlasın
-            startAnswerTimer(answerTime, () -> {
-                // Kullanıcı cevap vermediyse
-
-            });
-        });
-    }
-
-    private void startExamTimer(long duration) {
-        examTimer = new CountDownTimer(duration, 1000) {
-            public void onTick(long millisUntilFinished) {
-                // Kalan zamanı göster (örneğin bir TextView'de)
-                long minutes = (millisUntilFinished / 1000) / 60;
-                long seconds = (millisUntilFinished / 1000) % 60;
-                Log.d("ExamTimer", "Kalan süre: " + minutes + ":" + seconds);
-            }
-
-            public void onFinish() {
-                // Zaman doldu, sınavı bitir
-                Log.d("ExamTimer", "Sınav süresi doldu.");
-                showFinalScore(); // Son puanları göster
-            }
-        }.start();
-    }
-
     // Listener Interfaces
     interface CountdownListener {
         void onCountdownFinished();
@@ -516,24 +450,18 @@ public class ExamProcess extends AppCompatActivity {
         }.start();
     }
 
-    /**
-     * Starts the answer phase countdown.
-     *
-     * @param duration The duration of the countdown in milliseconds.
-     * @param listener The listener to invoke when the countdown finishes.
-     */
-    private void startAnswerTimer(long duration, CountdownListener listener) {
-        if (answerTimer != null) {
-            answerTimer.cancel();
+    private void startExamTimer(long duration, CountdownListener listener) {
+        if (examTimer != null) {
+            examTimer.cancel();
         }
 
-        answerTimer = new CountDownTimer(duration, 1000) {
+        examTimer = new CountDownTimer(duration, 1000) {
             public void onTick(long millisUntilFinished) {
-                circularCountdownView.setRemainingTime(millisUntilFinished);
+                examCountdownView.setRemainingTime(millisUntilFinished);
             }
 
             public void onFinish() {
-                circularCountdownView.setRemainingTime(0);
+                examCountdownView.setRemainingTime(0);
                 if (listener != null) {
                     listener.onCountdownFinished();
                 }
@@ -756,19 +684,6 @@ public class ExamProcess extends AppCompatActivity {
             for (ImageView imageView : imageViewList) {
                 imageView.setClickable(true);
             }
-
-            // Start the answer timer (e.g., 4 seconds)
-            if (answerTimerVal) {
-                startAnswerTimer(answerTime, () -> {
-                    if (!hasAnswered) {
-                        Log.d("ExamProcess", "User did not answer in time. Awarding 0 points.");
-                        Toast.makeText(this, "Süre doldu! Puan verilmedi.", Toast.LENGTH_SHORT).show();
-                        // Move to the next question without awarding points
-                        currentQuestionIndex++;
-                        displayNextQuestion(questionList, listener);
-                    }
-                });
-            }
         });
     }
 
@@ -814,16 +729,6 @@ public class ExamProcess extends AppCompatActivity {
         option2Tick.setVisibility(View.INVISIBLE);
         option3Tick.setVisibility(View.INVISIBLE);
         option4Tick.setVisibility(View.INVISIBLE);
-
-        // Start the answer timer (e.g., 4 seconds)
-        startAnswerTimer(answerTime, () -> {
-            if (!hasAnswered) {
-                Log.d("ExamProcess", "User did not answer in time. Awarding 0 points.");
-                // Move to the next question without awarding points
-                currentQuestionIndex++;
-                displayNextQuestion(questionList, listener);
-            }
-        });
     }
 
     /**
@@ -979,10 +884,10 @@ public class ExamProcess extends AppCompatActivity {
      * @param visibility The desired visibility (e.g., View.VISIBLE, View.GONE).
      */
     private void changeImageVisibility(int visibility) {
-       for(int i=0; i<imageViewList.size(); i++) {
-           imageViewList.get(i).setVisibility(visibility);
-           cardViewList.get(i).setVisibility(visibility);
-       }
+        for(int i=0; i<imageViewList.size(); i++) {
+            imageViewList.get(i).setVisibility(visibility);
+            cardViewList.get(i).setVisibility(visibility);
+        }
         Log.d("ChangeImageVisibility", "All ImageViews visibility set to: " + visibility);
     }
 
@@ -1155,11 +1060,6 @@ public class ExamProcess extends AppCompatActivity {
         // User has answered
         hasAnswered = true;
 
-        // Cancel the answer timer as the user has responded
-        if (answerTimer != null) {
-            answerTimer.cancel();
-        }
-
         // Collect selected contentDescriptions
         List<String> selectedAnswers = new ArrayList<>();
         for (ImageView imageView : selectedImageViews) {
@@ -1221,11 +1121,6 @@ public class ExamProcess extends AppCompatActivity {
      */
     private void checkUserTextAnswers(CategoryCompletionListener listener) {
         hasAnswered = true;
-
-        // Cancel the answer timer as the user has responded
-        if (answerTimer != null) {
-            answerTimer.cancel();
-        }
 
         // Kullanıcının seçtiği seçenekleri kontrol et
         List<QuestionOption> options = currentQuestion.getQuestionOptions();
@@ -1324,7 +1219,6 @@ public class ExamProcess extends AppCompatActivity {
         }, 3000); // 3000 milliseconds = 3 seconds
     }
 
-
     /**
      * Retrieves the current question list based on the current category.
      *
@@ -1361,8 +1255,8 @@ public class ExamProcess extends AppCompatActivity {
         if (questionTimer != null) {
             questionTimer.cancel();
         }
-        if (answerTimer != null) {
-            answerTimer.cancel();
+        if (examTimer != null) {
+            examTimer.cancel();
         }
         handler.removeCallbacksAndMessages(null);
     }
