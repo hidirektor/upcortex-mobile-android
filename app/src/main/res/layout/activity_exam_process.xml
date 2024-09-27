@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightBaseColor"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -117,11 +117,10 @@
         <LinearLayout
             android:id="@+id/questionHeader"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:orientation="horizontal"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginTop="12dp"
             app:layout_constraintTop_toBottomOf="@id/seperator">
             <LinearLayout
                 android:layout_width="0dp"
@@ -164,16 +163,16 @@
             </LinearLayout>
             <me.t3sl4.upcortex.UI.Components.CircularCountdown.CircularCountdownView
                 android:id="@+id/circularCountdownView"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
                 app:progressColor="@color/ratingColor"
                 app:backgroundColor="@color/membershipButtonColor"
                 app:progressTextColor="@color/ratingColor"
                 app:remainingTimeTextColor="@color/ratingColor"
-                app:progressTextSize="16sp"
-                app:remainingTimeTextSize="22sp"
-                app:strokeWidth="8dp"
+                app:progressTextSize="8sp"
+                app:remainingTimeTextSize="12sp"
+                app:strokeWidth="2dp"
                 app:progressText="Test"
                 app:preProgressText="false"
                 app:duration="10000"
@@ -187,7 +186,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="16dp"
+            android:fillViewport="true"
             android:layout_marginRight="4dp"
             android:layout_marginLeft="4dp"
             app:layout_constraintTop_toBottomOf="@+id/questionHeader"
@@ -203,7 +202,7 @@
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="16dp"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" >
@@ -468,16 +467,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_marginEnd="12dp"
-                        android:layout_marginBottom="16dp"
-                        android:layout_gravity="start"
+                        android:layout_gravity="start|center_vertical"
                         android:background="@drawable/background_circle_category_count_light">
                         <TextView
                             android:id="@+id/questionOrder"
@@ -487,7 +485,7 @@
                             android:fontFamily="@font/roboto_flex"
                             android:textColor="@color/ratingColor"
                             android:textStyle="bold"
-                            android:textSize="16sp"
+                            android:textSize="12sp"
                             android:gravity="start"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -500,7 +498,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Kısa Süreli Bellek"
-                        android:textSize="22sp"
+                        android:textSize="18sp"
                         android:textColor="@color/darkBaseColor"
                         android:fontFamily="@font/roboto_flex"
                         android:gravity="center"
@@ -512,7 +510,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Kısa Süreli Bellek"
-                        android:textSize="18sp"
+                        android:textSize="14sp"
                         android:textColor="@color/darkBaseColor"
                         android:fontFamily="@font/roboto_flex"
                         android:gravity="center"
@@ -534,17 +532,17 @@
                         <LinearLayout
                             android:id="@+id/option1Layout"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="50dp"
                             android:orientation="horizontal"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"
                             android:padding="14dp"
-                            android:layout_marginBottom="12dp"
+                            android:layout_marginBottom="4dp"
                             android:background="@drawable/background_question_options">
                             <androidx.constraintlayout.widget.ConstraintLayout
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_gravity="start"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:layout_gravity="start|center"
                                 android:background="@drawable/background_circle_category_count_light">
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -553,7 +551,7 @@
                                     android:fontFamily="@font/roboto_flex"
                                     android:textColor="@color/ratingColor"
                                     android:textStyle="bold"
-                                    android:textSize="16sp"
+                                    android:textSize="8sp"
                                     android:gravity="start"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -591,17 +589,17 @@
                         <LinearLayout
                             android:id="@+id/option2Layout"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="50dp"
                             android:orientation="horizontal"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"
                             android:padding="14dp"
-                            android:layout_marginBottom="12dp"
+                            android:layout_marginBottom="4dp"
                             android:background="@drawable/background_question_options">
                             <androidx.constraintlayout.widget.ConstraintLayout
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_gravity="start"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:layout_gravity="start|center"
                                 android:background="@drawable/background_circle_category_count_light">
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -610,7 +608,7 @@
                                     android:fontFamily="@font/roboto_flex"
                                     android:textColor="@color/ratingColor"
                                     android:textStyle="bold"
-                                    android:textSize="16sp"
+                                    android:textSize="8sp"
                                     android:gravity="start"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -648,17 +646,17 @@
                         <LinearLayout
                             android:id="@+id/option3Layout"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="50dp"
                             android:orientation="horizontal"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"
                             android:padding="14dp"
-                            android:layout_marginBottom="12dp"
+                            android:layout_marginBottom="4dp"
                             android:background="@drawable/background_question_options">
                             <androidx.constraintlayout.widget.ConstraintLayout
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_gravity="start"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:layout_gravity="start|center"
                                 android:background="@drawable/background_circle_category_count_light">
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -667,7 +665,7 @@
                                     android:fontFamily="@font/roboto_flex"
                                     android:textColor="@color/ratingColor"
                                     android:textStyle="bold"
-                                    android:textSize="16sp"
+                                    android:textSize="8sp"
                                     android:gravity="start"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -705,17 +703,17 @@
                         <LinearLayout
                             android:id="@+id/option4Layout"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="50dp"
                             android:orientation="horizontal"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"
                             android:padding="14dp"
-                            android:layout_marginBottom="12dp"
+                            android:layout_marginBottom="4dp"
                             android:background="@drawable/background_question_options">
                             <androidx.constraintlayout.widget.ConstraintLayout
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_gravity="start"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:layout_gravity="start|center"
                                 android:background="@drawable/background_circle_category_count_light">
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -724,7 +722,7 @@
                                     android:fontFamily="@font/roboto_flex"
                                     android:textColor="@color/ratingColor"
                                     android:textStyle="bold"
-                                    android:textSize="16sp"
+                                    android:textSize="8sp"
                                     android:gravity="start"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
