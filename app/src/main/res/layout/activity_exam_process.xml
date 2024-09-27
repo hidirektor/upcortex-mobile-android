@@ -472,6 +472,8 @@
                         android:textSize="22sp"
                         android:textColor="@color/darkBaseColor"
                         android:fontFamily="@font/roboto_flex"
+                        android:gravity="center"
+                        android:textAlignment="center"
                         android:layout_gravity="center"/>
 
                     <TextView
@@ -482,6 +484,8 @@
                         android:textSize="18sp"
                         android:textColor="@color/darkBaseColor"
                         android:fontFamily="@font/roboto_flex"
+                        android:gravity="center"
+                        android:textAlignment="center"
                         android:layout_gravity="center"/>
 
                     <ImageView
