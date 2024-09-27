@@ -25624,12 +25624,10 @@ com.google.gson.JsonArray:
     public byte getAsByte()
     public char getAsCharacter()
     public double getAsDouble()
-    public float getAsFloat()
     public int getAsInt()
     public long getAsLong()
     public java.lang.Number getAsNumber()
     public short getAsShort()
-    private com.google.gson.JsonElement getAsSingleElement()
     public java.lang.String getAsString()
     public boolean isEmpty()
     public com.google.gson.JsonElement remove(int)
@@ -25646,7 +25644,6 @@ com.google.gson.JsonElement:
     public byte getAsByte()
     public char getAsCharacter()
     public double getAsDouble()
-    public float getAsFloat()
     public int getAsInt()
     public com.google.gson.JsonNull getAsJsonNull()
     public long getAsLong()
@@ -25687,7 +25684,6 @@ com.google.gson.JsonPrimitive:
     public byte getAsByte()
     public char getAsCharacter()
     public double getAsDouble()
-    public float getAsFloat()
     public int getAsInt()
     public long getAsLong()
     public short getAsShort()
@@ -48130,12 +48126,12 @@ com.google.gson.GsonBuilder:
 com.google.gson.InstanceCreator
 com.google.gson.JsonArray:
     public final void add(com.google.gson.JsonElement)
+    public static com.google.gson.JsonElement getAsSingleElement()
 com.google.gson.JsonDeserializationContext
 com.google.gson.JsonDeserializer
 com.google.gson.JsonElement:
     public abstract com.google.gson.JsonArray getAsJsonArray()
     public abstract com.google.gson.JsonObject getAsJsonObject()
-    public final com.google.gson.JsonPrimitive getAsJsonPrimitive()
     public abstract boolean isJsonArray()
     public abstract boolean isJsonNull()
     public abstract boolean isJsonObject()

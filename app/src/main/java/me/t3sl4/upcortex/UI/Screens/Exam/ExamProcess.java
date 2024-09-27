@@ -129,7 +129,7 @@ public class ExamProcess extends AppCompatActivity {
     private long totalExamTime = 30 * 60 * 1000;
 
     private List<CategoryInfo> categoryInfoList = new ArrayList<>();
-    private int examPoint = 0;
+    private float examPoint = 0;
 
     private List<ImageView> imageViewList = new ArrayList<>();
     private List<CardView> cardViewList = new ArrayList<>();
@@ -1338,7 +1338,13 @@ public class ExamProcess extends AppCompatActivity {
 
             // Prepare the updated categoryInfoList as JSON
             Gson gson = new Gson();
-            String updatedCategoryListJson = gson.toJson(categoryInfoList);
+            String updatedCategoryListJson;
+            if(!isNormalExam) {
+                updatedCategoryListJson = gson.toJson(categoryInfoList);
+            } else {
+                updatedCategoryListJson = gson.toJson(examPoint);
+            }
+            Log.d("Sonuç Test", updatedCategoryListJson);
 
             Intent resultIntent = new Intent();
             resultIntent.putExtra("updatedCategoryListJson", updatedCategoryListJson);

@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -129,7 +131,7 @@ public class ExamDashboard extends AppCompatActivity {
         }
     }
 
-    private void loadExamStats(HashMap<String, Float> categoryPoints, int generalPoint, Exam currentExam) {
+    private void loadExamStats(HashMap<String, Float> categoryPoints, float generalPoint, Exam currentExam) {
         List<String> categoryList = new ArrayList<>();
         List<Float> percentList = new ArrayList<>();
 
@@ -147,7 +149,7 @@ public class ExamDashboard extends AppCompatActivity {
         currentExamPercent.setText("% " + generalPoint);
         generalExamResult.setText(generalName);
         generalExamDesc.setText(generalDesc);
-        currentExamGeneralStat.setPercent(generalPoint, 2000L, () -> {
+        currentExamGeneralStat.setPercent((int) generalPoint, 2000L, () -> {
             return null;
         });
         generalExamDiagnose.setVisibility(View.GONE);
@@ -216,16 +218,20 @@ public class ExamDashboard extends AppCompatActivity {
             if (data != null) {
                 String updatedCategoryListJson = data.getStringExtra("updatedCategoryListJson");
                 if (updatedCategoryListJson != null) {
-                    Gson gson = new Gson();
-                    CategoryInfo[] updatedCategoryList = gson.fromJson(updatedCategoryListJson, CategoryInfo[].class);
-
                     HashMap<String, Float> categoryPoints = new HashMap<>();
-                    int generalPoint = 0;
+                    float generalPoint = 0;
 
-                    // Update the general point and category points from the list
-                    for (CategoryInfo currentInfo : updatedCategoryList) {
-                        categoryPoints.put(currentInfo.getName(), currentInfo.getUserPoint());
-                        generalPoint += currentInfo.getUserPoint(); // Sum up the points for a general score
+                    Gson gson = new Gson();
+                    if(parseFloatFromJson(updatedCategoryListJson) != null) {
+                        generalPoint = parseFloatFromJson(updatedCategoryListJson);
+                    } else {
+                        CategoryInfo[] updatedCategoryList = gson.fromJson(updatedCategoryListJson, CategoryInfo[].class);
+
+                        // Update the general point and category points from the list
+                        for (CategoryInfo currentInfo : updatedCategoryList) {
+                            categoryPoints.put(currentInfo.getName(), currentInfo.getUserPoint());
+                            generalPoint += currentInfo.getUserPoint(); // Sum up the points for a general score
+                        }
                     }
 
                     loadExamStats(categoryPoints, generalPoint, receivedExam); // Assuming loadExamStats uses the category points and general point
@@ -237,5 +243,24 @@ public class ExamDashboard extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    public static Float parseFloatFromJson(String jsonString) {
+        Gson gson = new Gson();
+        try {
+            // JSON stringini bir JsonElement'e çevir
+            JsonElement jsonElement = gson.fromJson(jsonString, JsonElement.class);
+
+            // Eğer JsonElement bir sayıysa ve float'a dönüştürülebiliyorsa döndür
+            if (jsonElement.isJsonPrimitive() && jsonElement.getAsJsonPrimitive().isNumber()) {
+                return jsonElement.getAsFloat();
+            }
+        } catch (JsonSyntaxException e) {
+            // JSON formatı hatalıysa
+            e.printStackTrace();
+        }
+
+        // Eğer float bir sayı bulunmazsa veya format hatalıysa null döner
+        return null;
     }
 }
