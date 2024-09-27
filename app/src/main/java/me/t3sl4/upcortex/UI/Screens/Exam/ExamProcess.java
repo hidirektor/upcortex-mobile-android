@@ -419,8 +419,8 @@ public class ExamProcess extends AppCompatActivity {
             String senaryoBaslangic = "Senaryo: ";
             String problemBaslangic = "Problemin Tanımı:";
 
-            String senaryoKismi = gelenString.substring(gelenString.indexOf(senaryoBaslangic) + senaryoBaslangic.length(), gelenString.indexOf(problemBaslangic)).trim();
-            String problemKismi = gelenString.substring(gelenString.indexOf(problemBaslangic) + problemBaslangic.length()).trim();
+            String senaryoKismi = gelenString.substring(gelenString.indexOf(senaryoBaslangic) + senaryoBaslangic.length(), gelenString.indexOf(problemBaslangic)).trim().replaceAll("[\\\\r\\\\n]+", "");
+            String problemKismi = gelenString.substring(gelenString.indexOf(problemBaslangic) + problemBaslangic.length()).trim().replaceAll("[\\\\r\\\\n]+", "");
 
             examScenerio.setText(senaryoKismi);
             examScenerioDesc.setText(problemKismi);
@@ -635,6 +635,10 @@ public class ExamProcess extends AppCompatActivity {
         preTextButton.setText(currentQuestion.getPreText());
         if(currentQuestion.getSubText() != null || !currentQuestion.getSubText().isEmpty()) {
             subText.setText(currentQuestion.getSubText());
+        }
+
+        if(receivedExam.getExamName().equals("Metin Anlama Testi")) {
+            categoryName.setText(currentQuestion.getCategoryName());
         }
 
         // Zorluk modunu ayarla
