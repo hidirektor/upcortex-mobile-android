@@ -11,9 +11,9 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 1084,
-      "versionName": "1.9.84(1084)",
-      "outputFile": "DinamikBeyin release_27-09-2024_v1.9.84(1084).apk"
+      "versionCode": 1085,
+      "versionName": "1.9.85(1085)",
+      "outputFile": "DinamikBeyin release_27-09-2024_v1.9.85(1085).apk"
     }
   ],
   "elementType": "File",
@@ -22,14 +22,14 @@
       "minApi": 28,
       "maxApi": 30,
       "baselineProfiles": [
-        "baselineProfiles/1/DinamikBeyin release_27-09-2024_v1.9.84(1084).dm"
+        "baselineProfiles/1/DinamikBeyin release_27-09-2024_v1.9.85(1085).dm"
       ]
     },
     {
       "minApi": 31,
       "maxApi": 2147483647,
       "baselineProfiles": [
-        "baselineProfiles/0/DinamikBeyin release_27-09-2024_v1.9.84(1084).dm"
+        "baselineProfiles/0/DinamikBeyin release_27-09-2024_v1.9.85(1085).dm"
       ]
     }
   ],
