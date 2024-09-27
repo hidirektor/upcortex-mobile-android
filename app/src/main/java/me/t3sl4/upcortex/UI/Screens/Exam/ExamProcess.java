@@ -64,6 +64,7 @@ public class ExamProcess extends AppCompatActivity {
     private Button answerButton;
     private TextView mainText;
     private TextView subText;
+    private ImageView subImage;
 
     private LinearLayout imageQuestionLayout;
 
@@ -110,6 +111,11 @@ public class ExamProcess extends AppCompatActivity {
     private LinearLayout option4Layout;
     private TextView option4Text;
     private ImageView option4Tick;
+
+    private ImageView option1Image;
+    private ImageView option2Image;
+    private ImageView option3Image;
+    private ImageView option4Image;
 
     private LinearLayout difficultyLinearLayout;
     private LinearLayout difficultyLayout;
@@ -202,6 +208,7 @@ public class ExamProcess extends AppCompatActivity {
         answerButton = findViewById(R.id.answerButton);
         mainText = findViewById(R.id.mainText);
         subText = findViewById(R.id.subText);
+        subImage = findViewById(R.id.subImage);
 
         // Initialize Image Question Layout
         imageQuestionLayout = findViewById(R.id.imageQuestionLayout);
@@ -278,6 +285,11 @@ public class ExamProcess extends AppCompatActivity {
         option4Layout = findViewById(R.id.option4Layout);
         option4Text = findViewById(R.id.option4Text);
         option4Tick = findViewById(R.id.option4Tick);
+
+        option1Image = findViewById(R.id.option1Image);
+        option2Image = findViewById(R.id.option2Image);
+        option3Image = findViewById(R.id.option3Image);
+        option4Image = findViewById(R.id.option4Image);
 
         difficultyLinearLayout = findViewById(R.id.difficultyLinearLayout);
         difficultyLayout = findViewById(R.id.difficultyLayout);
@@ -532,6 +544,7 @@ public class ExamProcess extends AppCompatActivity {
 
         imageQuestionLayout.setVisibility(View.GONE);
         textQuestionLayout.setVisibility(View.VISIBLE);
+        categoryName.setText(questionList.get(0).getCategoryName());
 
         // Soruları sırayla gösterecek
         startCategoryExam(questionList, () -> {
@@ -586,15 +599,29 @@ public class ExamProcess extends AppCompatActivity {
         boolean isImageQuestion = isImageQuestion(currentQuestion);
 
         if (isImageQuestion) {
-            imageQuestionLayout.setVisibility(View.VISIBLE);
-            textQuestionLayout.setVisibility(View.GONE);
-            preTextButton.setVisibility(View.VISIBLE);
-            answerButton.setVisibility(View.GONE);
-            mainText.setVisibility(View.GONE);
-            setupImageQuestion(() -> {
-                currentQuestionIndex++;
-                displayNextQuestion(questionList, listener);
-            }, questionList);
+            if(!isNormalExam) {
+                imageQuestionLayout.setVisibility(View.VISIBLE);
+                textQuestionLayout.setVisibility(View.GONE);
+                preTextButton.setVisibility(View.VISIBLE);
+                answerButton.setVisibility(View.GONE);
+                mainText.setVisibility(View.GONE);
+                setupImageQuestion(() -> {
+                    currentQuestionIndex++;
+                    displayNextQuestion(questionList, listener);
+                }, questionList);
+            } else {
+                subImage.setVisibility(View.VISIBLE);
+                loadImageIntoImageView(subImage, currentQuestion.getFileName());
+                imageQuestionLayout.setVisibility(View.GONE);
+                textQuestionLayout.setVisibility(View.VISIBLE);
+                preTextButton.setVisibility(View.GONE);
+                answerButton.setVisibility(View.VISIBLE);
+                mainText.setVisibility(View.GONE);
+                setupTextQuestion(() -> {
+                    currentQuestionIndex++;
+                    displayNextQuestion(questionList, listener);
+                }, questionList);
+            }
         } else {
             imageQuestionLayout.setVisibility(View.GONE);
             textQuestionLayout.setVisibility(View.VISIBLE);
@@ -725,10 +752,33 @@ public class ExamProcess extends AppCompatActivity {
         // Seçenekleri doldurun
         List<QuestionOption> options = currentQuestion.getQuestionOptions();
         if (options.size() >= 4) {
-            option1Text.setText(options.get(0).getText());
-            option2Text.setText(options.get(1).getText());
-            option3Text.setText(options.get(2).getText());
-            option4Text.setText(options.get(3).getText());
+            if(options.get(0).getFileName() != null) {
+                option1Text.setVisibility(View.GONE);
+                option2Text.setVisibility(View.GONE);
+                option3Text.setVisibility(View.GONE);
+                option4Text.setVisibility(View.GONE);
+                option1Image.setVisibility(View.VISIBLE);
+                option2Image.setVisibility(View.VISIBLE);
+                option3Image.setVisibility(View.VISIBLE);
+                option4Image.setVisibility(View.VISIBLE);
+                loadImageIntoImageView(option1Image, options.get(0).getFileName());
+                loadImageIntoImageView(option2Image, options.get(1).getFileName());
+                loadImageIntoImageView(option3Image, options.get(2).getFileName());
+                loadImageIntoImageView(option4Image, options.get(3).getFileName());
+            } else {
+                option1Text.setVisibility(View.VISIBLE);
+                option2Text.setVisibility(View.VISIBLE);
+                option3Text.setVisibility(View.VISIBLE);
+                option4Text.setVisibility(View.VISIBLE);
+                option1Image.setVisibility(View.GONE);
+                option2Image.setVisibility(View.GONE);
+                option3Image.setVisibility(View.GONE);
+                option4Image.setVisibility(View.GONE);
+                option1Text.setText(options.get(0).getText());
+                option2Text.setText(options.get(1).getText());
+                option3Text.setText(options.get(2).getText());
+                option4Text.setText(options.get(3).getText());
+            }
         } else {
             // Handle cases where there are fewer than 4 options
             option1Text.setText(options.size() > 0 ? options.get(0).getText() : "");
@@ -1111,7 +1161,9 @@ public class ExamProcess extends AppCompatActivity {
             // Correct answer, add points
             examPoint += currentQuestion.getPoint();
             // Also add to category-specific points
-            categoryInfoList.get(currentCategoryIndex).addUserPoint(currentQuestion.getPoint());
+            if(!isNormalExam) {
+                categoryInfoList.get(currentCategoryIndex).addUserPoint(currentQuestion.getPoint());
+            }
             Log.d("ExamProcess", "Correct answer! Points awarded: " + currentQuestion.getPoint());
             Toast.makeText(this, "Doğru! +" + currentQuestion.getPoint() + " puan.", Toast.LENGTH_SHORT).show();
         } else {
@@ -1215,9 +1267,11 @@ public class ExamProcess extends AppCompatActivity {
         // Build the message string with total score and category-wise scores
         StringBuilder messageBuilder = new StringBuilder();
         messageBuilder.append("Total Score: ").append(examPoint).append("\n\n");
-        messageBuilder.append("Category Scores:\n");
-        for (CategoryInfo info : categoryInfoList) {
-            messageBuilder.append(info.getName()).append(": ").append(info.getUserPoint()).append(" puan\n");
+        if(!isNormalExam) {
+            messageBuilder.append("Category Scores:\n");
+            for (CategoryInfo info : categoryInfoList) {
+                messageBuilder.append(info.getName()).append(": ").append(info.getUserPoint()).append(" puan\n");
+            }
         }
 
         AlertDialog finalScoreDialog = new AlertDialog.Builder(this)

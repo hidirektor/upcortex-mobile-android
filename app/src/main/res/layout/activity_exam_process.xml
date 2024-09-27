@@ -484,6 +484,13 @@
                         android:fontFamily="@font/roboto_flex"
                         android:layout_gravity="center"/>
 
+                    <ImageView
+                        android:id="@+id/subImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:layout_gravity="center"/>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -528,6 +535,14 @@
                                 android:textSize="16sp"
                                 android:textColor="@color/darkBaseColor"
                                 android:fontFamily="@font/roboto_flex"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="8dp"/>
+
+                            <ImageView
+                                android:id="@+id/option1Image"
+                                android:layout_width="0dp"
+                                android:layout_weight="1.0"
+                                android:layout_height="match_parent"
                                 android:layout_gravity="center"
                                 android:layout_marginStart="8dp"/>
 
@@ -581,6 +596,14 @@
                                 android:layout_marginStart="8dp"/>
 
                             <ImageView
+                                android:id="@+id/option2Image"
+                                android:layout_width="0dp"
+                                android:layout_weight="1.0"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="8dp"/>
+
+                            <ImageView
                                 android:id="@+id/option2Tick"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
@@ -630,6 +653,14 @@
                                 android:layout_marginStart="8dp"/>
 
                             <ImageView
+                                android:id="@+id/option3Image"
+                                android:layout_width="0dp"
+                                android:layout_weight="1.0"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="8dp"/>
+
+                            <ImageView
                                 android:id="@+id/option3Tick"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
@@ -675,6 +706,14 @@
                                 android:textSize="16sp"
                                 android:textColor="@color/darkBaseColor"
                                 android:fontFamily="@font/roboto_flex"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="8dp"/>
+
+                            <ImageView
+                                android:id="@+id/option4Image"
+                                android:layout_width="0dp"
+                                android:layout_weight="1.0"
+                                android:layout_height="match_parent"
                                 android:layout_gravity="center"
                                 android:layout_marginStart="8dp"/>
 
