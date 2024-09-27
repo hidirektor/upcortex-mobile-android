@@ -623,6 +623,7 @@ public class ExamProcess extends AppCompatActivity {
                 }, questionList);
             }
         } else {
+            subImage.setVisibility(View.GONE);
             imageQuestionLayout.setVisibility(View.GONE);
             textQuestionLayout.setVisibility(View.VISIBLE);
             preTextButton.setVisibility(View.GONE);
