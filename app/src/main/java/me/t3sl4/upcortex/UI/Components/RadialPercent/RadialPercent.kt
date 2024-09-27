@@ -17,7 +17,7 @@ class RadialPercent @JvmOverloads constructor(
 
     private var baseColor: Int = Color.GRAY
     private var fillColor: Int = Color.BLUE
-    private var currentPercent: Int = 0
+    private var currentPercent: Float = 0F
     private var maxPercent: Int = 100 // Default max percent is 100
     private var strokeWidth: Float = 20f
     private var radius: Float = 0f
@@ -40,7 +40,7 @@ class RadialPercent @JvmOverloads constructor(
             try {
                 baseColor = getColor(R.styleable.RadialPercent_baseColor, Color.GRAY)
                 fillColor = getColor(R.styleable.RadialPercent_percentColor, Color.BLUE)
-                currentPercent = getInt(R.styleable.RadialPercent_currentPercent, 0)
+                currentPercent = getFloat(R.styleable.RadialPercent_currentPercent, 0F)
                 maxPercent = getInt(R.styleable.RadialPercent_percentMax, 100) // Get max percent from XML
                 strokeWidth = getDimension(R.styleable.RadialPercent_percentStrokeWidth, 20f)
                 radius = getDimension(R.styleable.RadialPercent_percentRadius, (width / 2).toFloat())
@@ -97,7 +97,7 @@ class RadialPercent @JvmOverloads constructor(
     }
 
     // Method to update the current percentage
-    fun setCurrentPercent(percent: Int) {
+    fun setCurrentPercent(percent: Float) {
         currentPercent = percent
         invalidate() // Redraw the view
     }

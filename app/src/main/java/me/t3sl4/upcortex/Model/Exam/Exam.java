@@ -22,7 +22,7 @@ public class Exam implements Parcelable {
     private String examDescription;
     private String examInstructions;
     private String beforeText;
-    private int userPoint;
+    private float userPoint;
     private LinkedList<QuestionCategory> questionCategories;
     private LinkedList<Question> questions;
     private LinkedList<GeneralClassification> examClassifications;
@@ -95,7 +95,7 @@ public class Exam implements Parcelable {
         parcel.writeString(examDescription);
         parcel.writeString(examInstructions);
         parcel.writeString(beforeText);
-        parcel.writeInt(userPoint);
+        parcel.writeFloat(userPoint);
     }
 
     public String getExamID() {
@@ -202,11 +202,11 @@ public class Exam implements Parcelable {
         this.beforeText = beforeText;
     }
 
-    public int getUserPoint() {
+    public float getUserPoint() {
         return userPoint;
     }
 
-    public void setUserPoint(int userPoint) {
+    public void setUserPoint(float userPoint) {
         this.userPoint = userPoint;
     }
 

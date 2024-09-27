@@ -129,9 +129,9 @@ public class ExamDashboard extends AppCompatActivity {
         }
     }
 
-    private void loadExamStats(HashMap<String, Integer> categoryPoints, int generalPoint, Exam currentExam) {
+    private void loadExamStats(HashMap<String, Float> categoryPoints, int generalPoint, Exam currentExam) {
         List<String> categoryList = new ArrayList<>();
-        List<Integer> percentList = new ArrayList<>();
+        List<Float> percentList = new ArrayList<>();
 
         // 1. Genel Sınıflandırmayı Bulma
         String generalName = "Bilinmiyor";
@@ -156,9 +156,9 @@ public class ExamDashboard extends AppCompatActivity {
         List<String> subNameList = new ArrayList<>();
         List<String> subDescList = new ArrayList<>();
 
-        for (Map.Entry<String, Integer> entry : categoryPoints.entrySet()) {
+        for (Map.Entry<String, Float> entry : categoryPoints.entrySet()) {
             String categoryName = entry.getKey();
-            int categoryPoint = entry.getValue();
+            float categoryPoint = entry.getValue();
 
             categoryList.add(categoryName);
             percentList.add(categoryPoint);
@@ -219,7 +219,7 @@ public class ExamDashboard extends AppCompatActivity {
                     Gson gson = new Gson();
                     CategoryInfo[] updatedCategoryList = gson.fromJson(updatedCategoryListJson, CategoryInfo[].class);
 
-                    HashMap<String, Integer> categoryPoints = new HashMap<>();
+                    HashMap<String, Float> categoryPoints = new HashMap<>();
                     int generalPoint = 0;
 
                     // Update the general point and category points from the list

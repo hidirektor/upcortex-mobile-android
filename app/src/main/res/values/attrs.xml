@@ -92,7 +92,7 @@
     <declare-styleable name="RadialPercent">
         <attr name="baseColor" format="color"/>
         <attr name="percentColor" format="color"/>
-        <attr name="currentPercent" format="integer"/>
+        <attr name="currentPercent" format="float"/>
         <attr name="percentStrokeWidth" format="dimension"/>
         <attr name="percentRadius" format="dimension"/>
         <attr name="percentClockwise" format="boolean"/>

@@ -7,7 +7,7 @@ public class CategoryInfo implements Parcelable {
     private String name;
     private int order;
     private int questionCount;
-    private int userPoint;
+    private float userPoint;
 
     public CategoryInfo(String name, int order) {
         this.name = name;
@@ -45,7 +45,7 @@ public class CategoryInfo implements Parcelable {
         parcel.writeString(name);
         parcel.writeInt(order);
         parcel.writeInt(questionCount);
-        parcel.writeInt(userPoint);
+        parcel.writeFloat(userPoint);
     }
 
     public String getName() {
@@ -72,11 +72,11 @@ public class CategoryInfo implements Parcelable {
         this.questionCount = questionCount;
     }
 
-    public int getUserPoint() {
+    public float getUserPoint() {
         return userPoint;
     }
 
-    public void setUserPoint(int userPoint) {
+    public void setUserPoint(float userPoint) {
         this.userPoint = userPoint;
     }
 

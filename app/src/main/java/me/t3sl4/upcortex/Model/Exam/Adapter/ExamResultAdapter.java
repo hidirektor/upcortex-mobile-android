@@ -18,9 +18,9 @@ public class ExamResultAdapter extends RecyclerView.Adapter<ExamResultAdapter.Ex
     private final List<String> categoryList;
     private final List<String> subNameList;
     private final List<String> subDescList;
-    private final List<Integer> percentList;
+    private final List<Float> percentList;
 
-    public ExamResultAdapter(List<String> categoryList, List<String> subNameList, List<String> subDescList, List<Integer> percentList) {
+    public ExamResultAdapter(List<String> categoryList, List<String> subNameList, List<String> subDescList, List<Float> percentList) {
         this.categoryList = categoryList;
         this.subNameList = subNameList;
         this.subDescList = subDescList;
