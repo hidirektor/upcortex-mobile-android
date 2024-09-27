@@ -62,6 +62,7 @@ public class ExamProcess extends AppCompatActivity {
 
     private Button preTextButton;
     private Button answerButton;
+    private Button nextButton;
     private TextView mainText;
     private TextView subText;
     private ImageView subImage;
@@ -119,6 +120,10 @@ public class ExamProcess extends AppCompatActivity {
 
     private LinearLayout difficultyLinearLayout;
     private LinearLayout difficultyLayout;
+
+    private LinearLayout beforeQuestionLayout;
+    private TextView examScenerio;
+    private TextView examScenerioDesc;
 
     private long questionTime = 4000; // 4 seconds for displaying the question
     private long totalExamTime = 30 * 60 * 1000;
@@ -206,6 +211,7 @@ public class ExamProcess extends AppCompatActivity {
         // Initialize Buttons and Main Text
         preTextButton = findViewById(R.id.preTextButton);
         answerButton = findViewById(R.id.answerButton);
+        nextButton = findViewById(R.id.nextButton);
         mainText = findViewById(R.id.mainText);
         subText = findViewById(R.id.subText);
         subImage = findViewById(R.id.subImage);
@@ -272,6 +278,10 @@ public class ExamProcess extends AppCompatActivity {
         textQuestionLayout = findViewById(R.id.textQuestionLayout);
         questionNumber = findViewById(R.id.questionOrder);
         mainQuestionText = findViewById(R.id.mainQuestionText);
+
+        beforeQuestionLayout = findViewById(R.id.beforeQuestionLayout);
+        examScenerio = findViewById(R.id.examScenerio);
+        examScenerioDesc = findViewById(R.id.examScenerioDesc);
 
         option1Layout = findViewById(R.id.option1Layout);
         option1Text = findViewById(R.id.option1Text);
@@ -390,7 +400,40 @@ public class ExamProcess extends AppCompatActivity {
         }
 
         // Tek kategori olduğundan direkt soruları göster
-        processNormalCurrentCategory();
+        if(receivedExam.getBeforeText() != null && !receivedExam.getBeforeText().isEmpty()) {
+            beforeQuestionLayout.setVisibility(View.VISIBLE);
+            textQuestionLayout.setVisibility(View.GONE);
+            preTextButton.setVisibility(View.GONE);
+            nextButton.setVisibility(View.VISIBLE);
+
+            String gelenString = receivedExam.getBeforeText();
+            String senaryoBaslangic = "Senaryo: ";
+            String problemBaslangic = "Problemin Tanımı:";
+
+            String senaryoKismi = gelenString.substring(gelenString.indexOf(senaryoBaslangic) + senaryoBaslangic.length(), gelenString.indexOf(problemBaslangic)).trim();
+            String problemKismi = gelenString.substring(gelenString.indexOf(problemBaslangic) + problemBaslangic.length()).trim();
+
+            examScenerio.setText(senaryoKismi);
+            examScenerioDesc.setText(problemKismi);
+
+            circularCountdownView.setVisibility(View.VISIBLE);
+            nextButton.setOnClickListener(v -> {
+                beforeQuestionLayout.setVisibility(View.GONE);
+                circularCountdownView.setVisibility(View.GONE);
+                nextButton.setVisibility(View.GONE);
+                processNormalCurrentCategory();
+            });
+
+            startQuestionTimer(questionTime, () -> {
+                beforeQuestionLayout.setVisibility(View.GONE);
+                nextButton.setVisibility(View.GONE);
+                circularCountdownView.setVisibility(View.GONE);
+                processNormalCurrentCategory();
+            });
+        } else {
+            beforeQuestionLayout.setVisibility(View.GONE);
+            processNormalCurrentCategory();
+        }
     }
 
     /**
