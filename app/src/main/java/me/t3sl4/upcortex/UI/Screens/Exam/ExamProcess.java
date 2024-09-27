@@ -318,6 +318,14 @@ public class ExamProcess extends AppCompatActivity {
 
         // Add click listeners to text option layouts
         setupTextOptionClickListeners();
+
+        nextButton.setOnClickListener(v -> {
+            beforeQuestionLayout.setVisibility(View.GONE);
+            circularCountdownView.setVisibility(View.GONE);
+            nextButton.setVisibility(View.GONE);
+            questionTimer.cancel();
+            processNormalCurrentCategory();
+        });
     }
 
     /**
@@ -405,6 +413,7 @@ public class ExamProcess extends AppCompatActivity {
             textQuestionLayout.setVisibility(View.GONE);
             preTextButton.setVisibility(View.GONE);
             nextButton.setVisibility(View.VISIBLE);
+            circularCountdownView.setVisibility(View.VISIBLE);
 
             String gelenString = receivedExam.getBeforeText();
             String senaryoBaslangic = "Senaryo: ";
@@ -415,14 +424,7 @@ public class ExamProcess extends AppCompatActivity {
 
             examScenerio.setText(senaryoKismi);
             examScenerioDesc.setText(problemKismi);
-
-            circularCountdownView.setVisibility(View.VISIBLE);
-            nextButton.setOnClickListener(v -> {
-                beforeQuestionLayout.setVisibility(View.GONE);
-                circularCountdownView.setVisibility(View.GONE);
-                nextButton.setVisibility(View.GONE);
-                processNormalCurrentCategory();
-            });
+            categoryName.setText(senaryoKismi);
 
             startQuestionTimer(questionTime, () -> {
                 beforeQuestionLayout.setVisibility(View.GONE);
