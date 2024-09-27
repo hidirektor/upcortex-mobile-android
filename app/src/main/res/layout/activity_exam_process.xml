@@ -35,6 +35,7 @@
             app:layout_constraintEnd_toEndOf="parent">
 
             <LinearLayout
+                android:id="@+id/difficultyLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -192,6 +193,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="4dp"
+                android:layout_marginLeft="4dp"
                 android:layout_gravity="center">
                 <LinearLayout
                     android:id="@+id/imageQuestionLayout"
@@ -467,6 +470,16 @@
                         android:layout_height="wrap_content"
                         android:text="Kısa Süreli Bellek"
                         android:textSize="22sp"
+                        android:textColor="@color/darkBaseColor"
+                        android:fontFamily="@font/roboto_flex"
+                        android:layout_gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/subText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kısa Süreli Bellek"
+                        android:textSize="18sp"
                         android:textColor="@color/darkBaseColor"
                         android:fontFamily="@font/roboto_flex"
                         android:layout_gravity="center"/>

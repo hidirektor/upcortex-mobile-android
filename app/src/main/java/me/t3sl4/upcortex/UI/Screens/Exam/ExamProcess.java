@@ -63,6 +63,7 @@ public class ExamProcess extends AppCompatActivity {
     private Button preTextButton;
     private Button answerButton;
     private TextView mainText;
+    private TextView subText;
 
     private LinearLayout imageQuestionLayout;
 
@@ -111,6 +112,7 @@ public class ExamProcess extends AppCompatActivity {
     private ImageView option4Tick;
 
     private LinearLayout difficultyLinearLayout;
+    private LinearLayout difficultyLayout;
 
     private long questionTime = 4000; // 4 seconds for displaying the question
     private long totalExamTime = 30 * 60 * 1000;
@@ -139,6 +141,7 @@ public class ExamProcess extends AppCompatActivity {
     private CountDownTimer examTimer;
     private boolean hasAnswered = false; // Flag to check if user has answered
     private boolean isAnswerPhase = false; // Flag to determine the current phase
+    private boolean isNormalExam = false;
 
     private Handler handler = new Handler(); // Handler for delayed dialog dismissal
 
@@ -170,7 +173,12 @@ public class ExamProcess extends AppCompatActivity {
             showFinalScore();
         });
 
-        processCurrentCategory();
+        if(receivedExam.getExamName().equals("Risk Düzeyi Hesaplama Sınavı")) {
+            processCurrentCategory();
+        } else {
+            isNormalExam = true;
+            handleNormalExam();
+        }
     }
 
     /**
@@ -193,6 +201,7 @@ public class ExamProcess extends AppCompatActivity {
         preTextButton = findViewById(R.id.preTextButton);
         answerButton = findViewById(R.id.answerButton);
         mainText = findViewById(R.id.mainText);
+        subText = findViewById(R.id.subText);
 
         // Initialize Image Question Layout
         imageQuestionLayout = findViewById(R.id.imageQuestionLayout);
@@ -271,6 +280,7 @@ public class ExamProcess extends AppCompatActivity {
         option4Tick = findViewById(R.id.option4Tick);
 
         difficultyLinearLayout = findViewById(R.id.difficultyLinearLayout);
+        difficultyLayout = findViewById(R.id.difficultyLayout);
 
         // Initially hide answerButton and mainText for image questions
         answerButton.setVisibility(View.GONE);
@@ -293,56 +303,82 @@ public class ExamProcess extends AppCompatActivity {
      */
     private void processExamData() {
         if (receivedExam != null && receivedExam.getQuestions() != null) {
-            LinkedList<QuestionCategory> categories = receivedExam.getQuestionCategories();
-            if (categories != null) {
-                for (QuestionCategory category : categories) {
-                    CategoryInfo info = new CategoryInfo(category.getName(), category.getOrder());
-                    categoryInfoList.add(info);
+            // Sadece Risk Düzeyi Hesaplama Sınavı için özel işlemler yapılacak
+            if (receivedExam.getExamName().equals("Risk Düzeyi Hesaplama Sınavı")) {
+                LinkedList<QuestionCategory> categories = receivedExam.getQuestionCategories();
+                if (categories != null) {
+                    for (QuestionCategory category : categories) {
+                        CategoryInfo info = new CategoryInfo(category.getName(), category.getOrder());
+                        categoryInfoList.add(info);
+                    }
+
+                    // Kategorileri sıralayın
+                    Collections.sort(categoryInfoList, Comparator.comparingInt(CategoryInfo::getOrder));
+                } else {
+                    Log.d("ProcessExamData", "Kategoriler boş veya null");
                 }
 
-                // Sort categories based on their order
-                Collections.sort(categoryInfoList, Comparator.comparingInt(CategoryInfo::getOrder));
-            } else {
-                Log.d("ProcessExamData", "Categories are null or empty");
-            }
+                // Soruları kategoriye göre ayırın
+                LinkedList<Question> questions = receivedExam.getQuestions();
+                if (questions != null) {
+                    for (Question question : questions) {
+                        String categoryName = question.getCategoryName();
+                        boolean matched = false;
 
-            // Count questions per category
-            LinkedList<Question> questions = receivedExam.getQuestions();
-            if (questions != null) {
-                for (Question question : questions) {
-                    String categoryName = question.getCategoryName();
-                    boolean matched = false;
-
-                    for (CategoryInfo info : categoryInfoList) {
-                        if (info.getName().trim().equalsIgnoreCase(categoryName.trim())) {
-                            info.incrementQuestionCount();
-                            // Add question to the categoryQuestionsMap
-                            if (!categoryQuestionsMap.containsKey(categoryName)) {
-                                categoryQuestionsMap.put(categoryName, new ArrayList<>());
+                        for (CategoryInfo info : categoryInfoList) {
+                            if (info.getName().trim().equalsIgnoreCase(categoryName.trim())) {
+                                info.incrementQuestionCount();
+                                if (!categoryQuestionsMap.containsKey(categoryName)) {
+                                    categoryQuestionsMap.put(categoryName, new ArrayList<>());
+                                }
+                                categoryQuestionsMap.get(categoryName).add(question);
+                                matched = true;
+                                break;
                             }
-                            categoryQuestionsMap.get(categoryName).add(question);
-                            matched = true;
-                            break;
+                        }
+                        if (!matched) {
+                            Log.d("ProcessExamData", "Kategori eşleşmedi: " + categoryName);
                         }
                     }
-                    if (!matched) {
-                        Log.d("ProcessExamData", "Category did not match: " + categoryName);
-                    }
+                } else {
+                    Log.d("ProcessExamData", "Sorular boş veya null");
                 }
-            } else {
-                Log.d("ProcessExamData", "Questions are null or empty");
-            }
 
-            // Ensure that categories with no questions are skipped
-            for (CategoryInfo info : categoryInfoList) {
-                if (info.getQuestionCount() == 0) {
-                    Log.d("ProcessExamData", "No questions available in " + info.getName() + " category.");
+                displayCategoryInfo();
+            } else {
+                Log.d("Start", "Parçalama başladı.");
+                // Risk Düzeyi Hesaplama Sınavı dışındaki sınavlarda sadece text sorularını işle
+                LinkedList<Question> questions = receivedExam.getQuestions();
+                Log.d("Soru Sayısı", ""+questions.size());
+                if (questions != null) {
+                    for (Question question : questions) {
+                        String categoryName = question.getCategoryName();
+                        if (!categoryQuestionsMap.containsKey(categoryName)) {
+                            categoryQuestionsMap.put(categoryName, new ArrayList<>());
+                        }
+                        categoryQuestionsMap.get(categoryName).add(question);
+                        questionList.add(question); // Soruları ana listeye ekliyoruz
+                    }
+                } else {
+                    Log.d("Questions", "Sorular boş.");
                 }
             }
-            displayCategoryInfo();
         } else {
-            Log.d("ProcessExamData", "receivedExam or questions are null");
+            Log.d("ProcessExamData", "receivedExam veya sorular null");
         }
+    }
+
+    private void handleNormalExam() {
+        difficultyLayout.setVisibility(View.GONE); // Hide difficulty layout
+        circularCountdownView.setVisibility(View.GONE);
+
+        if (questionList == null || questionList.isEmpty()) {
+            Log.e("handleNormalExam", "No questions available for the exam.");
+            return;
+        }
+
+        // Tek kategori olduğundan direkt soruları göster
+        processNormalCurrentCategory();
     }
 
     /**
@@ -487,6 +523,22 @@ public class ExamProcess extends AppCompatActivity {
         });
     }
 
+    private void processNormalCurrentCategory() {
+        // Kategori kontrolünü kaldırıyoruz çünkü tek kategori var
+        if (questionList == null || questionList.isEmpty()) {
+            Log.e("processNormalCurrentCategory", "No questions available.");
+            return;
+        }
+
+        imageQuestionLayout.setVisibility(View.GONE);
+        textQuestionLayout.setVisibility(View.VISIBLE);
+
+        // Soruları sırayla gösterecek
+        startCategoryExam(questionList, () -> {
+            showFinalScore();  // Sınav tamamlandığında puanı göster
+        });
+    }
+
     /**
      * Initiates the exam flow for a given category.
      *
@@ -523,6 +575,9 @@ public class ExamProcess extends AppCompatActivity {
         // Soru detaylarını göster
         mainText.setText(currentQuestion.getMainText());
         preTextButton.setText(currentQuestion.getPreText());
+        if(currentQuestion.getSubText() != null || !currentQuestion.getSubText().isEmpty()) {
+            subText.setText(currentQuestion.getSubText());
+        }
 
         // Zorluk modunu ayarla
         difficultyMode(currentQuestion.getDifficulty());
@@ -1114,7 +1169,9 @@ public class ExamProcess extends AppCompatActivity {
         if (allCorrect) {
             examPoint += currentQuestion.getPoint();
             // Also add to category-specific points
-            categoryInfoList.get(currentCategoryIndex).addUserPoint(currentQuestion.getPoint());
+            if(!isNormalExam) {
+                categoryInfoList.get(currentCategoryIndex).addUserPoint(currentQuestion.getPoint());
+            }
             Log.d("ExamProcess", "Correct answer! Points awarded: " + currentQuestion.getPoint());
             Toast.makeText(this, "Doğru! +" + currentQuestion.getPoint() + " puan.", Toast.LENGTH_SHORT).show();
         } else {
