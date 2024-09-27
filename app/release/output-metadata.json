@@ -11,9 +11,9 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 1032,
-      "versionName": "1.9.32(1032)",
-      "outputFile": "UpCortex release_27-09-2024_v1.9.32(1032).apk"
+      "versionCode": 1035,
+      "versionName": "1.9.35(1035)",
+      "outputFile": "DinamikBeyin release_27-09-2024_v1.9.35(1035).apk"
     }
   ],
   "elementType": "File",
@@ -22,14 +22,14 @@
       "minApi": 28,
       "maxApi": 30,
       "baselineProfiles": [
-        "baselineProfiles/1/UpCortex release_27-09-2024_v1.9.32(1032).dm"
+        "baselineProfiles/1/DinamikBeyin release_27-09-2024_v1.9.35(1035).dm"
       ]
     },
     {
       "minApi": 31,
       "maxApi": 2147483647,
       "baselineProfiles": [
-        "baselineProfiles/0/UpCortex release_27-09-2024_v1.9.32(1032).dm"
+        "baselineProfiles/0/DinamikBeyin release_27-09-2024_v1.9.35(1035).dm"
       ]
     }
   ],

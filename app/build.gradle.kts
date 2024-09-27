@@ -23,7 +23,7 @@ android {
             val versionName = versionName
             val formattedDate = SimpleDateFormat("dd-MM-yyyy").format(Date())
             val fileExtension = output.outputFile.extension
-            output.outputFileName = "UpCortex ${variantName}_${formattedDate}_v${versionName}.${fileExtension}"
+            output.outputFileName = "DinamikBeyin ${variantName}_${formattedDate}_v${versionName}.${fileExtension}"
         }
     }
 
@@ -139,12 +139,12 @@ dependencies {
         exclude(group = "net.jcip", module = "jcip-annotations")
     }
 
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation(libs.okhttp)
     implementation("com.android.volley:volley:1.2.1")
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
+    implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor)
 
     implementation(libs.core.ktx)
 
@@ -152,11 +152,11 @@ dependencies {
     implementation(libs.ccp)
     implementation(libs.pinview)
     implementation(libs.circleimageview)
-    implementation("com.github.YarikSOffice:lingver:1.3.0")
+    implementation(libs.lingver)
     implementation("com.github.delight-im:Android-AdvancedWebView:v3.0.0")
-    implementation("com.github.bumptech.glide:glide:4.12.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 
-    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
     implementation(libs.appcompat)
     implementation(libs.material)
     testImplementation(libs.junit)
