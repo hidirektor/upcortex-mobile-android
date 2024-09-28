@@ -223,6 +223,7 @@
                         android:layout_height="wrap_content"
                         android:text="Şehir İçi Trafik Yoğunluğu"
                         android:textSize="18sp"
+                        android:maxLines="10"
                         android:textColor="@color/darkBaseColor"
                         android:layout_marginBottom="8dp"/>
                 </LinearLayout>
@@ -233,7 +234,7 @@
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="12dp"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent" >
 
                     <LinearLayout
@@ -465,7 +466,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
@@ -541,7 +542,7 @@
                         <LinearLayout
                             android:id="@+id/option1Layout"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"
@@ -598,7 +599,7 @@
                         <LinearLayout
                             android:id="@+id/option2Layout"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"
@@ -655,7 +656,7 @@
                         <LinearLayout
                             android:id="@+id/option3Layout"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"
@@ -712,7 +713,7 @@
                         <LinearLayout
                             android:id="@+id/option4Layout"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"

@@ -20,7 +20,7 @@ public class CategoryInfo implements Parcelable {
         name = in.readString();
         order = in.readInt();
         questionCount = in.readInt();
-        userPoint = in.readInt();
+        userPoint = in.readFloat();
     }
 
     public static final Creator<CategoryInfo> CREATOR = new Creator<CategoryInfo>() {

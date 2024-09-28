@@ -416,11 +416,11 @@ public class ExamProcess extends AppCompatActivity {
             circularCountdownView.setVisibility(View.VISIBLE);
 
             String gelenString = receivedExam.getBeforeText();
-            String senaryoBaslangic = "Senaryo: ";
-            String problemBaslangic = "Problemin Tanımı:";
 
-            String senaryoKismi = gelenString.substring(gelenString.indexOf(senaryoBaslangic) + senaryoBaslangic.length(), gelenString.indexOf(problemBaslangic)).trim().replaceAll("[\\\\r\\\\n]+", "");
-            String problemKismi = gelenString.substring(gelenString.indexOf(problemBaslangic) + problemBaslangic.length()).trim().replaceAll("[\\\\r\\\\n]+", "");
+            String[] splittedStrings = gelenString.split(";", 2);
+
+            String senaryoKismi = splittedStrings.length > 0 ? splittedStrings[0] : "";
+            String problemKismi = splittedStrings.length > 1 ? splittedStrings[1] : "";
 
             examScenerio.setText(senaryoKismi);
             examScenerioDesc.setText(problemKismi);
@@ -1341,6 +1341,9 @@ public class ExamProcess extends AppCompatActivity {
             String updatedCategoryListJson;
             if(!isNormalExam) {
                 updatedCategoryListJson = gson.toJson(categoryInfoList);
+                for(CategoryInfo info2 : categoryInfoList) {
+                    Log.d("Test123", info2.getUserPoint() + "");
+                }
             } else {
                 updatedCategoryListJson = gson.toJson(examPoint);
             }

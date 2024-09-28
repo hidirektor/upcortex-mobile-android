@@ -2,6 +2,7 @@ package me.t3sl4.upcortex.UI.Screens.Exam;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -178,7 +179,9 @@ public class ExamDashboard extends AppCompatActivity {
                 // Kategoriye Ait Sınıflandırmaları Dolaşma
                 boolean classificationFound = false;
                 for (CategoryClassification cc : matchedCategory.getCategoryClassifications()) {
-                    if (categoryPoint >= cc.getMinVal() && categoryPoint <= cc.getMaxVal()) {
+                    Log.d("Kategory Point", categoryPoint + " ");
+                    Log.d("Kategori Stats", cc.getName() + " " + cc.getDescription() + " " + cc.getMinVal() + " " + cc.getMaxVal());
+                    if (categoryPoint >= Float.valueOf(cc.getMinVal()) && categoryPoint <= Float.valueOf(cc.getMaxVal())) {
                         subNameList.add(cc.getName());
                         subDescList.add(cc.getDescription());
                         classificationFound = true;
