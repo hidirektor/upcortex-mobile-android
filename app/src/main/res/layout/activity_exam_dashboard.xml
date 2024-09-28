@@ -288,7 +288,7 @@
                             app:fourthQuarterColor="@color/no_risk"
                             app:tickBorder="false"
                             app:percentText="false"
-                            app:firstPercent="1"
+                            app:firstPercent="50"
                             app:firstPercentColor="@color/no_risk"
                             android:layout_gravity="center"
                             android:layout_marginTop="12dp"

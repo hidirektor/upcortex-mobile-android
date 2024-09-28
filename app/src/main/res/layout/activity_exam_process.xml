@@ -223,7 +223,6 @@
                         android:layout_height="wrap_content"
                         android:text="Şehir İçi Trafik Yoğunluğu"
                         android:textSize="18sp"
-                        android:maxLines="10"
                         android:textColor="@color/darkBaseColor"
                         android:layout_marginBottom="8dp"/>
                 </LinearLayout>
@@ -464,7 +463,7 @@
                 <LinearLayout
                     android:id="@+id/textQuestionLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"

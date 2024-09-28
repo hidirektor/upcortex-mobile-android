@@ -396,19 +396,38 @@ class Speedometer @JvmOverloads constructor(
     }
 
     override fun onDraw(canvas: Canvas) {
+        canvas.save()
+
+        // Mevcut çizim işlemleri
         renderMajorTicks(canvas)
         renderMinorTicks(canvas)
         renderBorder(canvas)
         if (mode == 0) {
-            // Mode 0: Tek renk ile dolum
             renderBorderFill(canvas)
         } else {
-            renderQuarterColors(canvas)  // Çeyrek renkleri render ediyoruz
-            renderSpeedBars(canvas)       // Yüzde 87'yi gösteren siyah çubuğu çiziyoruz
+            renderQuarterColors(canvas)
+            renderSpeedBars(canvas)
         }
         if (tickBorder) {
             renderTickBorder(canvas)
         }
+
+        // Needle çizimi
+        canvas.save()
+        canvas.rotate(angle, centerX, centerY) // Needle'ı merkeze göre döndür
+        renderNeedle(canvas) // Needle'ı çiz
+        canvas.restore() // Döndürme işlemini geri al
+
+        canvas.restore() // Canvas'ın önceki durumuna döndür
+    }
+
+    private fun renderNeedle(canvas: Canvas) {
+        paintIndicatorNeedle.color = firstPercentColor
+        canvas.drawLine(
+            centerX, centerY,
+            centerX, centerY - 200, // Needle uzunluğu ayarlanabilir
+            paintIndicatorNeedle
+        )
     }
 
     private fun renderQuarterColors(canvas: Canvas) {
@@ -580,11 +599,25 @@ class Speedometer @JvmOverloads constructor(
         val newPercent = s.coerceIn(MIN_SPEED, maxPercent)
 
         animator.apply {
-            setFloatValues(mapSpeedToAngle(firstPercent), mapSpeedToAngle(newPercent))
+            val startAngle = mapSpeedToAngle(firstPercent)
+            val endAngle = mapSpeedToAngle(newPercent)
+
+            when {
+                newPercent > 0 -> {
+                    // Saat yönüne (CW)
+                    setFloatValues(endAngle, startAngle)
+                }
+                newPercent == 50 -> {
+                    // 50 ise needle'ı olduğu gibi bırak
+                    angle = mapSpeedToAngle(50)
+                    invalidate()
+                    return
+                }
+            }
 
             addUpdateListener {
                 angle = it.animatedValue as Float
-                firstPercent = mapAngleToSpeed(angle)
+                firstPercent = 0
                 invalidate()
             }
 

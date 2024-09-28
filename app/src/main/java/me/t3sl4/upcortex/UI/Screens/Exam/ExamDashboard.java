@@ -150,9 +150,10 @@ public class ExamDashboard extends AppCompatActivity {
         currentExamPercent.setText("% " + generalPoint);
         generalExamResult.setText(generalName);
         generalExamDesc.setText(generalDesc);
-        currentExamGeneralStat.setPercent((int) generalPoint, 2000L, () -> {
-            return null;
-        });
+        //currentExamGeneralStat.setPercent((int) generalPoint, 2000L, () -> {
+            //return null;
+        //});
+        currentExamGeneralStat.setVisibility(View.GONE);
         generalExamDiagnose.setVisibility(View.GONE);
 
         // 2. Kategori Sınıflandırmalarını Bulma
