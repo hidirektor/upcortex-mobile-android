@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -19,6 +21,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Set;
@@ -28,6 +32,7 @@ import me.t3sl4.upcortex.Model.Exam.Exam;
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.CircularCountdown.CircularCountdownView;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
+import me.t3sl4.upcortex.UI.Screens.Auth.Register.Register1;
 import me.t3sl4.upcortex.Utility.Bluetooth.BluetoothScanDialog;
 import me.t3sl4.upcortex.Utility.Bluetooth.BluetoothUtil;
 import me.t3sl4.upcortex.Utility.HTTP.Requests.Exam.ExamService;
@@ -55,6 +60,8 @@ public class Dashboard extends AppCompatActivity {
     private ExamAdapter examAdapter;
     private LinkedList<Exam> examList = new LinkedList<>();
 
+    private FloatingActionButton buyButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +75,11 @@ public class Dashboard extends AppCompatActivity {
         loadExamList();
 
         addDeviceLayout.setOnClickListener(v -> startBluetoothDeviceSelection());
+
+        buyButton.setOnClickListener(v -> {
+            Intent registerIntent = new Intent(Dashboard.this, Register1.class);
+            startActivity(registerIntent);
+        });
     }
 
     private void initializeComponents() {
@@ -84,6 +96,10 @@ public class Dashboard extends AppCompatActivity {
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         bluetoothUtil = new BluetoothUtil();
+
+        buyButton = findViewById(R.id.homeConstraint);
+        Animation pulseAnimation = AnimationUtils.loadAnimation(this, R.anim.pulse);
+        buyButton.startAnimation(pulseAnimation);
     }
 
     private void loadExamList() {

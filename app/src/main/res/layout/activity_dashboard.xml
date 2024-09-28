@@ -553,7 +553,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:pointerIcon="wait"
-            android:src="@drawable/ikon_navbar_home"
+            android:src="@drawable/ikon_buy"
             app:maxImageSize="25dp"
             app:tint="@color/ratingColor"
             app:layout_anchor="@id/app_bar"
