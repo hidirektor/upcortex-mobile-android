@@ -125,8 +125,8 @@ public class ExamProcess extends AppCompatActivity {
     private TextView examScenerio;
     private TextView examScenerioDesc;
 
-    private long questionTime = 4000; // 4 seconds for displaying the question
-    private long totalExamTime = 30 * 60 * 1000;
+    private long questionTime = 10000; // 9 seconds for displaying the question
+    private long totalExamTime = 30 * 60 * 1000; //30 Dakika
 
     private List<CategoryInfo> categoryInfoList = new ArrayList<>();
     private float examPoint = 0;
@@ -163,9 +163,11 @@ public class ExamProcess extends AppCompatActivity {
 
         // Retrieve JSON data and convert to Exam object
         String examJson = getIntent().getStringExtra("examJson");
+        Log.d("Test Json", examJson);
         if (examJson != null) {
             Gson gson = new Gson();
             receivedExam = gson.fromJson(examJson, Exam.class);
+            totalExamTime = receivedExam.getExamTime() * 60 * 1000; //Gelen süre kadar dk
             Log.d("ExamProcess", "Exam object successfully received: " + receivedExam.getExamName());
         } else {
             Log.e("ExamProcess", "Exam JSON data could not be retrieved!");
@@ -323,13 +325,13 @@ public class ExamProcess extends AppCompatActivity {
             beforeQuestionLayout.setVisibility(View.GONE);
             circularCountdownView.setVisibility(View.GONE);
             nextButton.setVisibility(View.GONE);
-            questionTimer.cancel();
+            //questionTimer.cancel();
             processNormalCurrentCategory();
         });
     }
 
     /**
-     * Processes the received exam data by categorizing and counting questions.
+     * Processes the received exam data by categorizing and counting questions.1
      */
     private void processExamData() {
         if (receivedExam != null && receivedExam.getQuestions() != null) {
@@ -413,7 +415,7 @@ public class ExamProcess extends AppCompatActivity {
             textQuestionLayout.setVisibility(View.GONE);
             preTextButton.setVisibility(View.GONE);
             nextButton.setVisibility(View.VISIBLE);
-            circularCountdownView.setVisibility(View.VISIBLE);
+            circularCountdownView.setVisibility(View.GONE);
 
             String gelenString = receivedExam.getBeforeText();
 
@@ -426,12 +428,15 @@ public class ExamProcess extends AppCompatActivity {
             examScenerioDesc.setText(problemKismi);
             categoryName.setText(senaryoKismi);
 
-            startQuestionTimer(questionTime, () -> {
+            /*
+            Kadir ağamın emri üzerine normal sınavlarda ki bekleme süresi kaldırıldı
+             */
+           /*startQuestionTimer(questionTime, () -> {
                 beforeQuestionLayout.setVisibility(View.GONE);
                 nextButton.setVisibility(View.GONE);
                 circularCountdownView.setVisibility(View.GONE);
                 processNormalCurrentCategory();
-            });
+            });*/
         } else {
             beforeQuestionLayout.setVisibility(View.GONE);
             processNormalCurrentCategory();
