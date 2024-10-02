@@ -594,7 +594,7 @@ public class ExamProcess extends AppCompatActivity {
 
         imageQuestionLayout.setVisibility(View.GONE);
         textQuestionLayout.setVisibility(View.VISIBLE);
-        categoryName.setText(questionList.get(0).getCategoryName());
+        categoryName.setText(questionList.get(currentQuestionIndex).getCategoryName());
 
         // Soruları sırayla gösterecek
         startCategoryExam(questionList, () -> {
@@ -634,6 +634,12 @@ public class ExamProcess extends AppCompatActivity {
 
         // Mevcut soruyu al
         currentQuestion = questionList.get(currentQuestionIndex);
+
+        if(currentQuestionIndex != 0) {
+            if(!currentQuestion.getCategoryName().equals(questionList.get(currentQuestionIndex-1).getCategoryName())) {
+                currentCategoryIndex++;
+            }
+        }
 
         // Soru detaylarını göster
         mainText.setText(currentQuestion.getMainText());
