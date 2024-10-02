@@ -94,6 +94,18 @@ public class ExamProcess extends AppCompatActivity {
     private CardView cardView4_1;
     private CardView cardView4_2;
     private CardView cardView4_3;
+    private ImageView imageViewCount1_1;
+    private ImageView imageViewCount1_2;
+    private ImageView imageViewCount1_3;
+    private ImageView imageViewCount2_1;
+    private ImageView imageViewCount2_2;
+    private ImageView imageViewCount2_3;
+    private ImageView imageViewCount3_1;
+    private ImageView imageViewCount3_2;
+    private ImageView imageViewCount3_3;
+    private ImageView imageViewCount4_1;
+    private ImageView imageViewCount4_2;
+    private ImageView imageViewCount4_3;
 
     // Text Option Components
     private LinearLayout textQuestionLayout;
@@ -133,6 +145,7 @@ public class ExamProcess extends AppCompatActivity {
 
     private List<ImageView> imageViewList = new ArrayList<>();
     private List<CardView> cardViewList = new ArrayList<>();
+    private List<ImageView> imageViewCountList = new ArrayList<>();
 
     private List<String> examCategories = new ArrayList<>();
     private List<Question> questionList = new ArrayList<>();
@@ -246,6 +259,18 @@ public class ExamProcess extends AppCompatActivity {
         cardView4_1 = findViewById(R.id.cardView4_1);
         cardView4_2 = findViewById(R.id.cardView4_2);
         cardView4_3 = findViewById(R.id.cardView4_3);
+        imageViewCount1_1 = findViewById(R.id.imageViewCount1_1);
+        imageViewCount1_2 = findViewById(R.id.imageViewCount1_2);
+        imageViewCount1_3 = findViewById(R.id.imageViewCount1_3);
+        imageViewCount2_1 = findViewById(R.id.imageViewCount2_1);
+        imageViewCount2_2 = findViewById(R.id.imageViewCount2_2);
+        imageViewCount2_3 = findViewById(R.id.imageViewCount2_3);
+        imageViewCount3_1 = findViewById(R.id.imageViewCount3_1);
+        imageViewCount3_2 = findViewById(R.id.imageViewCount3_2);
+        imageViewCount3_3 = findViewById(R.id.imageViewCount3_3);
+        imageViewCount4_1 = findViewById(R.id.imageViewCount4_1);
+        imageViewCount4_2 = findViewById(R.id.imageViewCount4_2);
+        imageViewCount4_3 = findViewById(R.id.imageViewCount4_3);
 
         // Add all ImageViews to the list for easy management
         imageViewList.add(imageView1_1);
@@ -272,6 +297,18 @@ public class ExamProcess extends AppCompatActivity {
         cardViewList.add(cardView4_1);
         cardViewList.add(cardView4_2);
         cardViewList.add(cardView4_3);
+        imageViewCountList.add(imageViewCount1_1);
+        imageViewCountList.add(imageViewCount1_2);
+        imageViewCountList.add(imageViewCount1_3);
+        imageViewCountList.add(imageViewCount2_1);
+        imageViewCountList.add(imageViewCount2_2);
+        imageViewCountList.add(imageViewCount2_3);
+        imageViewCountList.add(imageViewCount3_1);
+        imageViewCountList.add(imageViewCount3_2);
+        imageViewCountList.add(imageViewCount3_3);
+        imageViewCountList.add(imageViewCount4_1);
+        imageViewCountList.add(imageViewCount4_2);
+        imageViewCountList.add(imageViewCount4_3);
 
         // Initially hide the imageQuestionLayout
         imageQuestionLayout.setVisibility(View.GONE);
@@ -314,8 +351,11 @@ public class ExamProcess extends AppCompatActivity {
         answerButton.setOnClickListener(view -> handleAnswerButtonClick());
 
         // Add click listeners to all ImageViews for selection
-        for (ImageView imageView : imageViewList) {
-            imageView.setOnClickListener(view -> handleImageClick(imageView));
+        for (int i = 0; i < imageViewList.size(); i++) {
+            int index = i;  // İndeksi final yaparak lambda içinde kullanılabilir hale getiriyoruz
+            ImageView imageView = imageViewList.get(i);
+            ImageView imageCount = imageViewCountList.get(i);
+            imageView.setOnClickListener(view -> handleImageClick(imageCount));  // İndeksi de fonksiyona geçiriyoruz
         }
 
         // Add click listeners to text option layouts

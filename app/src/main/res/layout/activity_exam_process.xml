@@ -233,7 +233,7 @@
                     android:gravity="center"
                     android:orientation="vertical"
                     android:padding="12dp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:layout_constraintStart_toStartOf="parent" >
 
                     <LinearLayout
@@ -256,6 +256,14 @@
                                 android:layout_height="match_parent"
                                 android:scaleType="fitXY"
                                 android:src="@drawable/ikon_question_template" />
+                            <ImageView
+                                android:id="@+id/imageViewCount1_1"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:scaleType="fitXY"
+                                android:layout_gravity="top|end"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginRight="6dp" />
                         </androidx.cardview.widget.CardView>
 
                         <androidx.cardview.widget.CardView
@@ -272,6 +280,15 @@
                                 android:layout_height="match_parent"
                                 android:scaleType="fitXY"
                                 android:src="@drawable/ikon_question_template" />
+
+                            <ImageView
+                                android:id="@+id/imageViewCount1_2"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:scaleType="fitXY"
+                                android:layout_gravity="top|end"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginRight="6dp" />
                         </androidx.cardview.widget.CardView>
 
                         <androidx.cardview.widget.CardView
@@ -288,6 +305,15 @@
                                 android:layout_height="match_parent"
                                 android:scaleType="fitXY"
                                 android:src="@drawable/ikon_question_template" />
+
+                            <ImageView
+                                android:id="@+id/imageViewCount1_3"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:scaleType="fitXY"
+                                android:layout_gravity="top|end"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginRight="6dp" />
                         </androidx.cardview.widget.CardView>
                     </LinearLayout>
 
@@ -312,6 +338,15 @@
                                 android:layout_height="match_parent"
                                 android:scaleType="fitXY"
                                 android:src="@drawable/ikon_question_template" />
+
+                            <ImageView
+                                android:id="@+id/imageViewCount2_1"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:scaleType="fitXY"
+                                android:layout_gravity="top|end"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginRight="6dp" />
                         </androidx.cardview.widget.CardView>
 
                         <androidx.cardview.widget.CardView
@@ -328,6 +363,15 @@
                                 android:layout_height="match_parent"
                                 android:scaleType="fitXY"
                                 android:src="@drawable/ikon_question_template" />
+
+                            <ImageView
+                                android:id="@+id/imageViewCount2_2"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:scaleType="fitXY"
+                                android:layout_gravity="top|end"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginRight="6dp" />
                         </androidx.cardview.widget.CardView>
 
                         <androidx.cardview.widget.CardView
@@ -344,6 +388,15 @@
                                 android:layout_height="match_parent"
                                 android:scaleType="fitXY"
                                 android:src="@drawable/ikon_question_template" />
+
+                            <ImageView
+                                android:id="@+id/imageViewCount2_3"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:scaleType="fitXY"
+                                android:layout_gravity="top|end"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginRight="6dp" />
                         </androidx.cardview.widget.CardView>
                     </LinearLayout>
 
@@ -368,6 +421,15 @@
                                 android:layout_height="match_parent"
                                 android:scaleType="fitXY"
                                 android:src="@drawable/ikon_question_template" />
+
+                            <ImageView
+                                android:id="@+id/imageViewCount3_1"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:scaleType="fitXY"
+                                android:layout_gravity="top|end"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginRight="6dp" />
                         </androidx.cardview.widget.CardView>
 
                         <androidx.cardview.widget.CardView
@@ -384,6 +446,15 @@
                                 android:layout_height="match_parent"
                                 android:scaleType="fitXY"
                                 android:src="@drawable/ikon_question_template" />
+
+                            <ImageView
+                                android:id="@+id/imageViewCount3_2"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:scaleType="fitXY"
+                                android:layout_gravity="top|end"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginRight="6dp" />
                         </androidx.cardview.widget.CardView>
 
                         <androidx.cardview.widget.CardView
@@ -400,6 +471,15 @@
                                 android:layout_height="match_parent"
                                 android:scaleType="fitXY"
                                 android:src="@drawable/ikon_question_template" />
+
+                            <ImageView
+                                android:id="@+id/imageViewCount3_3"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:scaleType="fitXY"
+                                android:layout_gravity="top|end"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginRight="6dp" />
                         </androidx.cardview.widget.CardView>
                     </LinearLayout>
 
@@ -424,6 +504,15 @@
                                 android:layout_height="match_parent"
                                 android:scaleType="fitXY"
                                 android:src="@drawable/ikon_question_template" />
+
+                            <ImageView
+                                android:id="@+id/imageViewCount4_1"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:scaleType="fitXY"
+                                android:layout_gravity="top|end"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginRight="6dp" />
                         </androidx.cardview.widget.CardView>
 
                         <androidx.cardview.widget.CardView
@@ -440,6 +529,15 @@
                                 android:layout_height="match_parent"
                                 android:scaleType="fitXY"
                                 android:src="@drawable/ikon_question_template" />
+
+                            <ImageView
+                                android:id="@+id/imageViewCount4_2"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:scaleType="fitXY"
+                                android:layout_gravity="top|end"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginRight="6dp" />
                         </androidx.cardview.widget.CardView>
 
                         <androidx.cardview.widget.CardView
@@ -456,6 +554,15 @@
                                 android:layout_height="match_parent"
                                 android:scaleType="fitXY"
                                 android:src="@drawable/ikon_question_template" />
+
+                            <ImageView
+                                android:id="@+id/imageViewCount4_3"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:scaleType="fitXY"
+                                android:layout_gravity="top|end"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginRight="6dp" />
                         </androidx.cardview.widget.CardView>
                     </LinearLayout>
 
@@ -465,7 +572,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:gravity="center"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
