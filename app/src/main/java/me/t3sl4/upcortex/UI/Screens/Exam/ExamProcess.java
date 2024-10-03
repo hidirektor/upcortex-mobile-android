@@ -1009,6 +1009,7 @@ public class ExamProcess extends AppCompatActivity {
         int imageIndex = 0; // Separate index for imageFileNames
         for (int i = 0; i < imageViewList.size(); i++) {
             ImageView imageView = imageViewList.get(i);
+            ImageView imageCountView = imageViewCountList.get(i);
             CardView cardView = cardViewList.get(i);
 
             if (imageView.getVisibility() == View.VISIBLE && cardView.getVisibility() == View.VISIBLE) {
@@ -1032,8 +1033,12 @@ public class ExamProcess extends AppCompatActivity {
                             break;
                         }
                     }
+                    addCircleWithNumber(imageCountView, imageIndex+1);
                     imageView.setContentDescription(optionText); // Assign text to contentDescription
                 } else {
+                    for(int j=0; j<imageViewCountList.size(); j++) {
+                        imageViewCountList.get(j).setForeground(null);
+                    }
                     if (imageIndex < allOptionsRandomizedList.size()) {
                         QuestionOption option = allOptionsRandomizedList.get(imageIndex);
                         imageView.setContentDescription(option.getText()); // Assign text to contentDescription
