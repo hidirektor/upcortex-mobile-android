@@ -159,6 +159,7 @@ public class ExamProcess extends AppCompatActivity {
     private List<QuestionOption> correctOptionsList = new ArrayList<>();
     private List<QuestionOption> allOptionsRandomizedList = new ArrayList<>();
     private List<ImageView> selectedImageViews = new ArrayList<>();
+    private List<ImageView> selectedImageCountViews = new ArrayList<>();
 
     // Timers
     private CountDownTimer questionTimer;
@@ -352,10 +353,9 @@ public class ExamProcess extends AppCompatActivity {
 
         // Add click listeners to all ImageViews for selection
         for (int i = 0; i < imageViewList.size(); i++) {
-            int index = i;  // İndeksi final yaparak lambda içinde kullanılabilir hale getiriyoruz
             ImageView imageView = imageViewList.get(i);
             ImageView imageCount = imageViewCountList.get(i);
-            imageView.setOnClickListener(view -> handleImageClick(imageCount));  // İndeksi de fonksiyona geçiriyoruz
+            imageView.setOnClickListener(view -> handleImageClick(imageView, imageCount));
         }
 
         // Add click listeners to text option layouts
@@ -768,6 +768,7 @@ public class ExamProcess extends AppCompatActivity {
 
         // Reset selected images
         selectedImageViews.clear();
+        selectedImageCountViews.clear();
         for (ImageView imageView : imageViewList) {
             imageView.setAlpha(1.0f); // Reset opacity
             imageView.setTag(null);
@@ -1086,7 +1087,7 @@ public class ExamProcess extends AppCompatActivity {
      *
      * @param imageView The ImageView that was clicked.
      */
-    private void handleImageClick(ImageView imageView) {
+    private void handleImageClick(ImageView imageView, ImageView imageCountView) {
         if (!isAnswerPhase) {
             // If not in answer phase, ignore clicks
             return;
@@ -1100,17 +1101,26 @@ public class ExamProcess extends AppCompatActivity {
             // Remove the circle if deselected
             imageView.setForeground(null);
 
+            selectedImageCountViews.remove(imageCountView);
+            imageCountView.setAlpha(1.0F);
+            imageCountView.setTag("unselected");
+            imageCountView.setForeground(null);
+
             // Update the numbers on the remaining selected images
             updateSelectedImageNumbers();
         } else {
             // Check if maximum selections have been reached
             if (selectedImageViews.size() < currentQuestion.getCorrectOptionsCount()) {
                 selectedImageViews.add(imageView);
-                imageView.setAlpha(0.5f); // Indicate selection
+                imageView.setAlpha(1.0f); // Indicate selection
                 imageView.setTag("selected");
 
+                selectedImageCountViews.add(imageCountView);
+                imageCountView.setAlpha(1.0F);
+                imageCountView.setTag("selected");
+
                 // Add a circle with the selection number
-                addCircleWithNumber(imageView, selectedImageViews.size());
+                addCircleWithNumber(imageCountView, selectedImageViews.size());
             } else {
                 // Inform the user that no more selections are allowed
                 Toast.makeText(this, "You can only select " + currentQuestion.getCorrectOptionsCount() + " images.", Toast.LENGTH_SHORT).show();
@@ -1138,8 +1148,8 @@ public class ExamProcess extends AppCompatActivity {
 
 
     private void updateSelectedImageNumbers() {
-        for (int i = 0; i < selectedImageViews.size(); i++) {
-            ImageView selectedImageView = selectedImageViews.get(i);
+        for (int i = 0; i < selectedImageCountViews.size(); i++) {
+            ImageView selectedImageView = selectedImageCountViews.get(i);
             addCircleWithNumber(selectedImageView, i + 1); // Update the circle with the new number
         }
     }
@@ -1206,8 +1216,13 @@ public class ExamProcess extends AppCompatActivity {
      * Handles the AnswerButton click by checking user answers based on question type.
      */
     private void handleAnswerButtonClick() {
-        for (ImageView imageView : imageViewList) {
+        for(int i=0; i<imageViewList.size(); i++) {
+            ImageView imageView, imageCountView;
+            imageView = imageViewList.get(i);
+            imageCountView = imageViewCountList.get(i);
+
             imageView.setForeground(null);
+            imageCountView.setForeground(null);
         }
         if (isImageQuestion(currentQuestion)) {
             checkUserImageAnswers(() -> {
@@ -1275,9 +1290,16 @@ public class ExamProcess extends AppCompatActivity {
 
         // Reset selections
         selectedImageViews.clear();
-        for (ImageView imageView : imageViewList) {
+        for(int i=0; i<imageViewList.size(); i++) {
+            ImageView imageView, imageCountView;
+            imageView = imageViewList.get(i);
+            imageCountView = imageViewCountList.get(i);
+
             imageView.setAlpha(1.0f); // Reset opacity
             imageView.setTag("unselected"); // Reset tag
+
+            imageCountView.setAlpha(1.0f); // Reset opacity
+            imageCountView.setTag("unselected"); // Reset tag
         }
 
         // Hide AnswerButton and mainText
