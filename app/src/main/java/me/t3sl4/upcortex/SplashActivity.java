@@ -54,20 +54,7 @@ public class SplashActivity extends AppCompatActivity {
 
         startLoadingAnimation();
 
-        // İzinleri kontrol et ve izin pop-up'larını göster
-        if (PermissionUtil.hasLocationPermission(this)) {
-            if (PermissionUtil.hasNotificationPermission(this)) {
-                if (PermissionUtil.hasBluetoothPermission(this)) {
-                    continueAppFlow();
-                } else {
-                    showPermissionPopup(3); // Bluetooth izni
-                }
-            } else {
-                showPermissionPopup(2); // Bildirim izni
-            }
-        } else {
-            showPermissionPopup(1); // Konum izni
-        }
+        continueAppFlow();
     }
 
     @Override

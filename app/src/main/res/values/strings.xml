@@ -212,6 +212,10 @@
     <string name="exam_recycler_warning">Bu sınava ait farklı kategorilerdeki puanlarınızı içermektedir.</string>
     <string name="exam_sub_name">Çok İyi</string>
     <string name="exam_sub_desc">Görsel bellek yetenekleri mükemmeldir. Görsel bilgileri hızlı bir şekilde öğrenir ve hatırlarlar. Bu, mekan tanıma ve yön bulma gibi günlük görevlerde büyük bir avantaj sağlar.</string>
+    <string name="exam_correct_answer">Tebrikler Cevabınız Doğru</string>
+    <string name="exam_wrong_answer">Maalesef Cevabınız Yanlış</string>
+    <string name="exam_point">puan</string>
+    <string name="exam_zero_point">Puan verilmedi.</string>
 
     <!-- Exams Classification Texts -->
     <string name="exam_no_risk">Risk Yok</string>

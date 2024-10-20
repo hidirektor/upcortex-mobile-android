@@ -43,6 +43,7 @@ import me.t3sl4.upcortex.Model.Exam.QuestionCategory;
 import me.t3sl4.upcortex.Model.Exam.QuestionOption;
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.CircularCountdown.CircularCountdownView;
+import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
 import me.t3sl4.upcortex.Utils.Screen.ScreenUtil;
 import me.t3sl4.upcortex.Utils.Screen.TextDrawable;
 
@@ -1286,11 +1287,21 @@ public class ExamProcess extends AppCompatActivity {
                 categoryInfoList.get(currentCategoryIndex).addUserPoint(currentQuestion.getPoint());
             }
             Log.d("ExamProcess", "Correct answer! Points awarded: " + currentQuestion.getPoint());
-            Toast.makeText(this, "Doğru! +" + currentQuestion.getPoint() + " puan.", Toast.LENGTH_SHORT).show();
+            Sneaker.with(ExamProcess.this)
+                    .setTitle(getString(R.string.exam_correct_answer))
+                    .setMessage(currentQuestion.getPoint() + " " + getString(R.string.exam_point))
+                    .setHeight(75)
+                    .setDuration(900)
+                    .sneakSuccess();
         } else {
             // Incorrect answer, no points
             Log.d("ExamProcess", "Incorrect answer! No points awarded.");
-            Toast.makeText(this, "Yanlış! Puan verilmedi.", Toast.LENGTH_SHORT).show();
+            Sneaker.with(ExamProcess.this)
+                    .setTitle(getString(R.string.exam_wrong_answer))
+                    .setMessage(getString(R.string.exam_zero_point))
+                    .setHeight(75)
+                    .setDuration(900)
+                    .sneakError();
         }
 
         // Reset selections

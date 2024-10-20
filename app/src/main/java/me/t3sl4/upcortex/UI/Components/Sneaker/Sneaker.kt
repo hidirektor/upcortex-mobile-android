@@ -433,7 +433,7 @@ class Sneaker(private var context: Context) : View.OnClickListener, LifecycleObs
                 this.layoutParams = layoutParams
                 orientation = LinearLayout.HORIZONTAL
                 gravity = Gravity.CENTER_VERTICAL
-                setPadding(46, if (isActivity) Utils.getStatusBarHeight(it) else 0, 46, 0)
+                setPadding(46, 0, 46, 0)
                 setBackground(mBackgroundColor, mCornerRadius)
                 setIcon(mIconDrawable, mIsCircular, Utils.convertToDp(context, mIconSize.toFloat()), mIconColorFilterColor)
                 setTextContent(mTitle, mTitleColor, mMessage, mMessageColor, mTypeFace)

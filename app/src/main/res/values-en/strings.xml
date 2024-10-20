@@ -206,6 +206,10 @@
     <string name="exam_recycler_warning">It contains your scores in different categories of this exam.</string>
     <string name="exam_sub_name">Very Good</string>
     <string name="exam_sub_desc">Their visual memory skills are excellent. They learn and remember visual information quickly. This provides a great advantage in daily tasks such as spatial recognition and navigation.</string>
+    <string name="exam_correct_answer">Congratulations Your Answer is Correct</string>
+    <string name="exam_wrong_answer">Sorry, Your Answer Is Wrong</string>
+    <string name="exam_point">point</string>
+    <string name="exam_zero_point">No points were given.</string>
 
     <!-- Exams Classification Texts -->
     <string name="exam_no_risk">No Risk</string>
