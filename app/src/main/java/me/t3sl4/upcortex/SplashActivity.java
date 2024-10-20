@@ -20,17 +20,17 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import me.t3sl4.upcortex.Service.UserDataService;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
 import me.t3sl4.upcortex.UI.Screens.Auth.Login;
 import me.t3sl4.upcortex.UI.Screens.FirstSetup.FirstSetupError;
 import me.t3sl4.upcortex.UI.Screens.General.Dashboard;
 import me.t3sl4.upcortex.UI.Screens.OnBoard.OnBoard1;
-import me.t3sl4.upcortex.Utility.Bluetooth.BluetoothUtil;
-import me.t3sl4.upcortex.Utility.Permission.PermissionUtil;
-import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
-import me.t3sl4.upcortex.Utility.SharedPreferences.SharedPreferencesManager;
-import me.t3sl4.upcortex.Utility.Utils;
+import me.t3sl4.upcortex.Utils.BaseUtil;
+import me.t3sl4.upcortex.Utils.Bluetooth.BluetoothUtil;
+import me.t3sl4.upcortex.Utils.Permission.PermissionUtil;
+import me.t3sl4.upcortex.Utils.Screen.ScreenUtil;
+import me.t3sl4.upcortex.Utils.Service.UserDataService;
+import me.t3sl4.upcortex.Utils.SharedPreferences.SharedPreferencesManager;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -172,7 +172,7 @@ public class SplashActivity extends AppCompatActivity {
         boolean isFirstTime = SharedPreferencesManager.getSharedPref("isFirstTime", this, true);
         boolean canAccess = SharedPreferencesManager.getSharedPref("canAccess", this, true);
 
-        if (Utils.isNetworkAvailable(this)) {
+        if (BaseUtil.isNetworkAvailable(this)) {
             if (canAccess) {
                 if (isFirstTime) {
                     setupOnboarding();

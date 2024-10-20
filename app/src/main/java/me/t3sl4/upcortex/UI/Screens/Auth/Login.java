@@ -15,8 +15,8 @@ import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
 import me.t3sl4.upcortex.UI.Screens.Auth.Register.Register1;
 import me.t3sl4.upcortex.UI.Screens.General.Dashboard;
 import me.t3sl4.upcortex.UI.Screens.ResetPass.ResetPass1;
-import me.t3sl4.upcortex.Utility.HTTP.Requests.Auth.AuthService;
-import me.t3sl4.upcortex.Utility.Screen.ScreenListeners;
+import me.t3sl4.upcortex.Utils.HTTP.Requests.Auth.AuthService;
+import me.t3sl4.upcortex.Utils.Screen.ScreenListeners;
 
 public class Login extends AppCompatActivity {
 

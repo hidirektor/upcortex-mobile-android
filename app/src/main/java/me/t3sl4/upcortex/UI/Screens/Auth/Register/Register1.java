@@ -18,9 +18,9 @@ import java.util.Calendar;
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.DatePicker.DatePickerBottomSheet;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
-import me.t3sl4.upcortex.Utility.Screen.ScreenListeners;
-import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
-import me.t3sl4.upcortex.Utility.SharedPreferences.SharedPreferencesManager;
+import me.t3sl4.upcortex.Utils.Screen.ScreenListeners;
+import me.t3sl4.upcortex.Utils.Screen.ScreenUtil;
+import me.t3sl4.upcortex.Utils.SharedPreferences.SharedPreferencesManager;
 
 public class Register1 extends AppCompatActivity {
 

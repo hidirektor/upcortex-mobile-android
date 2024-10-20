@@ -33,10 +33,10 @@ import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.CircularCountdown.CircularCountdownView;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
 import me.t3sl4.upcortex.UI.Screens.Auth.Register.Register1;
-import me.t3sl4.upcortex.Utility.Bluetooth.BluetoothScanDialog;
-import me.t3sl4.upcortex.Utility.Bluetooth.BluetoothUtil;
-import me.t3sl4.upcortex.Utility.HTTP.Requests.Exam.ExamService;
-import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
+import me.t3sl4.upcortex.Utils.Bluetooth.BluetoothScanDialog;
+import me.t3sl4.upcortex.Utils.Bluetooth.BluetoothUtil;
+import me.t3sl4.upcortex.Utils.HTTP.Requests.Exam.ExamService;
+import me.t3sl4.upcortex.Utils.Screen.ScreenUtil;
 
 public class Dashboard extends AppCompatActivity {
 

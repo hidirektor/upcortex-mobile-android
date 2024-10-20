@@ -43,8 +43,8 @@ import me.t3sl4.upcortex.Model.Exam.QuestionCategory;
 import me.t3sl4.upcortex.Model.Exam.QuestionOption;
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.CircularCountdown.CircularCountdownView;
-import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
-import me.t3sl4.upcortex.Utility.Screen.TextDrawable;
+import me.t3sl4.upcortex.Utils.Screen.ScreenUtil;
+import me.t3sl4.upcortex.Utils.Screen.TextDrawable;
 
 public class ExamProcess extends AppCompatActivity {
     private Exam receivedExam;

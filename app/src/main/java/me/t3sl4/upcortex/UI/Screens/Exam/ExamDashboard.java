@@ -31,8 +31,8 @@ import me.t3sl4.upcortex.Model.Exam.QuestionCategory;
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.CircularStats.Speedometer;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
-import me.t3sl4.upcortex.Utility.HTTP.Requests.Exam.ExamService;
-import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
+import me.t3sl4.upcortex.Utils.HTTP.Requests.Exam.ExamService;
+import me.t3sl4.upcortex.Utils.Screen.ScreenUtil;
 
 public class ExamDashboard extends AppCompatActivity {
     private static final int EXAM_REQUEST_CODE = 1;

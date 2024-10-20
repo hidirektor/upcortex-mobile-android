@@ -10,8 +10,8 @@ import androidx.core.content.ContextCompat;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Screens.Auth.AuthSelection;
-import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
-import me.t3sl4.upcortex.Utility.SharedPreferences.SharedPreferencesManager;
+import me.t3sl4.upcortex.Utils.Screen.ScreenUtil;
+import me.t3sl4.upcortex.Utils.SharedPreferences.SharedPreferencesManager;
 
 public class FirstSetup extends AppCompatActivity {
 

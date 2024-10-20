@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Screens.FirstSetup.FirstSetup;
-import me.t3sl4.upcortex.Utility.Screen.ScreenUtil;
-import me.t3sl4.upcortex.Utility.SharedPreferences.SharedPreferencesManager;
+import me.t3sl4.upcortex.Utils.Screen.ScreenUtil;
+import me.t3sl4.upcortex.Utils.SharedPreferences.SharedPreferencesManager;
 
 public class OnBoard1 extends AppCompatActivity {
 
