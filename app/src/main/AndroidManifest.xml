@@ -81,5 +81,7 @@
 
         <activity android:name=".UI.Screens.Exam.ExamDashboard" />
         <activity android:name=".UI.Screens.Exam.ExamProcess" />
+
+        <activity android:name=".UI.Screens.Program.ProgramSelection" />
     </application>
 </manifest>

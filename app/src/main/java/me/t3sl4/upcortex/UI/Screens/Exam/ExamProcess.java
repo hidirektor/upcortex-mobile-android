@@ -1,6 +1,5 @@
 package me.t3sl4.upcortex.UI.Screens.Exam;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -1403,46 +1402,18 @@ public class ExamProcess extends AppCompatActivity {
      * The dialog is displayed for 5 seconds and then automatically dismissed.
      */
     private void showFinalScore() {
-        // Build the message string with total score and category-wise scores
-        StringBuilder messageBuilder = new StringBuilder();
-        messageBuilder.append("Total Score: ").append(examPoint).append("\n\n");
+        Gson gson = new Gson();
+        String updatedCategoryListJson;
         if(!isNormalExam) {
-            messageBuilder.append("Category Scores:\n");
-            for (CategoryInfo info : categoryInfoList) {
-                messageBuilder.append(info.getName()).append(": ").append(info.getUserPoint()).append(" puan\n");
-            }
+            updatedCategoryListJson = gson.toJson(categoryInfoList);
+        } else {
+            updatedCategoryListJson = gson.toJson(examPoint);
         }
 
-        AlertDialog finalScoreDialog = new AlertDialog.Builder(this)
-                .setTitle("Exam Completed")
-                .setMessage(messageBuilder.toString())
-                .setCancelable(false)
-                .create();
-
-        finalScoreDialog.show();
-
-        // Dismiss the dialog after 3 seconds and return categoryInfoList with results
-        handler.postDelayed(() -> {
-            finalScoreDialog.dismiss();
-
-            // Prepare the updated categoryInfoList as JSON
-            Gson gson = new Gson();
-            String updatedCategoryListJson;
-            if(!isNormalExam) {
-                updatedCategoryListJson = gson.toJson(categoryInfoList);
-                for(CategoryInfo info2 : categoryInfoList) {
-                    Log.d("Test123", info2.getUserPoint() + "");
-                }
-            } else {
-                updatedCategoryListJson = gson.toJson(examPoint);
-            }
-            Log.d("Sonuç Test", updatedCategoryListJson);
-
-            Intent resultIntent = new Intent();
-            resultIntent.putExtra("updatedCategoryListJson", updatedCategoryListJson);
-            setResult(RESULT_OK, resultIntent); // Send the result back
-            finish(); // End activity
-        }, 3000); // 3000 milliseconds = 3 seconds
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("updatedCategoryListJson", updatedCategoryListJson);
+        setResult(RESULT_OK, resultIntent);
+        finish();
     }
 
     /**

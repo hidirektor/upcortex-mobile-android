@@ -8075,7 +8075,6 @@ androidx.core.view.accessibility.AccessibilityNodeInfoCompat:
     public static androidx.core.view.accessibility.AccessibilityNodeInfoCompat obtain(android.view.View,int)
     public boolean performAction(int)
     public boolean refresh()
-    public boolean removeAction(androidx.core.view.accessibility.AccessibilityNodeInfoCompat$AccessibilityActionCompat)
     public boolean removeChild(android.view.View)
     public boolean removeChild(android.view.View,int)
     public void setAccessibilityDataSensitive(boolean)
@@ -10334,8 +10333,6 @@ androidx.recyclerview.widget.RecyclerView:
     public static final int UNDEFINED_DURATION
     static final boolean VERBOSE_TRACING
     public static final int VERTICAL
-    public void <init>(android.content.Context)
-    public void addOnChildAttachStateChangeListener(androidx.recyclerview.widget.RecyclerView$OnChildAttachStateChangeListener)
     public void addRecyclerListener(androidx.recyclerview.widget.RecyclerView$RecyclerListener)
     void assertInLayoutOrScroll(java.lang.String)
     public void clearOnChildAttachStateChangeListeners()
@@ -11157,7 +11154,56 @@ androidx.viewpager2.R$integer
 androidx.viewpager2.R$layout
 androidx.viewpager2.R$string
 androidx.viewpager2.R$style
-androidx.viewpager2.R$styleable
+androidx.viewpager2.R$styleable:
+    public static int ColorStateListItem_alpha
+    public static int ColorStateListItem_android_alpha
+    public static int ColorStateListItem_android_color
+    public static int ColorStateListItem_android_lStar
+    public static int ColorStateListItem_lStar
+    public static int FontFamilyFont_android_font
+    public static int FontFamilyFont_android_fontStyle
+    public static int FontFamilyFont_android_fontVariationSettings
+    public static int FontFamilyFont_android_fontWeight
+    public static int FontFamilyFont_android_ttcIndex
+    public static int FontFamilyFont_font
+    public static int FontFamilyFont_fontStyle
+    public static int FontFamilyFont_fontVariationSettings
+    public static int FontFamilyFont_fontWeight
+    public static int FontFamilyFont_ttcIndex
+    public static int FontFamily_fontProviderAuthority
+    public static int FontFamily_fontProviderCerts
+    public static int FontFamily_fontProviderFetchStrategy
+    public static int FontFamily_fontProviderFetchTimeout
+    public static int FontFamily_fontProviderPackage
+    public static int FontFamily_fontProviderQuery
+    public static int FontFamily_fontProviderSystemFontFamily
+    public static int GradientColorItem_android_color
+    public static int GradientColorItem_android_offset
+    public static int GradientColor_android_centerColor
+    public static int GradientColor_android_centerX
+    public static int GradientColor_android_centerY
+    public static int GradientColor_android_endColor
+    public static int GradientColor_android_endX
+    public static int GradientColor_android_endY
+    public static int GradientColor_android_gradientRadius
+    public static int GradientColor_android_startColor
+    public static int GradientColor_android_startX
+    public static int GradientColor_android_startY
+    public static int GradientColor_android_tileMode
+    public static int GradientColor_android_type
+    public static int RecyclerView_android_clipToPadding
+    public static int RecyclerView_android_descendantFocusability
+    public static int RecyclerView_android_orientation
+    public static int RecyclerView_fastScrollEnabled
+    public static int RecyclerView_fastScrollHorizontalThumbDrawable
+    public static int RecyclerView_fastScrollHorizontalTrackDrawable
+    public static int RecyclerView_fastScrollVerticalThumbDrawable
+    public static int RecyclerView_fastScrollVerticalTrackDrawable
+    public static int RecyclerView_layoutManager
+    public static int RecyclerView_reverseLayout
+    public static int RecyclerView_spanCount
+    public static int RecyclerView_stackFromEnd
+    private void <init>()
 androidx.viewpager2.R
 androidx.viewpager2.adapter.FragmentStateAdapter$1
 androidx.viewpager2.adapter.FragmentStateAdapter$2:
@@ -11230,39 +11276,58 @@ androidx.viewpager2.adapter.FragmentStateAdapter:
 androidx.viewpager2.adapter.FragmentViewHolder:
     private void <init>(android.widget.FrameLayout)
     static androidx.viewpager2.adapter.FragmentViewHolder create(android.view.ViewGroup)
-androidx.viewpager2.adapter.StatefulAdapter
-androidx.viewpager2.widget.AnimateLayoutChangeDetector$1
-androidx.viewpager2.widget.AnimateLayoutChangeDetector
-androidx.viewpager2.widget.CompositeOnPageChangeCallback
+androidx.viewpager2.widget.CompositeOnPageChangeCallback:
+    void removeOnPageChangeCallback(androidx.viewpager2.widget.ViewPager2$OnPageChangeCallback)
 androidx.viewpager2.widget.CompositePageTransformer
-androidx.viewpager2.widget.FakeDrag
+androidx.viewpager2.widget.FakeDrag:
+    private int mActualDraggedDistance
+    private long mFakeDragBeginTime
+    private int mMaximumVelocity
+    private float mRequestedDragDistance
+    private android.view.VelocityTracker mVelocityTracker
+    private void addFakeMotionEvent(long,int,float,float)
+    boolean beginFakeDrag()
+    private void beginFakeVelocityTracker()
+    boolean endFakeDrag()
+    boolean fakeDragBy(float)
 androidx.viewpager2.widget.MarginPageTransformer
-androidx.viewpager2.widget.PageTransformerAdapter
-androidx.viewpager2.widget.ScrollEventAdapter$ScrollEventValues
-androidx.viewpager2.widget.ScrollEventAdapter
-androidx.viewpager2.widget.ViewPager2$1
-androidx.viewpager2.widget.ViewPager2$2
-androidx.viewpager2.widget.ViewPager2$3
-androidx.viewpager2.widget.ViewPager2$4
-androidx.viewpager2.widget.ViewPager2$AccessibilityProvider
-androidx.viewpager2.widget.ViewPager2$BasicAccessibilityProvider
-androidx.viewpager2.widget.ViewPager2$DataSetChangeObserver
-androidx.viewpager2.widget.ViewPager2$LinearLayoutManagerImpl
+androidx.viewpager2.widget.ScrollEventAdapter:
+    private static final int NO_POSITION
+    private static final int STATE_IDLE
+    private static final int STATE_IN_PROGRESS_FAKE_DRAG
+    private static final int STATE_IN_PROGRESS_IMMEDIATE_SCROLL
+    private static final int STATE_IN_PROGRESS_MANUAL_DRAG
+    private static final int STATE_IN_PROGRESS_SMOOTH_SCROLL
+    boolean isDragging()
+    void notifyBeginFakeDrag()
+    void notifyEndFakeDrag()
+androidx.viewpager2.widget.ViewPager2$DataSetChangeObserver:
+    public final void onItemRangeChanged(int,int)
 androidx.viewpager2.widget.ViewPager2$OffscreenPageLimit
-androidx.viewpager2.widget.ViewPager2$OnPageChangeCallback
 androidx.viewpager2.widget.ViewPager2$Orientation
-androidx.viewpager2.widget.ViewPager2$PageAwareAccessibilityProvider$1
-androidx.viewpager2.widget.ViewPager2$PageAwareAccessibilityProvider$2
-androidx.viewpager2.widget.ViewPager2$PageAwareAccessibilityProvider$3
-androidx.viewpager2.widget.ViewPager2$PageAwareAccessibilityProvider
-androidx.viewpager2.widget.ViewPager2$PageTransformer
-androidx.viewpager2.widget.ViewPager2$PagerSnapHelperImpl
-androidx.viewpager2.widget.ViewPager2$RecyclerViewImpl
-androidx.viewpager2.widget.ViewPager2$SavedState$1
-androidx.viewpager2.widget.ViewPager2$SavedState
 androidx.viewpager2.widget.ViewPager2$ScrollState
-androidx.viewpager2.widget.ViewPager2$SmoothScrollToPosition
-androidx.viewpager2.widget.ViewPager2
+androidx.viewpager2.widget.ViewPager2:
+    public static final int OFFSCREEN_PAGE_LIMIT_DEFAULT
+    public static final int ORIENTATION_HORIZONTAL
+    public static final int ORIENTATION_VERTICAL
+    public static final int SCROLL_STATE_DRAGGING
+    public static final int SCROLL_STATE_IDLE
+    public static final int SCROLL_STATE_SETTLING
+    public void <init>(android.content.Context)
+    public void <init>(android.content.Context,android.util.AttributeSet,int)
+    public void <init>(android.content.Context,android.util.AttributeSet,int,int)
+    public void addItemDecoration(androidx.recyclerview.widget.RecyclerView$ItemDecoration)
+    public void addItemDecoration(androidx.recyclerview.widget.RecyclerView$ItemDecoration,int)
+    public boolean beginFakeDrag()
+    public boolean endFakeDrag()
+    public boolean fakeDragBy(float)
+    public androidx.recyclerview.widget.RecyclerView$ItemDecoration getItemDecorationAt(int)
+    public void invalidateItemDecorations()
+    public void registerOnPageChangeCallback(androidx.viewpager2.widget.ViewPager2$OnPageChangeCallback)
+    public void removeItemDecoration(androidx.recyclerview.widget.RecyclerView$ItemDecoration)
+    public void removeItemDecorationAt(int)
+    void snapToPage()
+    public void unregisterOnPageChangeCallback(androidx.viewpager2.widget.ViewPager2$OnPageChangeCallback)
 com.android.volley.AsyncCache$OnGetCompleteCallback
 com.android.volley.AsyncCache$OnWriteCompleteCallback
 com.android.volley.AsyncCache
@@ -38291,7 +38356,7 @@ androidx.appcompat.app.AlertController:
     public static boolean onKeyDown()
     public static boolean onKeyUp()
     public static int selectContentView()
-    public final void setButton(java.lang.String,me.t3sl4.upcortex.Utility.Bluetooth.BluetoothScanDialog$$InternalSyntheticLambda$1$9059d3f74053a5bb2ac4c105f2732eef3d2750727c21a16d5f175a3561669759$1)
+    public final void setButton(java.lang.String,me.t3sl4.upcortex.Utils.Bluetooth.BluetoothScanDialog$$InternalSyntheticLambda$1$8bf5053ed484785276397fd3e7bb69c6e1684b686c2603c4d3bde22ad4f139eb$1)
     public static void setCustomTitle()
     public static void setIcon()
     public static void setIcon$1()
@@ -41066,7 +41131,7 @@ androidx.core.os.LocaleListCompat:
     public final java.lang.String toLanguageTags()
     public static java.lang.Object unwrap()
     public static androidx.core.os.LocaleListCompat wrap(android.os.LocaleList)
-androidx.core.os.LocaleListCompatWrapper$$InternalSyntheticThrowCCEIfNotNull$203$eabde584e09f5dbef5e5c77b987ffae1119ec566c4556bde1e78e256d6ae9d7b$0
+androidx.core.os.LocaleListCompatWrapper$$InternalSyntheticThrowCCEIfNotNull$205$eabde584e09f5dbef5e5c77b987ffae1119ec566c4556bde1e78e256d6ae9d7b$0
 androidx.core.os.LocaleListCompatWrapper
 androidx.core.os.LocaleListInterface:
     public abstract java.util.Locale get()
@@ -41452,7 +41517,7 @@ androidx.core.view.WindowInsetsControllerCompat
 androidx.core.view.accessibility.AccessibilityEventCompat
 androidx.core.view.accessibility.AccessibilityManagerCompat$TouchExplorationStateChangeListener
 androidx.core.view.accessibility.AccessibilityManagerCompat
-androidx.core.view.accessibility.AccessibilityNodeInfoCompat$AccessibilityActionCompat$$InternalSyntheticThrowCCEIfNotNull$50$51a518e2562bdd83f1a37db6273eca8c40d29d82445ffc5c9314f2450daba410$0
+androidx.core.view.accessibility.AccessibilityNodeInfoCompat$AccessibilityActionCompat$$InternalSyntheticThrowCCEIfNotNull$149$51a518e2562bdd83f1a37db6273eca8c40d29d82445ffc5c9314f2450daba410$0
 androidx.core.view.accessibility.AccessibilityNodeInfoCompat$AccessibilityActionCompat:
     public static final androidx.core.view.accessibility.AccessibilityNodeInfoCompat$AccessibilityActionCompat ACTION_ACCESSIBILITY_FOCUS
     public static final androidx.core.view.accessibility.AccessibilityNodeInfoCompat$AccessibilityActionCompat ACTION_CLEAR_ACCESSIBILITY_FOCUS
@@ -41545,6 +41610,7 @@ androidx.core.view.accessibility.AccessibilityNodeInfoCompat:
     public static androidx.core.view.accessibility.AccessibilityNodeInfoCompat obtain()
     public static boolean performAction()
     public static void recycle()
+    public final void removeAction(androidx.core.view.accessibility.AccessibilityNodeInfoCompat$AccessibilityActionCompat)
     public static void removeCollectedSpans()
     public final void setAccessibilityFocused(boolean)
     public static void setBooleanProperty()
@@ -42574,7 +42640,7 @@ androidx.lifecycle.ProcessLifecycleOwner:
     public static void dispatchPauseIfNeeded$lifecycle_process_release()
     public final void dispatchStopIfNeeded$lifecycle_process_release()
 androidx.lifecycle.ReportFragment$ActivityInitializationListener
-androidx.lifecycle.ReportFragment$Companion$$InternalSyntheticThrowCCEIfNotNull$147$6606f6a9d6c00feabd13f693204c7c685bcfd577a1c056fdbb01af5d22a24ba7$0
+androidx.lifecycle.ReportFragment$Companion$$InternalSyntheticThrowCCEIfNotNull$149$6606f6a9d6c00feabd13f693204c7c685bcfd577a1c056fdbb01af5d22a24ba7$0
 androidx.lifecycle.ReportFragment$Companion:
     public static androidx.lifecycle.ReportFragment get()
 androidx.lifecycle.ReportFragment$LifecycleCallbacks$Companion:
@@ -42887,9 +42953,9 @@ androidx.recyclerview.widget.LinearLayoutManager$SavedState:
     public static void invalidateAnchor()
 androidx.recyclerview.widget.LinearLayoutManager:
     public boolean mRecycleChildrenOnDetach
+    public void <init>()
     public static androidx.recyclerview.widget.LinearLayoutManager$LayoutState createLayoutState()
     public final android.view.View findFirstPartiallyOrCompletelyInvisibleChild()
-    public final int findFirstVisibleItemPosition()
     public final android.view.View findLastPartiallyOrCompletelyInvisibleChild()
     public static android.view.View findPartiallyOrCompletelyInvisibleChildClosestToEnd()
     public static android.view.View findPartiallyOrCompletelyInvisibleChildClosestToStart()
@@ -42941,10 +43007,8 @@ androidx.recyclerview.widget.OrientationHelper:
     public abstract void onLayoutComplete()
 androidx.recyclerview.widget.PagerSnapHelper:
     public android.widget.Scroller mGravityScroller
-    public static void attachToRecyclerView()
     public static androidx.recyclerview.widget.LinearSmoothScroller createScroller()
     public static void destroyCallbacks()
-    public static android.view.View findSnapView()
     public static int findTargetSnapPosition()
     public static androidx.recyclerview.widget.OrientationHelper getOrientationHelper()
     public static boolean isForwardFling()
@@ -42952,8 +43016,6 @@ androidx.recyclerview.widget.PagerSnapHelper:
     public final boolean onFling()
     public static void setupCallbacks()
     public static boolean snapFromFling()
-androidx.recyclerview.widget.RecyclerView$$InternalSyntheticThrowCCEIfNotNull$13$25afd68fa2348859b7543da3a4a459d8c399b73922bc144b750ebd2ecb97ea96$0
-androidx.recyclerview.widget.RecyclerView$$InternalSyntheticThrowCCEIfNotNull$13$d0c8fb5152f7346534634e64c58a01049944a6d1492d1200890f23d1433c266c$0
 androidx.recyclerview.widget.RecyclerView$4:
     public static void processPersistent()
     public final void unused(androidx.recyclerview.widget.RecyclerView$ViewHolder)
@@ -42979,13 +43041,6 @@ androidx.recyclerview.widget.RecyclerView$Adapter$StateRestorationPolicy:
     public static final enum androidx.recyclerview.widget.RecyclerView$Adapter$StateRestorationPolicy PREVENT_WHEN_EMPTY
 androidx.recyclerview.widget.RecyclerView$AdapterDataObservable:
     public static void notifyItemRangeChanged()
-androidx.recyclerview.widget.RecyclerView$AdapterDataObserver:
-    public abstract void onChanged()
-    public abstract void onItemRangeChanged()
-    public abstract void onItemRangeInserted()
-    public abstract void onItemRangeMoved()
-    public abstract void onItemRangeRemoved()
-    public abstract void onStateRestorationPolicyChanged()
 androidx.recyclerview.widget.RecyclerView$ChildDrawingOrderCallback:
     public abstract int onGetChildDrawingOrder()
 androidx.recyclerview.widget.RecyclerView$EdgeEffectFactory:
@@ -43077,7 +43132,6 @@ androidx.recyclerview.widget.RecyclerView$LayoutManager:
     public abstract boolean onRequestChildFocus$1()
     public abstract void onSmoothScrollerStopped()
     public abstract boolean performAccessibilityAction()
-    public abstract boolean performAccessibilityAction$1()
     public abstract boolean performAccessibilityActionForItem()
     public abstract boolean performAccessibilityActionForItem$1()
     public final void removeAndRecycleViewAt(int,androidx.recyclerview.widget.RecyclerView$Recycler)
@@ -43150,13 +43204,6 @@ androidx.recyclerview.widget.RecyclerView$Recycler:
     public static void viewRangeUpdate()
 androidx.recyclerview.widget.RecyclerView$RecyclerListener:
     public abstract void onViewRecycled()
-androidx.recyclerview.widget.RecyclerView$RecyclerViewDataObserver:
-    public final void onChanged()
-    public final void onItemRangeChanged()
-    public final void onItemRangeInserted()
-    public final void onItemRangeMoved()
-    public final void onItemRangeRemoved()
-    public final void onStateRestorationPolicyChanged()
 androidx.recyclerview.widget.RecyclerView$SavedState$1:
     public static androidx.recyclerview.widget.RecyclerView$SavedState createFromParcel()
     public static androidx.recyclerview.widget.RecyclerView$SavedState createFromParcel$1()
@@ -43194,10 +43241,10 @@ androidx.recyclerview.widget.RecyclerView:
     public static final boolean IGNORE_DETACHED_FOCUSED_CHILD
     public androidx.recyclerview.widget.RecyclerView$ChildDrawingOrderCallback mChildDrawingOrderCallback
     public boolean mEnableFastScroller
-    public java.util.List mOnChildAttachStateListeners
     public androidx.recyclerview.widget.RecyclerView$RecyclerListener mRecyclerListener
     public static void absorbGlows()
     public static void addItemDecoration()
+    public static void addOnChildAttachStateChangeListener()
     public static void addOnItemTouchListener()
     public static void animateAppearance()
     public static void animateChange()
@@ -43209,7 +43256,6 @@ androidx.recyclerview.widget.RecyclerView:
     public static void createLayoutManager()
     public static boolean didChildRangeChange()
     public static void dispatchChildAttached()
-    public final void dispatchChildDetached(android.view.View)
     public static void dispatchContentChangedIfNecessary()
     public static void dispatchLayoutStep3()
     public static void dispatchOnScrollStateChanged()
@@ -43263,7 +43309,6 @@ androidx.recyclerview.widget.RecyclerView:
     public static void smoothScrollBy()
     public final void smoothScrollBy(int,int)
     public static void smoothScrollBy$1()
-    public static void smoothScrollToPosition()
     public final void startNestedScroll(int,int)
     public static boolean stopGlowAnimations$1()
     public final void stopScroll()
@@ -43706,6 +43751,14 @@ androidx.versionedparcelable.VersionedParcelParcel:
     public final void writeInt(int)
     public final void writeParcelable()
     public final void writeString(java.lang.String)
+androidx.viewpager2.R$styleable:
+    public static int[] ColorStateListItem
+    public static int[] FontFamily
+    public static int[] FontFamilyFont
+    public static int[] GradientColor
+    public static int[] GradientColorItem
+    public static int[] RecyclerView
+    public static int ViewPager2_android_orientation
 androidx.viewpager2.adapter.FragmentStateAdapter$2:
     public final synthetic androidx.viewpager2.adapter.FragmentStateAdapter this$0
     public final synthetic androidx.viewpager2.adapter.FragmentViewHolder val$holder
@@ -43717,6 +43770,110 @@ androidx.viewpager2.adapter.FragmentStateAdapter$FragmentMaxLifecycleEnforcer$3:
 androidx.viewpager2.adapter.FragmentStateAdapter$FragmentMaxLifecycleEnforcer
 androidx.viewpager2.adapter.FragmentStateAdapter
 androidx.viewpager2.adapter.FragmentViewHolder
+androidx.viewpager2.adapter.StatefulAdapter
+androidx.viewpager2.widget.AnimateLayoutChangeDetector$1:
+    public final synthetic androidx.viewpager2.widget.AnimateLayoutChangeDetector this$0
+    public static int compare()
+androidx.viewpager2.widget.AnimateLayoutChangeDetector:
+    public androidx.recyclerview.widget.LinearLayoutManager mLayoutManager
+    public static boolean arePagesLaidOutContiguously()
+    public static boolean hasRunningChangingLayoutTransition()
+    public static boolean mayHaveInterferingAnimations()
+androidx.viewpager2.widget.CompositeOnPageChangeCallback:
+    public final void addOnPageChangeCallback(androidx.viewpager2.widget.ViewPager2$OnPageChangeCallback)
+    public static void throwCallbackListModifiedWhileInUse(java.util.ConcurrentModificationException)
+androidx.viewpager2.widget.FakeDrag:
+    public final androidx.recyclerview.widget.RecyclerView mRecyclerView
+    public final androidx.viewpager2.widget.ViewPager2 mViewPager
+    public static boolean isFakeDragging()
+androidx.viewpager2.widget.PageTransformerAdapter:
+    public final androidx.viewpager2.widget.ViewPager2$LinearLayoutManagerImpl mLayoutManager
+    public androidx.viewpager2.widget.ViewPager2$PageTransformer mPageTransformer
+    public static void getPageTransformer()
+    public static void setPageTransformer()
+androidx.viewpager2.widget.ScrollEventAdapter$ScrollEventValues:
+    public final void reset()
+androidx.viewpager2.widget.ScrollEventAdapter:
+    public boolean mFakeDragging
+    public final void dispatchScrolled(int,float,int)
+    public final void dispatchSelected(int)
+    public static int getPosition()
+    public final double getRelativeScrollPosition()
+    public static int getScrollState()
+    public static boolean isFakeDragging()
+    public final boolean isIdle()
+    public final boolean isInAnyDraggingState()
+    public static void notifyDataSetChangeHappened()
+    public static void notifyProgrammaticScroll()
+    public static void setOnPageChangeCallback()
+    public static void startDrag()
+androidx.viewpager2.widget.ViewPager2$$InternalSyntheticThrowCCEIfNotNull$137$73d48e25c3207547eb5c6053a1843ead1fc05e48f19beb184fb82ebefd6b0239$0
+androidx.viewpager2.widget.ViewPager2$$InternalSyntheticThrowCCEIfNotNull$145$f4360361cb80a49e254f4382eb43a6fc55e960c8806ced6247e440541db0e483$0
+androidx.viewpager2.widget.ViewPager2$4:
+    public final synthetic androidx.viewpager2.widget.ViewPager2 this$0
+    public static void onChildViewAttachedToWindow()
+    public static void onChildViewDetachedFromWindow()
+androidx.viewpager2.widget.ViewPager2$AccessibilityProvider:
+    public final synthetic androidx.viewpager2.widget.ViewPager2 this$0
+    public abstract boolean handlesGetAccessibilityClassName()
+    public abstract boolean handlesLmPerformAccessibilityAction()
+    public abstract boolean handlesPerformAccessibilityAction(int)
+    public abstract boolean handlesRvGetAccessibilityClassName()
+    public abstract void onAttachAdapter()
+    public abstract void onDetachAdapter()
+    public abstract java.lang.String onGetAccessibilityClassName()
+    public abstract void onInitialize(androidx.viewpager2.widget.ViewPager2$RecyclerViewImpl)
+    public abstract void onInitializeAccessibilityNodeInfo()
+    public abstract void onLmInitializeAccessibilityNodeInfo()
+    public abstract boolean onLmPerformAccessibilityAction()
+    public abstract boolean onPerformAccessibilityAction()
+    public abstract void onRestorePendingState()
+    public abstract java.lang.CharSequence onRvGetAccessibilityClassName()
+    public abstract void onRvInitializeAccessibilityEvent()
+    public abstract void onSetLayoutDirection()
+    public void onSetNewCurrentItem()
+    public abstract void onSetOrientation()
+    public abstract void onSetUserInputEnabled()
+androidx.viewpager2.widget.ViewPager2$BasicAccessibilityProvider
+androidx.viewpager2.widget.ViewPager2$PageAwareAccessibilityProvider:
+    public static void addCollectionInfo()
+    public static void addScrollActions()
+    public final boolean handlesPerformAccessibilityAction(int)
+    public final void onAttachAdapter()
+    public final void onDetachAdapter()
+    public final java.lang.String onGetAccessibilityClassName()
+    public final void onInitialize(androidx.viewpager2.widget.ViewPager2$RecyclerViewImpl)
+    public final void onInitializeAccessibilityNodeInfo()
+    public final boolean onPerformAccessibilityAction()
+    public final void onRestorePendingState()
+    public final void onRvInitializeAccessibilityEvent()
+    public final void onSetLayoutDirection()
+    public final void onSetNewCurrentItem()
+    public final void onSetOrientation()
+    public final void onSetUserInputEnabled()
+    public final void setCurrentItemFromAccessibilityCommand(int)
+androidx.viewpager2.widget.ViewPager2$PageTransformer:
+    public abstract void transformPage()
+androidx.viewpager2.widget.ViewPager2$SavedState$1:
+    public static androidx.viewpager2.widget.ViewPager2$SavedState createFromParcel()
+    public static androidx.viewpager2.widget.ViewPager2$SavedState createFromParcel(android.os.Parcel,java.lang.ClassLoader)
+    public static androidx.viewpager2.widget.ViewPager2$SavedState[] newArray()
+androidx.viewpager2.widget.ViewPager2$SavedState:
+    public final void readValues(android.os.Parcel,java.lang.ClassLoader)
+androidx.viewpager2.widget.ViewPager2:
+    public androidx.viewpager2.widget.CompositeOnPageChangeCallback mExternalPageChangeCallbacks
+    public static boolean sFeatureEnhancedA11yEnabled
+    static void <clinit>()
+    public static androidx.viewpager2.widget.ViewPager2$4 enforceChildFillListener()
+    public static void initialize()
+    public final boolean isFakeDragging()
+    public final boolean isRtl()
+    public static boolean isUserInputEnabled()
+    public static void registerCurrentItemDataSetTracker()
+    public static void requestTransform()
+    public static void setCurrentItem()
+    public static void setOrientation()
+    public static void unregisterCurrentItemDataSetTracker()
 com.bumptech.glide.GeneratedAppGlideModule:
     public abstract java.util.Set getExcludedModuleClasses()
     public abstract com.bumptech.glide.manager.RequestManagerRetriever$1 getRequestManagerFactory()
@@ -45143,10 +45300,10 @@ com.google.android.gms.common.api.ApiException:
     public final com.google.android.gms.common.api.Status mStatus
     public static com.google.android.gms.common.api.Status getStatus()
 com.google.android.gms.common.api.CommonStatusCodes
-com.google.android.gms.common.api.GoogleApi$$InternalSyntheticThrowCCEIfNotNull$178$daa842e2bcf2f19cc0f90a7d36350410075fb86372360aff956ed17b5fc08fc9$0
-com.google.android.gms.common.api.GoogleApi$$InternalSyntheticThrowCCEIfNotNull$178$daa842e2bcf2f19cc0f90a7d36350410075fb86372360aff956ed17b5fc08fc9$1
-com.google.android.gms.common.api.GoogleApi$$InternalSyntheticThrowCCEIfNotNull$178$daa842e2bcf2f19cc0f90a7d36350410075fb86372360aff956ed17b5fc08fc9$2
-com.google.android.gms.common.api.GoogleApi$$InternalSyntheticThrowCCEIfNotNull$180$cbd6e37ea8225c7e7b675d4c0db7054199d7019f9410f22dd419e488a84996a0$0
+com.google.android.gms.common.api.GoogleApi$$InternalSyntheticThrowCCEIfNotNull$180$daa842e2bcf2f19cc0f90a7d36350410075fb86372360aff956ed17b5fc08fc9$0
+com.google.android.gms.common.api.GoogleApi$$InternalSyntheticThrowCCEIfNotNull$180$daa842e2bcf2f19cc0f90a7d36350410075fb86372360aff956ed17b5fc08fc9$1
+com.google.android.gms.common.api.GoogleApi$$InternalSyntheticThrowCCEIfNotNull$180$daa842e2bcf2f19cc0f90a7d36350410075fb86372360aff956ed17b5fc08fc9$2
+com.google.android.gms.common.api.GoogleApi$$InternalSyntheticThrowCCEIfNotNull$182$cbd6e37ea8225c7e7b675d4c0db7054199d7019f9410f22dd419e488a84996a0$0
 com.google.android.gms.common.api.GoogleApi$Settings$Builder
 com.google.android.gms.common.api.GoogleApi$Settings:
     public final android.os.Looper zab
@@ -45195,8 +45352,8 @@ com.google.android.gms.common.api.internal.BackgroundDetector:
     public static boolean readCurrentStateIfPossible()
 com.google.android.gms.common.api.internal.BasePendingResult
 com.google.android.gms.common.api.internal.ConnectionCallbacks
-com.google.android.gms.common.api.internal.GoogleApiManager$$InternalSyntheticThrowCCEIfNotNull$194$176a2ecec2e201424803a5fc985d9d742a2e18976d4340f9044d3126d8ef36fa$0
-com.google.android.gms.common.api.internal.GoogleApiManager$$InternalSyntheticThrowCCEIfNotNull$194$176a2ecec2e201424803a5fc985d9d742a2e18976d4340f9044d3126d8ef36fa$1
+com.google.android.gms.common.api.internal.GoogleApiManager$$InternalSyntheticThrowCCEIfNotNull$196$176a2ecec2e201424803a5fc985d9d742a2e18976d4340f9044d3126d8ef36fa$0
+com.google.android.gms.common.api.internal.GoogleApiManager$$InternalSyntheticThrowCCEIfNotNull$196$176a2ecec2e201424803a5fc985d9d742a2e18976d4340f9044d3126d8ef36fa$1
 com.google.android.gms.common.api.internal.GoogleApiManager:
     public com.google.android.gms.common.api.internal.zaae zao
     public final void zaA(com.google.android.gms.common.api.internal.zaae)
@@ -45285,10 +45442,10 @@ com.google.android.gms.common.api.internal.zabl:
     public static void onBackgroundStateChanged()
 com.google.android.gms.common.api.internal.zabp:
     public static void onSignOutComplete()
-com.google.android.gms.common.api.internal.zabq$$InternalSyntheticThrowCCEIfNotNull$183$6e59dd714f23b8788d809f7a1ddb855157feafdba66a5fd0e46484d88534a2db$0
-com.google.android.gms.common.api.internal.zabq$$InternalSyntheticThrowCCEIfNotNull$185$43a7021dd4db3f0cc4f2cbd2a0736e605edbd628cfca6b31cb0b458102f91a3a$0
-com.google.android.gms.common.api.internal.zabq$$InternalSyntheticThrowCCEIfNotNull$191$906131d2c123e80164b9ca67ef89941ca6a5db27f850a568d4ea107eea66b0a4$0
-com.google.android.gms.common.api.internal.zabq$$InternalSyntheticThrowCCEIfNotNull$203$06f2ce6319b5d8454e69a67161d537b9107548b0e54541017ec6364bab2df9fd$0
+com.google.android.gms.common.api.internal.zabq$$InternalSyntheticThrowCCEIfNotNull$185$6e59dd714f23b8788d809f7a1ddb855157feafdba66a5fd0e46484d88534a2db$0
+com.google.android.gms.common.api.internal.zabq$$InternalSyntheticThrowCCEIfNotNull$187$43a7021dd4db3f0cc4f2cbd2a0736e605edbd628cfca6b31cb0b458102f91a3a$0
+com.google.android.gms.common.api.internal.zabq$$InternalSyntheticThrowCCEIfNotNull$193$906131d2c123e80164b9ca67ef89941ca6a5db27f850a568d4ea107eea66b0a4$0
+com.google.android.gms.common.api.internal.zabq$$InternalSyntheticThrowCCEIfNotNull$205$06f2ce6319b5d8454e69a67161d537b9107548b0e54541017ec6364bab2df9fd$0
 com.google.android.gms.common.api.internal.zabq:
     public final com.google.android.gms.common.api.internal.zact zai
     public int zam
@@ -45356,9 +45513,9 @@ com.google.android.gms.common.api.internal.zacv:
     public static com.google.android.gms.common.Feature[] zab()
 com.google.android.gms.common.api.internal.zacw
 com.google.android.gms.common.api.internal.zad
-com.google.android.gms.common.api.internal.zah$$InternalSyntheticThrowCCEIfNotNull$185$83b11eb7a67d3312b471146c5df05f45da276349cf0ab4dc292055c608e4ba56$0
-com.google.android.gms.common.api.internal.zah$$InternalSyntheticThrowCCEIfNotNull$185$8446b4cf514ec2ba97e9c75bc6ea57cb75891d6e3990672d55dd2b1cd7705cda$0
-com.google.android.gms.common.api.internal.zah$$InternalSyntheticThrowCCEIfNotNull$185$988b434661292ed719064ee83f0c31f06507f5a811809e15e9e049ecf7c51307$0
+com.google.android.gms.common.api.internal.zah$$InternalSyntheticThrowCCEIfNotNull$187$83b11eb7a67d3312b471146c5df05f45da276349cf0ab4dc292055c608e4ba56$0
+com.google.android.gms.common.api.internal.zah$$InternalSyntheticThrowCCEIfNotNull$187$8446b4cf514ec2ba97e9c75bc6ea57cb75891d6e3990672d55dd2b1cd7705cda$0
+com.google.android.gms.common.api.internal.zah$$InternalSyntheticThrowCCEIfNotNull$187$988b434661292ed719064ee83f0c31f06507f5a811809e15e9e049ecf7c51307$0
 com.google.android.gms.common.api.internal.zah:
     public final com.google.android.gms.common.api.internal.ListenerHolder$ListenerKey zab
 com.google.android.gms.common.api.internal.zai
@@ -46931,11 +47088,11 @@ com.google.android.material.datepicker.DaysOfWeekAdapter:
     static void <clinit>()
     public static java.lang.Integer getItem()
     public final int positionToDayOfWeek(int)
-com.google.android.material.datepicker.MaterialCalendar$$InternalSyntheticThrowCCEIfNotNull$169$a4c48b855944400f3a37fd7ce152a9437d0f7b776d2ddb6f6ae01d36b3b56503$0
-com.google.android.material.datepicker.MaterialCalendar$$InternalSyntheticThrowCCEIfNotNull$169$a4c48b855944400f3a37fd7ce152a9437d0f7b776d2ddb6f6ae01d36b3b56503$1
+com.google.android.material.datepicker.MaterialCalendar$$InternalSyntheticThrowCCEIfNotNull$171$a4c48b855944400f3a37fd7ce152a9437d0f7b776d2ddb6f6ae01d36b3b56503$0
+com.google.android.material.datepicker.MaterialCalendar$$InternalSyntheticThrowCCEIfNotNull$171$a4c48b855944400f3a37fd7ce152a9437d0f7b776d2ddb6f6ae01d36b3b56503$1
 com.google.android.material.datepicker.MaterialCalendar$1:
     public final synthetic com.google.android.material.datepicker.MaterialCalendar this$0
-com.google.android.material.datepicker.MaterialCalendar$3$$InternalSyntheticThrowCCEIfNotNull$172$11d4ec5a207ce79f5d476fe91140e0eb1349444d0450a9810d3f7c5973a317b3$0
+com.google.android.material.datepicker.MaterialCalendar$3$$InternalSyntheticThrowCCEIfNotNull$174$11d4ec5a207ce79f5d476fe91140e0eb1349444d0450a9810d3f7c5973a317b3$0
 com.google.android.material.datepicker.MaterialCalendar$3:
     public static void onDayClick()
 com.google.android.material.datepicker.MaterialCalendar$4:
@@ -47005,7 +47162,7 @@ com.google.android.material.datepicker.MaterialDatePicker:
     public static void updateTitle()
     public final void updateToggleContentDescription(com.google.android.material.internal.CheckableImageButton)
 com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener
-com.google.android.material.datepicker.MaterialTextInputPicker$$InternalSyntheticThrowCCEIfNotNull$169$10f04847218b83c9bef9d4f97278bb386358b28cd393fa1c3f960e62558304c9$0
+com.google.android.material.datepicker.MaterialTextInputPicker$$InternalSyntheticThrowCCEIfNotNull$171$10f04847218b83c9bef9d4f97278bb386358b28cd393fa1c3f960e62558304c9$0
 com.google.android.material.datepicker.MaterialTextInputPicker$1
 com.google.android.material.datepicker.MaterialTextInputPicker:
     public com.google.android.material.datepicker.DateSelector dateSelector
@@ -49736,7 +49893,7 @@ kotlinx.coroutines.scheduling.WorkQueue:
     public static long tryStealLastScheduled()
 me.t3sl4.upcortex.UI.Screens.Auth.Register.Register3$$InternalSyntheticLambda$1$115315925045c37e2e3a1a239b7d44516009448ee9401a041a5bf8908cb86997$0:
     public final void onCheckedChanged()
-me.t3sl4.upcortex.Utility.Utils:
+me.t3sl4.upcortex.Utils.BaseUtil:
     static void <clinit>()
 okhttp3.Address:
     public final java.net.Proxy proxy

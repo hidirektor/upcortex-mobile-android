@@ -130,6 +130,7 @@
     <string name="locationPermError">Konum izni gereklidir. Lütfen uygulamayı yeniden başlatın.</string>
     <string name="get_exams_error">Sınav verilerinize ulaşılamadı. Lütfen ekranı yenileyin.</string>
     <string name="exam_detail_cant_retrieve">Sınav detayları alınamadı.</string>
+    <string name="not_permitted">Programı kullanmak için gerekli şartları karşılamıyorsunuz.</string>
 
     <!-- Register 4 Screen Texts-->
     <string name="register_fourth_success">Aboneliğiniz Başarıyla Alındı!</string>

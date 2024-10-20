@@ -103,8 +103,6 @@ public class Dashboard extends AppCompatActivity {
     }
 
     private void loadExamList() {
-        //Boolean isFirstExam = SharedPreferencesManager.getSharedPref("firstExam", this, false);
-
         ExamService.getAllExams(this, () -> {
             examsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
