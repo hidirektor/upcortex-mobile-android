@@ -32,9 +32,9 @@ import me.t3sl4.upcortex.Utils.Web.PaymentWebViewBottomSheetFragment;
 
 public class Register3 extends AppCompatActivity implements ExpiryDatePicker.ExpiryDateSelectedListener  {
 
-    private Button monthlyButton;
-    private Button sixMonthButton;
-    private Button annuallyButton;
+    private Button firstPlanButton;
+    private Button secondPlanButton;
+    private Button thirthPlanButton;
 
     private TextView packagePrice;
     private Button packagePromotion;
@@ -63,9 +63,9 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
 
     private String uniqueID;
 
-    private String packageID = "1";
-    private String packageName = "Alzheimer Paketi";
-    private String packagePriceText = "1";
+    private String packageID = "3";
+    private String packageName = "Sınava Hazırlık";
+    private String packagePriceText = "7800";
     private String selectedPaymentOption;
 
     @Override
@@ -84,9 +84,9 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
     }
 
     private void initializeComponents() {
-        monthlyButton = findViewById(R.id.buttonMonthly);
-        sixMonthButton = findViewById(R.id.button6Month);
-        annuallyButton = findViewById(R.id.buttonAnnually);
+        firstPlanButton = findViewById(R.id.buttonFirstPlan);
+        secondPlanButton = findViewById(R.id.buttonSecondPlan);
+        thirthPlanButton = findViewById(R.id.buttonThirthPlan);
 
         packagePrice = findViewById(R.id.packagePrice);
         packagePromotion = findViewById(R.id.promotionButton);
@@ -159,37 +159,37 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
             }
         });
 
-        monthlyButton.setOnClickListener(v -> {
-            buttonStatusSwitch(monthlyButton, true);
-            buttonStatusSwitch(sixMonthButton, false);
-            buttonStatusSwitch(annuallyButton, false);
+        firstPlanButton.setOnClickListener(v -> {
+            buttonStatusSwitch(firstPlanButton, true);
+            buttonStatusSwitch(secondPlanButton, false);
+            buttonStatusSwitch(thirthPlanButton, false);
             packageSetup(1);
 
             packageID = "1";
             packageName = getString(R.string.plan_1_summary);
-            packagePriceText = "1";
+            packagePriceText = "15600";
         });
 
-        sixMonthButton.setOnClickListener(v -> {
-            buttonStatusSwitch(monthlyButton, false);
-            buttonStatusSwitch(sixMonthButton, true);
-            buttonStatusSwitch(annuallyButton, false);
+        secondPlanButton.setOnClickListener(v -> {
+            buttonStatusSwitch(firstPlanButton, false);
+            buttonStatusSwitch(secondPlanButton, true);
+            buttonStatusSwitch(thirthPlanButton, false);
             packageSetup(2);
 
             packageID = "2";
             packageName = getString(R.string.plan_2_summary);
-            packagePriceText = "1";
+            packagePriceText = "13600";
         });
 
-        annuallyButton.setOnClickListener(v -> {
-            buttonStatusSwitch(monthlyButton, false);
-            buttonStatusSwitch(sixMonthButton, false);
-            buttonStatusSwitch(annuallyButton, true);
+        thirthPlanButton.setOnClickListener(v -> {
+            buttonStatusSwitch(firstPlanButton, false);
+            buttonStatusSwitch(secondPlanButton, false);
+            buttonStatusSwitch(thirthPlanButton, true);
             packageSetup(3);
 
             packageID = "3";
             packageName = getString(R.string.plan_3_summary);
-            packagePriceText = "1";
+            packagePriceText = "7800";
         });
 
         editTextExpiryDate.setOnClickListener(v -> {

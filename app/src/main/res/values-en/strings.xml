@@ -82,9 +82,9 @@
     <!-- Register 3 Screen Texts-->
     <string name="register_thirth_header">Subscription Plan</string>
     <string name="register_thirth_desc">You can continue with one of \nthe membership options suitable for you..</string>
-    <string name="register_thirth_monthly">Monthly</string>
-    <string name="register_thirth_sixmonth">6 Month</string>
-    <string name="register_thirth_annually">Annually</string>
+    <string name="register_thirth_plan_1">Obesity</string>
+    <string name="register_thirth_plan_2">Alzheimer</string>
+    <string name="register_thirth_plan_3">Exam Preparation</string>
     <string name="register_thirth_terms">I have read the Preliminary Information Form and I accept the Distance Sales Agreement.</string>
     <string name="register_thirth_warning">Your subscription process begins after you receive your device.</string>
     <string name="register_card_number">Card Number</string>
@@ -96,9 +96,9 @@
     <string name="register_thirth_select_expiry_date">Expiry Date</string>
 
     <!-- Package Plan Texts-->
-    <string name="plan_1_summary">Monthly Plan</string>
-    <string name="plan_2_summary">6 Month Plan</string>
-    <string name="plan_3_summary">Annual Plan</string>
+    <string name="plan_1_summary">Obesity Plan</string>
+    <string name="plan_2_summary">Alzheimer Plan</string>
+    <string name="plan_3_summary">Exam Preperation Plan</string>
 
     <string name="plan_1_gift">10 Days Gift</string>
     <string name="plan_1_spec_1">No Commitment Cancel Anytime</string>

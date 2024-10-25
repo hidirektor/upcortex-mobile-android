@@ -84,9 +84,9 @@
     <!-- Register 3 Screen Texts-->
     <string name="register_thirth_header">Üyelik Planı</string>
     <string name="register_thirth_desc">Size uygun üyelik seçeneklerinden biri ile\ndevam edebilirsiniz.</string>
-    <string name="register_thirth_monthly">Aylık</string>
-    <string name="register_thirth_sixmonth">6 Aylık</string>
-    <string name="register_thirth_annually">Yıllık</string>
+    <string name="register_thirth_plan_1">Obezite</string>
+    <string name="register_thirth_plan_2">Alzheimer</string>
+    <string name="register_thirth_plan_3">Sınava Hazırlık</string>
     <string name="register_thirth_terms">Ön Bilgilendirme Formunu okudum, Mesafeli Satış Sözleşmesini kabul ediyorum.</string>
     <string name="register_thirth_warning">Abonelik süreciniz cihaz elinize ulaştıktan sonra başlar.</string>
     <string name="register_card_number">Kart Numarası</string>
@@ -102,9 +102,9 @@
     <string name="plan_2_price" translatable="false">1.020,00 ₺</string>
     <string name="plan_3_price" translatable="false">1.990,00 ₺</string>
 
-    <string name="plan_1_summary">Aylık Plan</string>
-    <string name="plan_2_summary">6 Aylık Plan</string>
-    <string name="plan_3_summary">1 Yıllık Plan</string>
+    <string name="plan_1_summary">Obezite Paketi</string>
+    <string name="plan_2_summary">Alzheimer Paketi</string>
+    <string name="plan_3_summary">Sınava Hazırlık Paketi</string>
 
     <string name="plan_1_gift">10 Gün Hediye</string>
     <string name="plan_1_spec_1">Taahhüt Yok Dilediğin Zaman İptal Et</string>

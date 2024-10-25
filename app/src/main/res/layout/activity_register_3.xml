@@ -101,11 +101,11 @@
                 android:layout_marginBottom="16dp">
 
                 <Button
-                    android:id="@+id/buttonMonthly"
+                    android:id="@+id/buttonFirstPlan"
                     android:layout_width="0dp"
                     android:layout_weight="1.0"
                     android:layout_height="wrap_content"
-                    android:text="@string/register_thirth_monthly"
+                    android:text="@string/register_thirth_plan_1"
                     android:textAllCaps="false"
                     android:textColor="@color/darkBaseColor"
                     android:textSize="18sp"
@@ -113,11 +113,11 @@
                     android:layout_marginRight="12dp"/>
 
                 <Button
-                    android:id="@+id/button6Month"
+                    android:id="@+id/buttonSecondPlan"
                     android:layout_width="0dp"
                     android:layout_weight="1.0"
                     android:layout_height="wrap_content"
-                    android:text="@string/register_thirth_sixmonth"
+                    android:text="@string/register_thirth_plan_2"
                     android:textAllCaps="false"
                     android:textColor="@color/darkBaseColor"
                     android:textSize="18sp"
@@ -125,11 +125,11 @@
                     android:layout_marginRight="12dp"/>
 
                 <Button
-                    android:id="@+id/buttonAnnually"
+                    android:id="@+id/buttonThirthPlan"
                     android:layout_width="0dp"
                     android:layout_weight="1.0"
                     android:layout_height="wrap_content"
-                    android:text="@string/register_thirth_annually"
+                    android:text="@string/register_thirth_plan_3"
                     android:drawableTint="@color/white"
                     android:drawableEnd="@drawable/ikon_membership_star"
                     android:textAllCaps="false"
