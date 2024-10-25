@@ -30,6 +30,8 @@ import java.util.List;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
+import me.t3sl4.upcortex.Utils.BaseUtil;
+import me.t3sl4.upcortex.Utils.HTTP.Requests.Auth.AuthService;
 import me.t3sl4.upcortex.Utils.Screen.ScreenUtil;
 import me.t3sl4.upcortex.Utils.SharedPreferences.SharedPreferencesManager;
 
@@ -97,9 +99,28 @@ public class Register2 extends AppCompatActivity {
                         .sneakError();
             } else if (confirmAddress.isChecked()) {
                 saveData(); // Verileri kaydet
-                Intent intent = new Intent(Register2.this, Register3.class);
-                startActivity(intent);
-                finish();
+
+                String userName = SharedPreferencesManager.getSharedPref("name", this, "");
+                String userSurname = SharedPreferencesManager.getSharedPref("surname", this, "");
+                String userEmail = SharedPreferencesManager.getSharedPref("eMail", this, "");
+                String birthDate = BaseUtil.getValidBirthDate(SharedPreferencesManager.getSharedPref("birthDate", this, ""));
+                String userAddress = SharedPreferencesManager.getSharedPref("neighboorhood", this, "") + " " + SharedPreferencesManager.getSharedPref("addressDetail", this, "") + " " + SharedPreferencesManager.getSharedPref("zipCode", this, "") + " " + SharedPreferencesManager.getSharedPref("district", this, "") + " " + SharedPreferencesManager.getSharedPref("city", this, "");
+                String userPassword = SharedPreferencesManager.getSharedPref("password", this, "");
+                String dialCode = SharedPreferencesManager.getSharedPref("countryCode", this, "");
+                String userPhone = SharedPreferencesManager.getSharedPref("phoneNumber", this, "");
+                String userIdentity = SharedPreferencesManager.getSharedPref("idNumber", this, "");
+
+                AuthService.register(Register2.this,
+                        userName, userSurname, userEmail, birthDate, userAddress, userPassword, dialCode, userPhone, userIdentity, () -> {
+                            Intent intent = new Intent(Register2.this, Register3.class);
+                            startActivity(intent);
+                            finish();
+                        }, () -> {
+                            Sneaker.with(Register2.this)
+                                    .setTitle(getString(R.string.error_title))
+                                    .setMessage(getString(R.string.error_register_not_complete))
+                                    .sneakError();
+                        });
             } else {
                 Sneaker.with(Register2.this)
                         .setTitle(getString(R.string.error_title))

@@ -19,7 +19,7 @@ public class AuthService {
     private static final String REGISTER_URL = "/auth/register";
     private static final String LOGIN_URL = "/auth/login";
 
-    public static void register(Context context, String firstName, String lastName, String email, String dateOfBirth, String address, String password, String dialCode, String phone, String identityNumber, Runnable onSuccess) {
+    public static void register(Context context, String firstName, String lastName, String email, String dateOfBirth, String address, String password, String dialCode, String phone, String identityNumber, Runnable onSuccess, Runnable onFailure) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("firstName", firstName);
@@ -52,6 +52,9 @@ public class AuthService {
                 } else {
                     try {
                         Log.e("Register", "Failure: " + response.errorBody().string());
+                        if (onFailure != null) {
+                            onFailure.run();
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

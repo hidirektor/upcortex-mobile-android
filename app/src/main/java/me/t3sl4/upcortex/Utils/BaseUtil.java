@@ -20,6 +20,9 @@ import com.yariksoffice.lingver.Lingver;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -181,5 +184,17 @@ public class BaseUtil {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         Date date = new Date();
         return dateFormat.format(date);
+    }
+
+    public static String getValidBirthDate(String birthDate) {
+        DateTimeFormatter isoFormatter = DateTimeFormatter.ISO_DATE;
+
+        try {
+            LocalDate.parse(birthDate, isoFormatter);
+            return birthDate;
+        } catch (DateTimeParseException e) {
+            System.out.println("Invalid date format. Setting default birthDate.");
+            return "2000-01-01";
+        }
     }
 }

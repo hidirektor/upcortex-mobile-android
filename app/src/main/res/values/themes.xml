@@ -1,5 +1,5 @@
 <resources>
-    <style name="Theme.UpCortex" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.UpCortex" parent="Theme.MaterialComponents.NoActionBar.Bridge">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryVariant">@color/primaryOnTop</item>
