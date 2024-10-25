@@ -1,6 +1,11 @@
 package me.t3sl4.upcortex.Utils.HTTP.Requests.Payment;
 
+import android.content.Context;
 import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Base64;
@@ -10,6 +15,8 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 import me.t3sl4.upcortex.BuildConfig;
+import me.t3sl4.upcortex.Utils.BaseUtil;
+import me.t3sl4.upcortex.Utils.SharedPreferences.SharedPreferencesManager;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -19,24 +26,94 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class IyzicoService {
-
-    private static final String URL = "https://api.iyzipay.com/payment/iyzipos/checkoutform/initialize/auth/ecom";
     private static final String API_KEY = BuildConfig.IYZICO_API_KEY;
     private static final String SECRET_KEY = BuildConfig.IYZICO_SECRET_KEY;
 
-    public static void sendPaymentRequest(String jsonBody) {
+    private static final String BASE_URL = "https://api.iyzipay.com";
+    private static final String URI_PATH_CF_START = "/payment/iyzipos/checkoutform/initialize/auth/ecom";
+    private static final String URI_PATH_CF_CHECK = "/payment/iyzipos/checkoutform/auth/ecom/detail";
+
+    private static String defaultRandomKey = "123456789";
+    private static String defaultCallbackURL = "https://dinamikbeyin.com";
+    private static String defaultCurrency = "TRY";
+    private static String defaultLocale = "tr";
+    private static String defaultPaymentGroup = "PRODUCT";
+    private static String defaultProductType = "VIRTUAL";
+    private static String defaultCountry = "Turkey";
+
+    public static void sendPaymentRequest(Context context, String planID, String planName, String planPrice) throws JSONException {
         OkHttpClient client = new OkHttpClient();
+
+        String userName = SharedPreferencesManager.getSharedPref("name", context, "");
+        String userSurname = SharedPreferencesManager.getSharedPref("surname", context, "");
+        String userEmail = SharedPreferencesManager.getSharedPref("eMail", context, "");
+        String userAddress = SharedPreferencesManager.getSharedPref("neighboorhood", context, "") + " " + SharedPreferencesManager.getSharedPref("addressDetail", context, "") + " " + SharedPreferencesManager.getSharedPref("zipCode", context, "") + " " + SharedPreferencesManager.getSharedPref("district", context, "") + " " + SharedPreferencesManager.getSharedPref("city", context, "");
+        String dialCode = "+" + SharedPreferencesManager.getSharedPref("countryCode", context, "");
+        String userPhone = dialCode + SharedPreferencesManager.getSharedPref("phoneNumber", context, "");
+        String userIdentity = SharedPreferencesManager.getSharedPref("idNumber", context, "");
+        String zipCode = SharedPreferencesManager.getSharedPref("zipCode", context, "");
+        String city = SharedPreferencesManager.getSharedPref("city", context, "");
+
+        // Create the buyer object
+        JSONObject buyer = new JSONObject();
+        buyer.put("id", "BY789");
+        buyer.put("name", userName);
+        buyer.put("surname", userSurname);
+        buyer.put("identityNumber", userIdentity);
+        buyer.put("email", userEmail);
+        buyer.put("gsmNumber", userPhone);
+        //buyer.put("registrationDate", "2013-04-21 15:12:09");
+        //buyer.put("lastLoginDate", "2015-10-05 12:43:35");
+        buyer.put("registrationAddress", userAddress);
+        buyer.put("city", city);
+        buyer.put("country", defaultCountry);
+        buyer.put("zipCode", zipCode);
+        buyer.put("ip", BaseUtil.getUserIp(context));
+
+        JSONObject shippingAddress = new JSONObject();
+        shippingAddress.put("address", userAddress);
+        shippingAddress.put("zipCode", zipCode);
+        shippingAddress.put("contactName", userName + " " + userSurname);
+        shippingAddress.put("city", city);
+        shippingAddress.put("country", defaultCountry);
+
+        // Create the basket items array
+        JSONArray basketItems = new JSONArray();
+        basketItems.put(new JSONObject()
+                .put("id", planID)
+                .put("price", planPrice)
+                .put("name", planName)
+                .put("category1", "Online Programlar")
+                //.put("category2", "Accessories")
+                .put("itemType", defaultProductType));
+
+        // Create the main request object
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("locale", defaultLocale);
+        //requestBody.put("conversationId", "123456789");
+        requestBody.put("price", planPrice);
+        //requestBody.put("basketId", "B67832");
+        requestBody.put("paymentGroup", defaultPaymentGroup);
+        requestBody.put("buyer", buyer);
+        requestBody.put("shippingAddress", shippingAddress);
+        requestBody.put("billingAddress", shippingAddress);
+        requestBody.put("basketItems", basketItems);
+        requestBody.put("enabledInstallments", new JSONArray().put(1).put(2).put(3).put(6).put(9));
+        requestBody.put("callbackUrl", defaultCallbackURL);
+        requestBody.put("currency", defaultCurrency);
+        requestBody.put("paidPrice", planPrice);
+
+        String jsonBody = requestBody.toString();
+        String xIyziRnd = new Date().getTime() + defaultRandomKey;
+        String authorization = generateAuthorization(jsonBody, xIyziRnd, URI_PATH_CF_START);
 
         RequestBody body = RequestBody.create(
                 jsonBody,
                 MediaType.parse("application/json; charset=utf-8")
         );
 
-        String xIyziRnd = new Date().getTime() + "123456789";
-        String authorization = generateAuthorization(jsonBody, xIyziRnd);
-
         Request request = new Request.Builder()
-                .url(URL)
+                .url(BASE_URL + URI_PATH_CF_START)
                 .post(body)
                 .addHeader("Authorization", authorization)
                 .addHeader("Content-Type", "application/json")
@@ -52,19 +129,17 @@ public class IyzicoService {
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
                     String responseData = response.body().string();
-                    Log.d("Iyzico", responseData);
+                    Log.d("Iyzico response: ", responseData);
                 } else {
-                    Log.d("Iyzico", response.message());
+                    Log.d("Iyzico error: ", response.message());
                 }
             }
         });
     }
 
-    private static String generateAuthorization(String jsonBody, String xIyziRnd) {
+    private static String generateAuthorization(String jsonBody, String xIyziRnd, String uriPath) {
         try {
             String randomKey = xIyziRnd;
-
-            String uriPath = "/payment/iyzipos/checkoutform/initialize/auth/ecom";
 
             String payload = randomKey + uriPath + jsonBody;
 
