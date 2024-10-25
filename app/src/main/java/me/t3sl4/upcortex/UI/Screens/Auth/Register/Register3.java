@@ -1,9 +1,9 @@
 package me.t3sl4.upcortex.UI.Screens.Auth.Register;
 
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -28,6 +28,7 @@ import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
 import me.t3sl4.upcortex.Utils.HTTP.Requests.Payment.IyzicoService;
 import me.t3sl4.upcortex.Utils.Screen.ScreenUtil;
 import me.t3sl4.upcortex.Utils.SharedPreferences.SharedPreferencesManager;
+import me.t3sl4.upcortex.Utils.Web.PaymentWebViewBottomSheetFragment;
 
 public class Register3 extends AppCompatActivity implements ExpiryDatePicker.ExpiryDateSelectedListener  {
 
@@ -123,18 +124,41 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
                 saveData(); // Verileri kaydet
 
                 try {
-                    IyzicoService.sendPaymentRequest(Register3.this, packageID, packageName, packagePriceText);
+                    IyzicoService.sendPaymentRequest(Register3.this, packageID, packageName, packagePriceText,
+                            jsonResponse -> {
+                                Log.d("Başarılı Ödeme Formu", jsonResponse.toString());
+
+                                String status = jsonResponse.optString("status");
+                                String locale = jsonResponse.optString("locale");
+                                String systemTime = jsonResponse.optString("systemTime");
+                                String token = jsonResponse.optString("token");
+                                String checkoutFormContent = jsonResponse.optString("checkoutFormContent");
+                                String tokenExpireTime = jsonResponse.optString("tokenExpireTime");
+                                String paymentPageUrl = jsonResponse.optString("paymentPageUrl");
+                                String payWithIyzicoPageUrl = jsonResponse.optString("payWithIyzicoPageUrl");
+                                String signature = jsonResponse.optString("signature");
+
+                                PaymentWebViewBottomSheetFragment webViewFragment = new PaymentWebViewBottomSheetFragment(paymentPageUrl,
+                                        status, locale, systemTime, token, checkoutFormContent, tokenExpireTime, paymentPageUrl, payWithIyzicoPageUrl, signature);
+                                webViewFragment.show(getSupportFragmentManager(), webViewFragment.getTag());
+                            },
+                            () -> {
+                                Sneaker.with(Register3.this)
+                                        .setTitle(getString(R.string.error_title))
+                                        .setMessage(getString(R.string.error_payment_not_complete))
+                                        .sneakError();
+                            });
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
 
-                clearRegisterData();
+                /*clearRegisterData();
                 String summary = packageName + ";Online Abonelik;" + packagePriceSummary.getText().toString() + ";" + uniqueID;
                 // Ödeme ekranına yönlendirmeden önce taksit seçeneği uyarısını göster
                 Intent finalIntent = new Intent(Register3.this, Register4.class);
                 finalIntent.putExtra("summaryData", summary);
                 startActivity(finalIntent);
-                finish();
+                finish();*/
             } else {
                 Sneaker.with(Register3.this)
                         .setTitle(getString(R.string.error_title))

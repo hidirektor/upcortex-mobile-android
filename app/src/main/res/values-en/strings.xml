@@ -128,6 +128,7 @@
     <string name="exam_detail_cant_retrieve">Cant retrieve exam details.</string>
     <string name="not_permitted">You do not meet the requirements to use the program.</string>
     <string name="error_register_not_complete">Registration wont complete. Please try again.</string>
+    <string name="error_payment_not_complete">Payment wont complete. Please try again.</string>
 
     <!-- Register 4 Screen Texts-->
     <string name="register_fourth_success">Your Subscription Has Been Successfully Received!</string>

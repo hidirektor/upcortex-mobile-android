@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.Date;
+import java.util.function.Consumer;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -41,7 +42,8 @@ public class IyzicoService {
     private static String defaultProductType = "VIRTUAL";
     private static String defaultCountry = "Turkey";
 
-    public static void sendPaymentRequest(Context context, String planID, String planName, String planPrice) throws JSONException {
+    public static void sendPaymentRequest(Context context, String planID, String planName, String planPrice,
+                                          Consumer<JSONObject> onSuccess, Runnable onFailure) throws JSONException {
         OkHttpClient client = new OkHttpClient();
 
         String userName = SharedPreferencesManager.getSharedPref("name", context, "");
@@ -129,12 +131,39 @@ public class IyzicoService {
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
                     String responseData = response.body().string();
-                    Log.d("Iyzico response: ", responseData);
+
+                    try {
+                        JSONObject jsonResponse = new JSONObject(responseData);
+                        String status = jsonResponse.optString("status");
+
+                        if ("success".equals(status)) {
+                            if (onSuccess != null) {
+                                onSuccess.accept(jsonResponse);  // Başarılı olduğunda response döndür
+                            }
+                        } else {
+                            if(onFailure != null) {
+                                onFailure.run();
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        if(onFailure != null) {
+                            onFailure.run();
+                        }
+                    }
                 } else {
                     Log.d("Iyzico error: ", response.message());
+                    if(onFailure != null) {
+                        onFailure.run();
+                    }
                 }
             }
         });
+    }
+
+    public static boolean checkUserPayment(String status, String locale, String systemTime, String token, String checkoutFormContent, String tokenExpireTime, String paymentPageUrl, String payWithIyzicoPageUrl, String signature) {
+        Log.d("Odeme kontrol", "Kontrol kısmına geçildi.");
+        return false;
     }
 
     private static String generateAuthorization(String jsonBody, String xIyziRnd, String uriPath) {

@@ -134,6 +134,7 @@
     <string name="exam_detail_cant_retrieve">Sınav detayları alınamadı.</string>
     <string name="not_permitted">Programı kullanmak için gerekli şartları karşılamıyorsunuz.</string>
     <string name="error_register_not_complete">Kayıtlanma tamamlanamadı lütfen tekrar deneyin.</string>
+    <string name="error_payment_not_complete">Ödeme işlemi tamamlanamadı lütfen tekrar deneyin.</string>
 
     <!-- Register 4 Screen Texts-->
     <string name="register_fourth_success">Aboneliğiniz Başarıyla Alındı!</string>
