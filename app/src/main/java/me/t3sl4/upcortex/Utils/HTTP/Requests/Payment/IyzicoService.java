@@ -161,9 +161,70 @@ public class IyzicoService {
         });
     }
 
-    public static boolean checkUserPayment(String status, String locale, String systemTime, String token, String checkoutFormContent, String tokenExpireTime, String paymentPageUrl, String payWithIyzicoPageUrl, String signature) {
+    public static void checkUserPayment(String status, String locale, String systemTime, String token, String checkoutFormContent, String tokenExpireTime, String paymentPageUrl, String payWithIyzicoPageUrl, String signature,
+                                           Runnable onSuccess, Runnable onFailure) throws JSONException {
         Log.d("Odeme kontrol", "Kontrol kısmına geçildi.");
-        return false;
+
+        OkHttpClient client = new OkHttpClient();
+
+        JSONObject controlObject = new JSONObject();
+        controlObject.put("locale", defaultLocale);
+        controlObject.put("token", token);
+
+        String xIyziRnd = new Date().getTime() + defaultRandomKey;
+        String authorization = generateAuthorization(String.valueOf(controlObject), xIyziRnd, URI_PATH_CF_CHECK);
+
+        RequestBody body = RequestBody.create(
+                String.valueOf(controlObject),
+                MediaType.parse("application/json; charset=utf-8")
+        );
+
+        Request request = new Request.Builder()
+                .url(BASE_URL + URI_PATH_CF_CHECK)
+                .post(body)
+                .addHeader("Authorization", authorization)
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String responseData = response.body().string();
+
+                    try {
+                        JSONObject jsonResponse = new JSONObject(responseData);
+                        String status = jsonResponse.optString("paymentStatus");
+                        Log.d("Control response", jsonResponse.toString());
+
+                        if ("SUCCESS".equals(status)) {
+                            if (onSuccess != null) {
+                                onSuccess.run();
+                            }
+                        } else {
+                            if(onFailure != null) {
+                                onFailure.run();
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        if(onFailure != null) {
+                            onFailure.run();
+                        }
+                    }
+                } else {
+                    Log.d("Iyzico error: ", response.message());
+                    if(onFailure != null) {
+                        onFailure.run();
+                    }
+                }
+            }
+        });
     }
 
     private static String generateAuthorization(String jsonBody, String xIyziRnd, String uriPath) {

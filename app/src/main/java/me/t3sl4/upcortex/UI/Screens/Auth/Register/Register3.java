@@ -138,8 +138,8 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
                                 String payWithIyzicoPageUrl = jsonResponse.optString("payWithIyzicoPageUrl");
                                 String signature = jsonResponse.optString("signature");
 
-                                PaymentWebViewBottomSheetFragment webViewFragment = new PaymentWebViewBottomSheetFragment(paymentPageUrl,
-                                        status, locale, systemTime, token, checkoutFormContent, tokenExpireTime, paymentPageUrl, payWithIyzicoPageUrl, signature);
+                                PaymentWebViewBottomSheetFragment webViewFragment = new PaymentWebViewBottomSheetFragment(Register3.this, Register3.this, paymentPageUrl,
+                                        status, locale, systemTime, token, checkoutFormContent, tokenExpireTime, paymentPageUrl, payWithIyzicoPageUrl, signature, packageName, packagePriceSummary.getText().toString(), uniqueID);
                                 webViewFragment.show(getSupportFragmentManager(), webViewFragment.getTag());
                             },
                             () -> {
@@ -151,14 +151,6 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
-
-                /*clearRegisterData();
-                String summary = packageName + ";Online Abonelik;" + packagePriceSummary.getText().toString() + ";" + uniqueID;
-                // Ödeme ekranına yönlendirmeden önce taksit seçeneği uyarısını göster
-                Intent finalIntent = new Intent(Register3.this, Register4.class);
-                finalIntent.putExtra("summaryData", summary);
-                startActivity(finalIntent);
-                finish();*/
             } else {
                 Sneaker.with(Register3.this)
                         .setTitle(getString(R.string.error_title))
@@ -342,33 +334,6 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
 
         boolean confirmCheckBoxValue = SharedPreferencesManager.getSharedPref("confirmCheckBox", this, false);
         confirmCheckBox.setChecked(confirmCheckBoxValue);
-    }
-
-    private void clearRegisterData() {
-        SharedPreferencesManager.writeSharedPref("name", "", this);
-        SharedPreferencesManager.writeSharedPref("surname", "", this);
-        SharedPreferencesManager.writeSharedPref("idNumber", "", this);
-        SharedPreferencesManager.writeSharedPref("birthDate", "", this);
-        SharedPreferencesManager.writeSharedPref("countryCode", "", this);
-        SharedPreferencesManager.writeSharedPref("phoneNumber", "", this);
-        SharedPreferencesManager.writeSharedPref("password", "", this);
-        SharedPreferencesManager.writeSharedPref("repeatPassword", "", this);
-        SharedPreferencesManager.writeSharedPref("termsAccepted", false, this);
-        SharedPreferencesManager.writeSharedPref("addressName", "", this);
-        SharedPreferencesManager.writeSharedPref("addressName_name", "", this);
-        SharedPreferencesManager.writeSharedPref("addressName_surname", "", this);
-        SharedPreferencesManager.writeSharedPref("addressName_countryCode", "", this);
-        SharedPreferencesManager.writeSharedPref("addressName_phoneNumber", "", this);
-        SharedPreferencesManager.writeSharedPref("city", "", this);
-        SharedPreferencesManager.writeSharedPref("district", "", this);
-        SharedPreferencesManager.writeSharedPref("neighborhood", "", this);
-        SharedPreferencesManager.writeSharedPref("addressDetail", "", this);
-        SharedPreferencesManager.writeSharedPref("confirmAddress", false, this);
-        SharedPreferencesManager.writeSharedPref("cardNumber", "", this);
-        SharedPreferencesManager.writeSharedPref("holderName", "", this);
-        SharedPreferencesManager.writeSharedPref("expiryDate", "", this);
-        SharedPreferencesManager.writeSharedPref("cvv", "", this);
-        SharedPreferencesManager.writeSharedPref("confirmCheckBox", false, this);
     }
 
     @Override
