@@ -32,7 +32,7 @@ public class IyzicoService {
                 MediaType.parse("application/json; charset=utf-8")
         );
 
-        String xIyziRnd = String.valueOf(new Date().getTime()) + "123456789";
+        String xIyziRnd = new Date().getTime() + "123456789";
         String authorization = generateAuthorization(jsonBody, xIyziRnd);
 
         Request request = new Request.Builder()
