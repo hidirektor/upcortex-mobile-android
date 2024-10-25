@@ -64,6 +64,8 @@ android {
 
             buildConfigField("String", "BASE_URL", "\"http://160.20.111.45:3200/\"")
             buildConfigField("String", "ONESIGNAL_APP_ID", "\"9cbe059f-be21-4512-a1f6-5a9fc0f77506\"")
+            buildConfigField("String", "IYZICO_API_KEY", "\"6F4KE3wl6CcRv2xFgWg84p9JoagezWwk\"")
+            buildConfigField("String", "IYZICO_SECRET_KEY", "\"8AvQnnosHIxHFBLLUnKGKJaOIKbY8Oxn\"")
 
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         }

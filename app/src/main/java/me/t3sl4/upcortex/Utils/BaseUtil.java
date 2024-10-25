@@ -7,6 +7,8 @@ import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
+import android.text.format.Formatter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +16,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yariksoffice.lingver.Lingver;
+
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
@@ -142,5 +152,34 @@ public class BaseUtil {
 
         alert.show();
         alert.getWindow().setBackgroundDrawableResource(R.drawable.background_permission_dialog);
+    }
+
+    public static String getUserIp(Context context) {
+        try {
+            WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            if (wifiManager != null && wifiManager.isWifiEnabled()) {
+                int ipAddress = wifiManager.getConnectionInfo().getIpAddress();
+                return Formatter.formatIpAddress(ipAddress);
+            } else {
+                List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
+                for (NetworkInterface networkInterface : interfaces) {
+                    List<InetAddress> addresses = Collections.list(networkInterface.getInetAddresses());
+                    for (InetAddress address : addresses) {
+                        if (!address.isLoopbackAddress() && address instanceof InetAddress) {
+                            return address.getHostAddress();
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "IP address not available";
+    }
+
+    public static String getCurrentDateTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date date = new Date();
+        return dateFormat.format(date);
     }
 }
