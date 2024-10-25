@@ -356,7 +356,7 @@ public class Register2 extends AppCompatActivity {
 
         String zipCodeValue = SharedPreferencesManager.getSharedPref("zipCode", this, "");
         if (!zipCodeValue.isEmpty()) {
-            addressDetail.setText(zipCodeValue);
+            zipCode.setText(zipCodeValue);
         }
 
         String addressDetailValue = SharedPreferencesManager.getSharedPref("addressDetail", this, "");

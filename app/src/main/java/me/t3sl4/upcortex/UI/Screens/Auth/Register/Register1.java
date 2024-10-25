@@ -30,6 +30,7 @@ public class Register1 extends AppCompatActivity {
     private TextInputEditText birthDateEditText;
     private CountryCodePicker countryCodePicker;
     private TextInputEditText phoneNumberEditText;
+    private TextInputEditText emailEditText;
     private TextInputEditText passwordEditText;
     private TextInputEditText repeatPasswordEditText;
     private ZCheckBox termsAndConditionsCheckBox;
@@ -57,6 +58,7 @@ public class Register1 extends AppCompatActivity {
         birthDateEditText = findViewById(R.id.editTextBirthDate);
         countryCodePicker = findViewById(R.id.country_code_picker);
         phoneNumberEditText = findViewById(R.id.editTextPhoneNumber);
+        emailEditText = findViewById(R.id.editTextEmail);
         passwordEditText = findViewById(R.id.editTextPassword);
         repeatPasswordEditText = findViewById(R.id.editTextPasswordRepeat);
         termsAndConditionsCheckBox = findViewById(R.id.termsCheckBox);
@@ -145,6 +147,7 @@ public class Register1 extends AppCompatActivity {
         SharedPreferencesManager.writeSharedPref("birthDate", birthDateEditText.getText().toString(), this);
         SharedPreferencesManager.writeSharedPref("countryCode", countryCodePicker.getSelectedCountryCode(), this);
         SharedPreferencesManager.writeSharedPref("phoneNumber", phoneNumberEditText.getText().toString(), this);
+        SharedPreferencesManager.writeSharedPref("eMail", emailEditText.getText().toString(), this);
         SharedPreferencesManager.writeSharedPref("password", passwordEditText.getText().toString(), this);
         SharedPreferencesManager.writeSharedPref("repeatPassword", repeatPasswordEditText.getText().toString(), this);
         SharedPreferencesManager.writeSharedPref("termsAccepted", termsAndConditionsCheckBox.isChecked(), this);
@@ -179,6 +182,11 @@ public class Register1 extends AppCompatActivity {
         String phoneNumber = SharedPreferencesManager.getSharedPref("phoneNumber", this, "");
         if (!phoneNumber.isEmpty()) {
             phoneNumberEditText.setText(phoneNumber);
+        }
+
+        String eMail = SharedPreferencesManager.getSharedPref("eMail", this, "");
+        if (!eMail.isEmpty()) {
+            emailEditText.setText(eMail);
         }
 
         String password = SharedPreferencesManager.getSharedPref("password", this, "");
