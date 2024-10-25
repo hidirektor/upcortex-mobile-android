@@ -62,6 +62,7 @@
     <string name="register_surname">Surname</string>
     <string name="register_birth_date">Birth Date</string>
     <string name="register_phone_number">Phone</string>
+    <string name="register_email">E-Mail</string>
     <string name="register_repeat_pass">Confirm Password</string>
     <string name="register_terms_and_conditions">I approve the Membership Agreement, Privacy Policy and Device Terms of Use.</string>
     <string name="register_first_select_date">Select Birth Date</string>
@@ -74,6 +75,7 @@
     <string name="register_address_city">City</string>
     <string name="register_address_district">District</string>
     <string name="register_address_neighborhood">Neighborhood</string>
+    <string name="register_zip_code">Zip Code</string>
     <string name="register_address_detail">Address Detail</string>
     <string name="register_address_confirm">I confirm that the address I have given is correct.</string>
 

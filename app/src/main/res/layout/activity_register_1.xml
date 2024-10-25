@@ -8,8 +8,9 @@
     android:id="@+id/mainLayout">
 
     <LinearLayout
+        android:id="@+id/headerSection"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="120dp"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -84,7 +85,13 @@
                     android:layout_gravity="center|end" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/headerSection"
+        app:layout_constraintBottom_toTopOf="@+id/nextButton">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -224,6 +231,24 @@
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/button_support"
+                android:drawableTint="@color/darkBaseColor"
+                android:drawableStart="@drawable/ikon_register_mail"
+                android:drawablePadding="16dp"
+                android:ems="10"
+                android:fontFamily="@font/roboto_flex"
+                android:hint="@string/register_email"
+                android:inputType="none"
+                android:padding="8dp"
+                android:textColorHint="@color/darkBaseColor"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="12dp"/>
+
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -291,7 +316,7 @@
                     android:fontFamily="@font/roboto_flex"/>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/nextButton"

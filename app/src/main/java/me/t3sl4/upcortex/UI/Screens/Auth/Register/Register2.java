@@ -43,6 +43,7 @@ public class Register2 extends AppCompatActivity {
     private TextInputEditText city;
     private TextInputEditText district;
     private TextInputEditText neighborhood;
+    private TextInputEditText zipCode;
     private TextInputEditText addressDetail;
     private ZCheckBox confirmAddress;
     private TextView termsViewer;
@@ -75,6 +76,7 @@ public class Register2 extends AppCompatActivity {
         city = findViewById(R.id.editTextCity);
         district = findViewById(R.id.editTextDistrict);
         neighborhood = findViewById(R.id.editTextNeighborhood);
+        zipCode = findViewById(R.id.editTextZipCode);
         addressDetail = findViewById(R.id.editTextAddresDetail);
         confirmAddress = findViewById(R.id.confirmCheckBox);
         termsViewer = findViewById(R.id.termsViewText);
@@ -291,6 +293,7 @@ public class Register2 extends AppCompatActivity {
                 && !city.getText().toString().isEmpty()
                 && !district.getText().toString().isEmpty()
                 && !neighborhood.getText().toString().isEmpty()
+                && !zipCode.getText().toString().isEmpty()
                 && !addressDetail.getText().toString().isEmpty();
     }
 
@@ -303,6 +306,7 @@ public class Register2 extends AppCompatActivity {
         SharedPreferencesManager.writeSharedPref("city", city.getText().toString(), this);
         SharedPreferencesManager.writeSharedPref("district", district.getText().toString(), this);
         SharedPreferencesManager.writeSharedPref("neighborhood", neighborhood.getText().toString(), this);
+        SharedPreferencesManager.writeSharedPref("zipCode", zipCode.getText().toString(), this);
         SharedPreferencesManager.writeSharedPref("addressDetail", addressDetail.getText().toString(), this);
         SharedPreferencesManager.writeSharedPref("confirmAddress", confirmAddress.isChecked(), this);
     }
@@ -348,6 +352,11 @@ public class Register2 extends AppCompatActivity {
         String neighborhoodValue = SharedPreferencesManager.getSharedPref("neighborhood", this, "");
         if (!neighborhoodValue.isEmpty()) {
             neighborhood.setText(neighborhoodValue);
+        }
+
+        String zipCodeValue = SharedPreferencesManager.getSharedPref("zipCode", this, "");
+        if (!zipCodeValue.isEmpty()) {
+            addressDetail.setText(zipCodeValue);
         }
 
         String addressDetailValue = SharedPreferencesManager.getSharedPref("addressDetail", this, "");
