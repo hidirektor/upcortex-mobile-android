@@ -2,19 +2,34 @@ package me.t3sl4.upcortex.UI.Screens.Program;
 
 import static me.t3sl4.upcortex.Utils.BaseUtil.showPermissionPopup;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.view.View;
+import android.view.animation.LinearInterpolator;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import me.t3sl4.upcortex.Model.Package.Adapter.PackagePagerAdapter;
+import me.t3sl4.upcortex.Model.Package.PackageItem;
 import me.t3sl4.upcortex.R;
+import me.t3sl4.upcortex.UI.Components.HorizontalStepper.HorizontalStepper;
 import me.t3sl4.upcortex.UI.Screens.General.Dashboard;
 import me.t3sl4.upcortex.Utils.Permission.PermissionUtil;
+import me.t3sl4.upcortex.Utils.Screen.CustomPageTransformer;
 import me.t3sl4.upcortex.Utils.SharedPreferences.SharedPreferencesManager;
 
 public class ProgramSelection extends AppCompatActivity {
@@ -24,9 +39,12 @@ public class ProgramSelection extends AppCompatActivity {
     private ViewPager2 viewPager;
     private TextView bannerText;
 
-    private LinearLayout alzheimerButton;
-    private LinearLayout diyetButton;
-    private LinearLayout sinavaHazirlikButton;
+    private ViewPager2 productPager;
+
+    FrameLayout darkOverlay;
+    ImageView swipeIcon;
+
+    private HorizontalStepper productStepper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +52,8 @@ public class ProgramSelection extends AppCompatActivity {
         setContentView(R.layout.activity_program_selection);
 
         initializeComponents();
+
+        swipeAnimation();
 
         if (PermissionUtil.hasNotificationPermission(this)) {
             if (PermissionUtil.hasBluetoothPermission(this)) {
@@ -44,6 +64,8 @@ public class ProgramSelection extends AppCompatActivity {
         } else {
             showPermissionPopup(2, ProgramSelection.this);
         }
+
+        initializePackages();
     }
 
     private void initializeComponents() {
@@ -52,9 +74,12 @@ public class ProgramSelection extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         bannerText = findViewById(R.id.imageCounter);
 
-        alzheimerButton = findViewById(R.id.alzheimerButton);
-        diyetButton = findViewById(R.id.diyetButton);
-        sinavaHazirlikButton = findViewById(R.id.sinavaHazirlikButton);
+        productPager = findViewById(R.id.productPager);
+
+        darkOverlay = findViewById(R.id.darkOverlay);
+        swipeIcon = findViewById(R.id.swipeIcon);
+
+        productStepper = findViewById(R.id.productStepper);
     }
 
     private void redirectDashboard() {
@@ -78,26 +103,7 @@ public class ProgramSelection extends AppCompatActivity {
     }
 
     private void buttonClickListeners() {
-        alzheimerButton.setOnClickListener(v -> {
-            Intent sinavIntent = new Intent(ProgramSelection.this, Dashboard.class);
-            SharedPreferencesManager.writeSharedPref("lastScreen", "alzheimer", this);
-            startActivity(sinavIntent);
-            finish();
-        });
 
-        diyetButton.setOnClickListener(v -> {
-            Intent sinavIntent = new Intent(ProgramSelection.this, Dashboard.class);
-            SharedPreferencesManager.writeSharedPref("lastScreen", "diyet", this);
-            startActivity(sinavIntent);
-            finish();
-        });
-
-        sinavaHazirlikButton.setOnClickListener(v -> {
-            Intent sinavIntent = new Intent(ProgramSelection.this, Dashboard.class);
-            SharedPreferencesManager.writeSharedPref("lastScreen", "sinavaHazirlik", this);
-            startActivity(sinavIntent);
-            finish();
-        });
     }
 
     @Override
@@ -138,5 +144,53 @@ public class ProgramSelection extends AppCompatActivity {
         redirectDashboard();
 
         buttonClickListeners();
+    }
+
+    private void swipeAnimation() {
+        darkOverlay.setVisibility(View.VISIBLE);
+
+        swipeIcon.setColorFilter(ContextCompat.getColor(this, android.R.color.white), PorterDuff.Mode.SRC_IN);
+
+        ObjectAnimator rotateLeft = ObjectAnimator.ofFloat(swipeIcon, "rotation", 0f, -5f);
+        rotateLeft.setDuration(500);
+
+        ObjectAnimator rotateRight = ObjectAnimator.ofFloat(swipeIcon, "rotation", -5f, 5f);
+        rotateRight.setDuration(500);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playSequentially(rotateLeft, rotateRight);
+        animatorSet.setInterpolator(new LinearInterpolator());
+
+        animatorSet.start();
+
+        animatorSet.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                swipeIcon.setRotation(0f);
+                darkOverlay.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    private void initializePackages() {
+        List<PackageItem> packages = new ArrayList<>();
+        packages.add(new PackageItem("Unutkanlık ve Bellek (Alzheimer)", "Description for Package 1", 1, R.drawable.ikon_alsheimer));
+        packages.add(new PackageItem("Kilo Verme", "Description for Package 2", 2, R.drawable.ikon_diet));
+        packages.add(new PackageItem("Sınava Hazırlık", "Description for Package 3", 3, R.drawable.ikon_exam_program));
+
+        PackagePagerAdapter adapter = new PackagePagerAdapter(packages);
+        productPager.setAdapter(adapter);
+
+        productPager.setPageTransformer(new CustomPageTransformer());
+
+        productStepper.setStep(productPager.getCurrentItem());
+
+        productPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                productStepper.setStep(position);
+            }
+        });
     }
 }

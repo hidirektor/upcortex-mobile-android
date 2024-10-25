@@ -14,8 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
 import me.t3sl4.upcortex.UI.Screens.Auth.Login;
+import me.t3sl4.upcortex.UI.Screens.General.Dashboard;
 import me.t3sl4.upcortex.UI.Screens.OnBoard.OnBoard1;
-import me.t3sl4.upcortex.UI.Screens.Program.ProgramSelection;
 import me.t3sl4.upcortex.Utils.BaseUtil;
 import me.t3sl4.upcortex.Utils.Bluetooth.BluetoothUtil;
 import me.t3sl4.upcortex.Utils.Screen.ScreenUtil;
@@ -101,7 +101,7 @@ public class SplashActivity extends AppCompatActivity {
             Intent loginIntent;
             stopLoadingAnimation();
             if (UserDataService.getAccessToken(this) != null && !UserDataService.getAccessToken(this).isEmpty()) {
-                loginIntent = new Intent(SplashActivity.this, ProgramSelection.class);
+                loginIntent = new Intent(SplashActivity.this, Dashboard.class);
             } else {
                 loginIntent = new Intent(SplashActivity.this, Login.class);
             }

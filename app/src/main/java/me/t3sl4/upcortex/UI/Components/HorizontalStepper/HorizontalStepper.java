@@ -84,4 +84,11 @@ public class HorizontalStepper extends View {
             canvas.drawRoundRect(rectF, leftTopRadius, leftTopRadius, paint);
         }
     }
+
+    public void setStep(int step) {
+        if (step >= 0 && step < stepSize) {
+            currentStep = step;
+            invalidate();
+        }
+    }
 }

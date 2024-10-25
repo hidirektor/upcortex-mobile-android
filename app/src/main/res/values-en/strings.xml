@@ -229,4 +229,7 @@
     <string name="exam_difficulty_beginner">Beginner</string>
     <string name="exam_difficulty_medium">Medium</string>
     <string name="exam_difficulty_hard">Hard</string>
+
+    <!-- Program Selection Texts -->
+    <string name="program_selection">Slide the divider left or right to switch between your packages.</string>
 </resources>

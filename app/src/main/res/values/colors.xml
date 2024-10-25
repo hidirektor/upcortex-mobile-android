@@ -3,6 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
+    <color name="black_overlay">#80000000</color>
 
     <color name="primaryColor">#8BD5FF</color>
     <color name="primaryOnTop">#55B5FA</color>
@@ -49,6 +50,9 @@
     <color name="no_risk">#07193A</color>
 
     <color name="exam_text">#263238</color>
+
+    <color name="package_order_start">#5c2fa5</color>
+    <color name="package_order_end">#fdc7cd</color>
 
     <color name="gray">#A9A9B0</color>
 </resources>

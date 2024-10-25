@@ -235,4 +235,7 @@
     <string name="exam_difficulty_beginner">Kolay Seviye</string>
     <string name="exam_difficulty_medium">Orta Seviye</string>
     <string name="exam_difficulty_hard">Zor Seviye</string>
+
+    <!-- Program Selection Texts -->
+    <string name="program_selection">Paketleriniz arasında geçiş yapmak için ayracı sola ya da sağa kaydırın.</string>
 </resources>
