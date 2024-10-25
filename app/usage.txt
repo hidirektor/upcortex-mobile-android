@@ -11323,7 +11323,6 @@ androidx.viewpager2.widget.ViewPager2:
     public boolean fakeDragBy(float)
     public androidx.recyclerview.widget.RecyclerView$ItemDecoration getItemDecorationAt(int)
     public void invalidateItemDecorations()
-    public void registerOnPageChangeCallback(androidx.viewpager2.widget.ViewPager2$OnPageChangeCallback)
     public void removeItemDecoration(androidx.recyclerview.widget.RecyclerView$ItemDecoration)
     public void removeItemDecorationAt(int)
     void snapToPage()
@@ -36828,7 +36827,6 @@ okhttp3.OkHttpClient:
 okhttp3.Protocol:
     public static final okhttp3.Protocol get(java.lang.String)
 okhttp3.Request$Builder:
-    public okhttp3.Request$Builder addHeader(java.lang.String,java.lang.String)
     public okhttp3.Request$Builder cacheControl(okhttp3.CacheControl)
     public final okhttp3.Request$Builder delete()
     public okhttp3.Request$Builder delete(okhttp3.RequestBody)
@@ -36841,7 +36839,6 @@ okhttp3.Request$Builder:
     public final okhttp3.HttpUrl getUrl$okhttp()
     public okhttp3.Request$Builder head()
     public okhttp3.Request$Builder patch(okhttp3.RequestBody)
-    public okhttp3.Request$Builder post(okhttp3.RequestBody)
     public okhttp3.Request$Builder put(okhttp3.RequestBody)
     public final void setBody$okhttp(okhttp3.RequestBody)
     public final void setHeaders$okhttp(okhttp3.Headers$Builder)
@@ -36849,7 +36846,6 @@ okhttp3.Request$Builder:
     public final void setTags$okhttp(java.util.Map)
     public final void setUrl$okhttp(okhttp3.HttpUrl)
     public okhttp3.Request$Builder tag(java.lang.Object)
-    public okhttp3.Request$Builder url(java.lang.String)
     public okhttp3.Request$Builder url(java.net.URL)
 okhttp3.Request:
     public final okhttp3.RequestBody -deprecated_body()
@@ -43787,9 +43783,7 @@ androidx.viewpager2.widget.FakeDrag:
     public final androidx.viewpager2.widget.ViewPager2 mViewPager
     public static boolean isFakeDragging()
 androidx.viewpager2.widget.PageTransformerAdapter:
-    public final androidx.viewpager2.widget.ViewPager2$LinearLayoutManagerImpl mLayoutManager
-    public androidx.viewpager2.widget.ViewPager2$PageTransformer mPageTransformer
-    public static void getPageTransformer()
+    public static androidx.viewpager2.widget.ViewPager2$PageTransformer getPageTransformer()
     public static void setPageTransformer()
 androidx.viewpager2.widget.ScrollEventAdapter$ScrollEventValues:
     public final void reset()
@@ -43852,8 +43846,6 @@ androidx.viewpager2.widget.ViewPager2$PageAwareAccessibilityProvider:
     public final void onSetOrientation()
     public final void onSetUserInputEnabled()
     public final void setCurrentItemFromAccessibilityCommand(int)
-androidx.viewpager2.widget.ViewPager2$PageTransformer:
-    public abstract void transformPage()
 androidx.viewpager2.widget.ViewPager2$SavedState$1:
     public static androidx.viewpager2.widget.ViewPager2$SavedState createFromParcel()
     public static androidx.viewpager2.widget.ViewPager2$SavedState createFromParcel(android.os.Parcel,java.lang.ClassLoader)
@@ -43861,7 +43853,6 @@ androidx.viewpager2.widget.ViewPager2$SavedState$1:
 androidx.viewpager2.widget.ViewPager2$SavedState:
     public final void readValues(android.os.Parcel,java.lang.ClassLoader)
 androidx.viewpager2.widget.ViewPager2:
-    public androidx.viewpager2.widget.CompositeOnPageChangeCallback mExternalPageChangeCallbacks
     public static boolean sFeatureEnhancedA11yEnabled
     static void <clinit>()
     public static androidx.viewpager2.widget.ViewPager2$4 enforceChildFillListener()
@@ -43870,6 +43861,7 @@ androidx.viewpager2.widget.ViewPager2:
     public final boolean isRtl()
     public static boolean isUserInputEnabled()
     public static void registerCurrentItemDataSetTracker()
+    public static void registerOnPageChangeCallback()
     public static void requestTransform()
     public static void setCurrentItem()
     public static void setOrientation()
@@ -49529,6 +49521,7 @@ kotlin.text.StringsKt__IndentKt$getIndentFunction$1
 kotlin.text.StringsKt__IndentKt$getIndentFunction$2
 kotlin.text.StringsKt__StringsJVMKt:
     public static java.lang.String concatToString(char[])
+    public static synthetic boolean startsWith$default(java.lang.String,java.lang.String)
     public static synthetic boolean startsWith$default(java.lang.String,java.lang.String,int)
 kotlin.text.StringsKt__StringsKt$rangesDelimitedBy$1:
     public final kotlin.Pair invoke()
@@ -49895,6 +49888,8 @@ me.t3sl4.upcortex.UI.Screens.Auth.Register.Register3$$InternalSyntheticLambda$1$
     public final void onCheckedChanged()
 me.t3sl4.upcortex.Utils.BaseUtil:
     static void <clinit>()
+me.t3sl4.upcortex.Utils.HTTP.Requests.Payment.IyzicoService:
+    static void <clinit>()
 okhttp3.Address:
     public final java.net.Proxy proxy
     public static okhttp3.CertificatePinner certificatePinner()
@@ -49933,9 +49928,12 @@ okhttp3.CacheControl:
     public static boolean noStore()
     public static boolean onlyIfCached()
 okhttp3.Call$Factory:
-    public abstract okhttp3.internal.connection.RealCall newCall()
-okhttp3.Call
-okhttp3.Callback
+    public abstract okhttp3.internal.connection.RealCall newCall(okhttp3.Request)
+okhttp3.Call:
+    public abstract void cancel()
+    public abstract void enqueue(okhttp3.Callback)
+    public abstract boolean isCanceled()
+    public abstract okhttp3.Request request()
 okhttp3.CertificatePinner$$InternalSyntheticThrowCCEIfNotNull$19$65c720c03ab18cdb70e359ae7154e4835ba9bf3740df13f514f6c060ad84f1a4$0
 okhttp3.CertificatePinner$Builder
 okhttp3.CertificatePinner$Companion:
@@ -50197,7 +50195,7 @@ okhttp3.HttpUrl:
     public static java.lang.String scheme()
     public static java.net.URL url()
 okhttp3.Interceptor$Chain:
-    public abstract okhttp3.internal.connection.RealCall call()
+    public abstract okhttp3.Call call()
     public abstract okhttp3.Connection connection()
     public abstract okhttp3.Response proceed(okhttp3.Request)
     public abstract okhttp3.Request request()
@@ -50292,7 +50290,7 @@ okhttp3.OkHttpClient:
     public static javax.net.ssl.HostnameVerifier hostnameVerifier()
     public static java.util.List interceptors()
     public static java.util.List networkInterceptors()
-    public final okhttp3.internal.connection.RealCall newCall()
+    public final okhttp3.internal.connection.RealCall newCall(okhttp3.Request)
     public static int pingIntervalMillis()
     public static java.util.List protocols()
     public static java.net.Proxy proxy()
@@ -50308,6 +50306,7 @@ okhttp3.Protocol:
     public static final okhttp3.Protocol$Companion Companion
 okhttp3.Request$Builder:
     public final void headers(okhttp3.Headers)
+    public final void post(okhttp3.RequestBody$Companion$toRequestBody$2)
     public final void removeHeader(java.lang.String)
     public final void url(okhttp3.HttpUrl)
 okhttp3.Request:
@@ -50491,7 +50490,6 @@ okhttp3.internal.connection.RealCall:
     public static void callStart()
     public static okhttp3.internal.connection.RealCall clone()
     public static okhttp3.Address createAddress()
-    public static void enqueue()
     public static void enterNetworkInterceptorExchange()
     public static okhttp3.OkHttpClient getClient()
     public static okhttp3.internal.connection.RealConnection getConnection()
@@ -50500,9 +50498,9 @@ okhttp3.internal.connection.RealCall:
     public static okhttp3.internal.connection.Exchange getInterceptorScopedExchange$okhttp()
     public static okhttp3.Request getOriginalRequest()
     public static okhttp3.internal.connection.Exchange initExchange$okhttp()
-    public static boolean isCanceled()
+    public final boolean isCanceled()
     public final java.lang.String redactedUrl$okhttp()
-    public static okhttp3.Request request()
+    public final okhttp3.Request request()
     public static boolean retryAfterFailure()
     public static void setConnectionToCancel()
     public static void timeoutEarlyExit()
@@ -50590,7 +50588,7 @@ okhttp3.internal.http.HttpMethod:
     public static boolean redirectsToGet()
     public static boolean redirectsWithBody()
 okhttp3.internal.http.RealInterceptorChain:
-    public final okhttp3.internal.connection.RealCall call()
+    public final okhttp3.Call call()
     public final okhttp3.Connection connection()
     public static okhttp3.internal.http.RealInterceptorChain copy$okhttp()
     public static okhttp3.internal.connection.RealCall getCall$okhttp()
@@ -51179,7 +51177,7 @@ retrofit2.KotlinExtensions$awaitResponse$2$1:
 retrofit2.KotlinExtensions$suspendAndThrow$1:
     public java.lang.Throwable L$0
 retrofit2.OkHttpCall$1:
-    public static void onFailure()
+    public final void callFailure(java.lang.Throwable)
 retrofit2.OkHttpCall$ExceptionCatchingResponseBody:
     public static void throwIfCaught()
 retrofit2.OkHttpCall:
