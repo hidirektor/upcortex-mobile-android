@@ -33,9 +33,11 @@ import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.CircularCountdown.CircularCountdownView;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
 import me.t3sl4.upcortex.UI.Screens.Auth.Register.Register1;
+import me.t3sl4.upcortex.UI.Screens.Auth.Register.Register2;
 import me.t3sl4.upcortex.UI.Screens.Auth.Register.Register3;
 import me.t3sl4.upcortex.Utils.Bluetooth.BluetoothScanDialog;
 import me.t3sl4.upcortex.Utils.Bluetooth.BluetoothUtil;
+import me.t3sl4.upcortex.Utils.HTTP.Requests.Auth.AuthService;
 import me.t3sl4.upcortex.Utils.HTTP.Requests.Exam.ExamService;
 import me.t3sl4.upcortex.Utils.Screen.ScreenUtil;
 import me.t3sl4.upcortex.Utils.Service.UserDataService;
@@ -81,8 +83,15 @@ public class Dashboard extends AppCompatActivity {
         addDeviceLayout.setOnClickListener(v -> startBluetoothDeviceSelection());
 
         buyButton.setOnClickListener(v -> {
-            Intent registerIntent = new Intent(Dashboard.this, Register1.class);
-            startActivity(registerIntent);
+             if(UserDataService.getUserState(Dashboard.this).equals("subscribed")) {
+                 Sneaker.with(Dashboard.this)
+                         .setTitle(getString(R.string.cargo_title))
+                         .setMessage(getString(R.string.cargo_description))
+                         .sneakSuccess();
+            } else {
+                 Intent registerIntent = new Intent(Dashboard.this, Register1.class);
+                 startActivity(registerIntent);
+             }
         });
     }
 
@@ -218,10 +227,21 @@ public class Dashboard extends AppCompatActivity {
     }
 
     private void checkSubscription() {
-        if(UserDataService.getUserState(Dashboard.this).equals("registered") || UserDataService.getUserState(Dashboard.this).equals("adressed")) {
-            Intent packageIntent = new Intent(Dashboard.this, Register3.class);
-            startActivity(packageIntent);
-            finish();
-        }
+        AuthService.getProfile(Dashboard.this, () -> {
+            if(UserDataService.getUserState(Dashboard.this).equals("registered")) {
+                Intent packageIntent = new Intent(Dashboard.this, Register2.class);
+                startActivity(packageIntent);
+                finish();
+            } else if(UserDataService.getUserState(Dashboard.this).equals("adressed")) {
+                Intent packageIntent = new Intent(Dashboard.this, Register3.class);
+                startActivity(packageIntent);
+                finish();
+            }
+        }, () -> {
+            Sneaker.with(Dashboard.this)
+                    .setTitle(getString(R.string.error_title))
+                    .setMessage(getString(R.string.error_profile_retrieve))
+                    .sneakError();
+        });
     }
 }

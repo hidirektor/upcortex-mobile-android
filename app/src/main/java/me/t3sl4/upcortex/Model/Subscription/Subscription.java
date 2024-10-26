@@ -10,6 +10,7 @@ public class Subscription {
     private String content;
     private String scope;
     private String isActive;
+    private String code;
 
     // Getters and Setters
     public String getId() { return id; }
@@ -38,4 +39,12 @@ public class Subscription {
 
     public String getIsActive() { return isActive; }
     public void setIsActive(String isActive) { this.isActive = isActive; }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 }

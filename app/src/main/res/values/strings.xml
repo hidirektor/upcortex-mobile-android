@@ -119,6 +119,9 @@
     <string name="plan_3_spec_2">12 Taksite Bölünür</string>
     <string name="plan_3_spec_3">Yıllık Olarak Kesilir</string>
 
+    <string name="cargo_title">Hazırlanıyor...</string>
+    <string name="cargo_description">Siparişinizi özenle hazırlıyoruz.</string>
+
     <!-- Error Messages-->
     <string name="error_title">Hata !</string>
     <string name="error_term_confirm">Sözleşmeleri onaylamalısınız.</string>
@@ -139,6 +142,7 @@
     <string name="error_turkish_number_format">Telefon numarası 5XX XXX XX XX formatında olmalı.</string>
     <string name="error_profile_retrieve">Profil bilgisi alınamadı.</string>
     <string name="error_invalid_email">E-Posta adresi xxxx@xx.com formatında olmalıdır.</string>
+    <string name="error_address_cant_create">Adres oluşturulamadı. Lütfen tekrar deneyin.</string>
 
     <!-- Register 4 Screen Texts-->
     <string name="register_fourth_success">Aboneliğiniz Başarıyla Alındı!</string>

@@ -21,6 +21,7 @@ public class User implements Parcelable {
     private String dialCode;
     private String zipCode;
     private String city;
+    private String addressId;
 
     public User(String userID, String accessToken, String identityNumber, String eMail, String nameSurname, String phoneNumber, String userState) {
         this.userID = userID;
@@ -136,6 +137,14 @@ public class User implements Parcelable {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public String getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(String addressId) {
+        this.addressId = addressId;
     }
 
     @Override

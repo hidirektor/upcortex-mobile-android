@@ -113,6 +113,9 @@
     <string name="plan_3_spec_2">Divided into 12 Installments</string>
     <string name="plan_3_spec_3">Cut annually</string>
 
+    <string name="cargo_title">Preparing...</string>
+    <string name="cargo_description">We are preparing your order.</string>
+
     <!-- Error Messages-->
     <string name="error_title">Error !</string>
     <string name="error_term_confirm">You must confirm the terms and conditions.</string>
@@ -133,6 +136,7 @@
     <string name="error_turkish_number_format">The phone number must be in the format 5XX XXX XX XX</string>
     <string name="error_profile_retrieve">Profile data cant retrieve.</string>
     <string name="error_invalid_email">E-mail address must be in the format xxxx@xx.com</string>
+    <string name="error_address_cant_create">Address cant create. Please try again.</string>
 
     <!-- Register 4 Screen Texts-->
     <string name="register_fourth_success">Your Subscription Has Been Successfully Received!</string>

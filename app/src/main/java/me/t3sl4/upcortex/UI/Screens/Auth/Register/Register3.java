@@ -134,15 +134,14 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
                                 String status = jsonResponse.optString("status");
                                 String locale = jsonResponse.optString("locale");
                                 String systemTime = jsonResponse.optString("systemTime");
+                                String conversationId = jsonResponse.optString("conversationId");
                                 String token = jsonResponse.optString("token");
-                                String checkoutFormContent = jsonResponse.optString("checkoutFormContent");
-                                String tokenExpireTime = jsonResponse.optString("tokenExpireTime");
                                 String paymentPageUrl = jsonResponse.optString("paymentPageUrl");
                                 String payWithIyzicoPageUrl = jsonResponse.optString("payWithIyzicoPageUrl");
                                 String signature = jsonResponse.optString("signature");
 
                                 PaymentWebViewBottomSheetFragment webViewFragment = new PaymentWebViewBottomSheetFragment(Register3.this, Register3.this, paymentPageUrl,
-                                        status, locale, systemTime, token, checkoutFormContent, tokenExpireTime, paymentPageUrl, payWithIyzicoPageUrl, signature, selectedSubscription.getName(), packagePriceSummary.getText().toString());
+                                        status, locale, systemTime, token, paymentPageUrl, payWithIyzicoPageUrl, signature, selectedSubscription.getName(), packagePriceSummary.getText().toString(), selectedSubscription.getId(), selectedSubscription.getCode());
                                 webViewFragment.show(getSupportFragmentManager(), webViewFragment.getTag());
                             },
                             () -> {

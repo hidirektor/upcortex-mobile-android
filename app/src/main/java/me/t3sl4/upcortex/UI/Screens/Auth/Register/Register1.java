@@ -22,6 +22,8 @@ import java.util.regex.Pattern;
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.DatePicker.DatePickerBottomSheet;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
+import me.t3sl4.upcortex.Utils.BaseUtil;
+import me.t3sl4.upcortex.Utils.HTTP.Requests.Auth.AuthService;
 import me.t3sl4.upcortex.Utils.Screen.ScreenListeners;
 import me.t3sl4.upcortex.Utils.Screen.ScreenUtil;
 import me.t3sl4.upcortex.Utils.SharedPreferences.SharedPreferencesManager;
@@ -172,9 +174,37 @@ public class Register1 extends AppCompatActivity {
                         .sneakError();
             } else if (termsAndConditionsCheckBox.isChecked()) {
                 saveData(); // Verileri kaydet
-                Intent intent = new Intent(Register1.this, Register2.class);
-                startActivity(intent);
-                finish();
+
+                String userName = SharedPreferencesManager.getSharedPref("name", this, "");
+                String userSurname = SharedPreferencesManager.getSharedPref("surname", this, "");
+                String userEmail = SharedPreferencesManager.getSharedPref("eMail", this, "");
+                String birthDate = BaseUtil.getValidBirthDate(SharedPreferencesManager.getSharedPref("birthDate", this, ""));
+                String userAddress = SharedPreferencesManager.getSharedPref("neighborhood", this, "") + " " + SharedPreferencesManager.getSharedPref("addressDetail", this, "") + " " + SharedPreferencesManager.getSharedPref("zipCode", this, "") + " " + SharedPreferencesManager.getSharedPref("district", this, "") + " " + SharedPreferencesManager.getSharedPref("city", this, "");
+                String userPassword = SharedPreferencesManager.getSharedPref("password", this, "");
+                String dialCode = "+" + SharedPreferencesManager.getSharedPref("countryCode", this, "");
+                String userPhone = dialCode + SharedPreferencesManager.getSharedPref("phoneNumber", this, "").replace(" ", "");
+                String userIdentity = SharedPreferencesManager.getSharedPref("idNumber", this, "");
+
+                AuthService.register(Register1.this,
+                        userName, userSurname, userEmail, birthDate, userAddress, userPassword, dialCode, userPhone, userIdentity, () -> {
+                            AuthService.login(Register1.this, userIdentity, userPassword, () -> {
+                                Intent intent = new Intent(Register1.this, Register2.class);
+                                startActivity(intent);
+                                finish();
+                            }, () -> {
+                                Sneaker.with(Register1.this)
+                                        .setTitle(getString(R.string.error_title))
+                                        .setMessage(getString(R.string.error_register_not_complete))
+                                        .sneakError();
+                            });
+                        }, () -> {
+                            Sneaker.with(Register1.this)
+                                    .setTitle(getString(R.string.error_title))
+                                    .setMessage(getString(R.string.error_register_not_complete))
+                                    .sneakError();
+                        });
+
+
             } else {
                 Sneaker.with(Register1.this)
                         .setTitle(getString(R.string.error_title))

@@ -45,6 +45,7 @@ public class SubscriptionService {
                             subscription.setContent(subscriptionJson.getString("content"));
                             subscription.setScope(subscriptionJson.getString("scope"));
                             subscription.setIsActive(subscriptionJson.getString("isActive"));
+                            subscription.setCode(subscriptionJson.getString("code"));
 
                             subscriptions.add(subscription);
                         }

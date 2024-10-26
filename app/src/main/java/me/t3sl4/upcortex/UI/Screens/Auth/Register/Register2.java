@@ -30,7 +30,6 @@ import java.util.List;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
-import me.t3sl4.upcortex.Utils.BaseUtil;
 import me.t3sl4.upcortex.Utils.HTTP.Requests.Auth.AuthService;
 import me.t3sl4.upcortex.Utils.Screen.ScreenUtil;
 import me.t3sl4.upcortex.Utils.SharedPreferences.SharedPreferencesManager;
@@ -100,32 +99,43 @@ public class Register2 extends AppCompatActivity {
             } else if (confirmAddress.isChecked()) {
                 saveData(); // Verileri kaydet
 
+                String addressNameText = addressName.getText().toString();
                 String userName = SharedPreferencesManager.getSharedPref("name", this, "");
                 String userSurname = SharedPreferencesManager.getSharedPref("surname", this, "");
-                String userEmail = SharedPreferencesManager.getSharedPref("eMail", this, "");
-                String birthDate = BaseUtil.getValidBirthDate(SharedPreferencesManager.getSharedPref("birthDate", this, ""));
-                String userAddress = SharedPreferencesManager.getSharedPref("neighborhood", this, "") + " " + SharedPreferencesManager.getSharedPref("addressDetail", this, "") + " " + SharedPreferencesManager.getSharedPref("zipCode", this, "") + " " + SharedPreferencesManager.getSharedPref("district", this, "") + " " + SharedPreferencesManager.getSharedPref("city", this, "");
-                String userPassword = SharedPreferencesManager.getSharedPref("password", this, "");
-                String dialCode = "+" + SharedPreferencesManager.getSharedPref("countryCode", this, "");
-                String userPhone = dialCode + SharedPreferencesManager.getSharedPref("phoneNumber", this, "").replace(" ", "");
-                String userIdentity = SharedPreferencesManager.getSharedPref("idNumber", this, "");
+                String cityText = SharedPreferencesManager.getSharedPref("city", this, "");
+                String districtText = SharedPreferencesManager.getSharedPref("district", this, "");
+                String neighborhoodText = SharedPreferencesManager.getSharedPref("neighborhood", this, "");
 
-                AuthService.register(Register2.this,
-                        userName, userSurname, userEmail, birthDate, userAddress, userPassword, dialCode, userPhone, userIdentity, () -> {
-                            AuthService.login(Register2.this, userIdentity, userPassword, () -> {
+                String userAddress =
+                        SharedPreferencesManager.getSharedPref("neighborhood", this, "")
+                                + " " +
+                                SharedPreferencesManager.getSharedPref("addressDetail", this, "")
+                                + " " +
+                                SharedPreferencesManager.getSharedPref("zipCode", this, "")
+                                + " " +
+                                SharedPreferencesManager.getSharedPref("district", this, "")
+                                + " " +
+                                SharedPreferencesManager.getSharedPref("city", this, "");
+
+                String dialCode = "+" + SharedPreferencesManager.getSharedPref("countryCode", this, "");
+                String userPhone = SharedPreferencesManager.getSharedPref("phoneNumber", this, "").replace(" ", "");
+
+                AuthService.createAddress(Register2.this,
+                        addressNameText, userName, userSurname, dialCode, userPhone, cityText, districtText, neighborhoodText, userAddress, () -> {
+                            AuthService.getProfile(Register2.this, () -> {
                                 Intent intent = new Intent(Register2.this, Register3.class);
                                 startActivity(intent);
                                 finish();
                             }, () -> {
                                 Sneaker.with(Register2.this)
                                         .setTitle(getString(R.string.error_title))
-                                        .setMessage(getString(R.string.error_register_not_complete))
+                                        .setMessage(getString(R.string.error_profile_retrieve))
                                         .sneakError();
                             });
                         }, () -> {
                             Sneaker.with(Register2.this)
                                     .setTitle(getString(R.string.error_title))
-                                    .setMessage(getString(R.string.error_register_not_complete))
+                                    .setMessage(getString(R.string.error_address_cant_create))
                                     .sneakError();
                         });
             } else {

@@ -19,6 +19,7 @@ public class AuthService {
     private static final String REGISTER_URL = "/auth/register";
     private static final String LOGIN_URL = "/auth/login";
     private static final String PROFILE_URL = "/user/profile";
+    private static final String ADDRESS_URL = "/address/create";
 
     public static void register(Context context, String firstName, String lastName, String email, String dateOfBirth, String address, String password, String dialCode, String phone, String identityNumber, Runnable onSuccess, Runnable onFailure) {
         JSONObject jsonObject = new JSONObject();
@@ -65,6 +66,55 @@ public class AuthService {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.e("Register", "Error: " + t.getMessage());
+            }
+        });
+    }
+
+    public static void createAddress(Context context, String addressName, String firstName, String lastName, String dialCode, String phone, String city, String district, String neighborhood, String description, Runnable onSuccess, Runnable onFailure) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("name", addressName);
+            jsonObject.put("firstName", firstName);
+            jsonObject.put("lastName", lastName);
+            jsonObject.put("dialCode", dialCode);
+            jsonObject.put("phone", phone);
+            jsonObject.put("city", city);
+            jsonObject.put("district", district);
+            jsonObject.put("neighbourhood", neighborhood);
+            jsonObject.put("description", description);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        Call<ResponseBody> call = HttpHelper.makeRequest("POST", ADDRESS_URL, null, jsonObject.toString(), UserDataService.getAccessToken(context));
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        Log.d("Create Address", "Success: " + response.body().string());
+                        if (onSuccess != null) {
+                            onSuccess.run();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        Log.e("Create Address", "Failure: " + response.errorBody().string());
+                        if (onFailure != null) {
+                            onFailure.run();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("Create Address", "Error: " + t.getMessage());
             }
         });
     }
@@ -151,22 +201,31 @@ public class AuthService {
 
                         JSONObject responseJson = new JSONObject(responseBody);
                         JSONObject payload = responseJson.getJSONObject("response");
+                        JSONObject addressBlock = payload.getJSONObject("address");
 
                         String firstName = payload.getString("firstName");
                         String lastName = payload.getString("lastName");
                         String address = payload.getString("address");
                         String dialCode = payload.getString("dialCode");
+                        String registrationState = payload.getString("registrationState");
 
-                        String[] addressParts = address.split(" ");
-                        String zipCode = addressParts[addressParts.length - 2];
-                        String city = addressParts[addressParts.length - 1];
+                        String addressId = addressBlock.getString("id");
+
+                        if(address != null && !address.isEmpty()) {
+                            String[] addressParts = address.split(" ");
+                            String zipCode = addressParts[addressParts.length - 2];
+                            String city = addressParts[addressParts.length - 1];
+
+                            UserDataService.setUserZipCode(context, zipCode);
+                            UserDataService.setUserCity(context, city);
+                        }
 
                         UserDataService.setUserFirstName(context, firstName);
                         UserDataService.setUserLastName(context, lastName);
                         UserDataService.setUserAddress(context, address);
                         UserDataService.setUserDialCode(context, dialCode);
-                        UserDataService.setUserZipCode(context, zipCode);
-                        UserDataService.setUserCity(context, city);
+                        UserDataService.setUserState(context, registrationState);
+                        UserDataService.setUserAddressId(context, addressId);
 
                         if (onSuccess != null) {
                             onSuccess.run();

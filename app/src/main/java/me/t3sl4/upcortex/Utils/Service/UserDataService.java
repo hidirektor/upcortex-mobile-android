@@ -27,6 +27,8 @@ public class UserDataService {
     private static final String KEY_USER_ZIP_CODE = "userZipCode";
     private static final String KEY_USER_CITY = "userCity";
 
+    private static final String KEY_ADDRESS_ID = "userAddressId";
+
     private static SharedPreferences getPreferences(Context context) {
         return context.getSharedPreferences(USER_DATA, Context.MODE_PRIVATE);
     }
@@ -122,6 +124,13 @@ public class UserDataService {
         editor.apply();
     }
 
+    public static void setUserAddressId(Context context, String userAddressId) {
+        SharedPreferences prefs = getPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(KEY_ADDRESS_ID, userAddressId);
+        editor.apply();
+    }
+
     // Get individual user properties from SharedPreferences
     public static String getUserID(Context context) {
         SharedPreferences prefs = getPreferences(context);
@@ -188,6 +197,11 @@ public class UserDataService {
         return prefs.getString(KEY_USER_CITY, "");
     }
 
+    public static String getUserAddressId(Context context) {
+        SharedPreferences prefs = getPreferences(context);
+        return prefs.getString(KEY_ADDRESS_ID, "");
+    }
+
     // Clear user data from SharedPreferences
     public static void clearUser(Context context) {
         SharedPreferences prefs = getPreferences(context);
@@ -225,6 +239,7 @@ public class UserDataService {
         sharedUser.setDialCode(getUserDialCode(context));
         sharedUser.setZipCode(getUserZipCode(context));
         sharedUser.setCity(getUserCity(context));
+        sharedUser.setAddressId(getUserAddressId(context));
 
         return sharedUser;
     }

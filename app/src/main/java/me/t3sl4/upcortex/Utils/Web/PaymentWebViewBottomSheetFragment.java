@@ -22,11 +22,14 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import org.json.JSONException;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
 import me.t3sl4.upcortex.UI.Screens.Auth.Register.Register4;
 import me.t3sl4.upcortex.Utils.BaseUtil;
 import me.t3sl4.upcortex.Utils.HTTP.Requests.Payment.IyzicoService;
+import me.t3sl4.upcortex.Utils.Service.UserDataService;
 
 public class PaymentWebViewBottomSheetFragment extends BottomSheetDialogFragment {
 
@@ -43,24 +46,21 @@ public class PaymentWebViewBottomSheetFragment extends BottomSheetDialogFragment
     private String locale;
     private String systemTime;
     private String token;
-    private String checkoutFormContent;
-    private String tokenExpireTime;
     private String paymentPageUrl;
     private String payWithIyzicoPageUrl;
     private String signature;
 
-    private String packageName, packagePriceSummary, uniqueID;
+    public static String packageName, packagePriceSummary, packageId, packageCode;
+    AtomicReference<String> uniqueID = new AtomicReference<>();
 
-    public PaymentWebViewBottomSheetFragment(Activity activity, Context context, String url, String status, String locale, String systemTime, String token,
-                                             String checkoutFormContent, String tokenExpireTime, String paymentPageUrl,
-                                             String payWithIyzicoPageUrl, String signature, String packageName, String packagePriceSummary) {
+    public PaymentWebViewBottomSheetFragment(Activity activity, Context context, String url, String status, String locale, String systemTime,
+                                             String token, String paymentPageUrl,
+                                             String payWithIyzicoPageUrl, String signature, String packageName, String packagePriceSummary, String packageId, String packageCode) {
         this.url = url;
         this.status = status;
         this.locale = locale;
         this.systemTime = systemTime;
         this.token = token;
-        this.checkoutFormContent = checkoutFormContent;
-        this.tokenExpireTime = tokenExpireTime;
         this.paymentPageUrl = paymentPageUrl;
         this.payWithIyzicoPageUrl = payWithIyzicoPageUrl;
         this.signature = signature;
@@ -68,6 +68,8 @@ public class PaymentWebViewBottomSheetFragment extends BottomSheetDialogFragment
         this.context = context;
         this.packageName = packageName;
         this.packagePriceSummary = packagePriceSummary;
+        this.packageId = packageId;
+        this.packageCode = packageCode;
     }
 
     @Nullable
@@ -96,9 +98,9 @@ public class PaymentWebViewBottomSheetFragment extends BottomSheetDialogFragment
                 Log.d("WebView", "Page finished loading: " + url);
                 if(url.equals("https://dinamikbeyin.com/")) {
                     try {
-                        IyzicoService.checkUserPayment(status, locale, systemTime, token, checkoutFormContent, tokenExpireTime, paymentPageUrl, payWithIyzicoPageUrl, signature, () -> {
+                        IyzicoService.checkUserPayment(status, locale, systemTime, token, paymentPageUrl, payWithIyzicoPageUrl, signature, () -> {
                             IyzicoService.createSubscription(context,
-                                    status, locale, systemTime, token, checkoutFormContent, tokenExpireTime, paymentPageUrl, payWithIyzicoPageUrl, signature, uniqueID, () -> {
+                                    status, locale, systemTime, token, paymentPageUrl, payWithIyzicoPageUrl, signature, uniqueID, packageId, packageCode, UserDataService.getUserAddressId(context), () -> {
                                         afterPaymentOperations(uniqueID);
                                     }, () -> {
                                         dismiss();
@@ -127,9 +129,9 @@ public class PaymentWebViewBottomSheetFragment extends BottomSheetDialogFragment
 
                 if (url.equals("https://dinamikbeyin.com")) {
                     try {
-                        IyzicoService.checkUserPayment(status, locale, systemTime, token, checkoutFormContent, tokenExpireTime, paymentPageUrl, payWithIyzicoPageUrl, signature, () -> {
+                        IyzicoService.checkUserPayment(status, locale, systemTime, token, paymentPageUrl, payWithIyzicoPageUrl, signature, () -> {
                             IyzicoService.createSubscription(context,
-                                    status, locale, systemTime, token, checkoutFormContent, tokenExpireTime, paymentPageUrl, payWithIyzicoPageUrl, signature, uniqueID, () -> {
+                                    status, locale, systemTime, token, paymentPageUrl, payWithIyzicoPageUrl, signature, uniqueID, packageId, packageCode, UserDataService.getUserAddressId(context), () -> {
                                         afterPaymentOperations(uniqueID);
                                     }, () -> {
                                         dismiss();
@@ -162,9 +164,9 @@ public class PaymentWebViewBottomSheetFragment extends BottomSheetDialogFragment
 
                 if (url.equals("https://dinamikbeyin.com")) {
                     try {
-                        IyzicoService.checkUserPayment(status, locale, systemTime, token, checkoutFormContent, tokenExpireTime, paymentPageUrl, payWithIyzicoPageUrl, signature, () -> {
+                        IyzicoService.checkUserPayment(status, locale, systemTime, token, paymentPageUrl, payWithIyzicoPageUrl, signature, () -> {
                             IyzicoService.createSubscription(context,
-                                    status, locale, systemTime, token, checkoutFormContent, tokenExpireTime, paymentPageUrl, payWithIyzicoPageUrl, signature, uniqueID, () -> {
+                                    status, locale, systemTime, token, paymentPageUrl, payWithIyzicoPageUrl, signature, uniqueID, packageId, packageCode, UserDataService.getUserAddressId(context), () -> {
                                         afterPaymentOperations(uniqueID);
                             }, () -> {
                                         dismiss();
@@ -201,10 +203,10 @@ public class PaymentWebViewBottomSheetFragment extends BottomSheetDialogFragment
         return view;
     }
 
-    private void afterPaymentOperations(String orderID) {
+    private void afterPaymentOperations(AtomicReference<String> uniqueID) {
         BaseUtil.clearRegisterData(context);
         dismiss();
-        String summary = packageName + ";Online Abonelik;" + packagePriceSummary + ";" + orderID;
+        String summary = packageName + ";Online Abonelik;" + packagePriceSummary + ";" + uniqueID.get();
 
         Intent finalIntent = new Intent(context, Register4.class);
         finalIntent.putExtra("summaryData", summary);

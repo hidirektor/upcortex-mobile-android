@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
 import javax.crypto.Mac;
@@ -37,7 +38,7 @@ public class IyzicoService {
     private static final String BASE_URL = "https://api.iyzipay.com";
     private static final String URI_PATH_CF_START = "/payment/iyzipos/checkoutform/initialize/auth/ecom";
     private static final String URI_PATH_CF_CHECK = "/payment/iyzipos/checkoutform/auth/ecom/detail";
-    private static final String CREATE_SUBSCRIPTION_URL = "/subscription/create";
+    private static final String CREATE_SUBSCRIPTION_URL = "/user-subscription/create";
 
     private static String defaultRandomKey = "123456789";
     private static String defaultCallbackURL = "https://dinamikbeyin.com";
@@ -181,7 +182,7 @@ public class IyzicoService {
         });
     }
 
-    public static void checkUserPayment(String status, String locale, String systemTime, String token, String checkoutFormContent, String tokenExpireTime, String paymentPageUrl, String payWithIyzicoPageUrl, String signature,
+    public static void checkUserPayment(String status, String locale, String systemTime, String token, String paymentPageUrl, String payWithIyzicoPageUrl, String signature,
                                            Runnable onSuccess, Runnable onFailure) throws JSONException {
 
         OkHttpClient client = new OkHttpClient();
@@ -246,19 +247,24 @@ public class IyzicoService {
         });
     }
 
-    public static void createSubscription(Context context, String status, String locale, String systemTime, String token, String checkoutFormContent, String tokenExpireTime, String paymentPageUrl, String payWithIyzicoPageUrl, String signature, String uniqueID,
+    public static void createSubscription(Context context, String status, String locale, String systemTime, String token, String paymentPageUrl, String payWithIyzicoPageUrl, String signature, AtomicReference<String> uniqueID, String subscriptionId, String code, String addressId,
                                           Runnable onSuccess, Runnable onFailure) {
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("status", status);
-            jsonObject.put("locale", locale);
-            jsonObject.put("systemTime", systemTime);
-            jsonObject.put("token", token);
-            jsonObject.put("checkoutFormContent", checkoutFormContent);
-            jsonObject.put("tokenExpireTime", tokenExpireTime);
-            jsonObject.put("paymentPageUrl", paymentPageUrl);
-            jsonObject.put("payWithIyzicoPageUrl", payWithIyzicoPageUrl);
-            jsonObject.put("signature", signature);
+            jsonObject.put("subscriptionId", subscriptionId);
+            jsonObject.put("code", code);
+            jsonObject.put("addressId", addressId);
+
+            JSONObject paymentObject = new JSONObject();
+            paymentObject.put("status", status);
+            paymentObject.put("locale", locale);
+            paymentObject.put("systemTime", systemTime);
+            paymentObject.put("token", token);
+            paymentObject.put("paymentPageUrl", paymentPageUrl);
+            paymentObject.put("payWithIyzicoPageUrl", payWithIyzicoPageUrl);
+            paymentObject.put("signature", signature);
+
+            jsonObject.put("payment", paymentObject);
         } catch (JSONException e) {
             e.printStackTrace();
             return;
@@ -270,14 +276,24 @@ public class IyzicoService {
             public void onResponse(retrofit2.Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     try {
-                        Log.d("Create Subscription", "Success: " + response.body().string());
-                        //TODO
-                        //gelen id'ye response'da ki orderID'yi ata
+                        String responseBody = response.body().string();
+
+                        Log.d("Create Subscription", "Success: " + responseBody);
+
+                        JSONObject jsonResponse = new JSONObject(responseBody);
+                        JSONObject payloadJson = jsonResponse.getJSONObject("response");
+
+                        uniqueID.set(payloadJson.getString("code"));
+
+                        Log.d("Taken Order Id", uniqueID.get());
+
                         if (onSuccess != null) {
                             onSuccess.run();
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
                     }
                 } else {
                     try {
