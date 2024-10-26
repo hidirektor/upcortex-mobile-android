@@ -11,9 +11,9 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 1290,
-      "versionName": "2.1.90(1290)",
-      "outputFile": "DinamikBeyin release_26-10-2024_v2.1.90(1290).apk"
+      "versionCode": 1339,
+      "versionName": "2.2.39(1339)",
+      "outputFile": "DinamikBeyin release_26-10-2024_v2.2.39(1339).apk"
     }
   ],
   "elementType": "File",
@@ -22,14 +22,14 @@
       "minApi": 28,
       "maxApi": 30,
       "baselineProfiles": [
-        "baselineProfiles/1/DinamikBeyin release_26-10-2024_v2.1.90(1290).dm"
+        "baselineProfiles/1/DinamikBeyin release_26-10-2024_v2.2.39(1339).dm"
       ]
     },
     {
       "minApi": 31,
       "maxApi": 2147483647,
       "baselineProfiles": [
-        "baselineProfiles/0/DinamikBeyin release_26-10-2024_v2.1.90(1290).dm"
+        "baselineProfiles/0/DinamikBeyin release_26-10-2024_v2.2.39(1339).dm"
       ]
     }
   ],
