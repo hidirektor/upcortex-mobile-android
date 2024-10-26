@@ -22,7 +22,6 @@ import org.json.JSONException;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.UUID;
 
 import me.t3sl4.upcortex.Model.Subscription.Subscription;
 import me.t3sl4.upcortex.R;
@@ -67,7 +66,6 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
     private LinearLayout paymentOptionsButton;
 
     private Subscription selectedSubscription;
-    private String uniqueID;
     private String selectedPaymentOption;
 
     private ArrayList<Subscription> subscriptionList = new ArrayList<>();
@@ -86,8 +84,6 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
         loadSavedData(); // Kaydedilen verileri yükle
         buttonClickListeners();
         //summarySection();
-
-        uniqueID = UUID.randomUUID().toString();
     }
 
     private void initializeComponents() {
@@ -146,7 +142,7 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
                                 String signature = jsonResponse.optString("signature");
 
                                 PaymentWebViewBottomSheetFragment webViewFragment = new PaymentWebViewBottomSheetFragment(Register3.this, Register3.this, paymentPageUrl,
-                                        status, locale, systemTime, token, checkoutFormContent, tokenExpireTime, paymentPageUrl, payWithIyzicoPageUrl, signature, selectedSubscription.getName(), packagePriceSummary.getText().toString(), uniqueID);
+                                        status, locale, systemTime, token, checkoutFormContent, tokenExpireTime, paymentPageUrl, payWithIyzicoPageUrl, signature, selectedSubscription.getName(), packagePriceSummary.getText().toString());
                                 webViewFragment.show(getSupportFragmentManager(), webViewFragment.getTag());
                             },
                             () -> {

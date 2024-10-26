@@ -18,6 +18,7 @@ import javax.crypto.spec.SecretKeySpec;
 import me.t3sl4.upcortex.BuildConfig;
 import me.t3sl4.upcortex.Model.User.User;
 import me.t3sl4.upcortex.Utils.BaseUtil;
+import me.t3sl4.upcortex.Utils.HTTP.HttpHelper;
 import me.t3sl4.upcortex.Utils.Service.UserDataService;
 import me.t3sl4.upcortex.Utils.SharedPreferences.SharedPreferencesManager;
 import okhttp3.Call;
@@ -27,6 +28,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class IyzicoService {
     private static final String API_KEY = BuildConfig.IYZICO_API_KEY;
@@ -35,6 +37,7 @@ public class IyzicoService {
     private static final String BASE_URL = "https://api.iyzipay.com";
     private static final String URI_PATH_CF_START = "/payment/iyzipos/checkoutform/initialize/auth/ecom";
     private static final String URI_PATH_CF_CHECK = "/payment/iyzipos/checkoutform/auth/ecom/detail";
+    private static final String CREATE_SUBSCRIPTION_URL = "/subscription/create";
 
     private static String defaultRandomKey = "123456789";
     private static String defaultCallbackURL = "https://dinamikbeyin.com";
@@ -180,7 +183,6 @@ public class IyzicoService {
 
     public static void checkUserPayment(String status, String locale, String systemTime, String token, String checkoutFormContent, String tokenExpireTime, String paymentPageUrl, String payWithIyzicoPageUrl, String signature,
                                            Runnable onSuccess, Runnable onFailure) throws JSONException {
-        Log.d("Odeme kontrol", "Kontrol kısmına geçildi.");
 
         OkHttpClient client = new OkHttpClient();
 
@@ -240,6 +242,58 @@ public class IyzicoService {
                         onFailure.run();
                     }
                 }
+            }
+        });
+    }
+
+    public static void createSubscription(Context context, String status, String locale, String systemTime, String token, String checkoutFormContent, String tokenExpireTime, String paymentPageUrl, String payWithIyzicoPageUrl, String signature, String uniqueID,
+                                          Runnable onSuccess, Runnable onFailure) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("status", status);
+            jsonObject.put("locale", locale);
+            jsonObject.put("systemTime", systemTime);
+            jsonObject.put("token", token);
+            jsonObject.put("checkoutFormContent", checkoutFormContent);
+            jsonObject.put("tokenExpireTime", tokenExpireTime);
+            jsonObject.put("paymentPageUrl", paymentPageUrl);
+            jsonObject.put("payWithIyzicoPageUrl", payWithIyzicoPageUrl);
+            jsonObject.put("signature", signature);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        retrofit2.Call<ResponseBody> call = HttpHelper.makeRequest("POST", CREATE_SUBSCRIPTION_URL, null, jsonObject.toString(), UserDataService.getAccessToken(context));
+        call.enqueue(new retrofit2.Callback<ResponseBody>() {
+            @Override
+            public void onResponse(retrofit2.Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        Log.d("Create Subscription", "Success: " + response.body().string());
+                        //TODO
+                        //gelen id'ye response'da ki orderID'yi ata
+                        if (onSuccess != null) {
+                            onSuccess.run();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        Log.e("Create Subscription", "Failure: " + response.errorBody().string());
+                        if (onFailure != null) {
+                            onFailure.run();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
+                Log.e("Create Subscription", "Error: " + t.getMessage());
             }
         });
     }

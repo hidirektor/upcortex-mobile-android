@@ -53,7 +53,7 @@ public class PaymentWebViewBottomSheetFragment extends BottomSheetDialogFragment
 
     public PaymentWebViewBottomSheetFragment(Activity activity, Context context, String url, String status, String locale, String systemTime, String token,
                                              String checkoutFormContent, String tokenExpireTime, String paymentPageUrl,
-                                             String payWithIyzicoPageUrl, String signature, String packageName, String packagePriceSummary, String uniqueID) {
+                                             String payWithIyzicoPageUrl, String signature, String packageName, String packagePriceSummary) {
         this.url = url;
         this.status = status;
         this.locale = locale;
@@ -68,7 +68,6 @@ public class PaymentWebViewBottomSheetFragment extends BottomSheetDialogFragment
         this.context = context;
         this.packageName = packageName;
         this.packagePriceSummary = packagePriceSummary;
-        this.uniqueID = uniqueID;
     }
 
     @Nullable
@@ -98,7 +97,16 @@ public class PaymentWebViewBottomSheetFragment extends BottomSheetDialogFragment
                 if(url.equals("https://dinamikbeyin.com/")) {
                     try {
                         IyzicoService.checkUserPayment(status, locale, systemTime, token, checkoutFormContent, tokenExpireTime, paymentPageUrl, payWithIyzicoPageUrl, signature, () -> {
-                            afterPaymentOperations();
+                            IyzicoService.createSubscription(context,
+                                    status, locale, systemTime, token, checkoutFormContent, tokenExpireTime, paymentPageUrl, payWithIyzicoPageUrl, signature, uniqueID, () -> {
+                                        afterPaymentOperations(uniqueID);
+                                    }, () -> {
+                                        dismiss();
+                                        Sneaker.with(activity)
+                                                .setTitle(getString(R.string.error_title))
+                                                .setMessage(getString(R.string.error_payment_not_complete))
+                                                .sneakError();
+                                    });
                         }, () -> {
                             dismiss();
                             Sneaker.with(activity)
@@ -120,7 +128,16 @@ public class PaymentWebViewBottomSheetFragment extends BottomSheetDialogFragment
                 if (url.equals("https://dinamikbeyin.com")) {
                     try {
                         IyzicoService.checkUserPayment(status, locale, systemTime, token, checkoutFormContent, tokenExpireTime, paymentPageUrl, payWithIyzicoPageUrl, signature, () -> {
-                            afterPaymentOperations();
+                            IyzicoService.createSubscription(context,
+                                    status, locale, systemTime, token, checkoutFormContent, tokenExpireTime, paymentPageUrl, payWithIyzicoPageUrl, signature, uniqueID, () -> {
+                                        afterPaymentOperations(uniqueID);
+                                    }, () -> {
+                                        dismiss();
+                                        Sneaker.with(activity)
+                                                .setTitle(getString(R.string.error_title))
+                                                .setMessage(getString(R.string.error_payment_not_complete))
+                                                .sneakError();
+                                    });
                         }, () -> {
                             dismiss();
                             Sneaker.with(activity)
@@ -146,7 +163,16 @@ public class PaymentWebViewBottomSheetFragment extends BottomSheetDialogFragment
                 if (url.equals("https://dinamikbeyin.com")) {
                     try {
                         IyzicoService.checkUserPayment(status, locale, systemTime, token, checkoutFormContent, tokenExpireTime, paymentPageUrl, payWithIyzicoPageUrl, signature, () -> {
-                            afterPaymentOperations();
+                            IyzicoService.createSubscription(context,
+                                    status, locale, systemTime, token, checkoutFormContent, tokenExpireTime, paymentPageUrl, payWithIyzicoPageUrl, signature, uniqueID, () -> {
+                                        afterPaymentOperations(uniqueID);
+                            }, () -> {
+                                        dismiss();
+                                        Sneaker.with(activity)
+                                                .setTitle(getString(R.string.error_title))
+                                                .setMessage(getString(R.string.error_payment_not_complete))
+                                                .sneakError();
+                                    });
                         }, () -> {
                             dismiss();
                             Sneaker.with(activity)
@@ -175,10 +201,10 @@ public class PaymentWebViewBottomSheetFragment extends BottomSheetDialogFragment
         return view;
     }
 
-    private void afterPaymentOperations() {
+    private void afterPaymentOperations(String orderID) {
         BaseUtil.clearRegisterData(context);
         dismiss();
-        String summary = packageName + ";Online Abonelik;" + packagePriceSummary + ";" + uniqueID;
+        String summary = packageName + ";Online Abonelik;" + packagePriceSummary + ";" + orderID;
 
         Intent finalIntent = new Intent(context, Register4.class);
         finalIntent.putExtra("summaryData", summary);
