@@ -144,6 +144,8 @@
     <string name="register_fourth_plan_name">Plan Name</string>
     <string name="register_fourth_order_type">Order Type</string>
     <string name="register_fourth_plan_price">Price</string>
+    <string name="register_fourth_address">Shipping Address</string>
+    <string name="register_fourth_order_id">Order ID</string>
 
     <!-- Payment Options Bottom Sheet Texts-->
     <string name="payment_options_type">Payment Type</string>

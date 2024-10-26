@@ -8,8 +8,9 @@
     android:id="@+id/mainLayout">
 
     <LinearLayout
+        android:id="@+id/headerSection"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="120dp"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -54,7 +55,13 @@
                 android:src="@drawable/logo_splash"
                 android:layout_gravity="center" />
         </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/headerSection"
+        app:layout_constraintBottom_toTopOf="@id/loginButton">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -106,7 +113,7 @@
                 style="@style/MyCardView"
                 android:id="@+id/subscriptionCard"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="450dp"
                 android:background="@color/white"
                 app:layout_constraintTop_toTopOf="parent"
                 app:cardPreventCornerOverlap="false"
@@ -121,6 +128,7 @@
                     android:layout_height="80dp"
                     android:src="@drawable/image_dashboard_cardview"
                     android:scaleType="matrix" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -183,17 +191,6 @@
                                 android:textColor="@color/darkBaseColor"
                                 android:fontFamily="@font/roboto_flex"/>
                         </LinearLayout>
-                        <TextView
-                            android:id="@+id/orderIDTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/register_fourth_plan_name"
-                            android:textSize="20sp"
-                            android:textColor="@color/darkBaseColor"
-                            android:fontFamily="@font/roboto_flex"
-                            android:layout_gravity="end|bottom"
-                            android:gravity="end|bottom"
-                            android:layout_marginRight="6dp"/>
                     </LinearLayout>
 
                     <View
@@ -236,6 +233,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
+                            android:layout_marginRight="12dp"
                             android:layout_gravity="end|bottom"
                             android:gravity="end|bottom">
                             <TextView
@@ -256,10 +254,87 @@
                                 android:fontFamily="@font/roboto_flex"/>
                         </LinearLayout>
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/lightBaseColor"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        android:layout_marginTop="16dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/register_fourth_address"
+                                android:textSize="20sp"
+                                android:textColor="@color/darkBaseColor"
+                                android:fontFamily="@font/roboto_flex"/>
+                            <TextView
+                                android:id="@+id/orderAddressTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/plan_3_summary"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/darkBaseColor"
+                                android:fontFamily="@font/roboto_flex"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/lightBaseColor"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        android:layout_marginTop="16dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/register_fourth_order_id"
+                                android:textSize="20sp"
+                                android:textColor="@color/darkBaseColor"
+                                android:fontFamily="@font/roboto_flex"/>
+                            <TextView
+                                android:id="@+id/orderIDTextView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/register_fourth_plan_name"
+                                android:textSize="20sp"
+                                android:textColor="@color/darkBaseColor"
+                                android:fontFamily="@font/roboto_flex"
+                                android:layout_gravity="start|center"
+                                android:gravity="start|center"/>
+                        </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/loginButton"

@@ -150,6 +150,8 @@
     <string name="register_fourth_plan_name">Abonelik İsmi</string>
     <string name="register_fourth_order_type">Sipariş Türü</string>
     <string name="register_fourth_plan_price">Fiyat</string>
+    <string name="register_fourth_address">Kargo Adresi</string>
+    <string name="register_fourth_order_id">Sipariş Numarası</string>
 
     <!-- Payment Options Bottom Sheet Texts-->
     <string name="payment_options_type">Ödeme Şekli</string>

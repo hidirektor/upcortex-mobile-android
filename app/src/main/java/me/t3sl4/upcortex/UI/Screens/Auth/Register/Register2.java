@@ -3,6 +3,8 @@ package me.t3sl4.upcortex.UI.Screens.Auth.Register;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
@@ -27,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
@@ -55,6 +58,9 @@ public class Register2 extends AppCompatActivity {
     private JSONObject districtsJson;
     private JSONArray neighborhoodsJson;
 
+    private static final String TURKISH_PHONE_NUMBER_PATTERN = "^5\\d{2} \\d{3} \\d{2} \\d{2}$";
+    Pattern turkishPhoneNumberPattern = Pattern.compile(TURKISH_PHONE_NUMBER_PATTERN);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +80,42 @@ public class Register2 extends AppCompatActivity {
         surname = findViewById(R.id.editTextSurname);
         countryCode = findViewById(R.id.country_code_picker);
         phoneNumber = findViewById(R.id.editTextPhoneNumber);
+        phoneNumber.addTextChangedListener(new TextWatcher() {
+            private boolean isFormatting;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (isFormatting) return;
+
+                String input = s.toString().replaceAll("\\s+", "");
+
+                if (input.length() <= 10 && input.startsWith("5")) {
+                    isFormatting = true;
+
+                    StringBuilder formatted = new StringBuilder(input);
+                    if (input.length() >= 3) formatted.insert(3, " ");
+                    if (input.length() >= 6) formatted.insert(7, " ");
+                    if (input.length() >= 8) formatted.insert(10, " ");
+
+                    phoneNumber.setText(formatted.toString());
+                    phoneNumber.setSelection(formatted.length());
+
+                    isFormatting = false;
+                }
+
+                if (!turkishPhoneNumberPattern.matcher(phoneNumber.getText().toString()).matches()) {
+                    phoneNumber.setError(getString(R.string.error_turkish_number_format));
+                } else {
+                    phoneNumber.setError(null);
+                }
+            }
+        });
         city = findViewById(R.id.editTextCity);
         district = findViewById(R.id.editTextDistrict);
         neighborhood = findViewById(R.id.editTextNeighborhood);
@@ -96,7 +138,7 @@ public class Register2 extends AppCompatActivity {
                         .setTitle(getString(R.string.error_title))
                         .setMessage(getString(R.string.error_fill_blanks))
                         .sneakError();
-            } else if (confirmAddress.isChecked()) {
+            } else if (confirmAddress.isChecked() && phoneNumber.getError() == null) {
                 saveData(); // Verileri kaydet
 
                 String addressNameText = addressName.getText().toString();

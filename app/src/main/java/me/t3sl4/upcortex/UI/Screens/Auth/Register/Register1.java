@@ -45,7 +45,7 @@ public class Register1 extends AppCompatActivity {
 
     private static final String EMAIL_PATTERN =
             "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
-    private static final String TURKISH_PHONE_NUMBER_PATTERN = "^(05\\d{9})$";
+    private static final String TURKISH_PHONE_NUMBER_PATTERN = "^5\\d{2} \\d{3} \\d{2} \\d{2}$";
 
     Pattern emailPattern = Pattern.compile(EMAIL_PATTERN);
     Pattern turkishPhoneNumberPattern = Pattern.compile(TURKISH_PHONE_NUMBER_PATTERN);
@@ -172,7 +172,7 @@ public class Register1 extends AppCompatActivity {
                         .setTitle(getString(R.string.error_title))
                         .setMessage(getString(R.string.error_age_error))
                         .sneakError();
-            } else if (termsAndConditionsCheckBox.isChecked()) {
+            } else if (termsAndConditionsCheckBox.isChecked() && phoneNumberEditText.getError() == null && idNumberEditText.getError() == null && emailEditText.getError() == null) {
                 saveData(); // Verileri kaydet
 
                 String userName = SharedPreferencesManager.getSharedPref("name", this, "");

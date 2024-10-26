@@ -81,7 +81,9 @@ public class Login extends AppCompatActivity {
         });
 
         loginButton.setOnClickListener(v -> {
-            sendLoginRequest();
+            if(idNumber.getError() == null) {
+                sendLoginRequest();
+            }
         });
     }
 

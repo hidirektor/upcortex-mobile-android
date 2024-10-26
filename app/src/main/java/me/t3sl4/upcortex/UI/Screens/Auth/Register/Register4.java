@@ -20,6 +20,8 @@ public class Register4 extends AppCompatActivity {
     private TextView orderType;
     private TextView planPrice;
 
+    private TextView orderAddress;
+
     private Button loginButton;
 
     @Override
@@ -39,6 +41,8 @@ public class Register4 extends AppCompatActivity {
         orderID = findViewById(R.id.orderIDTextView);
         orderType = findViewById(R.id.orderTypeTextView);
         planPrice = findViewById(R.id.planPriceTextView);
+
+        orderAddress = findViewById(R.id.orderAddressTextView);
 
         loginButton = findViewById(R.id.loginButton);
     }
@@ -66,6 +70,7 @@ public class Register4 extends AppCompatActivity {
                 orderID.setText(dataParts[3]);
                 orderType.setText(dataParts[1]);
                 planPrice.setText(dataParts[2]);
+                orderAddress.setText(UserDataService.getUserAddress(Register4.this));
             }
         }
     }

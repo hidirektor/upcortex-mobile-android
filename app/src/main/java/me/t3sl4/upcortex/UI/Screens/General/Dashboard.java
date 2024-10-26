@@ -83,15 +83,16 @@ public class Dashboard extends AppCompatActivity {
         addDeviceLayout.setOnClickListener(v -> startBluetoothDeviceSelection());
 
         buyButton.setOnClickListener(v -> {
-             if(UserDataService.getUserState(Dashboard.this).equals("subscribed")) {
+            Intent registerIntent = new Intent(Dashboard.this, Register1.class);
+            startActivity(registerIntent);
+             /*if(UserDataService.getUserState(Dashboard.this).equals("subscribed")) {
                  Sneaker.with(Dashboard.this)
                          .setTitle(getString(R.string.cargo_title))
                          .setMessage(getString(R.string.cargo_description))
                          .sneakSuccess();
             } else {
-                 Intent registerIntent = new Intent(Dashboard.this, Register1.class);
-                 startActivity(registerIntent);
-             }
+
+             }*/
         });
     }
 

@@ -8,8 +8,9 @@
     android:id="@+id/mainLayout">
 
     <LinearLayout
+        android:id="@+id/headerSection"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="120dp"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -84,7 +85,13 @@
                     android:layout_gravity="center|end" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/headerSection"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSection">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -95,49 +102,63 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="16dp">
-
-                <Button
-                    android:id="@+id/buttonFirstPlan"
-                    android:layout_width="0dp"
-                    android:layout_weight="1.0"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/register_thirth_plan_1"
-                    android:textAllCaps="false"
-                    android:textColor="@color/darkBaseColor"
-                    android:textSize="18sp"
-                    android:background="@drawable/button_membership"
-                    android:layout_marginRight="12dp"/>
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="16dp">
 
-                <Button
-                    android:id="@+id/buttonSecondPlan"
-                    android:layout_width="0dp"
-                    android:layout_weight="1.0"
-                    android:layout_height="wrap_content"
-                    android:text="@string/register_thirth_plan_2"
-                    android:textAllCaps="false"
-                    android:textColor="@color/darkBaseColor"
-                    android:textSize="18sp"
-                    android:background="@drawable/button_membership"
-                    android:layout_marginRight="12dp"/>
+                    <Button
+                        android:id="@+id/buttonFirstPlan"
+                        android:layout_width="0dp"
+                        android:layout_weight="1.0"
+                        android:layout_height="wrap_content"
+                        android:text="@string/register_thirth_plan_1"
+                        android:textAllCaps="false"
+                        android:textColor="@color/darkBaseColor"
+                        android:textSize="18sp"
+                        android:background="@drawable/button_membership"
+                        android:layout_marginRight="12dp"/>
 
-                <Button
-                    android:id="@+id/buttonThirthPlan"
-                    android:layout_width="0dp"
-                    android:layout_weight="1.0"
+                    <Button
+                        android:id="@+id/buttonSecondPlan"
+                        android:layout_width="0dp"
+                        android:layout_weight="1.0"
+                        android:layout_height="wrap_content"
+                        android:text="@string/register_thirth_plan_2"
+                        android:textAllCaps="false"
+                        android:textColor="@color/darkBaseColor"
+                        android:textSize="18sp"
+                        android:background="@drawable/button_membership"
+                        android:layout_marginRight="12dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/register_thirth_plan_3"
-                    android:drawableTint="@color/white"
-                    android:drawableEnd="@drawable/ikon_membership_star"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:background="@drawable/button_next_2"
-                    android:layout_marginRight="12dp"
-                    android:padding="12dp"/>
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="16dp">
+
+                    <Button
+                        android:id="@+id/buttonThirthPlan"
+                        android:layout_width="0dp"
+                        android:layout_weight="1.0"
+                        android:layout_height="wrap_content"
+                        android:text="@string/register_thirth_plan_3"
+                        android:drawableTint="@color/white"
+                        android:drawableEnd="@drawable/ikon_membership_star"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:background="@drawable/button_next_2"
+                        android:layout_marginRight="12dp"
+                        android:padding="12dp"/>
+                </LinearLayout>
             </LinearLayout>
 
             <com.google.android.material.card.MaterialCardView
@@ -260,11 +281,11 @@
                 android:layout_marginRight="24dp"
                 android:visibility="gone">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/image_dashboard_cardview"
-                android:scaleType="matrix"/>
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/image_dashboard_cardview"
+                    android:scaleType="matrix"/>
 
                 <Button
                     android:id="@+id/buttonSummary"
@@ -509,9 +530,10 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
+        android:id="@+id/buttonSection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

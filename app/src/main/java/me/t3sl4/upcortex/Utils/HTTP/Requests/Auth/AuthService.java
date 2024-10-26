@@ -205,7 +205,7 @@ public class AuthService {
 
                         String firstName = payload.getString("firstName");
                         String lastName = payload.getString("lastName");
-                        String address = payload.getString("address");
+                        String address = addressBlock.getString("description");
                         String dialCode = payload.getString("dialCode");
                         String registrationState = payload.getString("registrationState");
 
