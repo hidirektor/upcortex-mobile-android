@@ -41,7 +41,12 @@ public class Register1 extends AppCompatActivity {
     private TextView termsViewerTextView;
     private Button nextButton;
 
-    Pattern turkishPhoneNumberPattern = Pattern.compile("^(5[0-9]{2})\\s([0-9]{3})\\s([0-9]{2})\\s([0-9]{2})$");
+    private static final String EMAIL_PATTERN =
+            "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+    private static final String TURKISH_PHONE_NUMBER_PATTERN = "^(05\\d{9})$";
+
+    Pattern emailPattern = Pattern.compile(EMAIL_PATTERN);
+    Pattern turkishPhoneNumberPattern = Pattern.compile(TURKISH_PHONE_NUMBER_PATTERN);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +125,32 @@ public class Register1 extends AppCompatActivity {
             }
         });
         emailEditText = findViewById(R.id.editTextEmail);
+        emailEditText.addTextChangedListener(new TextWatcher() {
+            private boolean isFormatting;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (isFormatting) return;
+
+                String input = s.toString();
+
+                isFormatting = true;
+
+                if (!emailPattern.matcher(input).matches()) {
+                    emailEditText.setError(getString(R.string.error_invalid_email));
+                } else {
+                    emailEditText.setError(null);
+                }
+
+                isFormatting = false;
+            }
+        });
         passwordEditText = findViewById(R.id.editTextPassword);
         repeatPasswordEditText = findViewById(R.id.editTextPasswordRepeat);
         termsAndConditionsCheckBox = findViewById(R.id.termsCheckBox);

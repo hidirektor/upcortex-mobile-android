@@ -2,6 +2,9 @@ package me.t3sl4.upcortex.UI.Screens.Auth;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -42,6 +45,23 @@ public class Login extends AppCompatActivity {
 
     private void initializeComponents() {
         idNumber = findViewById(R.id.editTextIDNumber);
+        idNumber.setFilters(new InputFilter[] { new InputFilter.LengthFilter(11) });
+        idNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() != 11) {
+                    idNumber.setError(getString(R.string.error_invalid_id_number));
+                } else {
+                    idNumber.setError(null);
+                }
+            }
+        });
         password = findViewById(R.id.editTextPassword);
 
         forgetPassword = findViewById(R.id.forgetPasswordTextView);
