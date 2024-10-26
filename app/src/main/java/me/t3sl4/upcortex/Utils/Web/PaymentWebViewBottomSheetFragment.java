@@ -25,8 +25,8 @@ import org.json.JSONException;
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
 import me.t3sl4.upcortex.UI.Screens.Auth.Register.Register4;
+import me.t3sl4.upcortex.Utils.BaseUtil;
 import me.t3sl4.upcortex.Utils.HTTP.Requests.Payment.IyzicoService;
-import me.t3sl4.upcortex.Utils.SharedPreferences.SharedPreferencesManager;
 
 public class PaymentWebViewBottomSheetFragment extends BottomSheetDialogFragment {
 
@@ -175,35 +175,8 @@ public class PaymentWebViewBottomSheetFragment extends BottomSheetDialogFragment
         return view;
     }
 
-    private void clearRegisterData() {
-        SharedPreferencesManager.writeSharedPref("name", "", context);
-        SharedPreferencesManager.writeSharedPref("surname", "", context);
-        SharedPreferencesManager.writeSharedPref("idNumber", "", context);
-        SharedPreferencesManager.writeSharedPref("birthDate", "", context);
-        SharedPreferencesManager.writeSharedPref("countryCode", "", context);
-        SharedPreferencesManager.writeSharedPref("phoneNumber", "", context);
-        SharedPreferencesManager.writeSharedPref("password", "", context);
-        SharedPreferencesManager.writeSharedPref("repeatPassword", "", context);
-        SharedPreferencesManager.writeSharedPref("termsAccepted", false, context);
-        SharedPreferencesManager.writeSharedPref("addressName", "", context);
-        SharedPreferencesManager.writeSharedPref("addressName_name", "", context);
-        SharedPreferencesManager.writeSharedPref("addressName_surname", "", context);
-        SharedPreferencesManager.writeSharedPref("addressName_countryCode", "", context);
-        SharedPreferencesManager.writeSharedPref("addressName_phoneNumber", "", context);
-        SharedPreferencesManager.writeSharedPref("city", "", context);
-        SharedPreferencesManager.writeSharedPref("district", "", context);
-        SharedPreferencesManager.writeSharedPref("neighborhood", "", context);
-        SharedPreferencesManager.writeSharedPref("addressDetail", "", context);
-        SharedPreferencesManager.writeSharedPref("confirmAddress", false, context);
-        SharedPreferencesManager.writeSharedPref("cardNumber", "", context);
-        SharedPreferencesManager.writeSharedPref("holderName", "", context);
-        SharedPreferencesManager.writeSharedPref("expiryDate", "", context);
-        SharedPreferencesManager.writeSharedPref("cvv", "", context);
-        SharedPreferencesManager.writeSharedPref("confirmCheckBox", false, context);
-    }
-
     private void afterPaymentOperations() {
-        clearRegisterData();
+        BaseUtil.clearRegisterData(context);
         dismiss();
         String summary = packageName + ";Online Abonelik;" + packagePriceSummary + ";" + uniqueID;
 

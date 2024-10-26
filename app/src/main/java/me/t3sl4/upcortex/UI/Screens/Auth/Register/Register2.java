@@ -104,10 +104,10 @@ public class Register2 extends AppCompatActivity {
                 String userSurname = SharedPreferencesManager.getSharedPref("surname", this, "");
                 String userEmail = SharedPreferencesManager.getSharedPref("eMail", this, "");
                 String birthDate = BaseUtil.getValidBirthDate(SharedPreferencesManager.getSharedPref("birthDate", this, ""));
-                String userAddress = SharedPreferencesManager.getSharedPref("neighboorhood", this, "") + " " + SharedPreferencesManager.getSharedPref("addressDetail", this, "") + " " + SharedPreferencesManager.getSharedPref("zipCode", this, "") + " " + SharedPreferencesManager.getSharedPref("district", this, "") + " " + SharedPreferencesManager.getSharedPref("city", this, "");
+                String userAddress = SharedPreferencesManager.getSharedPref("neighborhood", this, "") + " " + SharedPreferencesManager.getSharedPref("addressDetail", this, "") + " " + SharedPreferencesManager.getSharedPref("zipCode", this, "") + " " + SharedPreferencesManager.getSharedPref("district", this, "") + " " + SharedPreferencesManager.getSharedPref("city", this, "");
                 String userPassword = SharedPreferencesManager.getSharedPref("password", this, "");
                 String dialCode = "+" + SharedPreferencesManager.getSharedPref("countryCode", this, "");
-                String userPhone = dialCode + SharedPreferencesManager.getSharedPref("phoneNumber", this, "");
+                String userPhone = dialCode + SharedPreferencesManager.getSharedPref("phoneNumber", this, "").replace(" ", "");
                 String userIdentity = SharedPreferencesManager.getSharedPref("idNumber", this, "");
 
                 AuthService.register(Register2.this,

@@ -137,6 +137,7 @@
     <string name="error_payment_not_complete">Ödeme işlemi tamamlanamadı lütfen tekrar deneyin.</string>
     <string name="error_package_list">Abonelikler alınamadı !</string>
     <string name="error_turkish_number_format">Telefon numarası 5XX XXX XX XX formatında olmalı.</string>
+    <string name="error_profile_retrieve">Profil bilgisi alınamadı.</string>
 
     <!-- Register 4 Screen Texts-->
     <string name="register_fourth_success">Aboneliğiniz Başarıyla Alındı!</string>

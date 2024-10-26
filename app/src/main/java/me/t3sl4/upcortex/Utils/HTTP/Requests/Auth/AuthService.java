@@ -18,6 +18,7 @@ import retrofit2.Response;
 public class AuthService {
     private static final String REGISTER_URL = "/auth/register";
     private static final String LOGIN_URL = "/auth/login";
+    private static final String PROFILE_URL = "/user/profile";
 
     public static void register(Context context, String firstName, String lastName, String email, String dateOfBirth, String address, String password, String dialCode, String phone, String identityNumber, Runnable onSuccess, Runnable onFailure) {
         JSONObject jsonObject = new JSONObject();
@@ -121,6 +122,61 @@ public class AuthService {
                 } else {
                     try {
                         Log.e("Login", "Failure: " + response.errorBody().string());
+
+                        if (onFailure != null) {
+                            onFailure.run();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("Login", "Error: " + t.getMessage());
+            }
+        });
+    }
+
+    public static void getProfile(Context context, Runnable onSuccess, Runnable onFailure) {
+        Call<ResponseBody> call = HttpHelper.makeRequest("GET", PROFILE_URL, null, null, UserDataService.getAccessToken(context));
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        String responseBody = response.body().string();
+                        Log.d("Get Profile", "Success: " + responseBody);
+
+                        JSONObject responseJson = new JSONObject(responseBody);
+                        JSONObject payload = responseJson.getJSONObject("response");
+
+                        String firstName = payload.getString("firstName");
+                        String lastName = payload.getString("lastName");
+                        String address = payload.getString("address");
+                        String dialCode = payload.getString("dialCode");
+
+                        String[] addressParts = address.split(" ");
+                        String zipCode = addressParts[addressParts.length - 2];
+                        String city = addressParts[addressParts.length - 1];
+
+                        UserDataService.setUserFirstName(context, firstName);
+                        UserDataService.setUserLastName(context, lastName);
+                        UserDataService.setUserAddress(context, address);
+                        UserDataService.setUserDialCode(context, dialCode);
+                        UserDataService.setUserZipCode(context, zipCode);
+                        UserDataService.setUserCity(context, city);
+
+                        if (onSuccess != null) {
+                            onSuccess.run();
+                        }
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        Log.e("Get Profile", "Failure: " + response.errorBody().string());
 
                         if (onFailure != null) {
                             onFailure.run();

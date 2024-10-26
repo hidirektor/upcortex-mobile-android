@@ -16,7 +16,9 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 import me.t3sl4.upcortex.BuildConfig;
+import me.t3sl4.upcortex.Model.User.User;
 import me.t3sl4.upcortex.Utils.BaseUtil;
+import me.t3sl4.upcortex.Utils.Service.UserDataService;
 import me.t3sl4.upcortex.Utils.SharedPreferences.SharedPreferencesManager;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -46,15 +48,30 @@ public class IyzicoService {
                                           Consumer<JSONObject> onSuccess, Runnable onFailure) throws JSONException {
         OkHttpClient client = new OkHttpClient();
 
-        String userName = SharedPreferencesManager.getSharedPref("name", context, "");
-        String userSurname = SharedPreferencesManager.getSharedPref("surname", context, "");
-        String userEmail = SharedPreferencesManager.getSharedPref("eMail", context, "");
-        String userAddress = SharedPreferencesManager.getSharedPref("neighboorhood", context, "") + " " + SharedPreferencesManager.getSharedPref("addressDetail", context, "") + " " + SharedPreferencesManager.getSharedPref("zipCode", context, "") + " " + SharedPreferencesManager.getSharedPref("district", context, "") + " " + SharedPreferencesManager.getSharedPref("city", context, "");
-        String dialCode = "+" + SharedPreferencesManager.getSharedPref("countryCode", context, "");
-        String userPhone = dialCode + SharedPreferencesManager.getSharedPref("phoneNumber", context, "");
-        String userIdentity = SharedPreferencesManager.getSharedPref("idNumber", context, "");
-        String zipCode = SharedPreferencesManager.getSharedPref("zipCode", context, "");
-        String city = SharedPreferencesManager.getSharedPref("city", context, "");
+        String userName, userSurname, userEmail, userAddress, dialCode, userPhone, userIdentity, zipCode, city;
+        if(UserDataService.getAccessToken(context) != null) {
+            User loggedUser = UserDataService.getUserFromPreferences(context);
+
+            userName = loggedUser.getName();
+            userSurname = loggedUser.getSurname();
+            userEmail = loggedUser.geteMail();
+            userAddress = loggedUser.getAddress();
+            dialCode = loggedUser.getDialCode();
+            userPhone = dialCode + loggedUser.getPhoneNumber();
+            userIdentity = loggedUser.getIdentityNumber();
+            zipCode = loggedUser.getZipCode();
+            city = loggedUser.getCity();
+        } else {
+            userName = SharedPreferencesManager.getSharedPref("name", context, "");
+            userSurname = SharedPreferencesManager.getSharedPref("surname", context, "");
+            userEmail = SharedPreferencesManager.getSharedPref("eMail", context, "");
+            userAddress = SharedPreferencesManager.getSharedPref("neighboorhood", context, "") + " " + SharedPreferencesManager.getSharedPref("addressDetail", context, "") + " " + SharedPreferencesManager.getSharedPref("zipCode", context, "") + " " + SharedPreferencesManager.getSharedPref("district", context, "") + " " + SharedPreferencesManager.getSharedPref("city", context, "");
+            dialCode = "+" + SharedPreferencesManager.getSharedPref("countryCode", context, "");
+            userPhone = dialCode + SharedPreferencesManager.getSharedPref("phoneNumber", context, "");
+            userIdentity = SharedPreferencesManager.getSharedPref("idNumber", context, "");
+            zipCode = SharedPreferencesManager.getSharedPref("zipCode", context, "");
+            city = SharedPreferencesManager.getSharedPref("city", context, "");
+        }
 
         // Create the buyer object
         JSONObject buyer = new JSONObject();

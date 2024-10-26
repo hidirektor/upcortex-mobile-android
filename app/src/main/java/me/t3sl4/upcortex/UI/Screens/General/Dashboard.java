@@ -33,10 +33,12 @@ import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.CircularCountdown.CircularCountdownView;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
 import me.t3sl4.upcortex.UI.Screens.Auth.Register.Register1;
+import me.t3sl4.upcortex.UI.Screens.Auth.Register.Register3;
 import me.t3sl4.upcortex.Utils.Bluetooth.BluetoothScanDialog;
 import me.t3sl4.upcortex.Utils.Bluetooth.BluetoothUtil;
 import me.t3sl4.upcortex.Utils.HTTP.Requests.Exam.ExamService;
 import me.t3sl4.upcortex.Utils.Screen.ScreenUtil;
+import me.t3sl4.upcortex.Utils.Service.UserDataService;
 
 public class Dashboard extends AppCompatActivity {
 
@@ -73,6 +75,8 @@ public class Dashboard extends AppCompatActivity {
 
         checkBluetoothDeviceStatus();
         loadExamList();
+
+        checkSubscription();
 
         addDeviceLayout.setOnClickListener(v -> startBluetoothDeviceSelection());
 
@@ -211,5 +215,13 @@ public class Dashboard extends AppCompatActivity {
                 .setTitle(getString(R.string.connected_title))
                 .setMessage(getString(R.string.connected_desc))
                 .sneakSuccess();
+    }
+
+    private void checkSubscription() {
+        if(UserDataService.getUserState(Dashboard.this).equals("registered") || UserDataService.getUserState(Dashboard.this).equals("adressed")) {
+            Intent packageIntent = new Intent(Dashboard.this, Register3.class);
+            startActivity(packageIntent);
+            finish();
+        }
     }
 }

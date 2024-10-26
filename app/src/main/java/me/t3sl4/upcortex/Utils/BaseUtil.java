@@ -31,6 +31,7 @@ import java.util.Locale;
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
 import me.t3sl4.upcortex.Utils.Permission.PermissionUtil;
+import me.t3sl4.upcortex.Utils.SharedPreferences.SharedPreferencesManager;
 
 public class BaseUtil {
     public static String SUPPORT_URL = "https://github.com/hidirektor";
@@ -196,5 +197,32 @@ public class BaseUtil {
             System.out.println("Invalid date format. Setting default birthDate.");
             return "2000-01-01";
         }
+    }
+
+    public static void clearRegisterData(Context context) {
+        SharedPreferencesManager.writeSharedPref("name", "", context);
+        SharedPreferencesManager.writeSharedPref("surname", "", context);
+        SharedPreferencesManager.writeSharedPref("idNumber", "", context);
+        SharedPreferencesManager.writeSharedPref("birthDate", "", context);
+        SharedPreferencesManager.writeSharedPref("countryCode", "", context);
+        SharedPreferencesManager.writeSharedPref("phoneNumber", "", context);
+        SharedPreferencesManager.writeSharedPref("password", "", context);
+        SharedPreferencesManager.writeSharedPref("repeatPassword", "", context);
+        SharedPreferencesManager.writeSharedPref("termsAccepted", false, context);
+        SharedPreferencesManager.writeSharedPref("addressName", "", context);
+        SharedPreferencesManager.writeSharedPref("addressName_name", "", context);
+        SharedPreferencesManager.writeSharedPref("addressName_surname", "", context);
+        SharedPreferencesManager.writeSharedPref("addressName_countryCode", "", context);
+        SharedPreferencesManager.writeSharedPref("addressName_phoneNumber", "", context);
+        SharedPreferencesManager.writeSharedPref("city", "", context);
+        SharedPreferencesManager.writeSharedPref("district", "", context);
+        SharedPreferencesManager.writeSharedPref("neighborhood", "", context);
+        SharedPreferencesManager.writeSharedPref("addressDetail", "", context);
+        SharedPreferencesManager.writeSharedPref("confirmAddress", false, context);
+        SharedPreferencesManager.writeSharedPref("cardNumber", "", context);
+        SharedPreferencesManager.writeSharedPref("holderName", "", context);
+        SharedPreferencesManager.writeSharedPref("expiryDate", "", context);
+        SharedPreferencesManager.writeSharedPref("cvv", "", context);
+        SharedPreferencesManager.writeSharedPref("confirmCheckBox", false, context);
     }
 }

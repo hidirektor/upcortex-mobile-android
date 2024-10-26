@@ -20,6 +20,13 @@ public class UserDataService {
 
     private static final String KEY_USER_STATE = "userState";
 
+    private static final String KEY_USER_FIRSTNAME = "userFirstName";
+    private static final String KEY_USER_LASTNAME = "userLastName";
+    private static final String KEY_USER_ADDRESS = "userAddress";
+    private static final String KEY_USER_DIAL_CODE = "userDialCode";
+    private static final String KEY_USER_ZIP_CODE = "userZipCode";
+    private static final String KEY_USER_CITY = "userCity";
+
     private static SharedPreferences getPreferences(Context context) {
         return context.getSharedPreferences(USER_DATA, Context.MODE_PRIVATE);
     }
@@ -73,6 +80,48 @@ public class UserDataService {
         editor.apply();
     }
 
+    public static void setUserFirstName(Context context, String userFirstName) {
+        SharedPreferences prefs = getPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(KEY_USER_FIRSTNAME, userFirstName);
+        editor.apply();
+    }
+
+    public static void setUserLastName(Context context, String userLastName) {
+        SharedPreferences prefs = getPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(KEY_USER_LASTNAME, userLastName);
+        editor.apply();
+    }
+
+    public static void setUserAddress(Context context, String userAddress) {
+        SharedPreferences prefs = getPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(KEY_USER_ADDRESS, userAddress);
+        editor.apply();
+    }
+
+    public static void setUserDialCode(Context context, String userDialCode) {
+        SharedPreferences prefs = getPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(KEY_USER_DIAL_CODE, userDialCode);
+        editor.apply();
+    }
+
+    public static void setUserZipCode(Context context, String userZipCode) {
+        SharedPreferences prefs = getPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(KEY_USER_ZIP_CODE, userZipCode);
+        editor.apply();
+    }
+
+    public static void setUserCity(Context context, String userCity) {
+        SharedPreferences prefs = getPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(KEY_USER_CITY, userCity);
+        editor.apply();
+    }
+
     // Get individual user properties from SharedPreferences
     public static String getUserID(Context context) {
         SharedPreferences prefs = getPreferences(context);
@@ -109,6 +158,36 @@ public class UserDataService {
         return prefs.getString(KEY_USER_STATE, "");
     }
 
+    public static String getUserFirstName(Context context) {
+        SharedPreferences prefs = getPreferences(context);
+        return prefs.getString(KEY_USER_FIRSTNAME, "");
+    }
+
+    public static String getUserLastName(Context context) {
+        SharedPreferences prefs = getPreferences(context);
+        return prefs.getString(KEY_USER_LASTNAME, "");
+    }
+
+    public static String getUserAddress(Context context) {
+        SharedPreferences prefs = getPreferences(context);
+        return prefs.getString(KEY_USER_ADDRESS, "");
+    }
+
+    public static String getUserDialCode(Context context) {
+        SharedPreferences prefs = getPreferences(context);
+        return prefs.getString(KEY_USER_DIAL_CODE, "");
+    }
+
+    public static String getUserZipCode(Context context) {
+        SharedPreferences prefs = getPreferences(context);
+        return prefs.getString(KEY_USER_ZIP_CODE, "");
+    }
+
+    public static String getUserCity(Context context) {
+        SharedPreferences prefs = getPreferences(context);
+        return prefs.getString(KEY_USER_CITY, "");
+    }
+
     // Clear user data from SharedPreferences
     public static void clearUser(Context context) {
         SharedPreferences prefs = getPreferences(context);
@@ -139,6 +218,13 @@ public class UserDataService {
         String userState = getUserState(context);
 
         User sharedUser = new User(userID, accessToken, identityNumber, eMail, nameSurname, phoneNumber, userState);
+
+        sharedUser.setName(getUserFirstName(context));
+        sharedUser.setSurname(getUserLastName(context));
+        sharedUser.setAddress(getUserAddress(context));
+        sharedUser.setDialCode(getUserDialCode(context));
+        sharedUser.setZipCode(getUserZipCode(context));
+        sharedUser.setCity(getUserCity(context));
 
         return sharedUser;
     }

@@ -14,6 +14,14 @@ public class User implements Parcelable {
 
     private String userState;
 
+    //Payment Info
+    private String name;
+    private String surname;
+    private String address;
+    private String dialCode;
+    private String zipCode;
+    private String city;
+
     public User(String userID, String accessToken, String identityNumber, String eMail, String nameSurname, String phoneNumber, String userState) {
         this.userID = userID;
         this.accessToken = accessToken;
@@ -80,6 +88,54 @@ public class User implements Parcelable {
 
     public void setUserState(String userState) {
         this.userState = userState;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getDialCode() {
+        return dialCode;
+    }
+
+    public void setDialCode(String dialCode) {
+        this.dialCode = dialCode;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     @Override
