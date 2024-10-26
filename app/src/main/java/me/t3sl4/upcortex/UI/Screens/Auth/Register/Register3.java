@@ -275,10 +275,10 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
 
     private void packageSetup(int stateNumber) {
         if (stateNumber == 1) {
-            String formattedPrice = NumberFormat.getInstance().format(Integer.parseInt(subscriptionList.get(0).getPrice()));
+            String formattedPrice = NumberFormat.getInstance().format(Integer.parseInt(subscriptionList.get(2).getPrice()));
             packagePrice.setText(formattedPrice + " ₺");
             try {
-               JSONArray contentArray = new JSONArray(subscriptionList.get(0).getContent());
+               JSONArray contentArray = new JSONArray(subscriptionList.get(2).getContent());
 
                 packagePromotion.setText(contentArray.length() > 0 ? contentArray.getString(0).trim().replace("- ", "") : getString(R.string.plan_1_gift));
                 package_spec_1.setText(contentArray.length() > 1 ? contentArray.getString(1).trim() : getString(R.string.plan_1_spec_1));
@@ -317,10 +317,10 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
             buttonSummary.setText(subscriptionList.get(1).getName());
             packagePriceSummary.setText(subscriptionList.get(1).getPrice() + " ₺");
         } else {
-            String formattedPrice = NumberFormat.getInstance().format(Integer.parseInt(subscriptionList.get(2).getPrice()));
+            String formattedPrice = NumberFormat.getInstance().format(Integer.parseInt(subscriptionList.get(0).getPrice()));
             packagePrice.setText(formattedPrice + " ₺");
             try {
-                JSONArray contentArray = new JSONArray(subscriptionList.get(2).getContent());
+                JSONArray contentArray = new JSONArray(subscriptionList.get(0).getContent());
 
                 packagePromotion.setText(contentArray.length() > 0 ? contentArray.getString(0).trim().replace("- ", "") : getString(R.string.plan_1_gift));
                 package_spec_1.setText(contentArray.length() > 1 ? contentArray.getString(1).trim() : getString(R.string.plan_1_spec_1));

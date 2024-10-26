@@ -13,10 +13,12 @@ import com.google.android.material.textfield.TextInputEditText;
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.Sneaker.Sneaker;
 import me.t3sl4.upcortex.UI.Screens.Auth.Register.Register1;
+import me.t3sl4.upcortex.UI.Screens.Auth.Register.Register3;
 import me.t3sl4.upcortex.UI.Screens.General.Dashboard;
 import me.t3sl4.upcortex.UI.Screens.ResetPass.ResetPass1;
 import me.t3sl4.upcortex.Utils.HTTP.Requests.Auth.AuthService;
 import me.t3sl4.upcortex.Utils.Screen.ScreenListeners;
+import me.t3sl4.upcortex.Utils.Service.UserDataService;
 
 public class Login extends AppCompatActivity {
 
@@ -84,9 +86,15 @@ public class Login extends AppCompatActivity {
 
         AuthService.login(this, idNumberText, passwordText,
                 () -> {
-                    Intent dashboardIntent = new Intent(Login.this, Dashboard.class);
-                    startActivity(dashboardIntent);
-                    finish();
+                    if(UserDataService.getUserState(Login.this).equals("registered") || UserDataService.getUserState(Login.this).equals("adressed")) {
+                        Intent packageIntent = new Intent(Login.this, Register3.class);
+                        startActivity(packageIntent);
+                        finish();
+                    } else {
+                        Intent dashboardIntent = new Intent(Login.this, Dashboard.class);
+                        startActivity(dashboardIntent);
+                        finish();
+                    }
                 },
                 () -> {
                     Sneaker.with(Login.this)

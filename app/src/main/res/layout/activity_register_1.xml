@@ -219,7 +219,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/button_support"
-                    android:drawableEnd="@drawable/ikon_register_arrow_down"
                     android:drawableTint="@color/darkBaseColor"
                     android:ems="10"
                     android:fontFamily="@font/roboto_flex"

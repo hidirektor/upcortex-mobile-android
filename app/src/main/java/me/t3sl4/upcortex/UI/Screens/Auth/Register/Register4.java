@@ -9,7 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Screens.Auth.Login;
+import me.t3sl4.upcortex.UI.Screens.General.Dashboard;
 import me.t3sl4.upcortex.Utils.Screen.ScreenUtil;
+import me.t3sl4.upcortex.Utils.Service.UserDataService;
 
 public class Register4 extends AppCompatActivity {
 
@@ -43,9 +45,15 @@ public class Register4 extends AppCompatActivity {
 
     private void buttonClickListeners() {
         loginButton.setOnClickListener(v -> {
-            Intent intent = new Intent(Register4.this, Login.class);
-            startActivity(intent);
-            finish();
+            if(UserDataService.getAccessToken(Register4.this) != null) {
+                Intent intent = new Intent(Register4.this, Dashboard.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Intent intent = new Intent(Register4.this, Login.class);
+                startActivity(intent);
+                finish();
+            }
         });
     }
 

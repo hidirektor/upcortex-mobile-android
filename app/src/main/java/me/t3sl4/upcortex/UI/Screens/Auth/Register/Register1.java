@@ -2,6 +2,9 @@ package me.t3sl4.upcortex.UI.Screens.Auth.Register;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -14,6 +17,7 @@ import com.hbb20.CountryCodePicker;
 import com.zpj.widget.checkbox.ZCheckBox;
 
 import java.util.Calendar;
+import java.util.regex.Pattern;
 
 import me.t3sl4.upcortex.R;
 import me.t3sl4.upcortex.UI.Components.DatePicker.DatePickerBottomSheet;
@@ -37,6 +41,8 @@ public class Register1 extends AppCompatActivity {
     private TextView termsViewerTextView;
     private Button nextButton;
 
+    Pattern turkishPhoneNumberPattern = Pattern.compile("^(5[0-9]{2})\\s([0-9]{3})\\s([0-9]{2})\\s([0-9]{2})$");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,9 +61,64 @@ public class Register1 extends AppCompatActivity {
         nameEditText = findViewById(R.id.editTextName);
         surnameEditText = findViewById(R.id.editTextSurname);
         idNumberEditText = findViewById(R.id.editTextIDNumber);
+        idNumberEditText.setFilters(new InputFilter[] { new InputFilter.LengthFilter(11) });
+        idNumberEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() != 11) {
+                    idNumberEditText.setError(getString(R.string.error_invalid_id_number));
+                } else {
+                    idNumberEditText.setError(null);
+                }
+            }
+        });
         birthDateEditText = findViewById(R.id.editTextBirthDate);
         countryCodePicker = findViewById(R.id.country_code_picker);
         phoneNumberEditText = findViewById(R.id.editTextPhoneNumber);
+        phoneNumberEditText.addTextChangedListener(new TextWatcher() {
+            private boolean isFormatting;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (isFormatting) return;
+
+                if (countryCodePicker.getSelectedCountryCode().equals("90")) {
+                    String input = s.toString().replaceAll("\\s+", "");
+
+                    if (input.length() <= 10 && input.startsWith("5")) {
+                        isFormatting = true;
+
+                        StringBuilder formatted = new StringBuilder(input);
+                        if (input.length() >= 3) formatted.insert(3, " ");
+                        if (input.length() >= 6) formatted.insert(7, " ");
+                        if (input.length() >= 8) formatted.insert(10, " ");
+
+                        phoneNumberEditText.setText(formatted.toString());
+                        phoneNumberEditText.setSelection(formatted.length());
+
+                        isFormatting = false;
+                    }
+
+                    if (!turkishPhoneNumberPattern.matcher(phoneNumberEditText.getText().toString()).matches()) {
+                        phoneNumberEditText.setError(getString(R.string.error_turkish_number_format));
+                    } else {
+                        phoneNumberEditText.setError(null);
+                    }
+                }
+            }
+        });
         emailEditText = findViewById(R.id.editTextEmail);
         passwordEditText = findViewById(R.id.editTextPassword);
         repeatPasswordEditText = findViewById(R.id.editTextPasswordRepeat);
