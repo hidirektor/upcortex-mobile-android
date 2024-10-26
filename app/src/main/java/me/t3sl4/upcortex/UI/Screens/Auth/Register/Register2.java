@@ -112,9 +112,16 @@ public class Register2 extends AppCompatActivity {
 
                 AuthService.register(Register2.this,
                         userName, userSurname, userEmail, birthDate, userAddress, userPassword, dialCode, userPhone, userIdentity, () -> {
-                            Intent intent = new Intent(Register2.this, Register3.class);
-                            startActivity(intent);
-                            finish();
+                            AuthService.login(Register2.this, userIdentity, userPassword, () -> {
+                                Intent intent = new Intent(Register2.this, Register3.class);
+                                startActivity(intent);
+                                finish();
+                            }, () -> {
+                                Sneaker.with(Register2.this)
+                                        .setTitle(getString(R.string.error_title))
+                                        .setMessage(getString(R.string.error_register_not_complete))
+                                        .sneakError();
+                            });
                         }, () -> {
                             Sneaker.with(Register2.this)
                                     .setTitle(getString(R.string.error_title))
