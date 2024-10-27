@@ -182,7 +182,7 @@ public class Register1 extends AppCompatActivity {
                 String userAddress = SharedPreferencesManager.getSharedPref("neighborhood", this, "") + " " + SharedPreferencesManager.getSharedPref("addressDetail", this, "") + " " + SharedPreferencesManager.getSharedPref("zipCode", this, "") + " " + SharedPreferencesManager.getSharedPref("district", this, "") + " " + SharedPreferencesManager.getSharedPref("city", this, "");
                 String userPassword = SharedPreferencesManager.getSharedPref("password", this, "");
                 String dialCode = "+" + SharedPreferencesManager.getSharedPref("countryCode", this, "");
-                String userPhone = dialCode + SharedPreferencesManager.getSharedPref("phoneNumber", this, "").replace(" ", "");
+                String userPhone = SharedPreferencesManager.getSharedPref("phoneNumber", this, "").replace(" ", "");
                 String userIdentity = SharedPreferencesManager.getSharedPref("idNumber", this, "");
 
                 AuthService.register(Register1.this,
