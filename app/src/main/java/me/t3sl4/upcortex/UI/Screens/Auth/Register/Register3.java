@@ -70,6 +70,8 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
 
     private ArrayList<Subscription> subscriptionList = new ArrayList<>();
 
+    private boolean isClicked = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,8 +125,9 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
         });
 
         nextButton.setOnClickListener(v -> {
-            if (confirmCheckBox.isChecked()) {
+            if (confirmCheckBox.isChecked() && !isClicked) {
                 saveData(); // Verileri kaydet
+                isClicked = true;
 
                 try {
                     IyzicoService.sendPaymentRequest(Register3.this, selectedSubscription.getId(), selectedSubscription.getName(), selectedSubscription.getPrice(),

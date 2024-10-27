@@ -152,6 +152,7 @@
     <string name="register_fourth_plan_price">Fiyat</string>
     <string name="register_fourth_address">Kargo Adresi</string>
     <string name="register_fourth_order_id">Sipariş Numarası</string>
+    <string name="three_d_secure" translatable="false">3D Secure</string>
 
     <!-- Payment Options Bottom Sheet Texts-->
     <string name="payment_options_type">Ödeme Şekli</string>

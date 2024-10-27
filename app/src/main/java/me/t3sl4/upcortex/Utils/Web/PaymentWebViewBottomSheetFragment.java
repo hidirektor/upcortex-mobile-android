@@ -75,7 +75,7 @@ public class PaymentWebViewBottomSheetFragment extends BottomSheetDialogFragment
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_webview_bottom_sheet, container, false);
+        View view = inflater.inflate(R.layout.fragment_web_view_payment, container, false);
 
         webView = view.findViewById(R.id.webview);
         customProgressBar = view.findViewById(R.id.customProgressBar);
