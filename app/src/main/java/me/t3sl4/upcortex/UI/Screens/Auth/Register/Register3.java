@@ -70,8 +70,6 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
 
     private ArrayList<Subscription> subscriptionList = new ArrayList<>();
 
-    private boolean isClicked = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,9 +123,8 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
         });
 
         nextButton.setOnClickListener(v -> {
-            if (confirmCheckBox.isChecked() && !isClicked) {
+            if (confirmCheckBox.isChecked()) {
                 saveData(); // Verileri kaydet
-                isClicked = true;
 
                 try {
                     IyzicoService.sendPaymentRequest(Register3.this, selectedSubscription.getId(), selectedSubscription.getName(), selectedSubscription.getPrice(),
@@ -137,7 +134,6 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
                                 String status = jsonResponse.optString("status");
                                 String locale = jsonResponse.optString("locale");
                                 String systemTime = jsonResponse.optString("systemTime");
-                                String conversationId = jsonResponse.optString("conversationId");
                                 String token = jsonResponse.optString("token");
                                 String paymentPageUrl = jsonResponse.optString("paymentPageUrl");
                                 String payWithIyzicoPageUrl = jsonResponse.optString("payWithIyzicoPageUrl");
@@ -170,7 +166,7 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
             buttonStatusSwitch(thirthPlanButton, false);
             packageSetup(1);
 
-            selectedSubscription = subscriptionList.get(0);
+            selectedSubscription = subscriptionList.get(1);
         });
 
         secondPlanButton.setOnClickListener(v -> {
@@ -179,7 +175,7 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
             buttonStatusSwitch(thirthPlanButton, false);
             packageSetup(2);
 
-            selectedSubscription = subscriptionList.get(1);
+            selectedSubscription = subscriptionList.get(2);
         });
 
         thirthPlanButton.setOnClickListener(v -> {
@@ -188,7 +184,7 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
             buttonStatusSwitch(thirthPlanButton, true);
             packageSetup(3);
 
-            selectedSubscription = subscriptionList.get(2);
+            selectedSubscription = subscriptionList.get(0);
         });
 
         editTextExpiryDate.setOnClickListener(v -> {
@@ -272,11 +268,14 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
     }
 
     private void packageSetup(int stateNumber) {
+        String formattedPrice;
+        Subscription currentPackage;
         if (stateNumber == 1) {
-            String formattedPrice = NumberFormat.getInstance().format(Integer.parseInt(subscriptionList.get(2).getPrice()));
+            currentPackage = subscriptionList.get(1);
+            formattedPrice = NumberFormat.getInstance().format(Integer.parseInt(currentPackage.getPrice()));
             packagePrice.setText(formattedPrice + " ₺");
             try {
-               JSONArray contentArray = new JSONArray(subscriptionList.get(2).getContent());
+               JSONArray contentArray = new JSONArray(currentPackage.getContent());
 
                 packagePromotion.setText(contentArray.length() > 0 ? contentArray.getString(0).trim().replace("- ", "") : getString(R.string.plan_1_gift));
                 package_spec_1.setText(contentArray.length() > 1 ? contentArray.getString(1).trim() : getString(R.string.plan_1_spec_1));
@@ -285,19 +284,16 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
 
             } catch (JSONException e) {
                 e.printStackTrace();
-                packagePromotion.setText(getString(R.string.plan_1_gift));
-                package_spec_1.setText(getString(R.string.plan_1_spec_1));
-                package_spec_2.setText(getString(R.string.plan_1_spec_2));
-                package_spec_3.setText(getString(R.string.plan_1_spec_3));
             }
 
-            buttonSummary.setText(subscriptionList.get(0).getName());
-            packagePriceSummary.setText(subscriptionList.get(0).getPrice() + " ₺");
+            buttonSummary.setText(currentPackage.getName());
+            packagePriceSummary.setText(currentPackage.getPrice() + " ₺");
         } else if (stateNumber == 2) {
-            String formattedPrice = NumberFormat.getInstance().format(Integer.parseInt(subscriptionList.get(1).getPrice()));
+            currentPackage = subscriptionList.get(2);
+            formattedPrice = NumberFormat.getInstance().format(Integer.parseInt(currentPackage.getPrice()));
             packagePrice.setText(formattedPrice + " ₺");
             try {
-                JSONArray contentArray = new JSONArray(subscriptionList.get(1).getContent());
+                JSONArray contentArray = new JSONArray(currentPackage.getContent());
 
                 packagePromotion.setText(contentArray.length() > 0 ? contentArray.getString(0).trim().replace("- ", "") : getString(R.string.plan_1_gift));
                 package_spec_1.setText(contentArray.length() > 1 ? contentArray.getString(1).trim() : getString(R.string.plan_1_spec_1));
@@ -306,19 +302,16 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
 
             } catch (JSONException e) {
                 e.printStackTrace();
-                packagePromotion.setText(getString(R.string.plan_1_gift));
-                package_spec_1.setText(getString(R.string.plan_1_spec_1));
-                package_spec_2.setText(getString(R.string.plan_1_spec_2));
-                package_spec_3.setText(getString(R.string.plan_1_spec_3));
             }
 
-            buttonSummary.setText(subscriptionList.get(1).getName());
-            packagePriceSummary.setText(subscriptionList.get(1).getPrice() + " ₺");
+            buttonSummary.setText(currentPackage.getName());
+            packagePriceSummary.setText(currentPackage.getPrice() + " ₺");
         } else {
-            String formattedPrice = NumberFormat.getInstance().format(Integer.parseInt(subscriptionList.get(0).getPrice()));
+            currentPackage = subscriptionList.get(0);
+            formattedPrice = NumberFormat.getInstance().format(Integer.parseInt(currentPackage.getPrice()));
             packagePrice.setText(formattedPrice + " ₺");
             try {
-                JSONArray contentArray = new JSONArray(subscriptionList.get(0).getContent());
+                JSONArray contentArray = new JSONArray(currentPackage.getContent());
 
                 packagePromotion.setText(contentArray.length() > 0 ? contentArray.getString(0).trim().replace("- ", "") : getString(R.string.plan_1_gift));
                 package_spec_1.setText(contentArray.length() > 1 ? contentArray.getString(1).trim() : getString(R.string.plan_1_spec_1));
@@ -326,15 +319,11 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
                 package_spec_3.setText(contentArray.length() > 3 ? contentArray.getString(3).trim() : getString(R.string.plan_1_spec_3));
 
             } catch (JSONException e) {
-                e.printStackTrace();
-                packagePromotion.setText(getString(R.string.plan_1_gift));
-                package_spec_1.setText(getString(R.string.plan_1_spec_1));
-                package_spec_2.setText(getString(R.string.plan_1_spec_2));
-                package_spec_3.setText(getString(R.string.plan_1_spec_3));
+                throw new RuntimeException(e);
             }
 
-            buttonSummary.setText(subscriptionList.get(2).getName());
-            packagePriceSummary.setText(subscriptionList.get(2).getPrice() + " ₺");
+            buttonSummary.setText(currentPackage.getName());
+            packagePriceSummary.setText(currentPackage.getPrice() + " ₺");
         }
     }
 
@@ -379,7 +368,11 @@ public class Register3 extends AppCompatActivity implements ExpiryDatePicker.Exp
 
     private void initializePackages() {
         SubscriptionService.getSubscriptions(Register3.this, subscriptionList, () -> {
-            selectedSubscription = subscriptionList.get(2);
+            firstPlanButton.setText(subscriptionList.get(1).getName());
+            secondPlanButton.setText(subscriptionList.get(2).getName());
+            thirthPlanButton.setText(subscriptionList.get(0).getName());
+
+            selectedSubscription = subscriptionList.get(0);
             packageSetup(3);
         }, () -> {
             Sneaker.with(Register3.this)
