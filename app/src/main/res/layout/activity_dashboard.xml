@@ -514,13 +514,14 @@
                     android:id="@+id/languageConstraint"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.2">
+                    android:layout_weight="0.2"
+                    android:foregroundTint="@color/white">
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/profile_image"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:src="@drawable/ikon_navbar_template"
+                        android:src="@drawable/ikon_profile"
                         app:civ_border_width="4dp"
                         app:civ_border_color="@color/white"
                         app:layout_constraintStart_toStartOf="parent"
