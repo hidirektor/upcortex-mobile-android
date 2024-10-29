@@ -18,6 +18,7 @@ import me.t3sl4.upcortex.UI.Screens.General.Dashboard;
 import me.t3sl4.upcortex.UI.Screens.OnBoard.OnBoard1;
 import me.t3sl4.upcortex.Utils.BaseUtil;
 import me.t3sl4.upcortex.Utils.Bluetooth.BluetoothUtil;
+import me.t3sl4.upcortex.Utils.HTTP.Requests.Auth.AuthService;
 import me.t3sl4.upcortex.Utils.Screen.ScreenUtil;
 import me.t3sl4.upcortex.Utils.Service.UserDataService;
 import me.t3sl4.upcortex.Utils.SharedPreferences.SharedPreferencesManager;
@@ -98,15 +99,22 @@ public class SplashActivity extends AppCompatActivity {
     private void redirectToMainActivity() {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(() -> {
-            Intent loginIntent;
             stopLoadingAnimation();
-            if (UserDataService.getAccessToken(this) != null && !UserDataService.getAccessToken(this).isEmpty()) {
-                loginIntent = new Intent(SplashActivity.this, Dashboard.class);
-            } else {
+            AuthService.login(SplashActivity.this, UserDataService.getIdentityNumber(SplashActivity.this), "password", () -> {
+                Intent loginIntent;
+                if (UserDataService.getAccessToken(this) != null && !UserDataService.getAccessToken(this).isEmpty()) {
+                    loginIntent = new Intent(SplashActivity.this, Dashboard.class);
+                } else {
+                    loginIntent = new Intent(SplashActivity.this, Login.class);
+                }
+                startActivity(loginIntent);
+                finish();
+            }, () -> {
+                Intent loginIntent;
                 loginIntent = new Intent(SplashActivity.this, Login.class);
-            }
-            startActivity(loginIntent);
-            finish();
+                startActivity(loginIntent);
+                finish();
+            });
         }, SPLASH_DELAY);
     }
 
