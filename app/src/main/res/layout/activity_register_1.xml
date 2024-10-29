@@ -229,23 +229,37 @@
                     android:layout_marginLeft="8dp"/>
             </LinearLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextEmail"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/button_support"
-                android:drawableTint="@color/darkBaseColor"
-                android:drawableStart="@drawable/ikon_register_mail"
-                android:drawablePadding="16dp"
-                android:ems="10"
-                android:fontFamily="@font/roboto_flex"
-                android:hint="@string/register_email"
-                android:inputType="none"
-                android:padding="8dp"
-                android:textColorHint="@color/darkBaseColor"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="12dp"/>
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextEmail"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.0"
+                    android:layout_height="50dp"
+                    android:background="@drawable/button_support"
+                    android:drawableTint="@color/darkBaseColor"
+                    android:drawableStart="@drawable/ikon_register_mail"
+                    android:drawablePadding="16dp"
+                    android:ems="10"
+                    android:fontFamily="@font/roboto_flex"
+                    android:hint="@string/register_email"
+                    android:inputType="none"
+                    android:padding="8dp"
+                    android:textColorHint="@color/darkBaseColor"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="12dp"/>
+
+                <com.zpj.widget.checkbox.ZCheckBox
+                    android:id="@+id/noEmailCheckbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    app:z_checkbox_checked_color="@color/errorColor"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextPassword"

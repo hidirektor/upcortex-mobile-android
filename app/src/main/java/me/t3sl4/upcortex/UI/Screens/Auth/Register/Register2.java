@@ -138,7 +138,17 @@ public class Register2 extends AppCompatActivity {
                         .setTitle(getString(R.string.error_title))
                         .setMessage(getString(R.string.error_fill_blanks))
                         .sneakError();
-            } else if (confirmAddress.isChecked() && phoneNumber.getError() == null) {
+            } else if(phoneNumber.getError() != null) {
+                Sneaker.with(Register2.this)
+                        .setTitle(getString(R.string.error_title))
+                        .setMessage(getString(R.string.error_register_format))
+                        .sneakError();
+            } else if(!confirmAddress.isChecked()) {
+                Sneaker.with(Register2.this)
+                        .setTitle(getString(R.string.error_title))
+                        .setMessage(getString(R.string.error_term_confirm))
+                        .sneakError();
+            } else {
                 saveData(); // Verileri kaydet
 
                 String addressNameText = addressName.getText().toString();
@@ -180,11 +190,6 @@ public class Register2 extends AppCompatActivity {
                                     .setMessage(getString(R.string.error_address_cant_create))
                                     .sneakError();
                         });
-            } else {
-                Sneaker.with(Register2.this)
-                        .setTitle(getString(R.string.error_title))
-                        .setMessage(getString(R.string.error_term_confirm))
-                        .sneakError();
             }
         });
 

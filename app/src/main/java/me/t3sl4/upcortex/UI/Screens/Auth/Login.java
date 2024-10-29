@@ -81,7 +81,12 @@ public class Login extends AppCompatActivity {
         });
 
         loginButton.setOnClickListener(v -> {
-            if(idNumber.getError() == null) {
+            if(idNumber.getError() != null) {
+                Sneaker.with(Login.this)
+                        .setTitle(getString(R.string.error_title))
+                        .setMessage(getString(R.string.error_register_format))
+                        .sneakError();
+            } else {
                 sendLoginRequest();
             }
         });

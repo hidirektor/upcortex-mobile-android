@@ -40,6 +40,7 @@ public class Register1 extends AppCompatActivity {
     private TextInputEditText passwordEditText;
     private TextInputEditText repeatPasswordEditText;
     private ZCheckBox termsAndConditionsCheckBox;
+    private ZCheckBox noEmailCheckBox;
     private TextView termsViewerTextView;
     private Button nextButton;
 
@@ -156,8 +157,19 @@ public class Register1 extends AppCompatActivity {
         passwordEditText = findViewById(R.id.editTextPassword);
         repeatPasswordEditText = findViewById(R.id.editTextPasswordRepeat);
         termsAndConditionsCheckBox = findViewById(R.id.termsCheckBox);
+        noEmailCheckBox = findViewById(R.id.noEmailCheckbox);
         termsViewerTextView = findViewById(R.id.termsViewText);
         nextButton = findViewById(R.id.nextButton);
+
+        noEmailCheckBox.setOnCheckedChangeListener((checkBox, isChecked) -> {
+            if(isChecked) {
+                emailEditText.setText("default-mail@dinamikbeyin.com");
+                emailEditText.setEnabled(false);
+            } else {
+                emailEditText.setText("");
+                emailEditText.setEnabled(true);
+            }
+        });
     }
 
     private void buttonClickListeners() {
@@ -172,7 +184,27 @@ public class Register1 extends AppCompatActivity {
                         .setTitle(getString(R.string.error_title))
                         .setMessage(getString(R.string.error_age_error))
                         .sneakError();
-            } else if (termsAndConditionsCheckBox.isChecked() && phoneNumberEditText.getError() == null && idNumberEditText.getError() == null && emailEditText.getError() == null) {
+            } else if (!termsAndConditionsCheckBox.isChecked()) {
+                Sneaker.with(Register1.this)
+                        .setTitle(getString(R.string.error_title))
+                        .setMessage(getString(R.string.error_term_confirm))
+                        .sneakError();
+            } else if(idNumberEditText.getError() != null) {
+                Sneaker.with(Register1.this)
+                        .setTitle(getString(R.string.error_title))
+                        .setMessage(getString(R.string.error_register_format))
+                        .sneakError();
+            } else if(phoneNumberEditText.getError() != null) {
+                Sneaker.with(Register1.this)
+                        .setTitle(getString(R.string.error_title))
+                        .setMessage(getString(R.string.error_register_format))
+                        .sneakError();
+            } else if(emailEditText.getError() != null) {
+                Sneaker.with(Register1.this)
+                        .setTitle(getString(R.string.error_title))
+                        .setMessage(getString(R.string.error_register_format))
+                        .sneakError();
+            } else {
                 saveData(); // Verileri kaydet
 
                 String userName = SharedPreferencesManager.getSharedPref("name", this, "");
@@ -203,13 +235,6 @@ public class Register1 extends AppCompatActivity {
                                     .setMessage(getString(R.string.error_register_not_complete))
                                     .sneakError();
                         });
-
-
-            } else {
-                Sneaker.with(Register1.this)
-                        .setTitle(getString(R.string.error_title))
-                        .setMessage(getString(R.string.error_term_confirm))
-                        .sneakError();
             }
         });
 

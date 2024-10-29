@@ -100,7 +100,7 @@ public class SplashActivity extends AppCompatActivity {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(() -> {
             stopLoadingAnimation();
-            AuthService.login(SplashActivity.this, UserDataService.getIdentityNumber(SplashActivity.this), "password", () -> {
+            AuthService.login(SplashActivity.this, UserDataService.getIdentityNumber(SplashActivity.this), "dinamikbeyin", () -> {
                 Intent loginIntent;
                 if (UserDataService.getAccessToken(this) != null && !UserDataService.getAccessToken(this).isEmpty()) {
                     loginIntent = new Intent(SplashActivity.this, Dashboard.class);
