@@ -229,42 +229,52 @@
                             android:layout_gravity="center"/>
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/package_spec_1"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/plan_3_spec_1"
-                        android:layout_marginTop="12dp"
-                        android:layout_gravity="center"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:fontFamily="@font/roboto_flex"
-                        android:textSize="18sp"
-                        android:layout_marginBottom="12dp"/>
-                    <TextView
-                        android:id="@+id/package_spec_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/plan_3_spec_2"
-                        android:layout_marginTop="12dp"
-                        android:layout_gravity="center"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:fontFamily="@font/roboto_flex"
-                        android:textSize="18sp"
-                        android:layout_marginBottom="12dp"/>
-                    <TextView
-                        android:id="@+id/package_spec_3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/plan_3_spec_3"
-                        android:layout_marginTop="12dp"
-                        android:layout_gravity="center"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:fontFamily="@font/roboto_flex"
-                        android:textSize="18sp"
-                        android:layout_marginBottom="12dp"/>
+                        android:orientation="vertical"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp">
+                        <TextView
+                            android:id="@+id/package_spec_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/plan_3_spec_1"
+                            android:layout_marginTop="12dp"
+                            android:layout_gravity="center"
+                            android:textAlignment="center"
+                            android:maxLines="2"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            android:fontFamily="@font/roboto_flex"
+                            android:textSize="18sp"/>
+                        <TextView
+                            android:id="@+id/package_spec_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/plan_3_spec_2"
+                            android:layout_marginTop="12dp"
+                            android:layout_gravity="center"
+                            android:textAlignment="center"
+                            android:maxLines="2"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            android:fontFamily="@font/roboto_flex"
+                            android:textSize="18sp"/>
+                        <TextView
+                            android:id="@+id/package_spec_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/plan_3_spec_3"
+                            android:layout_marginTop="12dp"
+                            android:layout_gravity="center"
+                            android:textAlignment="center"
+                            android:maxLines="2"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            android:fontFamily="@font/roboto_flex"
+                            android:textSize="18sp"/>
+                    </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

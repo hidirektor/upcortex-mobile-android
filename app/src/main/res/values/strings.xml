@@ -69,6 +69,7 @@
     <string name="register_terms_and_conditions">Üyelik Sözleşmesini, Gizlilik Politikasını ve Cihaz Kullanım Şartlarını onaylıyorum.</string>
     <string name="register_first_select_date">Doğum Tarihinizi Seçin</string>
     <string name="register_first_done">Tamam</string>
+    <string name="register_no_email">E-Postam Yok</string>
 
     <!-- Register 2 Screen Texts-->
     <string name="register_second_header">Adres Bilgileri</string>

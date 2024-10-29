@@ -67,6 +67,7 @@
     <string name="register_terms_and_conditions">I approve the Membership Agreement, Privacy Policy and Device Terms of Use.</string>
     <string name="register_first_select_date">Select Birth Date</string>
     <string name="register_first_done">Done</string>
+    <string name="register_no_email">I dont have email</string>
 
     <!-- Register 2 Screen Texts-->
     <string name="register_second_header">Address info</string>

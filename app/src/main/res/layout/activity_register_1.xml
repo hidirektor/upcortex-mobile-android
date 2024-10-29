@@ -252,13 +252,24 @@
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="12dp"/>
 
-                <com.zpj.widget.checkbox.ZCheckBox
-                    android:id="@+id/noEmailCheckbox"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    app:z_checkbox_checked_color="@color/errorColor"
-                    android:layout_gravity="center"/>
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="6dp"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/register_no_email"/>
+                    <com.zpj.widget.checkbox.ZCheckBox
+                        android:id="@+id/noEmailCheckbox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:z_checkbox_checked_color="@color/errorColor"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputEditText
