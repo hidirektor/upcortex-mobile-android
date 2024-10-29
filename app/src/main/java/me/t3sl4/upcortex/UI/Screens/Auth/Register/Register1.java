@@ -145,7 +145,7 @@ public class Register1 extends AppCompatActivity {
 
                 isFormatting = true;
 
-                if (!emailPattern.matcher(input).matches()) {
+                if (!emailPattern.matcher(input).matches() && !input.equals("Default")) {
                     emailEditText.setError(getString(R.string.error_invalid_email));
                 } else {
                     emailEditText.setError(null);
