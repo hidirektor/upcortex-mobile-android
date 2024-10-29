@@ -145,7 +145,7 @@ public class Register1 extends AppCompatActivity {
 
                 isFormatting = true;
 
-                if (!emailPattern.matcher(input).matches() && !input.equals("Default")) {
+                if (!emailPattern.matcher(input).matches()) {
                     emailEditText.setError(getString(R.string.error_invalid_email));
                 } else {
                     emailEditText.setError(null);
@@ -163,7 +163,7 @@ public class Register1 extends AppCompatActivity {
 
         noEmailCheckBox.setOnCheckedChangeListener((checkBox, isChecked) -> {
             if(isChecked) {
-                emailEditText.setText("Default");
+                emailEditText.setText("default@dinamikbeyin.com");
                 emailEditText.setEnabled(false);
             } else {
                 emailEditText.setText("");
@@ -294,11 +294,7 @@ public class Register1 extends AppCompatActivity {
         SharedPreferencesManager.writeSharedPref("birthDate", birthDateEditText.getText().toString(), this);
         SharedPreferencesManager.writeSharedPref("countryCode", countryCodePicker.getSelectedCountryCode(), this);
         SharedPreferencesManager.writeSharedPref("phoneNumber", phoneNumberEditText.getText().toString(), this);
-        if(emailEditText.getText().equals("Default")) {
-            SharedPreferencesManager.writeSharedPref("eMail", "default-mail@dinamikbeyin.com", this);
-        } else {
-            SharedPreferencesManager.writeSharedPref("eMail", emailEditText.getText().toString(), this);
-        }
+        SharedPreferencesManager.writeSharedPref("eMail", emailEditText.getText().toString(), this);
         SharedPreferencesManager.writeSharedPref("password", passwordEditText.getText().toString(), this);
         SharedPreferencesManager.writeSharedPref("repeatPassword", repeatPasswordEditText.getText().toString(), this);
         SharedPreferencesManager.writeSharedPref("termsAccepted", termsAndConditionsCheckBox.isChecked(), this);

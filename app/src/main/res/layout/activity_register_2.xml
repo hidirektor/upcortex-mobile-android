@@ -233,25 +233,6 @@
                     android:layout_marginLeft="8dp"/>
             </LinearLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextCity"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/button_support"
-                android:drawableEnd="@drawable/ikon_register_arrow_down"
-                android:drawableTint="@color/darkBaseColor"
-                android:drawableStart="@drawable/ikon_address_country"
-                android:drawablePadding="16dp"
-                android:ems="10"
-                android:fontFamily="@font/roboto_flex"
-                android:hint="@string/register_address_city"
-                android:inputType="none"
-                android:padding="8dp"
-                android:textColorHint="@color/darkBaseColor"
-                android:layout_marginTop="12dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"/>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -260,10 +241,27 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="12dp">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextCity"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.0"
+                    android:layout_height="50dp"
+                    android:background="@drawable/button_support"
+                    android:drawableEnd="@drawable/ikon_register_arrow_down"
+                    android:drawableTint="@color/darkBaseColor"
+                    android:drawableStart="@drawable/ikon_address_country"
+                    android:drawablePadding="16dp"
+                    android:ems="10"
+                    android:fontFamily="@font/roboto_flex"
+                    android:hint="@string/register_address_city"
+                    android:inputType="none"
+                    android:padding="8dp"
+                    android:textColorHint="@color/darkBaseColor" />
+
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextDistrict"
                     android:layout_width="0dp"
                     android:layout_weight="1.0"
-                    android:layout_height="60dp"
+                    android:layout_height="50dp"
                     android:background="@drawable/button_support"
                     android:drawableEnd="@drawable/ikon_register_arrow_down"
                     android:drawableTint="@color/darkBaseColor"
@@ -275,25 +273,28 @@
                     android:inputType="none"
                     android:padding="8dp"
                     android:textColorHint="@color/darkBaseColor"
-                    android:layout_marginRight="12dp"/>
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextNeighborhood"
-                    android:layout_width="0dp"
-                    android:layout_weight="1.0"
-                    android:layout_height="60dp"
-                    android:background="@drawable/button_support"
-                    android:drawableEnd="@drawable/ikon_register_arrow_down"
-                    android:drawableTint="@color/darkBaseColor"
-                    android:drawableStart="@drawable/ikon_address_neighborhood"
-                    android:drawablePadding="2dp"
-                    android:ems="25"
-                    android:fontFamily="@font/roboto_flex"
-                    android:hint="@string/register_address_neighborhood"
-                    android:inputType="none"
-                    android:clickable="false"
-                    android:padding="8dp"
-                    android:textColorHint="@color/darkBaseColor"/>
+                    android:layout_marginLeft="12dp"/>
             </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextNeighborhood"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/button_support"
+                android:drawableEnd="@drawable/ikon_register_arrow_down"
+                android:drawableTint="@color/darkBaseColor"
+                android:drawableStart="@drawable/ikon_address_neighborhood"
+                android:drawablePadding="12dp"
+                android:ems="25"
+                android:fontFamily="@font/roboto_flex"
+                android:hint="@string/register_address_neighborhood"
+                android:inputType="none"
+                android:clickable="false"
+                android:padding="8dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:textColorHint="@color/darkBaseColor"/>
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextZipCode"
